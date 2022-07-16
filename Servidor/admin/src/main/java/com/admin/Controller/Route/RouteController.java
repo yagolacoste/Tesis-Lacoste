@@ -1,6 +1,6 @@
 package com.admin.Controller.Route;
 
-import com.admin.Controller.User.UserController;
+import com.admin.Dto.RouteNewRequestDto;
 import com.admin.Models.Route;
 import com.admin.Service.Route.IRouteService;
 import org.slf4j.Logger;
@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class RouteController implements IRouteController{
@@ -19,12 +20,12 @@ public class RouteController implements IRouteController{
     private IRouteService routeService;
 
     @Override
-    public Route getById(Long id) {
+    public Optional<Route> getById(Long id) {
         return routeService.getById(id);
     }
 
     @Override
-    public void addRoute(Route route) {
+    public void addRoute(RouteNewRequestDto route) {
         routeService.add(route);
     }
 

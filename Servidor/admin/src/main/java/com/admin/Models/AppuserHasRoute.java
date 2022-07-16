@@ -34,6 +34,8 @@ public class AppuserHasRoute implements Serializable {
     private Date timesession;
 
 
+    public AppuserHasRoute() {
+    }
 
     public AppuserHasRouteId getId() {
         return id;

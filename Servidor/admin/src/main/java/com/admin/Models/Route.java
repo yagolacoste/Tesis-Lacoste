@@ -11,7 +11,7 @@ public class Route implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name= "id_route")
+    @Column(name= "id_route",columnDefinition = "serial")
     private Long id;
 
     @Column(name = "description")

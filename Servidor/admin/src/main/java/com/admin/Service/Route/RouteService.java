@@ -1,7 +1,9 @@
 package com.admin.Service.Route;
 
+import com.admin.Dto.RouteNewRequestDto;
 import com.admin.Models.Route;
 import com.admin.Repository.IRouteRepository;
+import org.apache.tomcat.util.json.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +27,12 @@ public class RouteService implements IRouteService{
     }
 
     @Override
-    public void add(Route route) {
-        routeRepository.save(route);
+    public void add(RouteNewRequestDto route) {
+        Route routeReal= new Route();
+        routeReal.setDescription(route.getDescription());
+       // routeReal.setWeather(route.getWeather());
+        routeReal.setCoordinates(route.getCoordinates());
+        routeRepository.save(routeReal);
     }
 
     @Override

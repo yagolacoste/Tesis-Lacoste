@@ -15,7 +15,8 @@ public class AppuserHasRouteId implements Serializable {
     @Column(name="route_id_route")
     private Long route;
 
-
+    public AppuserHasRouteId() {
+    }
 
     public Long getAppuser() {
         return appuser;
