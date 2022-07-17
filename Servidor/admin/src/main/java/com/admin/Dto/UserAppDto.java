@@ -2,6 +2,7 @@ package com.admin.Dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class UserAppDto {
@@ -23,13 +24,13 @@ public class UserAppDto {
     private String firstName;
     @NotBlank(message = "is required")
     private String lastName;
-    @NotBlank(message = "is required")
+    @NotNull (message = "is required")
     private int age;
     @NotBlank(message = "is required")
     private String phone;
     @NotBlank(message = "is required")
     private String email;
-    @NotEmpty(message = "is required")
+    @NotNull(message = "is required")
     private Date birthday;
 
     public String getFirstName() {

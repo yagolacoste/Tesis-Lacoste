@@ -3,6 +3,7 @@ package com.admin.Models;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name="appuser")
@@ -67,11 +68,11 @@ public class User implements Serializable {
         deleted=false;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -195,4 +196,14 @@ public class User implements Serializable {
         this.deleted = deleted;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        User u= (User) o;
+        return this.getEmail().equals(u.getEmail()) && this.getUsername().equals(u.getUsername()) && this.getPassword().equals(u.getPassword()) && this.identity.equals(u.getIdentity());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, identityType, identity, address, firstName, lastName, age, birthday, phone, email, creationTime, updateTime, active, deleted);
+    }
 }

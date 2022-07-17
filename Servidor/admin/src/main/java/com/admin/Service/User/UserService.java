@@ -1,5 +1,7 @@
 package com.admin.Service.User;
 
+import com.admin.Controller.Exception.ErrorCodes;
+import com.admin.Controller.Exception.TypeExceptions.NotFoundException;
 import com.admin.Dto.UserAppDto;
 import com.admin.Models.User;
 import com.admin.Repository.IUserRepository;
@@ -9,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 
 @Service
 public class UserService implements IUserService{
@@ -20,8 +24,10 @@ public class UserService implements IUserService{
 
 
     @Override
-    public User getByuser(Long id) {
-        return userRepository.getById(id);
+    public Optional<User> getByuser(Long id) {
+       User user= userRepository.findById(id)
+                .orElseThrow(()->new NotFoundException("User by id not found", ErrorCodes.NOT_FOUND.getCode()));
+       return Optional.ofNullable(user);
     }
 
     @Override
@@ -38,7 +44,11 @@ public class UserService implements IUserService{
         user.setBirthday(userAppDto.getBirthday());
         user.setPhone(userAppDto.getPhone());
         user.setEmail(userAppDto.getEmail());
-        userRepository.save(user);
+        List<User> repeat=this.list();
+        if(!repeat.contains(user))
+            userRepository.save(user);
+        else
+            throw new NotFoundException("User is Exist", ErrorCodes.NOT_FOUND.getCode());
 
     }
 

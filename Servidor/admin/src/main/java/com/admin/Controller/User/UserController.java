@@ -1,6 +1,8 @@
 package com.admin.Controller.User;
 
 
+import com.admin.Controller.Exception.ErrorCodes;
+import com.admin.Controller.Exception.TypeExceptions.NotFoundException;
 import com.admin.Dto.UserAppDto;
 import com.admin.Models.User;
 import com.admin.Service.User.IUserService;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class UserController implements IUserController {
@@ -20,8 +23,9 @@ public class UserController implements IUserController {
     private IUserService userService;
 
     @Override
-    public User getById(Long id) {
+    public Optional<User> getById(Long id) {
         return userService.getByuser(id);
+
     }
 
     @Override
