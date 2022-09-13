@@ -1,10 +1,15 @@
 package com.admin.Dto;
 
+import org.json.JSONObject;
+
+import javax.validation.constraints.NotBlank;
+
 public class RouteNewRequestDto {
     private String description;
 
-    private String weather;
+    private String  weather;
 
+    @NotBlank(message = "Coordinates is required")
     private String coordinates;
 
     public String getDescription() {

@@ -24,7 +24,8 @@ public interface IRouteController {
     @PostMapping(path = {"/add"},consumes = MediaType.APPLICATION_JSON_VALUE)
     void addRoute(@RequestBody RouteNewRequestDto route);
 
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping(path = {"/list"},produces = MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseStatus(HttpStatus.OK)
+//    @GetMapping(path = {"/list"},produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/list")
     List<Route> getRoutes();
 }

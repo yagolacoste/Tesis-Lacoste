@@ -1,19 +1,20 @@
 package com.admin.Dto;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 public class AppUserRouteRequestDto {
-
+    @NotBlank(message = "Is required")
     private Long Appuser;
-
+    @NotBlank(message = "Is required")
     private Long route;
-
+    @NotBlank(message = "Is required")
     private Double speed;
-
+    @NotBlank(message = "Is required")
     private Date timespeeed;
-
+    @NotBlank(message = "Is required")
     private Double kilometres;
-
+    @NotBlank(message = "Is required")
     private Date timesession;
 
     //Route data
@@ -22,6 +23,7 @@ public class AppUserRouteRequestDto {
 
     private String weather;
 
+    @NotBlank(message = "Is required")
     private String coordinates;
 
 
