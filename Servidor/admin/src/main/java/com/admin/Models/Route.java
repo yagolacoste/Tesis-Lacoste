@@ -1,6 +1,12 @@
 package com.admin.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonRawValue;
+
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.json.JSONObject;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -20,15 +26,14 @@ public class Route implements Serializable {
     @Column(name = "weather")
     private String weather;
 
+
     @Column(name = "coordinates")
+    @JsonRawValue
     private String coordinates;
 
-    public long getId() {
-        return id;
-    }
 
-    public void setId(long id) {
-        this.id = id;
+    public Long getId() {
+        return id;
     }
 
     public String getDescription() {
@@ -39,16 +44,16 @@ public class Route implements Serializable {
         this.description = description;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getWeather() {
         return weather;
     }
 
     public void setWeather(String weather) {
         this.weather = weather;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getCoordinates() {
