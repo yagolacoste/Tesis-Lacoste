@@ -2,11 +2,13 @@ package com.Tesis.bicycle;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Parcelable;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
@@ -22,11 +24,20 @@ import androidx.core.content.ContextCompat;
 import androidx.room.Room;
 
 
-import com.Tesis.bicycle.Model.RouteApiRest;
+import com.Tesis.bicycle.Activity.ShowPointLocationList;
+import com.Tesis.bicycle.Dto.AppUserHasRouteDetailsDto;
+import com.Tesis.bicycle.Dto.InfomationDto;
+import com.Tesis.bicycle.Dto.RouteDetailsDto;
+import com.Tesis.bicycle.Model.ApiRest.AppUserHasRouteApiRest;
+import com.Tesis.bicycle.Model.ApiRest.RouteApiRest;
+import com.Tesis.bicycle.Model.Room.AppUserHasRoute;
 import com.Tesis.bicycle.Presenter.ApiRestConecction;
 import com.Tesis.bicycle.Presenter.AppDataBase;
-import com.Tesis.bicycle.Model.Route;
-import com.Tesis.bicycle.Service.RouteApiRestService;
+import com.Tesis.bicycle.Model.Room.Route;
+
+import com.Tesis.bicycle.Service.ApiRest.AppUserHasRouteApiRestService;
+import com.Tesis.bicycle.Service.ApiRest.RouteApiRestService;
+import com.Tesis.bicycle.Service.Room.AppUserHasRouteService;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -39,11 +50,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.osmdroid.util.GeoPoint;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,17 +65,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends Activity  {
 
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
-    private static final int DEFAULT_UPDATE_INTERVAL = 10; // Puse un valor mas bajo solo para verificar que andaba
-    private static final int FAST_UPDATE_INTERVAL = 5;
+
     private static final String NAME_DATA_BASE="Bicycle";
 
 
     //Google Api for location services
     private FusedLocationProviderClient fusedLocationProviderClient;
 
-    private TextView tv_lat, tv_lon, tv_sensor, tv_update;
-    private Switch sw_locationupdates, sw_gps;
-    private Button btn_start,btn_turnoff,btn_shared;
+    private TextView tv_lat, tv_lon, tv_sensor;
+    private Switch  sw_gps;
+    private Button btn_start,btn_turnoff,btn_shared,btn_showpoint;
 
     //Location request is config for all setting related to fusedLocationProviderClient
     private LocationRequest locationRequest;
@@ -82,15 +93,12 @@ public class MainActivity extends Activity  {
    private  JSONObject coordinates=new JSONObject();
 
 
-   //Servicios y objetos de retorfit
-
-    private RouteApiRestService routeApiRestService;
-    private List<RouteApiRest> routes=new ArrayList<>();
-
 
     //Base de datos local utilizando room
     private AppDataBase db;
 
+    //retrofit
+    private AppUserHasRouteDetailsDto appUserHasRouteDetailsDto = null;
 
 
 
@@ -108,39 +116,41 @@ public class MainActivity extends Activity  {
 
         ///////////////////////Inicializacion y configuracion/////////////////////
 
-
-        // Mantengo una única instancia de client
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationProviderClient=LocationServices.getFusedLocationProviderClient(this);
 
         //event that is triggered whever the update internal is met
-        locationCallback = new LocationCallback() {
+         locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 super.onLocationResult(locationResult);
                 Location location=locationResult.getLastLocation();
-                    if (location != null)
-                        updateUIValues(location);
+                if (location != null){
+                updateUIValues(location);
 
+                }
             }
         };
+
+
+
 
         //Obtener ubicacion con fused location options
         tv_lat = findViewById(R.id.tv_lat);
         tv_lon = findViewById(R.id.tv_lon);
         tv_sensor = findViewById(R.id.tv_sensor);
-        tv_update = findViewById(R.id.tv_update);
+
         sw_gps = findViewById(R.id.sw_gps);
-        sw_locationupdates = findViewById(R.id.sw_locationupdates);
         btn_start=findViewById(R.id.btn_start);
         btn_turnoff=findViewById(R.id.btn_turnoff);
         btn_shared=findViewById(R.id.btn_shared);
+        btn_showpoint=findViewById(R.id.btn_showpoint);
 
-        // set all properties of locationRequest
+
         locationRequest = LocationRequest.create();
-        locationRequest.setInterval(1000 * DEFAULT_UPDATE_INTERVAL);
-        locationRequest.setFastestInterval(1000 * FAST_UPDATE_INTERVAL);
+        locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);
+        locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);
         locationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY); // Por defecto puse HIGH solo para verificar que andaba
-        tv_sensor.setText("using GPS");
+
 
         savedlocations=new ArrayList<>();
 
@@ -148,8 +158,8 @@ public class MainActivity extends Activity  {
         db= Room.databaseBuilder(getApplicationContext(),AppDataBase.class,NAME_DATA_BASE)
                 .allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
-        //Initial service with retrofit
-        routeApiRestService=ApiRestConecction.getService();
+
+
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////
@@ -172,7 +182,7 @@ public class MainActivity extends Activity  {
         });
 
 
-        //capturo coordenadas cada 15segundos
+        //capturo coordenadas cada 5segundos
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -191,22 +201,19 @@ public class MainActivity extends Activity  {
                     try {
                         for(int i=0 ; i<savedlocations.size();i++) {
                             GeoPoint p = new GeoPoint(savedlocations.get(i).getLatitude(), savedlocations.get(i).getLongitude());
-
                             coordinates.put(String.valueOf(i),p);
-//                            points.add(p);
                         }
-//                        coordinates.put("point",points);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-
                 Route r=new Route(coordinates.toString());
                 db.routeService().insertCoordinates(r);
+                addInformation();
 
-               String pointint=db.routeService().getAll().get(db.routeService().countRoute()-1).getCoordinates();//obtengo el ultimo registro ingresado
-                Toast.makeText(MainActivity.this,"Finalizo", Toast.LENGTH_SHORT).show();
-                Toast.makeText(MainActivity.this, pointint,Toast.LENGTH_LONG).show();
+//               String pointint=db.routeService().getAll().get(db.routeService().countRoute()-1).getCoordinates();//obtengo el ultimo registro ingresado
+//                Toast.makeText(MainActivity.this,"Finalizo", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, pointint,Toast.LENGTH_LONG).show();
 
 
             }
@@ -215,42 +222,112 @@ public class MainActivity extends Activity  {
         btn_shared.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-               String pointint=db.routeService().getAll().get(db.routeService().countRoute()-1).getCoordinates();
-//                Ggrabar en el servidor
+                Route route=db.routeService().getAll().get(db.routeService().countRoute()-1);
+               String pointint=route.getCoordinates();
+//                Grabar en el servidor
                 RouteApiRest aux=new RouteApiRest();
 //                aux.setId(db.routeService().countRoute()-1);
                 aux.setCoordinates(pointint);
                 aux.setDescription("");
                 aux.setWeather("");
                 addRoute(aux);
+                //por defecto hay un usuario
+                //Pasa la informacion al servidor
+                InfomationDto informationDto=db.appUserHasRouteService().getInformation((long)1,(long)route.getId());
+                AppUserHasRouteApiRest appUserHasRouteApiRest=new AppUserHasRouteApiRest();
+                appUserHasRouteApiRest.setAppUser(1L);
+                appUserHasRouteApiRest.setRoute((long)route.getId());
+                appUserHasRouteApiRest.setKilometres(informationDto.getKilometres());
+                appUserHasRouteApiRest.setSpeed(informationDto.getSpeed());
+                appUserHasRouteApiRest.setTimeSpeed(informationDto.getTimeSpeed());
+                appUserHasRouteApiRest.setTimesSession(informationDto.getTimesSession());
+                addStatistics(appUserHasRouteApiRest);
+
 
             }
         });
 
+        btn_showpoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                getRoutesByUser();
+                Intent i=new Intent(MainActivity.this,ShowPointLocationList.class);
+                startActivity(i);
+
+            }
+        });
 
     }
 
-    //Agregar rutas
-    public void addRoute(RouteApiRest routeApiRest){
-//        OkHttpClient httpClient = new  OkHttpClient.Builder()
-//                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-//                .build();
-//
-//        Retrofit retrofit=new Retrofit.Builder()
-//                .baseUrl(ApiRestConecction.URL)
-//                .addConverterFactory(GsonConverterFactory.create()).client(httpClient)
-//                .build();
+    private void addInformation() {
+        double distance=getDistance();
+        double speed=getSpeed();
+        double timeSpeed=getTimeSpeed();
+        Date fecha=new Date();
+        Route route=db.routeService().getAll().get(db.routeService().countRoute()-1);
+        AppUserHasRoute appUserHasRoute=new AppUserHasRoute();
+        appUserHasRoute.setAppUser(1L);
+        appUserHasRoute.setRoute((long) route.getId());
+        appUserHasRoute.setKilometres(distance);
+        appUserHasRoute.setSpeed(speed);
+        appUserHasRoute.setTimeSpeed(timeSpeed);
+        appUserHasRoute.setTimesSession(fecha);
+        db.appUserHasRouteService().addInformation(appUserHasRoute);
 
-//        routeApiRestService= retrofit.create(RouteApiRestService.class);
+    }
 
-        Call<Void>call=routeApiRestService.addRoute(routeApiRest);
+    private double getTimeSpeed() {//acomodar esto size-getTime(0); para calcular el tiempo que tardo en hacerlo
+        double time=0;
+        for(int i=0;i<savedlocations.size();i++){
+            time=time+savedlocations.get(i).getTime();
+        }
+        return time;
+    }
+
+    //obtengo la velocidad promedio(metros por segundo)----->getSpeedAcuraccyMetersPerSecond()
+    private double getSpeed(){
+        double speed=0;
+        int j=0;
+        //
+        for(int i=0;i<savedlocations.size();i++){
+
+            Location p1=savedlocations.get(i);
+            if(p1.hasSpeed()){
+            speed=speed+p1.getSpeed();
+            j++;//--->sumo j para contar los puntos que tuvieorn velocidad
+            }
+        }
+        return speed/j;
+    }
+
+    //Obtengo la distancia entre los puntos
+    private double getDistance() {
+        double distance=0;
+        int i=0;
+        Location p1=null;
+        while(i<savedlocations.size()){
+            p1=savedlocations.get(i);
+            if(i+1<savedlocations.size()){
+                Location p2=savedlocations.get(i+1);
+                distance=distance+p1.distanceTo(p2);
+            }
+            else
+                break;
+            i++;
+        }
+        return distance/1000;//lo da en metros
+    }
+
+
+    //agregar estadisticas
+    public void addStatistics(AppUserHasRouteApiRest appUserHasRouteApiRest){
+        AppUserHasRouteApiRestService appUserHasRouteApiRestService=ApiRestConecction.getServiceAppUserHasRoute();
+        Call<Void>call=appUserHasRouteApiRestService.AddStatistics(appUserHasRouteApiRest);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()){
-
-                    Toast.makeText(MainActivity.this,"se agrego con exito",Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this,"add is success",Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -261,27 +338,27 @@ public class MainActivity extends Activity  {
         });
     }
 
-    ///Lista las rutas
-    public void listarRoute(){
-        Retrofit retrofit=new Retrofit.Builder()
-                .baseUrl(ApiRestConecction.URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        routeApiRestService= retrofit.create(RouteApiRestService.class);
-        Call<List<RouteApiRest>> call =routeApiRestService.getRoutes();
-        call.enqueue(new Callback<List<RouteApiRest>>() {
+
+    //Agregar rutas
+    public void addRoute(RouteApiRest routeApiRest){
+        RouteApiRestService routeApiRestService = ApiRestConecction.getServiceRoute();
+        Call<Void>call=routeApiRestService.addRoute(routeApiRest);
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<List<RouteApiRest>> call, Response<List<RouteApiRest>> response) {
-                routes=response.body();
-//                tv_coordinates.setText(routes.toString());
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()){
+
+                    Toast.makeText(MainActivity.this,"add is success",Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
-            public void onFailure(Call<List<RouteApiRest>> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 Log.e("Error",t.getMessage());
             }
         });
     }
+
 
     //metodo runable para alamacenar ubicacion cada 10 segundos.
     private final Runnable sendData = new Runnable(){
@@ -295,7 +372,6 @@ public class MainActivity extends Activity  {
                     }
                 }
                 lastLocation=currentLocation;//Agrege lastLocation porque sino me guardaba la misma ubicacion y tengo asincronismo en los timpos
-
                 handler.postDelayed(this, 1000*5);//delay de 5 segundos
             }
             catch (Exception e) {
@@ -322,10 +398,8 @@ public class MainActivity extends Activity  {
 
     //start location and update callback
     private void startLocationUpdates() {
-
         // VIRU: Aca va negada la condicion!
         if (!(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
-            tv_update.setText("Location is being tracked");
             fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback,  Looper.getMainLooper());//actualizo el request y llamo al callback
             // VIRU: el updateGps solo obtiene la ubicación una vez
             updateGPS();

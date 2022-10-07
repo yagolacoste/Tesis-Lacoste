@@ -1,6 +1,6 @@
 package com.admin.Controller.Route;
 
-import com.admin.Dto.RouteNewRequestDto;
+import com.admin.Dto.Route.RouteNewRequestDto;
 import com.admin.Models.Route;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

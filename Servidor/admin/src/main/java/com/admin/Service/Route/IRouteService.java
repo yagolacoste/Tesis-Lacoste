@@ -1,6 +1,6 @@
 package com.admin.Service.Route;
 
-import com.admin.Dto.RouteNewRequestDto;
+import com.admin.Dto.Route.RouteNewRequestDto;
 import com.admin.Models.Route;
 
 import java.util.List;

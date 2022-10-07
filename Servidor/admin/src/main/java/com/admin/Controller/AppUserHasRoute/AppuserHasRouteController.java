@@ -1,9 +1,11 @@
 package com.admin.Controller.AppUserHasRoute;
 
-import com.admin.Dto.AppUserRouteRequestDto;
-import com.admin.Models.AppuserHasRoute;
-import com.admin.Models.AppuserHasRouteId;
-import com.admin.Service.AppuserHasRoute.IAppuserHasRouteService;
+import com.admin.Dto.AppUserHasRoute.AppUserHasRouteDetailsDto;
+import com.admin.Dto.AppUserHasRoute.AppUserRouteRequestDto;
+import com.admin.Models.AppUserHasRoute;
+
+import com.admin.Models.AppUserHasRouteId;
+import com.admin.Service.AppuserHasRoute.IAppUserHasRouteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +20,26 @@ public class AppuserHasRouteController implements IAppuserHasRouteController{
 
 
     @Autowired
-    private IAppuserHasRouteService appuserHasRouteService;
+    private IAppUserHasRouteService appUserHasRouteService;
 
 
     @Override
-    public void addAppuserRoute(AppUserRouteRequestDto appUserRouteRequestDto) {
-        appuserHasRouteService.add(appUserRouteRequestDto);
+    public void addAppUserRoute(AppUserRouteRequestDto appUserRouteRequestDto) {
+        appUserHasRouteService.add(appUserRouteRequestDto);
     }
 
     @Override
-    public Optional<AppuserHasRoute> getById(AppuserHasRouteId id) {
-        return appuserHasRouteService.getById(id);
+    public Optional<AppUserHasRoute> getById(AppUserHasRouteId id) {
+        return appUserHasRouteService.getById(id);
     }
 
     @Override
-    public List<AppuserHasRoute> getAppUserHasRoute() {
-        return appuserHasRouteService.list();
+    public List<AppUserHasRoute> getAppUserHasRoute() {
+        return appUserHasRouteService.list();
+    }
+
+    @Override
+    public AppUserHasRouteDetailsDto getRouteById(Long id) {
+        return appUserHasRouteService.getRouteById(id);
     }
 }

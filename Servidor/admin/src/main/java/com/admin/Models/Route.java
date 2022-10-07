@@ -1,6 +1,7 @@
 package com.admin.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonRawValue;
 
 import org.hibernate.annotations.Type;
@@ -55,6 +56,7 @@ public class Route implements Serializable {
     public void setWeather(String weather) {
         this.weather = weather;
     }
+
 
     public String getCoordinates() {
         return coordinates;
