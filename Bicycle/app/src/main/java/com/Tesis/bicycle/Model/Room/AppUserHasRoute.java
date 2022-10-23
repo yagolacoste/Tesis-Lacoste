@@ -2,6 +2,7 @@ package com.Tesis.bicycle.Model.Room;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
@@ -9,15 +10,20 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Date;
 
 
-@Entity(tableName="AppUserHasRoute",primaryKeys = {"appUser","route"})
+@Entity(tableName="AppUserHasRoute")
 public class AppUserHasRoute {
 
+    @NotNull
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name="id")
+    private Long id;
 
     @NotNull
+    @ColumnInfo(name="appUser")
     private Long appUser;
 
-
     @NotNull
+    @ColumnInfo(name="route")
     private Long route;
 
     @ColumnInfo(name= "speed")
@@ -31,6 +37,16 @@ public class AppUserHasRoute {
 
     @ColumnInfo(name="timesSession")
     private Date timesSession;
+
+
+    @NotNull
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(@NotNull Long id) {
+        this.id = id;
+    }
 
     public Long getAppUser() {
         return appUser;

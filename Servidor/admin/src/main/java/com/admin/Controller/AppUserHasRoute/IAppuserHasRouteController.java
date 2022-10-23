@@ -3,7 +3,6 @@ package com.admin.Controller.AppUserHasRoute;
 import com.admin.Dto.AppUserHasRoute.AppUserHasRouteDetailsDto;
 import com.admin.Dto.AppUserHasRoute.AppUserRouteRequestDto;
 import com.admin.Models.AppUserHasRoute;
-import com.admin.Models.AppUserHasRouteId;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.http.HttpStatus;
@@ -23,9 +22,10 @@ public interface IAppuserHasRouteController {
     @PostMapping(path={"/add"},consumes = MediaType.APPLICATION_JSON_VALUE)
     void addAppUserRoute(@RequestBody AppUserRouteRequestDto appUserRouteRequestDto);
 
+
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path={"/get"})
-    Optional<AppUserHasRoute> getById(@RequestBody AppUserHasRouteId id);
+    Optional<AppUserHasRoute> getById(@RequestBody Long id);
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path={"/list"},produces = MediaType.APPLICATION_JSON_VALUE)

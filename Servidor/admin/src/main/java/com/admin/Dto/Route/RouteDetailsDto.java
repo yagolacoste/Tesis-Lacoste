@@ -1,26 +1,25 @@
 package com.admin.Dto.Route;
 
+import com.fasterxml.jackson.annotation.JsonRawValue;
 import org.json.JSONObject;
 
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Column;
 
-public class RouteNewRequestDto {
-    @NotBlank(message = "id is required")
-    private Long id;
+public class RouteDetailsDto {
+
 
     private String description;
 
-    private String  weather;
 
-    @NotBlank(message = "Coordinates is required")
+    private String weather;
+
+
     private String coordinates;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public RouteDetailsDto(String description, String weather, String coordinates) {
+        this.description = description;
+        this.weather = weather;
+        this.coordinates = coordinates;
     }
 
     public String getDescription() {

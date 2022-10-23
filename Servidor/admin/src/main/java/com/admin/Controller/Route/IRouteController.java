@@ -18,7 +18,7 @@ public interface IRouteController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = {"/get"},produces = MediaType.APPLICATION_JSON_VALUE)
-    Optional<Route> getById(@RequestParam (value = "id")Long id);
+    Route getById(@RequestParam (value = "id")Long id);
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(path = {"/add"},consumes = MediaType.APPLICATION_JSON_VALUE)

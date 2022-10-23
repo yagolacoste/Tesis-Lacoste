@@ -17,7 +17,7 @@ import java.util.Date;
 public class Route implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name= "id_route",columnDefinition = "serial")
     private Long id;
 
@@ -31,6 +31,7 @@ public class Route implements Serializable {
     @Column(name = "coordinates")
     @JsonRawValue
     private String coordinates;
+
 
 
     public Long getId() {

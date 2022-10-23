@@ -8,7 +8,8 @@ import androidx.room.PrimaryKey;
 public class Route {
 
     @PrimaryKey(autoGenerate = true)
-     int id;
+    @ColumnInfo(name="id")
+    long id;
 
     @ColumnInfo(name= "coordinates")
      String coordinates;
@@ -18,11 +19,11 @@ public class Route {
         this.coordinates = coordinates;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

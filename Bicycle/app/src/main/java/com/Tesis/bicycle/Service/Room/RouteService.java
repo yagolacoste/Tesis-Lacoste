@@ -11,17 +11,21 @@ import java.util.List;
 @Dao
 public interface RouteService {
 
-
-    @Query("SELECT coordinates FROM Route where id = :id")
-    String getCoordinates(int id);
-
+    //add route in room
     @Insert
-    void insertCoordinates(Route route);
+    void addRoute(Route route);
+
+    //get by id
+    @Query("SELECT * FROM Route where id=:id")
+    Route getById(long id);
+
+    @Query("Select Count(*) from Route")
+    int countRoute();
+
 
     @Query("SELECT * FROM Route")
     List<Route> getAll();
 
-    @Query("Select Count(*) from Route")
-    int countRoute();
+
 
 }

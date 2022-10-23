@@ -23,8 +23,8 @@ public class UserController implements IUserController {
     private IUserService userService;
 
     @Override
-    public Optional<User> getById(Long id) {
-        return userService.getByuser(id);
+    public User getById(Long id) {
+        return userService.getByUser(id);
 
     }
 

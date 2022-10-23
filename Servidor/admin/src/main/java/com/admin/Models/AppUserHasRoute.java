@@ -1,24 +1,33 @@
 package com.admin.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Optional;
 
 @Entity
 @Table(name="appuser_has_route")
+
 public class AppUserHasRoute implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @EmbeddedId
-    private AppUserHasRouteId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name= "id",columnDefinition = "serial")
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "appuser_appuser", insertable = false, updatable = false)
+    @JoinColumn(name = "appuser_appuser")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private User appUser;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "route_id_route", insertable = false, updatable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JoinColumn(name = "route_id_route")
     private Route route;
 
     @Column(name= "speed")
@@ -37,14 +46,13 @@ public class AppUserHasRoute implements Serializable {
     public AppUserHasRoute() {
     }
 
-    public AppUserHasRouteId getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(AppUserHasRouteId id) {
+    public void setId(Long id) {
         this.id = id;
     }
-
 
     public User getAppUser() {
         return appUser;

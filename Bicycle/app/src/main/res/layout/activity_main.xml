@@ -6,13 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-<!--    <org.osmdroid.views.MapView-->
-<!--        android:id="@+id/openmapview"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:clickable="true"-->
-<!--        android:focusable="true" />-->
-
+    <org.osmdroid.views.MapView
+        android:id="@+id/v_map"
+        android:layout_width="377dp"
+        android:layout_height="537dp"
+        android:clickable="true"
+        android:contentDescription="@string/app_name"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.055" />
 
     <Button
         android:id="@+id/btn_shared"
@@ -22,82 +27,10 @@
         android:text="compartir"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.164"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
-
-    <TextView
-        android:id="@+id/tv_labellat"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Lat: "
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/tv_lat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="0.00 "
-        app:layout_constraintStart_toEndOf="@+id/tv_labellat"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/tv_labellong"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="long: "
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_labellat"/>
-
-    <TextView
-        android:id="@+id/tv_lon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="0.00 "
-        app:layout_constraintStart_toEndOf="@+id/tv_labellong"
-        app:layout_constraintTop_toBottomOf="@+id/tv_lat"/>
-
-    <Switch
-        android:id="@+id/sw_gps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="gps/savepower"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.101"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.177" />
-
-    <TextView
-        android:id="@+id/tv_labelsensor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sensor"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.073"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.252" />
-
-    <TextView
-        android:id="@+id/tv_sensor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cell tower + wifi"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.321"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.258" />
+        app:layout_constraintVertical_bias="0.976" />
 
     <Button
         android:id="@+id/btn_start"
@@ -110,7 +43,7 @@
         app:layout_constraintHorizontal_bias="0.096"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.355" />
+        app:layout_constraintVertical_bias="0.976" />
 
     <Button
         android:id="@+id/btn_turnoff"
@@ -119,10 +52,10 @@
         android:text="apagar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.716"
+        app:layout_constraintHorizontal_bias="0.873"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.355" />
+        app:layout_constraintVertical_bias="0.976" />
 
     <Button
         android:id="@+id/btn_showpoint"
@@ -131,10 +64,10 @@
         android:text="Show Point"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.315"
+        app:layout_constraintHorizontal_bias="0.437"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.632" />
+        app:layout_constraintVertical_bias="0.881" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

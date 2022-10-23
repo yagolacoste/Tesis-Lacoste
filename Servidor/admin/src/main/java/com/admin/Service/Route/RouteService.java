@@ -22,14 +22,16 @@ public class RouteService implements IRouteService{
     private IRouteRepository routeRepository;
 
     @Override
-    public Optional<Route> getById(Long id) {
+    public Route getById(Long id) {
 
-        return Optional.ofNullable(routeRepository.findById(id).orElseThrow(() -> new NotFoundException("Router by id not found", ErrorCodes.NOT_FOUND.getCode())));
+        Route route= routeRepository.findById(id).orElseThrow(() -> new NotFoundException("Router by id not found", ErrorCodes.NOT_FOUND.getCode()));
+        return route;
     }
 
     @Override
     public void add(RouteNewRequestDto route) {
         Route routeReal= new Route();
+        routeReal.setId(route.getId());
         if(routeReal.getDescription()!=null)
             routeReal.setDescription(route.getDescription());
 

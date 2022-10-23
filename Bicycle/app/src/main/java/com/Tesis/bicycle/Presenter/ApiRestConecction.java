@@ -6,7 +6,7 @@ import com.Tesis.bicycle.Service.ApiRest.RouteApiRestService;
 
 public class ApiRestConecction {
 
-    public static final String URL="http://192.168.1.14:8080/";
+    public static final String URL="http://192.168.1.32:8080/";
     public static final String URL_Route=ApiRestConecction.URL+"route/";
     public static final String URL_STATISTICS=ApiRestConecction.URL+"appuserroute/";
 

@@ -70,6 +70,7 @@ public class OpenStreetMap extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
+        Configuration.getInstance().setUserAgentValue("MyOwnUserAgent/1.0");
         setContentView(R.layout.activity_open_street_map);
 
         //Obtengo los geopoints almacenados en la base del servidor
@@ -95,44 +96,67 @@ public class OpenStreetMap extends AppCompatActivity {
 
         if (checkPermissions(true)) {
             initLayer();
-
         }
+        RoadManager roadManager = new OSRMRoadManager(this, "OBP_Tuto/1.0");
 
-//        while(i< points.size()-1){
-            Marker startMarker = new Marker(myOpenMapView);
-            startMarker.setPosition(points.get(0));
-            startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-            startMarker.setTitle("Start point");
-            startMarker.setDraggable(true);
-           // startMarker.setOnMarkerDragListener(new OnMarkerDragListenerDrawer());
-            myOpenMapView.getOverlays().add(startMarker);
+//
+//        ArrayList<GeoPoint> aux=new ArrayList<GeoPoint>();
+////        aux.add(points.get(0));
+////        aux.add(points.get(points.size()-1));
+//        Road road=roadManager.getRoad((ArrayList<GeoPoint>) points);
+//        if (road.mStatus != Road.STATUS_OK)
+//            Toast.makeText(this, "Error when loading the road - status=" + road.mStatus, Toast.LENGTH_SHORT).show();
+//
+//        Polyline roadOverlay=RoadManager.buildRoadOverlay(road);
+//        myOpenMapView.getOverlays().add(roadOverlay);
+//        myOpenMapView.invalidate();
+
+////        while(i< points.size()-1){
+//            Marker startMarker = new Marker(myOpenMapView);
+//            startMarker.setPosition(points.get(0));
+//            startMarker.setTitle("Start point");
+//            startMarker.setDraggable(true);
+//             myOpenMapView.getOverlays().add(startMarker);
+////                Polyline line = new Polyline(myOpenMapView);
+////                line.setPoints(points);
+////                line.setWidth(5f);
+////                line.setGeodesic(true);
+////                myOpenMapView.getOverlays().add(line);
+//        Marker endMarker=new Marker(myOpenMapView);
+//        endMarker.setPosition(points.get(points.size()-1));
+//        endMarker.setTitle("End point");
+//        endMarker.setDraggable(true);
+//        myOpenMapView.getOverlays().add(endMarker);
+//        Road road=roadManager.getRoad(points);
+//        Polil
+
 
 //        }
-        RoadManager roadManager = new OSRMRoadManager(this, "OBP_Tuto/1.0");
+
         ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
         Road road=roadManager.getRoad((ArrayList<GeoPoint>) points);
         Polyline roadOverlay=RoadManager.buildRoadOverlay(road);
         myOpenMapView.getOverlays().add(roadOverlay);
 
-        FolderOverlay roadMarkers = new FolderOverlay();
-        myOpenMapView.getOverlays().add(roadMarkers);
-        Drawable nodeIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_bicycle, null);
-        for(int i=0;i<road.mNodes.size();i++){
-            RoadNode node = road.mNodes.get(i);
-            Marker nodeMarker = new Marker(myOpenMapView);
-            nodeMarker.setPosition(node.mLocation);
-            nodeMarker.setIcon(nodeIcon);
-            nodeMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
-
-            nodeMarker.setTitle("Step " + i);
-            nodeMarker.setSnippet(node.mInstructions);
-            nodeMarker.setSubDescription(Road.getLengthDurationText(this, node.mLength, node.mDuration));
-            Drawable iconContinue = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_bicycle, null);
-            nodeMarker.setImage(iconContinue);
-
-            roadMarkers.add(nodeMarker);
-            myOpenMapView.invalidate();
-        }
+//        FolderOverlay roadMarkers = new FolderOverlay();
+//        myOpenMapView.getOverlays().add(roadMarkers);
+//        Drawable nodeIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_bicycle, null);
+//        for(int i=0;i<road.mNodes.size();i++){
+//            RoadNode node = road.mNodes.get(i);
+//            Marker nodeMarker = new Marker(myOpenMapView);
+//            nodeMarker.setPosition(node.mLocation);
+//            nodeMarker.setIcon(nodeIcon);
+//            nodeMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+//
+//            nodeMarker.setTitle("Step " + i);
+//            nodeMarker.setSnippet(node.mInstructions);
+//            nodeMarker.setSubDescription(Road.getLengthDurationText(this, node.mLength, node.mDuration));
+//            Drawable iconContinue = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_bicycle, null);
+//            nodeMarker.setImage(iconContinue);
+//
+//            roadMarkers.add(nodeMarker);
+//            myOpenMapView.invalidate();
+//        }
 
 
 
@@ -165,15 +189,13 @@ public class OpenStreetMap extends AppCompatActivity {
         List<GeoPoint> result=new ArrayList<>();
         String resultCoordinates=route.getCoordinates();
         try {
-            JSONObject coordinates=new JSONObject(resultCoordinates);
-
-            for(int i =0; i<coordinates.length();i++){
-                String aux=coordinates.getString(String.valueOf(i));
+            JSONArray coordinates=new JSONArray(resultCoordinates);
+            for(int i=0;i<coordinates.length();i++){
+//                JSONObject point=coordinates.getJSONObject(i);
+                String aux=coordinates.getString(i);
                 String[] split=aux.split(",");
                 result.add(new GeoPoint(Double.valueOf(split[0]),Double.valueOf(split[1])));
-
             }
-
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -5,13 +5,14 @@ import java.util.Date;
 
 public class AppUserHasRouteApiRest {
 
+
     private Long appUser;
 
     private Long route;
 
     private Double speed;
 
-    private Long timeSpeed;
+    private Double timeSpeed;
 
     private Double kilometres;
 
@@ -52,11 +53,11 @@ public class AppUserHasRouteApiRest {
         this.kilometres = kilometres;
     }
 
-    public Long getTimeSpeed() {
+    public Double getTimeSpeed() {
         return timeSpeed;
     }
 
-    public void setTimeSpeed(Long timeSpeed) {
+    public void setTimeSpeed(Double timeSpeed) {
         this.timeSpeed = timeSpeed;
     }
 

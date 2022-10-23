@@ -7,10 +7,10 @@ import com.admin.Dto.AppUserHasRoute.AppUserRouteRequestDto;
 import com.admin.Dto.Route.RouteDetailsDto;
 import com.admin.Models.AppUserHasRoute;
 
-import com.admin.Models.AppUserHasRouteId;
 import com.admin.Models.Route;
 import com.admin.Models.User;
 import com.admin.Repository.IAppUserHasRouteRepository;
+import com.admin.Service.Route.IRouteService;
 import com.admin.Service.User.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,15 +31,19 @@ public class AppUserHasRouteService implements IAppUserHasRouteService {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private IRouteService routeService;
+
 
     @Override
     public void add(AppUserRouteRequestDto appUserRouteRequestDto) {
 
-        AppUserHasRouteId appuserHasRouteId=new AppUserHasRouteId();
-        appuserHasRouteId.setAppUser(appUserRouteRequestDto.getAppUser());
-        appuserHasRouteId.setRoute(appUserRouteRequestDto.getRoute());
+        Route route=routeService.getById(appUserRouteRequestDto.getRoute());
+        User appUser=userService.getByUser(appUserRouteRequestDto.getAppUser());
+
         AppUserHasRoute appUserHasRoute=new AppUserHasRoute();
-        appUserHasRoute.setId(appuserHasRouteId);
+        appUserHasRoute.setAppUser(appUser);
+        appUserHasRoute.setRoute(route);
         appUserHasRoute.setSpeed(appUserRouteRequestDto.getSpeed());
         appUserHasRoute.setKilometres(appUserRouteRequestDto.getKilometres());
         appUserHasRoute.setTimeSpeed(appUserRouteRequestDto.getTimeSpeed());
@@ -50,22 +54,24 @@ public class AppUserHasRouteService implements IAppUserHasRouteService {
     }
 
     @Override
-    public Optional<AppUserHasRoute> getById(AppUserHasRouteId id) {
+    public Optional<AppUserHasRoute> getById(Long id) {
         return Optional.ofNullable(appUserHasRouteRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not exist user with route", ErrorCodes.NOT_FOUND.getCode())));
     }
 
     @Override
     public List<AppUserHasRoute> list() {
-        return appUserHasRouteRepository.findAll();
+        List<AppUserHasRoute>result= appUserHasRouteRepository.findAll();
+        return result;
     }
 
     @Override
     public AppUserHasRouteDetailsDto getRouteById(Long id) {
-        List<RouteDetailsDto> result=appUserHasRouteRepository.findByRoute(id);
-        Optional<User> user= userService.getByuser(id);
+       List<RouteDetailsDto> result=appUserHasRouteRepository.findByRoute((long)id);
 
-        AppUserHasRouteDetailsDto appUserHasRouteDetailsDto= new AppUserHasRouteDetailsDto(user.get().getId(), user.get().getFirstName(),result);
+        User user= userService.getByUser(id);
+
+        AppUserHasRouteDetailsDto appUserHasRouteDetailsDto= new AppUserHasRouteDetailsDto(user.getId(), user.getFirstName(),result);
 
         return appUserHasRouteDetailsDto;
     }

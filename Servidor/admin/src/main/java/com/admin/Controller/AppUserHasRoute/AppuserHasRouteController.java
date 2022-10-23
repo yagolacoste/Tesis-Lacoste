@@ -4,7 +4,6 @@ import com.admin.Dto.AppUserHasRoute.AppUserHasRouteDetailsDto;
 import com.admin.Dto.AppUserHasRoute.AppUserRouteRequestDto;
 import com.admin.Models.AppUserHasRoute;
 
-import com.admin.Models.AppUserHasRouteId;
 import com.admin.Service.AppuserHasRoute.IAppUserHasRouteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +28,7 @@ public class AppuserHasRouteController implements IAppuserHasRouteController{
     }
 
     @Override
-    public Optional<AppUserHasRoute> getById(AppUserHasRouteId id) {
+    public Optional<AppUserHasRoute> getById(Long id) {
         return appUserHasRouteService.getById(id);
     }
 
