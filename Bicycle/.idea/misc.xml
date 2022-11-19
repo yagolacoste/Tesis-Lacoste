@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Yago/Desktop/Tesis Lacoste/Bicycle/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/Yago/Desktop/Tesis Lacoste/Bicycle/app/src/main/res/drawable/ic_bicycle.xml" value="0.114" />
+        <entry key="..\:/Users/Yago/Desktop/Tesis Lacoste/Bicycle/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/Yago/Desktop/Tesis Lacoste/Bicycle/app/src/main/res/layout/activity_open_street_map.xml" value="0.1408514492753623" />
+        <entry key="..\:/Users/Yago/Desktop/Tesis Lacoste/Bicycle/app/src/main/res/layout/activity_show_point_location_list.xml" value="0.12318840579710146" />
+        <entry key="..\:/Users/Yago/Desktop/Tesis Lacoste/Bicycle/app/src/main/res/layout/activity_show_saved_locations_list.xml" value="0.12318840579710146" />
         <entry key="..\:/Users/Yago/Desktop/Tesis Lacoste/Bicycle/app/src/main/res/layout/showsavedlocations.xml" value="0.1526268115942029" />
       </map>
     </option>

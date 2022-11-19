@@ -24,10 +24,10 @@ public class UserService implements IUserService{
 
 
     @Override
-    public Optional<User> getByuser(Long id) {
+    public User getByUser(Long id) {
        User user= userRepository.findById(id)
                 .orElseThrow(()->new NotFoundException("User by id not found", ErrorCodes.NOT_FOUND.getCode()));
-       return Optional.ofNullable(user);
+       return user;
     }
 
     @Override

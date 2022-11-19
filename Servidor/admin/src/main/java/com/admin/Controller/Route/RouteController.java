@@ -1,6 +1,6 @@
 package com.admin.Controller.Route;
 
-import com.admin.Dto.RouteNewRequestDto;
+import com.admin.Dto.Route.RouteNewRequestDto;
 import com.admin.Models.Route;
 import com.admin.Service.Route.IRouteService;
 import org.slf4j.Logger;
@@ -20,7 +20,7 @@ public class RouteController implements IRouteController{
     private IRouteService routeService;
 
     @Override
-    public Optional<Route> getById(Long id) {
+    public Route getById(String id) {
         return routeService.getById(id);
     }
 

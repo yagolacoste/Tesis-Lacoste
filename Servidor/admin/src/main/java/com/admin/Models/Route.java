@@ -1,6 +1,7 @@
 package com.admin.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonRawValue;
 
 import org.hibernate.annotations.Type;
@@ -16,9 +17,9 @@ import java.util.Date;
 public class Route implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name= "id_route",columnDefinition = "serial")
-    private Long id;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name= "id_route")
+    private String id;
 
     @Column(name = "description")
     private String description;
@@ -32,8 +33,12 @@ public class Route implements Serializable {
     private String coordinates;
 
 
-    public Long getId() {
+    public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -44,9 +49,6 @@ public class Route implements Serializable {
         this.description = description;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getWeather() {
         return weather;
@@ -55,6 +57,7 @@ public class Route implements Serializable {
     public void setWeather(String weather) {
         this.weather = weather;
     }
+
 
     public String getCoordinates() {
         return coordinates;

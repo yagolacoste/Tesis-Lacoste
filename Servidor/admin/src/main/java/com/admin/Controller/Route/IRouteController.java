@@ -1,6 +1,6 @@
 package com.admin.Controller.Route;
 
-import com.admin.Dto.RouteNewRequestDto;
+import com.admin.Dto.Route.RouteNewRequestDto;
 import com.admin.Models.Route;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,7 +18,7 @@ public interface IRouteController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = {"/get"},produces = MediaType.APPLICATION_JSON_VALUE)
-    Optional<Route> getById(@RequestParam (value = "id")Long id);
+    Route getById(@RequestParam (value = "id")String id);
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(path = {"/add"},consumes = MediaType.APPLICATION_JSON_VALUE)

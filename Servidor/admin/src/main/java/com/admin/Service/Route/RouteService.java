@@ -2,19 +2,14 @@ package com.admin.Service.Route;
 
 import com.admin.Controller.Exception.ErrorCodes;
 import com.admin.Controller.Exception.TypeExceptions.NotFoundException;
-import com.admin.Dto.RouteNewRequestDto;
+import com.admin.Dto.Route.RouteNewRequestDto;
 import com.admin.Models.Route;
 import com.admin.Repository.IRouteRepository;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import org.apache.tomcat.util.json.JSONParser;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,14 +22,16 @@ public class RouteService implements IRouteService{
     private IRouteRepository routeRepository;
 
     @Override
-    public Optional<Route> getById(Long id) {
+    public Route getById(String id) {
 
-        return Optional.ofNullable(routeRepository.findById(id).orElseThrow(() -> new NotFoundException("Router by id not found", ErrorCodes.NOT_FOUND.getCode())));
+        Route route= routeRepository.findById(id).orElseThrow(() -> new NotFoundException("Router by id not found", ErrorCodes.NOT_FOUND.getCode()));
+        return route;
     }
 
     @Override
     public void add(RouteNewRequestDto route) {
         Route routeReal= new Route();
+        routeReal.setId(route.getId());
         if(routeReal.getDescription()!=null)
             routeReal.setDescription(route.getDescription());
 
@@ -51,4 +48,6 @@ public class RouteService implements IRouteService{
             return result;
         return null;
     }
+
+
 }
