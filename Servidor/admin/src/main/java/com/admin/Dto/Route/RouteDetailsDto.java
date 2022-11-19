@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonRawValue;
 import org.json.JSONObject;
 
 import javax.persistence.Column;
+import java.io.Serializable;
 
-public class RouteDetailsDto {
+public class RouteDetailsDto implements Serializable {
 
+    private String id;
 
     private String description;
 
@@ -16,10 +18,19 @@ public class RouteDetailsDto {
 
     private String coordinates;
 
-    public RouteDetailsDto(String description, String weather, String coordinates) {
+    public RouteDetailsDto(String id, String description, String weather, String coordinates) {
+        this.id = id;
         this.description = description;
         this.weather = weather;
         this.coordinates = coordinates;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDescription() {

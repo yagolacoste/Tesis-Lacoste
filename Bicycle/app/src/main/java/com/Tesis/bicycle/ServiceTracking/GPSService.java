@@ -1,7 +1,6 @@
 package com.Tesis.bicycle.ServiceTracking;
 
 import android.Manifest;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -16,14 +15,13 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Parcelable;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
 import com.Tesis.bicycle.Constants;
-import com.Tesis.bicycle.MainActivity;
+import com.Tesis.bicycle.Activity.TrackingActivity;
 import com.Tesis.bicycle.Model.Tracking;
 import com.Tesis.bicycle.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -36,9 +34,7 @@ import com.google.android.gms.location.Priority;
 import org.jetbrains.annotations.Nullable;
 import org.osmdroid.util.GeoPoint;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class GPSService extends Service {
@@ -64,6 +60,7 @@ public class GPSService extends Service {
 
 
     private void startLocationService(){
+        tracking=new Tracking();
         String channelId="Location_notification_channel";
         NotificationManager notificationManager= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Intent resultIntent=new Intent();
@@ -105,6 +102,8 @@ public class GPSService extends Service {
                     if(locationResult !=null && locationResult.getLastLocation()!=null){
                         //latitud y longitud
                         currentLocation= locationResult.getLastLocation();
+                        GeoPoint aux=new GeoPoint(currentLocation.getLatitude(),currentLocation.getLongitude());
+                        TrackingActivity.updatePosition(aux);//actualiza mapa
                         handler.post(sendData);
 //                        tracking.addTracking(currentLocation);
                     }
@@ -123,21 +122,20 @@ public class GPSService extends Service {
 
     private final Runnable sendData = new Runnable(){
         public void run(){
-//            try {
-////                updateGPS();
                 if(currentLocation!=null) {
-                    if ((lastLocation == null) || (currentLocation.getLongitude() != lastLocation.getLongitude()) || (currentLocation.getLatitude() != lastLocation.getLatitude())) {
+                    if ((lastLocation == null)) {
                         //preguntar por el tiempo
                         tracking.addTracking(currentLocation);
                     }
-                    else if(lastLocation!=null && currentLocation.getTime()!=lastLocation.getTime()){
+                    else if((currentLocation.getLongitude() != lastLocation.getLongitude()) || (currentLocation.getLatitude() != lastLocation.getLatitude()))
+                        if( currentLocation.getTime()!=lastLocation.getTime()){
                         tracking.addTracking(currentLocation);
                     }
                 }
                 lastLocation=currentLocation;//Agrege lastLocation porque sino me guardaba la misma ubicacion y tengo asincronismo en los timpos
             //tracking.addTracking(currentLocation);
-            GeoPoint aux=new GeoPoint(currentLocation.getLatitude(),currentLocation.getLongitude());
-            MainActivity.updatePosition(aux);
+            //GeoPoint aux=new GeoPoint(currentLocation.getLatitude(),currentLocation.getLongitude());
+
             handler.postDelayed(this, 1000*5);//delay de 5 segundos
             }
 //            catch (Exception e) {

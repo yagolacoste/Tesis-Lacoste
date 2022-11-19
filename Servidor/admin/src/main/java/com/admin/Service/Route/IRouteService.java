@@ -7,9 +7,11 @@ import java.util.List;
 
 
 public interface IRouteService {
-    Route getById(Long id);
+    Route getById(String id);
 
     void add(RouteNewRequestDto route);
 
     List<Route> list();
+
+
 }

@@ -20,7 +20,7 @@ public class RouteController implements IRouteController{
     private IRouteService routeService;
 
     @Override
-    public Route getById(Long id) {
+    public Route getById(String id) {
         return routeService.getById(id);
     }
 

@@ -9,6 +9,8 @@ import java.io.Serializable;
 public class RouteDetailsDto implements Serializable {
 
 
+    private Long id;
+
     private String description;
 
 
@@ -17,10 +19,19 @@ public class RouteDetailsDto implements Serializable {
 
     private String coordinates;
 
-    public RouteDetailsDto(String description, String weather, String coordinates) {
+    public RouteDetailsDto(Long id, String description, String weather, String coordinates) {
+        this.id = id;
         this.description = description;
         this.weather = weather;
         this.coordinates = coordinates;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -48,12 +59,12 @@ public class RouteDetailsDto implements Serializable {
     }
 
 
+
     @Override
     public String toString() {
         return
                 "description='" + description + '\'' +
                 ", weather='" + weather + '\'' +
                 ", coordinates='" + coordinates + '\'' ;
-
     }
 }

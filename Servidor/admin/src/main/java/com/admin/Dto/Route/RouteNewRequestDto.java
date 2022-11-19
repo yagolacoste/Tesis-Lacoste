@@ -3,10 +3,11 @@ package com.admin.Dto.Route;
 import org.json.JSONObject;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
-public class RouteNewRequestDto {
+public class RouteNewRequestDto implements Serializable {
     @NotBlank(message = "id is required")
-    private Long id;
+    private String id;
 
     private String description;
 
@@ -15,11 +16,11 @@ public class RouteNewRequestDto {
     @NotBlank(message = "Coordinates is required")
     private String coordinates;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

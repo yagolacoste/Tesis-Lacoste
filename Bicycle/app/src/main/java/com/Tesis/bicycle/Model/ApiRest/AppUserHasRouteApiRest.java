@@ -1,6 +1,14 @@
 package com.Tesis.bicycle.Model.ApiRest;
 
 
+import com.Tesis.bicycle.Converters.ConvertersDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 public class AppUserHasRouteApiRest {
@@ -8,7 +16,7 @@ public class AppUserHasRouteApiRest {
 
     private Long appUser;
 
-    private Long route;
+    private String route;
 
     private Double speed;
 
@@ -16,7 +24,13 @@ public class AppUserHasRouteApiRest {
 
     private Double kilometres;
 
-    private Date timesSession;
+    private LocalDate timeSession;
+
+    private String description;
+
+    private String weather;
+
+    private String coordinates;
 
 
     public Long getAppUser() {
@@ -27,11 +41,11 @@ public class AppUserHasRouteApiRest {
         this.appUser = appUser;
     }
 
-    public Long getRoute() {
+    public String getRoute() {
         return route;
     }
 
-    public void setRoute(Long route) {
+    public void setRoute(String route) {
         this.route = route;
     }
 
@@ -61,11 +75,50 @@ public class AppUserHasRouteApiRest {
         this.timeSpeed = timeSpeed;
     }
 
-    public Date getTimesSession() {
-        return timesSession;
+    public LocalDate getTimeSession() {
+        return timeSession;
     }
 
-    public void setTimesSession(Date timesSession) {
-        this.timesSession = timesSession;
+    public void setTimeSession(LocalDate timeSession) {
+        this.timeSession = timeSession;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getWeather() {
+        return weather;
+    }
+
+    public void setWeather(String weather) {
+        this.weather = weather;
+    }
+
+    public String getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(String coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    @Override
+    public String toString() {
+        return "AppUserHasRouteApiRest{" +
+                "appUser=" + appUser +
+                ", route='" + route + '\'' +
+                ", speed=" + speed +
+                ", timeSpeed=" + timeSpeed +
+                ", kilometres=" + kilometres +
+                ", timeSession=" + timeSession +
+                ", description='" + description + '\'' +
+                ", weather='" + weather + '\'' +
+                ", coordinates='" + coordinates + '\'' +
+                '}';
     }
 }

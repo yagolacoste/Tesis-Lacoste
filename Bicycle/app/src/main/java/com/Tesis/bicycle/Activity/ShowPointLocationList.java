@@ -1,7 +1,5 @@
 package com.Tesis.bicycle.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,16 +9,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.AppUserHasRouteDetailsDto;
 import com.Tesis.bicycle.Dto.RouteDetailsDto;
-import com.Tesis.bicycle.MainActivity;
 import com.Tesis.bicycle.Presenter.ApiRestConecction;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.Service.ApiRest.AppUserHasRouteApiRestService;
 
 import org.osmdroid.util.GeoPoint;
 
-import java.io.Serializable;
 import java.util.List;
 
 import retrofit2.Call;
@@ -39,14 +36,16 @@ public class ShowPointLocationList extends Activity {
 
         lv_saveLocations=findViewById(R.id.lv_showLocations);
 
-        getRoutesByUser();
 
 
+        String action=getIntent().getAction();
+        if(action!=null)
+            getRoutesByUser(action);
 
     }
 
     ///Lista las rutas por usuarios
-    public void  getRoutesByUser() {
+    public void  getRoutesByUser(String action) {
         AppUserHasRouteApiRestService appUserHasRouteApiRestService = ApiRestConecction.getServiceAppUserHasRoute();
         Call<AppUserHasRouteDetailsDto> call = appUserHasRouteApiRestService.getRouteById(1L);//es el usuario 1 por defecto
         call.enqueue(new Callback<AppUserHasRouteDetailsDto>() {
@@ -59,9 +58,20 @@ public class ShowPointLocationList extends Activity {
                     lv_saveLocations.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            Intent intent=new Intent(ShowPointLocationList.this,OpenStreetMap.class);
+                            Intent intent=null;
+                            if(action.equals(Constants.ACTION_REPLAY_ROUTE)){
+                                intent=new Intent(ShowPointLocationList.this,TrackingActivity.class);
+                                intent.setAction(Constants.ACTION_DRAW_MAP);
+//                                intent.putExtra("Route",routes.get(i));
+//                                startActivity(intent);
+                            }else{
+                                intent=new Intent(ShowPointLocationList.this,StatisticActivity.class);
+                                intent.setAction(Constants.ACTION_VIEW_STATISTICS);
+
+                            }
                             intent.putExtra("Route",routes.get(i));
                             startActivity(intent);
+
                         }
                     });
 

@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 public class RouteApiRest {
 
-    private  Long id;
+    private  String id;
 
     private String description;
 
@@ -15,11 +15,11 @@ public class RouteApiRest {
     public RouteApiRest() {
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

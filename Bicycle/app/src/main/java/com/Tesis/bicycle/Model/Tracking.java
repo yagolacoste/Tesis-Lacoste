@@ -1,6 +1,7 @@
 package com.Tesis.bicycle.Model;
 
 import android.location.Location;
+import android.os.Build;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -8,6 +9,7 @@ import org.osmdroid.util.GeoPoint;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,13 +21,15 @@ public class Tracking implements Serializable {
     private Double distance=0.0;
     private Double speed=0.0;
     private Double timeSpeed=0.0;
-    private Date timeSession=null;
+    private LocalDate timeSession=null;
 
 
     private transient List<Location> points;
 
     public Tracking() {
-        timeSession=new Date();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            timeSession=LocalDate.now();
+        }
         points=new ArrayList<>();
     }
 
@@ -79,16 +83,15 @@ public class Tracking implements Serializable {
         this.timeSpeed = timeSpeed;
     }
 
-    public Date getTimeSession() {
+    public LocalDate getTimeSession() {
         return timeSession;
     }
 
-    public void setTimeSession(Date timeSession) {
+    public void setTimeSession(LocalDate timeSession) {
         this.timeSession = timeSession;
     }
 
-
-//    private double getSpeed(){
+    //    private double getSpeed(){
 //        double speed=0;
 //        int j=0;
 //        //

@@ -9,7 +9,10 @@ public class AppUserHasRouteDetailsDto {
 
     private Long userId;
 
+
     private String firstName;
+
+
 
     private List<RouteDetailsDto> routes;
 

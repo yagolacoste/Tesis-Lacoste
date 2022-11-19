@@ -2,15 +2,14 @@ package com.Tesis.bicycle.Dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class AppUserHasRouteDetailsDto {
+public class AppUserHasRouteDetailsDto implements Serializable {
 
     private Long userId;
 
-
     private String firstName;
-
 
     private List<RouteDetailsDto> routes;
 
@@ -43,4 +42,5 @@ public class AppUserHasRouteDetailsDto {
     public void setRoutes(List<RouteDetailsDto> routes) {
         this.routes = routes;
     }
+
 }

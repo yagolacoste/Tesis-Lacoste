@@ -2,11 +2,11 @@ package com.Tesis.bicycle.Model.Room;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -36,7 +36,7 @@ public class AppUserHasRoute {
     private Double kilometres;
 
     @ColumnInfo(name="timesSession")
-    private Date timesSession;
+    private LocalDate timesSession;
 
 
     @NotNull
@@ -88,11 +88,11 @@ public class AppUserHasRoute {
         this.kilometres = kilometres;
     }
 
-    public Date getTimesSession() {
+    public LocalDate getTimesSession() {
         return timesSession;
     }
 
-    public void setTimesSession(Date timesSession) {
+    public void setTimesSession(LocalDate timesSession) {
         this.timesSession = timesSession;
     }
 }

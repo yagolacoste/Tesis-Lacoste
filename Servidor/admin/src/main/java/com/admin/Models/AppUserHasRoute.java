@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Optional;
 
@@ -40,7 +41,7 @@ public class AppUserHasRoute implements Serializable {
     private Double kilometres;
 
     @Column(name= "timesession")
-    private Date timesession;
+    private LocalDate timesession;
 
 
     public AppUserHasRoute() {
@@ -94,11 +95,11 @@ public class AppUserHasRoute implements Serializable {
         this.kilometres = kilometres;
     }
 
-    public Date getTimesession() {
+    public LocalDate getTimesession() {
         return timesession;
     }
 
-    public void setTimesession(Date timesession) {
+    public void setTimesession(LocalDate timesession) {
         this.timesession = timesession;
     }
 }

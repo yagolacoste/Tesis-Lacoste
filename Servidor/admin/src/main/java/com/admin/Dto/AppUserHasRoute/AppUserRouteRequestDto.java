@@ -1,21 +1,29 @@
 package com.admin.Dto.AppUserHasRoute;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
-public class AppUserRouteRequestDto {
-    @NotBlank(message = "Is required")
+public class AppUserRouteRequestDto implements Serializable {
+
     private Long AppUser;
-    @NotBlank(message = "Is required")
-    private Long route;
-    @NotBlank(message = "Is required")
+
+    private String route;
+
     private Double speed;
-    @NotBlank(message = "Is required")
+
     private Double timeSpeed;
-    @NotBlank(message = "Is required")
+
     private Double kilometres;
-    @NotBlank(message = "Is required")
-    private Date timeSession;
+
+    private LocalDate timeSession;
+
+    private String description;
+
+    private String weather;
+
+    private String coordinates;
 
 
     public Long getAppUser() {
@@ -26,11 +34,11 @@ public class AppUserRouteRequestDto {
         AppUser = appUser;
     }
 
-    public Long getRoute() {
+    public String getRoute() {
         return route;
     }
 
-    public void setRoute(Long route) {
+    public void setRoute(String route) {
         this.route = route;
     }
 
@@ -58,11 +66,35 @@ public class AppUserRouteRequestDto {
         this.kilometres = kilometres;
     }
 
-    public Date getTimeSession() {
+    public LocalDate getTimeSession() {
         return timeSession;
     }
 
-    public void setTimeSession(Date timeSession) {
+    public void setTimeSession(LocalDate timeSession) {
         this.timeSession = timeSession;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getWeather() {
+        return weather;
+    }
+
+    public void setWeather(String weather) {
+        this.weather = weather;
+    }
+
+    public String getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(String coordinates) {
+        this.coordinates = coordinates;
     }
 }

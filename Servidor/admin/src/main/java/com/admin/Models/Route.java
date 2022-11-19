@@ -18,8 +18,8 @@ public class Route implements Serializable {
 
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name= "id_route",columnDefinition = "serial")
-    private Long id;
+    @Column(name= "id_route")
+    private String id;
 
     @Column(name = "description")
     private String description;
@@ -33,9 +33,12 @@ public class Route implements Serializable {
     private String coordinates;
 
 
-
-    public Long getId() {
+    public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -46,9 +49,6 @@ public class Route implements Serializable {
         this.description = description;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getWeather() {
         return weather;

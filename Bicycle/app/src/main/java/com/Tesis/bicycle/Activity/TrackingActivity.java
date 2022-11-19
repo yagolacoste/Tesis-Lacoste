@@ -1,17 +1,22 @@
-package com.Tesis.bicycle;
+package com.Tesis.bicycle.Activity;
 
 import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,8 +29,9 @@ import androidx.core.content.ContextCompat;
 import androidx.room.Room;
 
 
-import com.Tesis.bicycle.Activity.ShowPointLocationList;
+import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.AppUserHasRouteDetailsDto;
+import com.Tesis.bicycle.Dto.RouteDetailsDto;
 import com.Tesis.bicycle.Model.ApiRest.AppUserHasRouteApiRest;
 import com.Tesis.bicycle.Model.ApiRest.RouteApiRest;
 import com.Tesis.bicycle.Model.Room.AppUserHasRoute;
@@ -34,6 +40,7 @@ import com.Tesis.bicycle.Presenter.ApiRestConecction;
 import com.Tesis.bicycle.Presenter.AppDataBase;
 import com.Tesis.bicycle.Model.Room.Route;
 
+import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.Service.ApiRest.AppUserHasRouteApiRestService;
 import com.Tesis.bicycle.Service.ApiRest.RouteApiRestService;
 import com.Tesis.bicycle.ServiceTracking.GPSService;
@@ -44,24 +51,30 @@ import com.google.android.gms.location.Priority;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.osmdroid.api.IMapController;
+import org.osmdroid.bonuspack.routing.OSRMRoadManager;
+import org.osmdroid.bonuspack.routing.Road;
+import org.osmdroid.bonuspack.routing.RoadManager;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity<Contex> extends Activity  {
+public class TrackingActivity extends Activity  {
 
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
 
@@ -73,7 +86,7 @@ public class MainActivity<Contex> extends Activity  {
 
     private static TextView tv_lat, tv_lon, tv_sensor;
     private Switch  sw_gps;
-    private Button btn_start,btn_turnoff,btn_shared,btn_showpoint;
+    private Button btn_start,btn_turnoff,btn_shared;
 
     //Location request is config for all setting related to fusedLocationProviderClient
     private LocationRequest locationRequest;
@@ -96,7 +109,7 @@ public class MainActivity<Contex> extends Activity  {
     private AppDataBase db;
 
     //retrofit
-    private AppUserHasRouteDetailsDto appUserHasRouteDetailsDto = null;
+    private RouteDetailsDto routeDetailsDto;
 
     //osm
     private static MapView myOpenMapView;
@@ -107,6 +120,19 @@ public class MainActivity<Contex> extends Activity  {
 //    public static final String MYFILTER="com.my.broadcast.RECEIVER";
 //    public static final String MSG="_message";
 
+
+    BroadcastReceiver myReceiver= new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            Tracking tracking= (Tracking)intent.getExtras().getSerializable(Constants.TRACKING);
+            tracking.setPoints(intent.getParcelableArrayListExtra("points"));
+            addRegisterRoute(tracking);
+            addRegisterStatistics(tracking);
+
+        }
+
+    };
 
 
 
@@ -120,7 +146,7 @@ public class MainActivity<Contex> extends Activity  {
         super.onCreate(savedInstanceState);
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_tracking_activity);
 
         checkPermissions(true);
 
@@ -154,7 +180,6 @@ public class MainActivity<Contex> extends Activity  {
         btn_start=findViewById(R.id.btn_start);
         btn_turnoff=findViewById(R.id.btn_turnoff);
         btn_shared=findViewById(R.id.btn_shared);
-        btn_showpoint=findViewById(R.id.btn_showpoint);
         startMarker=new Marker(myOpenMapView);
         startMarker.setIcon(getResources().getDrawable(R.drawable.ic_bicycle));
 
@@ -176,6 +201,7 @@ public class MainActivity<Contex> extends Activity  {
 
         if ( checkPermissions(true)) {
           initLayer(ctx);
+            String writeExternalStorage = Manifest.permission.WRITE_EXTERNAL_STORAGE;
         }
 
 
@@ -199,13 +225,15 @@ public class MainActivity<Contex> extends Activity  {
 //            }
 //        });
 //
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            AlertNoGps();
+        }
 
         //capturo coordenadas cada 5segundos
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startLocationUpdates();
-//                handler.post(sendData);
                 startLocationService();
             }
         });
@@ -215,20 +243,7 @@ public class MainActivity<Contex> extends Activity  {
             @Override
             public void onClick(View view) {
                 stopLocationService();
-                BroadcastReceiver myReceiver= new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-
-                        Tracking tracking= (Tracking)intent.getExtras().getSerializable(Constants.TRACKING);
-                        tracking.setPoints(intent.getParcelableArrayListExtra("points"));
-                        addRegisterRoute(tracking);
-                        addRegisterStatistics(tracking);
-
-
-
-                    }
-                };
-                registerReceiver(myReceiver,new IntentFilter(Constants.ACCTION_UPDATE_SERVICE));
+                registerReceiver(myReceiver,new IntentFilter(Constants.ACTION_UPDATE_SERVICE));
             }
         });
 
@@ -236,49 +251,105 @@ public class MainActivity<Contex> extends Activity  {
         btn_shared.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Guarda la ruta nueva en el servidor
-                Route route=db.routeService().getById(db.routeService().countRoute());
-                String pointint=route.getCoordinates();
-
-//                Grabar en el servidor
-                RouteApiRest routeApiRest=new RouteApiRest();
-                routeApiRest.setId(route.getId());
-                routeApiRest.setCoordinates(pointint);
-                routeApiRest.setDescription("");
-                routeApiRest.setWeather("");
-                addRoute(routeApiRest);
-
-
-
                 //por defecto hay un usuario despeus se pide al login que usuario seria
                 //Pasa la informacion al servidor
-                AppUserHasRoute appUserHasRoute=db.appUserHasRouteService().getAppUserHasRouteByID(db.appUserHasRouteService().countAppUserHasRoute());
+                AppUserHasRoute appUserHasRoute=db.appUserHasRouteService().getAppUserHasRouteByID(db.appUserHasRouteService().countAppUserHasRoute());//me traigo el ultimo registro del apphasroute
                 AppUserHasRouteApiRest appUserHasRouteApiRest=new AppUserHasRouteApiRest();
                 appUserHasRouteApiRest.setAppUser(1L);
-                appUserHasRouteApiRest.setRoute(route.getId());
                 appUserHasRouteApiRest.setKilometres(appUserHasRoute.getKilometres());
                 appUserHasRouteApiRest.setSpeed(appUserHasRoute.getSpeed());
                 appUserHasRouteApiRest.setTimeSpeed(appUserHasRoute.getTimeSpeed());
-                appUserHasRouteApiRest.setTimesSession(appUserHasRoute.getTimesSession());
-                addStatistics(appUserHasRouteApiRest);
+                appUserHasRouteApiRest.setTimeSession(appUserHasRoute.getTimesSession());
+                appUserHasRouteApiRest.setDescription("");
+                appUserHasRouteApiRest.setWeather("");
+
+                //Guarda la ruta nueva en el servidor
+                if(routeDetailsDto!=null){
+                    appUserHasRouteApiRest.setRoute(String.valueOf(appUserHasRoute.getRoute()));
+                }
+                else{
+                    Route route=db.routeService().getById(db.routeService().countRoute());
+                    String pointint=route.getCoordinates();
+                    appUserHasRouteApiRest.setRoute(1+String.valueOf(route.getId()));//Agrego por defecto el usuario 1 para probar + adelante cambiar
+                    appUserHasRouteApiRest.setCoordinates(pointint);
+                }
+                sendData(appUserHasRouteApiRest);
 
 
             }
         });
 
-        btn_showpoint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                getRoutesByUser();
-                Intent i=new Intent(MainActivity.this,ShowPointLocationList.class);
-                startActivity(i);
-
-            }
-        });
-
+        String result=getIntent().getAction();
+        if(result!=null)
+            if(result.equals(Constants.ACTION_DRAW_MAP)){
+                List<GeoPoint>route=getCoordinates();//Transformo la ruta en geopoint
+                drawRoute(route);
+        }
     }
 
-    //Init osm map with position
+    private void AlertNoGps() {
+        final AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setMessage("Your device setting will be changed")
+                .setCancelable(false)
+                .setPositiveButton("Turn on", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void drawRoute(List<GeoPoint> routes) {
+        Marker startMarker=new Marker(myOpenMapView);
+        startMarker.setPosition(routes.get(0));
+
+        myOpenMapView.getOverlays().add(startMarker);
+        RoadManager roadManager=new OSRMRoadManager(TrackingActivity.this,"OBP_Tuto/1.0");
+        ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
+        Road road=roadManager.getRoad((ArrayList<GeoPoint>) routes);
+//        Polyline roadOverlay=new Polyline();
+//        roadOverlay.setWidth(20f);
+        Polyline roadOverlay=RoadManager.buildRoadOverlay(road, 0x800000FF, 25.0f);
+
+
+       // Polyline roadOverlay=RoadManager.buildRoadOverlay(road).setWidth(2.0f);
+        myOpenMapView.getOverlays().add(roadOverlay);
+        Marker endMarker=new Marker(myOpenMapView);
+        endMarker.setPosition(routes.get(routes.size()-1));
+
+        myOpenMapView.getOverlays().add(endMarker);
+
+        myOpenMapView.invalidate();
+    }
+
+    //Transformation coordinates in GeoPoint
+    public List<GeoPoint> getCoordinates(){
+        routeDetailsDto= (RouteDetailsDto) getIntent().getSerializableExtra("Route");
+        List<GeoPoint> result=new ArrayList<>();
+        String resultCoordinates=routeDetailsDto.getCoordinates();
+        try {
+            JSONArray coordinates=new JSONArray(resultCoordinates);
+            for(int i=0;i<coordinates.length();i++){
+//                JSONObject point=coordinates.getJSONObject(i);
+                String aux=coordinates.getString(i);
+                String[] split=aux.split(",");
+                result.add(new GeoPoint(Double.valueOf(split[0]),Double.valueOf(split[1])));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    //Init osmodroid map with position
     private void initLayer(Context ctx) {
         //Seteo de mapa en tandil statico
         GeoPoint tandil=new GeoPoint(-37.32359319563445,-59.12548631254784);
@@ -286,7 +357,7 @@ public class MainActivity<Contex> extends Activity  {
         myOpenMapView.setBuiltInZoomControls(true);
         myOpenMapView.setMultiTouchControls(true);
         IMapController mapController=myOpenMapView.getController();
-        mapController.setZoom(22);
+        mapController.setZoom(18);
         mapController.setCenter(tandil);
         RotationGestureOverlay mRotationGestureOverlay = new RotationGestureOverlay(ctx, myOpenMapView);
         mRotationGestureOverlay.setEnabled(true);
@@ -295,19 +366,24 @@ public class MainActivity<Contex> extends Activity  {
         this.mCompassOverlay = new CompassOverlay(this, new InternalCompassOrientationProvider(this), myOpenMapView);
         this.mCompassOverlay.enableCompass();
         myOpenMapView.getOverlays().add(this.mCompassOverlay);
+        myOpenMapView.invalidate();
 
     }
 
     //Update psotiion ui (PREGUNTAR )
     public static void updatePosition(GeoPoint point){
         startMarker.setPosition(point);
-        startMarker.setAnchor(Marker.ANCHOR_CENTER,Marker.ANCHOR_BOTTOM);
+        startMarker.setAnchor(Marker.ANCHOR_RIGHT,Marker.ANCHOR_BOTTOM);
         myOpenMapView.getOverlays().add((myOpenMapView.getOverlays().size()-1),startMarker);
         IMapController mapController=myOpenMapView.getController();
         mapController.setCenter(point);
         myOpenMapView.invalidate();
 
     }
+
+    //public
+
+
 
 
     /////////////////////////PRUEBA DE SERVICIO GPS///////////////////////////////
@@ -322,14 +398,14 @@ public class MainActivity<Contex> extends Activity  {
                     }
                 }
             }
-            return true;
+            return false;
         }
         return false;
     }
 
     //Inicia el servicio de localizacion
     private void startLocationService(){
-        if(isLocationServiceRunning()){
+        if(!isLocationServiceRunning()){
             Intent intent =new Intent(getApplicationContext(),GPSService.class);
             intent.setAction(Constants.ACTION_START_LOCATION_SERVICE);
             startService(intent);
@@ -357,10 +433,13 @@ public class MainActivity<Contex> extends Activity  {
     private void addRegisterStatistics(Tracking tracking) {
 
 //        Date fecha=new Date();
-        Route route=db.routeService().getAll().get(db.routeService().countRoute()-1);
+        Long routeId=db.routeService().getAll().get(db.routeService().countRoute()-1).getId();
+        if(routeDetailsDto!=null){
+            routeId=routeDetailsDto.getId();
+        }
         AppUserHasRoute appUserHasRoute=new AppUserHasRoute();
         appUserHasRoute.setAppUser(1L);
-        appUserHasRoute.setRoute((long) route.getId());
+        appUserHasRoute.setRoute(routeId);
         appUserHasRoute.setKilometres(tracking.getDistance());
         appUserHasRoute.setSpeed(tracking.getSpeed());
         appUserHasRoute.setTimeSpeed(tracking.getTimeSpeed());
@@ -371,6 +450,7 @@ public class MainActivity<Contex> extends Activity  {
 
     ///add route in room
     private void addRegisterRoute(Tracking tracking)  {
+        if(routeDetailsDto==null){
         List<Location> locations =  tracking.getPoints();
 
         for (int i = 0; i < locations.size(); i++) {
@@ -379,9 +459,10 @@ public class MainActivity<Contex> extends Activity  {
 //                jsonObject.put(String.valueOf(i), p);
             coordinates.put(p);
         }
-
         Route r=new Route(coordinates.toString());
         db.routeService().addRoute(r);
+        }
+
 
     }
 
@@ -389,14 +470,14 @@ public class MainActivity<Contex> extends Activity  {
 
 
     //add statistics in server
-    public void addStatistics(AppUserHasRouteApiRest appUserHasRouteApiRest){
+    public void sendData(AppUserHasRouteApiRest appUserHasRouteApiRest){
         AppUserHasRouteApiRestService appUserHasRouteApiRestService=ApiRestConecction.getServiceAppUserHasRoute();
         Call<Void>call=appUserHasRouteApiRestService.AddStatistics(appUserHasRouteApiRest);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()){
-                    Toast.makeText(MainActivity.this,"add is success",Toast.LENGTH_LONG).show();
+                    Toast.makeText(TrackingActivity.this,"add is success",Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -408,95 +489,17 @@ public class MainActivity<Contex> extends Activity  {
     }
 
 
-    //add route in server
-    public void addRoute(RouteApiRest routeApiRest){
-        RouteApiRestService routeApiRestService = ApiRestConecction.getServiceRoute();
-        Call<Void>call=routeApiRestService.addRoute(routeApiRest);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if(response.isSuccessful()){
-
-                    Toast.makeText(MainActivity.this,"add is success",Toast.LENGTH_LONG).show();
-                }
-            }
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.e("Error",t.getMessage());
-            }
-        });
-    }
 
 
-//    //metodo runable para alamacenar ubicacion cada 10 segundos.
-//    private final Runnable sendData = new Runnable(){
-//        public void run(){
-//            try {
-//                updateGPS();
-//                if(currentLocation!=null) {
-//                    if ((lastLocation == null) || (currentLocation.getLongitude() != lastLocation.getLongitude()) || (currentLocation.getLatitude() != lastLocation.getLatitude())) {
-//                        //preguntar por el tiempo
-//                        savedlocations.add(currentLocation);
-//                    }
-//                }
-//                lastLocation=currentLocation;//Agrege lastLocation porque sino me guardaba la misma ubicacion y tengo asincronismo en los timpos
-//                handler.postDelayed(this, 1000*5);//delay de 5 segundos
-//            }
-//            catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    };
-//
-//    private void updateGPS(){
-//        //get permission from the user to track GPS
-//        //get the current location from the fused client
-//        //update the UI--set all propitiers in associated with UI
-//        if (!(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
-//            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-//                @Override
-//                public void onSuccess(Location location) {
-//                    updateUIValues(location);
-//                    currentLocation=location;
-//                }
-//            });
-//        }
-//
-//    }
-//
-//    //start location and update callback
-//    private void startLocationUpdates() {
-//        // VIRU: Aca va negada la condicion!
-//        if (!(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
-//            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback,  Looper.getMainLooper());//actualizo el request y llamo al callback
-//            // VIRU: el updateGps solo obtiene la ubicación una vez
-//            updateGPS();
-//            //Toast.makeText(this,"se actualizo",Toast.LENGTH_LONG).show();
-//        }
-//
-//    }
-//
-//    //Stop tracking and remove location
-//    private void stopLocationUpdates() {
-//        tv_lat.setText("Not tracking location");
-//        tv_lon.setText("Not tracking location");
-//        if (locationCallback != null)
-//            fusedLocationProviderClient.removeLocationUpdates(locationCallback);
-//    }
-//
-//
-//    //update all of the text view objects with new  location
-//    public static void updateUIValues(Location location){
-//        tv_lat.setText(String.valueOf(location.getLatitude()));
-//        tv_lon.setText(String.valueOf(location.getLongitude()));
-//
-//    }
 
     //Check permission if enable
     private boolean checkPermissions(boolean request) {
-        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
-            if (request)
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MainActivity.REQUEST_PERMISSIONS_REQUEST_CODE);
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+                &&((ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED))) {
+            if (request) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, TrackingActivity.REQUEST_PERMISSIONS_REQUEST_CODE);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, TrackingActivity.REQUEST_PERMISSIONS_REQUEST_CODE);
+            }
             return false;
         }
         return true;
@@ -512,10 +515,30 @@ public class MainActivity<Contex> extends Activity  {
                     //startLocationUpdates();
 //                    updateGPS();
                 startLocationService();
-                initLayer(MainActivity.this);
+                initLayer(TrackingActivity.this);
             }
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //this will refresh the osmdroid configuration on resuming.
+        //if you make changes to the configuration, use
+        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
+        myOpenMapView.onResume(); //needed for compass, my location overlays, v6.0.0 and up
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        //this will refresh the osmdroid configuration on resuming.
+        //if you make changes to the configuration, use
+        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //Configuration.getInstance().save(this, prefs);
+        myOpenMapView.onPause();  //needed for compass, my location overlays, v6.0.0 and up
+        routeDetailsDto=null;
+        //unregisterReceiver(myReceiver);
+    }
 }

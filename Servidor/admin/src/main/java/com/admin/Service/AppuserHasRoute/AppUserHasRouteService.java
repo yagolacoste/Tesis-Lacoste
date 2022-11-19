@@ -5,18 +5,21 @@ import com.admin.Controller.Exception.TypeExceptions.NotFoundException;
 import com.admin.Dto.AppUserHasRoute.AppUserHasRouteDetailsDto;
 import com.admin.Dto.AppUserHasRoute.AppUserRouteRequestDto;
 import com.admin.Dto.Route.RouteDetailsDto;
+import com.admin.Dto.Route.RouteNewRequestDto;
 import com.admin.Models.AppUserHasRoute;
 
 import com.admin.Models.Route;
 import com.admin.Models.User;
 import com.admin.Repository.IAppUserHasRouteRepository;
 import com.admin.Service.Route.IRouteService;
+import com.admin.Service.Route.RouteService;
 import com.admin.Service.User.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +41,19 @@ public class AppUserHasRouteService implements IAppUserHasRouteService {
     @Override
     public void add(AppUserRouteRequestDto appUserRouteRequestDto) {
 
-        Route route=routeService.getById(appUserRouteRequestDto.getRoute());
+        Route route=null;
+//        Route route=routeService.getById(appUserRouteRequestDto.getRoute());
+            //agregado de ruta
+        if(appUserRouteRequestDto.getCoordinates()!=null){
+                RouteNewRequestDto routeNewRequestDto=new RouteNewRequestDto();
+                routeNewRequestDto.setId(appUserRouteRequestDto.getRoute());
+                routeNewRequestDto.setWeather(appUserRouteRequestDto.getWeather());
+                routeNewRequestDto.setDescription(appUserRouteRequestDto.getDescription());
+                routeNewRequestDto.setCoordinates(appUserRouteRequestDto.getCoordinates());
+                routeService.add(routeNewRequestDto);
+             }
+        route=routeService.getById(appUserRouteRequestDto.getRoute());
+
         User appUser=userService.getByUser(appUserRouteRequestDto.getAppUser());
 
         AppUserHasRoute appUserHasRoute=new AppUserHasRoute();

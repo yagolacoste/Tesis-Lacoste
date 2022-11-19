@@ -22,7 +22,7 @@ public class RouteService implements IRouteService{
     private IRouteRepository routeRepository;
 
     @Override
-    public Route getById(Long id) {
+    public Route getById(String id) {
 
         Route route= routeRepository.findById(id).orElseThrow(() -> new NotFoundException("Router by id not found", ErrorCodes.NOT_FOUND.getCode()));
         return route;
@@ -48,4 +48,6 @@ public class RouteService implements IRouteService{
             return result;
         return null;
     }
+
+
 }
