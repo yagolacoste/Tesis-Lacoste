@@ -1,37 +1,64 @@
 package com.admin.Dto;
 
+import com.admin.Models.User;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 
-public class UserAppDto {
+public class UserAppDto implements Serializable {
 
+    private Long id;
 
-    @NotBlank(message = "is required")
     private String userName;
-    @NotBlank(message = "is required")
+
     private String password;
-    @NotBlank(message = "is required")
+
     private String identityType;
-    @NotBlank(message = "is required")
+
     private String identity;
 
-    @NotBlank(message = "is required")
     private String address;
 
-    @NotBlank(message = "is required")
     private String firstName;
-    @NotBlank(message = "is required")
+
     private String lastName;
-    @NotNull (message = "is required")
+
     private int age;
-    @NotBlank(message = "is required")
+
     private String phone;
-    @NotBlank(message = "is required")
+
     private String email;
-    @NotNull(message = "is required")
+
     private Date birthday;
+
+    public UserAppDto() {
+    }
+
+
+    public UserAppDto( User user) {
+        this.id=user.getId();
+        this.userName = user.getUsername();
+        this.identityType = user.getIdentity();
+        this.identity = user.getIdentity();
+        this.address = user.getAddress();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.age = user.getAge();
+        this.phone = user.getPhone();
+        this.email = user.getEmail();
+        this.birthday = user.getBirthday();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;

@@ -1,8 +1,9 @@
 package com.admin.Controller.AppUserHasRoute;
 
 import com.admin.Dto.AppUserHasRoute.AppUserHasRouteDetailsDto;
+import com.admin.Dto.AppUserHasRoute.AppUserHasRouteDto;
 import com.admin.Dto.AppUserHasRoute.AppUserRouteRequestDto;
-import com.admin.Models.AppUserHasRoute;
+import com.admin.Dto.AppUserHasRoute.StatisticsDTO;
 
 import com.admin.Service.AppuserHasRoute.IAppUserHasRouteService;
 import org.slf4j.Logger;
@@ -28,17 +29,22 @@ public class AppuserHasRouteController implements IAppuserHasRouteController{
     }
 
     @Override
-    public Optional<AppUserHasRoute> getById(Long id) {
+    public Optional<AppUserHasRouteDto> getById(String id) {
         return appUserHasRouteService.getById(id);
     }
 
     @Override
-    public List<AppUserHasRoute> getAppUserHasRoute() {
+    public List<AppUserHasRouteDto> getAppUserHasRoute() {
         return appUserHasRouteService.list();
     }
 
     @Override
-    public AppUserHasRouteDetailsDto getRouteById(Long id) {
-        return appUserHasRouteService.getRouteById(id);
+    public AppUserHasRouteDetailsDto getRoutesByUser(Long appUser) {
+        return appUserHasRouteService.getRoutesByUser(appUser);
+    }
+
+    @Override
+    public List<StatisticsDTO> getStatisticsByRoute(String routeId) {
+        return appUserHasRouteService.getStatisticsByRoute(routeId);
     }
 }

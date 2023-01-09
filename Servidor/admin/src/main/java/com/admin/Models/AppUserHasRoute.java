@@ -11,15 +11,12 @@ import java.util.Optional;
 
 @Entity
 @Table(name="appuser_has_route")
+public class AppUserHasRoute {
 
-public class AppUserHasRoute implements Serializable {
-
-    private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name= "id",columnDefinition = "serial")
-    private Long id;
+    @Column(name= "id")
+    private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "appuser_appuser")
@@ -30,6 +27,9 @@ public class AppUserHasRoute implements Serializable {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "route_id_route")
     private Route route;
+
+    @Column(name="weather")
+    private String weather;
 
     @Column(name= "speed")
     private Double speed;
@@ -47,12 +47,20 @@ public class AppUserHasRoute implements Serializable {
     public AppUserHasRoute() {
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public String getWeather() {
+        return weather;
+    }
+
+    public void setWeather(String weather) {
+        this.weather = weather;
     }
 
     public User getAppUser() {

@@ -1,34 +1,51 @@
 package com.admin.Dto.AppUserHasRoute;
 
-import javax.validation.constraints.NotBlank;
+import com.admin.Models.AppUserHasRoute;
+
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 
-public class AppUserRouteRequestDto implements Serializable {
+public class AppUserHasRouteDto implements Serializable {
+
+    private String id;
 
     private Long appUser;
 
     private String route;
 
+    private String weather;
+
     private Double speed;
+
 
     private Double timeSpeed;
 
+
     private Double kilometres;
+
 
     private LocalDate timeSession;
 
-    private String name;
+    public AppUserHasRouteDto() {
+    }
 
-    private String description;
+    public AppUserHasRouteDto(AppUserHasRoute r) {
+        this.id=r.getId();
+        this.appUser=r.getAppUser().getId();
+        this.route=r.getRoute().getId();
+        this.weather=r.getWeather();
+        this.speed=r.getSpeed();
+        this.timeSpeed=r.getTimeSpeed();
+        this.kilometres=r.getKilometres();
+        this.timeSession=r.getTimesession();
+    }
 
-    private String weather;
+    public String getId() {
+        return id;
+    }
 
-    private String coordinates;
-
-
-    public AppUserRouteRequestDto() {
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Long getAppUser() {
@@ -45,6 +62,14 @@ public class AppUserRouteRequestDto implements Serializable {
 
     public void setRoute(String route) {
         this.route = route;
+    }
+
+    public String getWeather() {
+        return weather;
+    }
+
+    public void setWeather(String weather) {
+        this.weather = weather;
     }
 
     public Double getSpeed() {
@@ -78,38 +103,4 @@ public class AppUserRouteRequestDto implements Serializable {
     public void setTimeSession(LocalDate timeSession) {
         this.timeSession = timeSession;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getWeather() {
-        return weather;
-    }
-
-    public void setWeather(String weather) {
-        this.weather = weather;
-    }
-
-    public String getCoordinates() {
-        return coordinates;
-    }
-
-    public void setCoordinates(String coordinates) {
-        this.coordinates = coordinates;
-    }
-
-
 }

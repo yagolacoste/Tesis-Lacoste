@@ -1,8 +1,9 @@
 package com.admin.Service.AppuserHasRoute;
 
 import com.admin.Dto.AppUserHasRoute.AppUserHasRouteDetailsDto;
+import com.admin.Dto.AppUserHasRoute.AppUserHasRouteDto;
 import com.admin.Dto.AppUserHasRoute.AppUserRouteRequestDto;
-import com.admin.Models.AppUserHasRoute;
+import com.admin.Dto.AppUserHasRoute.StatisticsDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,9 +13,11 @@ public interface IAppUserHasRouteService {
 
     void add(AppUserRouteRequestDto appUserRouteRequestDto);
 
-    Optional<AppUserHasRoute> getById(Long id);
+    Optional<AppUserHasRouteDto> getById(String id);
 
-    List<AppUserHasRoute> list();
+    List<AppUserHasRouteDto> list();
 
-    AppUserHasRouteDetailsDto getRouteById(Long id);
+    AppUserHasRouteDetailsDto getRoutesByUser(Long appUser);
+
+    List<StatisticsDTO> getStatisticsByRoute(String routeId);
 }

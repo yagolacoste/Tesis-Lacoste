@@ -11,11 +11,12 @@ import com.Tesis.bicycle.Model.Room.Route;
 import com.Tesis.bicycle.Service.Room.AppUserHasRouteService;
 import com.Tesis.bicycle.Service.Room.RouteService;
 
-@Database(entities = {Route.class, AppUserHasRoute.class}, version =5,exportSchema = true)
+@Database(entities = {Route.class, AppUserHasRoute.class}, version =6,exportSchema = true)
 @TypeConverters({ConvertersDate.class})
 public abstract class AppDataBase extends RoomDatabase {
 
     public abstract RouteService routeService();
     public abstract AppUserHasRouteService appUserHasRouteService();
+
 
 }

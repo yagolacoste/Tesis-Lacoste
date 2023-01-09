@@ -24,8 +24,8 @@ public class UserService implements IUserService{
 
 
     @Override
-    public User getByUser(Long id) {
-       User user= userRepository.findById(id)
+    public UserAppDto getByUser(Long id) {
+        UserAppDto user= userRepository.findById(id).map(u->new UserAppDto(u))
                 .orElseThrow(()->new NotFoundException("User by id not found", ErrorCodes.NOT_FOUND.getCode()));
        return user;
     }

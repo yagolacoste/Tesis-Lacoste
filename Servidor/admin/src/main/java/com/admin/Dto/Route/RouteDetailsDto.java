@@ -10,18 +10,17 @@ public class RouteDetailsDto implements Serializable {
 
     private String id;
 
+    private String name;
+
     private String description;
-
-
-    private String weather;
 
 
     private String coordinates;
 
-    public RouteDetailsDto(String id, String description, String weather, String coordinates) {
+    public RouteDetailsDto(String id, String description, String name, String coordinates) {
         this.id = id;
         this.description = description;
-        this.weather = weather;
+        this.name = name;
         this.coordinates = coordinates;
     }
 
@@ -41,12 +40,12 @@ public class RouteDetailsDto implements Serializable {
         this.description = description;
     }
 
-    public String getWeather() {
-        return weather;
+    public String getName() {
+        return name;
     }
 
-    public void setWeather(String weather) {
-        this.weather = weather;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCoordinates() {

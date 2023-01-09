@@ -17,7 +17,7 @@ public interface IUserController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = {"/get"},produces = MediaType.APPLICATION_JSON_VALUE)
-    User getById(@RequestParam (value = "id") Long id);
+    UserAppDto getById(@RequestParam (value = "id") Long id);
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(path= {"/add"}, consumes=MediaType.APPLICATION_JSON_VALUE)

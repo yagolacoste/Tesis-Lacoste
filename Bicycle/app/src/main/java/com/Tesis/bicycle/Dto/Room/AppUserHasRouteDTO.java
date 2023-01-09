@@ -1,52 +1,28 @@
-package com.Tesis.bicycle.Model.Room;
+package com.Tesis.bicycle.Dto.Room;
 
 import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
-import com.Tesis.bicycle.Constants;
-
-import org.apache.commons.lang3.RandomStringUtils;
-import org.jetbrains.annotations.NotNull;
-
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.UUID;
 
+public class AppUserHasRouteDTO implements Serializable {
 
-@Entity(tableName="appuser_has_route")
-public class AppUserHasRoute {
-
-    @PrimaryKey
-    @NotNull
-    @ColumnInfo(name="id")
     private String id;
 
-    @ColumnInfo(name="appUser")
     private Long appUser;
 
-    @ColumnInfo(name="route")
     private String route;
 
-    @ColumnInfo(name= "speed")
     private Double speed;
 
-    @ColumnInfo(name= "timeSpeed")
     private Double timeSpeed;
 
-    @ColumnInfo(name= "kilometres")
     private Double kilometres;
 
-    @ColumnInfo(name= "weather")
-    private String weather;
-
-    @ColumnInfo(name="timesSession")
     private LocalDate timesSession;
 
-    public AppUserHasRoute() {
-        this.id = RandomStringUtils.random(Constants.MAX_CARACTER_ID,true,true);
+    public AppUserHasRouteDTO() {
     }
-
 
     public String getId() {
         return id;
@@ -64,12 +40,11 @@ public class AppUserHasRoute {
         this.appUser = appUser;
     }
 
-
     public String getRoute() {
         return route;
     }
 
-    public void setRoute(@NotNull String route) {
+    public void setRoute(String route) {
         this.route = route;
     }
 
@@ -103,13 +78,5 @@ public class AppUserHasRoute {
 
     public void setTimesSession(LocalDate timesSession) {
         this.timesSession = timesSession;
-    }
-
-    public String getWeather() {
-        return weather;
-    }
-
-    public void setWeather(String weather) {
-        this.weather = weather;
     }
 }

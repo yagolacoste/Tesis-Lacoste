@@ -32,12 +32,9 @@ public class RouteService implements IRouteService{
     public void add(RouteNewRequestDto route) {
         Route routeReal= new Route();
         routeReal.setId(route.getId());
-        if(routeReal.getDescription()!=null)
-            routeReal.setDescription(route.getDescription());
-
-       routeReal.setWeather(route.getWeather());
+        routeReal.setDescription(route.getDescription());
+        routeReal.setName(route.getName());
         routeReal.setCoordinates(route.getCoordinates());
-//        JsonObject jsonObject=new JsonParser().parse(route.getCoordinates()).getAsJsonObject();
         routeRepository.save(routeReal);
     }
 
@@ -47,6 +44,11 @@ public class RouteService implements IRouteService{
         if(result!=null)
             return result;
         return null;
+    }
+
+    @Override
+    public boolean existsById(String id) {
+        return routeRepository.existsById(id);
     }
 
 

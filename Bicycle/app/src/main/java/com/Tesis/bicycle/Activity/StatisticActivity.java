@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.Tesis.bicycle.Dto.RouteDetailsDto;
+import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.R;
 
 import org.json.JSONArray;
@@ -39,7 +39,7 @@ public class StatisticActivity extends AppCompatActivity {
         myOpenMapView=findViewById(R.id.v_map);
         tv_speed=findViewById(R.id.tv_speed);
         tv_distance=findViewById(R.id.tv_distance);
-        tv_time=findViewById(R.id.tv_time);
+        tv_time=findViewById(R.id.tv_timeSpeed);
         List<GeoPoint>points=getCoordinates();
         drawRoute(points);
         viewStatistic();
