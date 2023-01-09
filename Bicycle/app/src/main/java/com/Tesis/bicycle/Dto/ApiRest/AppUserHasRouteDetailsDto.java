@@ -1,6 +1,4 @@
-package com.Tesis.bicycle.Dto;
-
-import com.google.gson.annotations.SerializedName;
+package com.Tesis.bicycle.Dto.ApiRest;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,6 +8,10 @@ public class AppUserHasRouteDetailsDto implements Serializable {
     private Long userId;
 
     private String firstName;
+
+    private Double distanceProm;
+
+    private Double timeProm;
 
     private List<RouteDetailsDto> routes;
 
@@ -43,4 +45,19 @@ public class AppUserHasRouteDetailsDto implements Serializable {
         this.routes = routes;
     }
 
+    public Double getDistanceProm() {
+        return distanceProm;
+    }
+
+    public void setDistanceProm(Double distanceProm) {
+        this.distanceProm = distanceProm;
+    }
+
+    public Double getTimeProm() {
+        return timeProm;
+    }
+
+    public void setTimeProm(Double timeProm) {
+        this.timeProm = timeProm;
+    }
 }

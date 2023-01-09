@@ -1,20 +1,25 @@
-package com.admin.Dto.Route;
+package com.Tesis.bicycle.Dto.Room;
 
-import org.json.JSONObject;
+import androidx.room.ColumnInfo;
+import androidx.room.PrimaryKey;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
-public class RouteNewRequestDto implements Serializable {
-    @NotBlank(message = "id is required")
+public class RouteDTO implements Serializable {
+
     private String id;
+
+
+    private String name;
+
 
     private String description;
 
-    private String  name;
 
-    @NotBlank(message = "Coordinates is required")
     private String coordinates;
+
+    public RouteDTO() {
+    }
 
     public String getId() {
         return id;
@@ -24,20 +29,20 @@ public class RouteNewRequestDto implements Serializable {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getCoordinates() {

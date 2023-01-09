@@ -1,8 +1,9 @@
 package com.admin.Controller.AppUserHasRoute;
 
 import com.admin.Dto.AppUserHasRoute.AppUserHasRouteDetailsDto;
+import com.admin.Dto.AppUserHasRoute.AppUserHasRouteDto;
 import com.admin.Dto.AppUserHasRoute.AppUserRouteRequestDto;
-import com.admin.Models.AppUserHasRoute;
+import com.admin.Dto.AppUserHasRoute.StatisticsDTO;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.http.HttpStatus;
@@ -25,15 +26,19 @@ public interface IAppuserHasRouteController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path={"/get"})
-    Optional<AppUserHasRoute> getById(@RequestBody Long id);
+    Optional<AppUserHasRouteDto> getById(@RequestBody String id);
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path={"/list"},produces = MediaType.APPLICATION_JSON_VALUE)
-    List<AppUserHasRoute> getAppUserHasRoute();
+    List<AppUserHasRouteDto> getAppUserHasRoute();
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path={"/getroutesbyuser"},produces=MediaType.APPLICATION_JSON_VALUE)
-    AppUserHasRouteDetailsDto getRouteById(@RequestParam(value="id") Long id);
+    AppUserHasRouteDetailsDto getRoutesByUser(@RequestParam(value="id") Long appUser);
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "/getstatisticsbyroute",produces = MediaType.APPLICATION_JSON_VALUE)
+    List<StatisticsDTO> getStatisticsByRoute(@RequestParam("route") String routeId);
 
 
 

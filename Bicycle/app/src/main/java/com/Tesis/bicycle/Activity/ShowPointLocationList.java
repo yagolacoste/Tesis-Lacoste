@@ -1,22 +1,22 @@
 package com.Tesis.bicycle.Activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.Tesis.bicycle.Constants;
-import com.Tesis.bicycle.Dto.AppUserHasRouteDetailsDto;
-import com.Tesis.bicycle.Dto.RouteDetailsDto;
+import com.Tesis.bicycle.Dto.ApiRest.AppUserHasRouteDetailsDto;
+import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
+import com.Tesis.bicycle.Dto.ApiRest.StatisticsDto;
 import com.Tesis.bicycle.Presenter.ApiRestConecction;
+import com.Tesis.bicycle.Presenter.CardView.RouteRecyclerViewAdapter;
+import com.Tesis.bicycle.Presenter.CardView.StatisticRecyclerViewAdapter;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.Service.ApiRest.AppUserHasRouteApiRestService;
-
-import org.osmdroid.util.GeoPoint;
 
 import java.util.List;
 
@@ -26,62 +26,78 @@ import retrofit2.Response;
 
 public class ShowPointLocationList extends Activity {
 
-    ListView lv_saveLocations;
     List<RouteDetailsDto>routes;
+    List<StatisticsDto>statistics;
+
+    private RecyclerView recyclerView;
+    private RouteRecyclerViewAdapter adaptorRoute;
+    private StatisticRecyclerViewAdapter adaptorStatistics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_point_location_list);
 
-        lv_saveLocations=findViewById(R.id.lv_showLocations);
-
+        //lv_saveLocations=findViewById(R.id.lv_showLocations);
+        recyclerView= (RecyclerView) findViewById(R.id.lv_showLocations);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
         String action=getIntent().getAction();
-        if(action!=null)
-            getRoutesByUser(action);
+        if(action!=null&& action.equals(Constants.ACTION_REPLAY_MY_ROUTES))
+            getRoutesByUser();
+        else
+            if(action!=null && action.equals(Constants.VIEW_STATISTICS)){
+                String routeId=getIntent().getStringExtra(Constants.ROUTE_ID);
+                getStatisticByRoute(routeId);
+            }
+
 
     }
 
     ///Lista las rutas por usuarios
-    public void  getRoutesByUser(String action) {
+    public void  getRoutesByUser() {
         AppUserHasRouteApiRestService appUserHasRouteApiRestService = ApiRestConecction.getServiceAppUserHasRoute();
         Call<AppUserHasRouteDetailsDto> call = appUserHasRouteApiRestService.getRouteById(1L);//es el usuario 1 por defecto
         call.enqueue(new Callback<AppUserHasRouteDetailsDto>() {
             @Override
             public void onResponse(Call<AppUserHasRouteDetailsDto> call, Response<AppUserHasRouteDetailsDto> response) {
-                if(response.isSuccessful()){
-                    routes=response.body().getRoutes();
-                    lv_saveLocations.setAdapter(new ArrayAdapter<RouteDetailsDto>(ShowPointLocationList.this, android.R.layout.simple_list_item_1,routes));
-
-                    lv_saveLocations.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            Intent intent=null;
-                            if(action.equals(Constants.ACTION_REPLAY_ROUTE)){
-                                intent=new Intent(ShowPointLocationList.this,TrackingActivity.class);
-                                intent.setAction(Constants.ACTION_DRAW_MAP);
-//                                intent.putExtra("Route",routes.get(i));
-//                                startActivity(intent);
-                            }else{
-                                intent=new Intent(ShowPointLocationList.this,StatisticActivity.class);
-                                intent.setAction(Constants.ACTION_VIEW_STATISTICS);
-
-                            }
-                            intent.putExtra("Route",routes.get(i));
-                            startActivity(intent);
-
-                        }
-                    });
-
+                if (response.isSuccessful()) {
+                    routes = response.body().getRoutes();
+                    // lv_saveLocations.setAdapter(new ArrayAdapter<RouteDetailsDto>(ShowPointLocationList.this, android.R.layout.));
+                    adaptorRoute = new RouteRecyclerViewAdapter(routes);
+                    recyclerView.setAdapter(adaptorRoute);
                 }
             }
-
+//
             @Override
             public void onFailure(Call<AppUserHasRouteDetailsDto> call, Throwable t) {
                 Log.e("Error",t.getMessage());
             }
         });
     }
+
+    public void getStatisticByRoute(String routeId){
+//        recyclerView.setHasFixedSize(true);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        AppUserHasRouteApiRestService appUserHasRouteApiRestService = ApiRestConecction.getServiceAppUserHasRoute();
+        Call<List<StatisticsDto>> call = appUserHasRouteApiRestService.getStatisticsByRoute(routeId);
+        call.enqueue(new Callback<List<StatisticsDto>>() {
+            @Override
+            public void onResponse(Call<List<StatisticsDto>> call, Response<List<StatisticsDto>> response) {
+                if(response.isSuccessful()){
+                    statistics=response.body();
+                    adaptorStatistics=new StatisticRecyclerViewAdapter(statistics);
+                    recyclerView.setAdapter(adaptorStatistics);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<StatisticsDto>> call, Throwable t) {
+                Log.e("Error",t.getMessage());
+            }
+        });
+    }
+
 }

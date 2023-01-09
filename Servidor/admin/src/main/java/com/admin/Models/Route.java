@@ -17,15 +17,14 @@ import java.util.Date;
 public class Route implements Serializable {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name= "id_route")
     private String id;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "description")
     private String description;
-
-    @Column(name = "weather")
-    private String weather;
 
 
     @Column(name = "coordinates")
@@ -50,14 +49,13 @@ public class Route implements Serializable {
     }
 
 
-    public String getWeather() {
-        return weather;
+    public String getName() {
+        return name;
     }
 
-    public void setWeather(String weather) {
-        this.weather = weather;
+    public void setName(String name) {
+        this.name = name;
     }
-
 
     public String getCoordinates() {
         return coordinates;

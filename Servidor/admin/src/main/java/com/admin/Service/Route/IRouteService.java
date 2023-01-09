@@ -13,5 +13,6 @@ public interface IRouteService {
 
     List<Route> list();
 
+    boolean existsById(String id);
 
 }

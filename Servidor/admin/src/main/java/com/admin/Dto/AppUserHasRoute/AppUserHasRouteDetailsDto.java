@@ -1,26 +1,22 @@
 package com.admin.Dto.AppUserHasRoute;
 
 import com.admin.Dto.Route.RouteDetailsDto;
-import com.admin.Service.Route.RouteService;
+import com.admin.Models.AppUserHasRoute;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class AppUserHasRouteDetailsDto {
+public class AppUserHasRouteDetailsDto implements Serializable {
 
     private Long userId;
 
-
-    private String firstName;
-
-
+    private String userName;
 
     private List<RouteDetailsDto> routes;
 
-    public AppUserHasRouteDetailsDto(Long userId, String firstName, List<RouteDetailsDto> routes) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.routes = routes;
+    public AppUserHasRouteDetailsDto() {
     }
+
 
     public Long getUserId() {
         return userId;
@@ -30,12 +26,12 @@ public class AppUserHasRouteDetailsDto {
         this.userId = userId;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public List<RouteDetailsDto> getRoutes() {
@@ -45,4 +41,7 @@ public class AppUserHasRouteDetailsDto {
     public void setRoutes(List<RouteDetailsDto> routes) {
         this.routes = routes;
     }
+
+
+
 }

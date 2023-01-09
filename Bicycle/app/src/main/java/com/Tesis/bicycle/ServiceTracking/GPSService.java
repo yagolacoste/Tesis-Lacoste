@@ -48,8 +48,19 @@ public class GPSService extends Service {
     //handle simula un thread
     private Handler handler = new Handler();
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        fusedLocationProviderClient=LocationServices.getFusedLocationProviderClient(GPSService.this);
+
+        locationRequest = LocationRequest.create();
+        locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);
+        locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);
+        locationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY); // Por defecto puse HIGH solo para verificar que andaba
 
 
+    }
 
     @Nullable
     @Override
@@ -88,13 +99,6 @@ public class GPSService extends Service {
                 notificationManager.createNotificationChannel(notificationChannel);
             }
 
-            fusedLocationProviderClient=LocationServices.getFusedLocationProviderClient(GPSService.this);
-
-            locationRequest = LocationRequest.create();
-            locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);
-            locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);
-            locationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY); // Por defecto puse HIGH solo para verificar que andaba
-
             locationCallback=new LocationCallback() {
                 @Override
                 public void onLocationResult(@NonNull LocationResult locationResult) {
@@ -102,10 +106,20 @@ public class GPSService extends Service {
                     if(locationResult !=null && locationResult.getLastLocation()!=null){
                         //latitud y longitud
                         currentLocation= locationResult.getLastLocation();
-                        GeoPoint aux=new GeoPoint(currentLocation.getLatitude(),currentLocation.getLongitude());
-                        TrackingActivity.updatePosition(aux);//actualiza mapa
-                        handler.post(sendData);
-//                        tracking.addTracking(currentLocation);
+                        if(currentLocation!=null) {
+                            if ((lastLocation == null)) {
+                                //preguntar por el tiempo
+                                tracking.addTracking(currentLocation);
+                            }
+                            else if((currentLocation.getLongitude() != lastLocation.getLongitude()) || (currentLocation.getLatitude() != lastLocation.getLatitude()))
+                                if( currentLocation.getTime()!=lastLocation.getTime()){
+                                    tracking.addTracking(currentLocation);
+                                }
+                        }
+                        lastLocation=currentLocation;//Agrege lastLocation porque sino me guardaba la misma ubicacion y tengo asincronismo en los timpos
+                        TrackingActivity.updatePosition(tracking);
+
+                       // handler.post(sendData);
                     }
                 }
             };
@@ -133,14 +147,10 @@ public class GPSService extends Service {
                     }
                 }
                 lastLocation=currentLocation;//Agrege lastLocation porque sino me guardaba la misma ubicacion y tengo asincronismo en los timpos
-            //tracking.addTracking(currentLocation);
-            //GeoPoint aux=new GeoPoint(currentLocation.getLatitude(),currentLocation.getLongitude());
-
-            handler.postDelayed(this, 1000*5);//delay de 5 segundos
+            TrackingActivity.updatePosition(tracking);
+            handler.postDelayed(this, 1000);
             }
-//            catch (Exception e) {
-//                e.printStackTrace();
-//            }
+
 
     };
 

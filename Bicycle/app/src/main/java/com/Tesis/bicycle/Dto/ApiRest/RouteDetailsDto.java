@@ -1,4 +1,4 @@
-package com.Tesis.bicycle.Dto;
+package com.Tesis.bicycle.Dto.ApiRest;
 
 import android.os.Parcelable;
 
@@ -9,28 +9,26 @@ import java.io.Serializable;
 public class RouteDetailsDto implements Serializable {
 
 
-    private Long id;
+    private String id;
 
     private String description;
 
-
-    private String weather;
-
+    private String name;
 
     private String coordinates;
 
-    public RouteDetailsDto(Long id, String description, String weather, String coordinates) {
+    public RouteDetailsDto(String id, String description, String name, String coordinates) {
         this.id = id;
         this.description = description;
-        this.weather = weather;
+        this.name = name;
         this.coordinates = coordinates;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -42,12 +40,12 @@ public class RouteDetailsDto implements Serializable {
         this.description = description;
     }
 
-    public String getWeather() {
-        return weather;
+    public String getName() {
+        return name;
     }
 
-    public void setWeather(String weather) {
-        this.weather = weather;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCoordinates() {
@@ -59,12 +57,13 @@ public class RouteDetailsDto implements Serializable {
     }
 
 
-
     @Override
     public String toString() {
-        return
-                "description='" + description + '\'' +
-                ", weather='" + weather + '\'' +
-                ", coordinates='" + coordinates + '\'' ;
+        return "RouteDetailsDto{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", name='" + name + '\'' +
+                ", coordinates='" + coordinates + '\'' +
+                '}';
     }
 }

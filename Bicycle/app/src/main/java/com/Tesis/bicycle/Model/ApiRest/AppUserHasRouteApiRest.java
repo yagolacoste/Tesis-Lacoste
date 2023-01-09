@@ -8,10 +8,11 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class AppUserHasRouteApiRest {
+public class AppUserHasRouteApiRest implements Serializable {
 
 
     private Long appUser;
@@ -26,12 +27,16 @@ public class AppUserHasRouteApiRest {
 
     private LocalDate timeSession;
 
+    private String name;
+
     private String description;
 
     private String weather;
 
     private String coordinates;
 
+    public AppUserHasRouteApiRest() {
+    }
 
     public Long getAppUser() {
         return appUser;
@@ -57,7 +62,13 @@ public class AppUserHasRouteApiRest {
         this.speed = speed;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Double getKilometres() {
         return kilometres;
@@ -116,6 +127,7 @@ public class AppUserHasRouteApiRest {
                 ", timeSpeed=" + timeSpeed +
                 ", kilometres=" + kilometres +
                 ", timeSession=" + timeSession +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", weather='" + weather + '\'' +
                 ", coordinates='" + coordinates + '\'' +

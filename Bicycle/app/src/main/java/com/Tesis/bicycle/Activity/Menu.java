@@ -15,7 +15,7 @@ import com.Tesis.bicycle.R;
 public class Menu extends AppCompatActivity {
 
 
-    private Button btn_free,btn_showPoint,btn_statistics;
+    private Button btn_free,btn_showPoint;
 
 
     @SuppressLint("MissingInflatedId")
@@ -26,7 +26,7 @@ public class Menu extends AppCompatActivity {
 
         btn_free=findViewById(R.id.btn_free);
         btn_showPoint=findViewById(R.id.btn_showRoute);
-        btn_statistics=findViewById(R.id.btn_statistics);
+
 
         btn_free.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,16 +40,7 @@ public class Menu extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i=new Intent(Menu.this, ShowPointLocationList.class);
-                i.setAction(Constants.ACTION_REPLAY_ROUTE);
-                startActivity(i);
-            }
-        });
-
-        btn_statistics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i=new Intent(Menu.this, ShowPointLocationList.class);
-                i.setAction(Constants.ACTION_VIEW_STATISTICS);
+                i.setAction(Constants.ACTION_REPLAY_MY_ROUTES);
                 startActivity(i);
             }
         });
