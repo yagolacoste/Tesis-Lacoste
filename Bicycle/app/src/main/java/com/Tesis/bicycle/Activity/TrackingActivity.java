@@ -300,7 +300,11 @@ public class TrackingActivity extends Activity  {
                 tracking.getPoints().get(tracking.getPoints().size()-1).getLongitude());
         tv_distance.setText(String.valueOf(tracking.getDistance()));
         tv_speed.setText(String.valueOf(tracking.getSpeed()));
-        tv_timeSpeed.setText(String.valueOf(tracking.getTimeSpeed()));
+//        tv_timeSpeed.setText(String.valueOf(tracking.getTimeSpeed()));
+        long hours = (long) (tracking.getTimeSpeed() / 3600);
+        long minutes = (long) ((tracking.getTimeSpeed() % 3600) / 60);
+        long seconds = (long) (tracking.getTimeSpeed() % 60);
+        tv_timeSpeed.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
         startMarker.setPosition(point);
         startMarker.setAnchor(Marker.ANCHOR_RIGHT,Marker.ANCHOR_BOTTOM);
         myOpenMapView.getOverlays().add((myOpenMapView.getOverlays().size()-1),startMarker);

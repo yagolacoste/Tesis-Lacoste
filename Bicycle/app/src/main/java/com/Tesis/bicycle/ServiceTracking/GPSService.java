@@ -53,7 +53,6 @@ public class GPSService extends Service {
         super.onCreate();
 
         fusedLocationProviderClient=LocationServices.getFusedLocationProviderClient(GPSService.this);
-
         locationRequest = LocationRequest.create();
         locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);
         locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);

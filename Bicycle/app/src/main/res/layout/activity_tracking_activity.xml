@@ -27,25 +27,31 @@
             app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="231dp"
-        android:padding="5dp">
+        android:layout_height="220dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0.0"
+        android:padding="5dp"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="110dp"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="130dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_weight="1">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:text="Distance"
+                    android:text="Distance km"
+                    android:gravity="center"
+                    android:textSize="20sp"
                     tools:layout_editor_absoluteX="5dp"
                     tools:layout_editor_absoluteY="5dp" />
 
@@ -53,24 +59,26 @@
                     android:id="@+id/tv_distance"
                     android:layout_width="match_parent"
                     android:layout_height="71dp"
-                    android:textSize="50sp"
-                    android:text="0.0"
-                    tools:text="0.0"
-                    android:textAlignment="center"
                     android:gravity="center"
+                    android:text="0.00"
+                    android:textAlignment="center"
+                    android:textSize="50sp"
                     tools:layout_editor_absoluteX="5dp"
                     tools:layout_editor_absoluteY="5dp" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="130dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:text="Speed"
+                    android:text="Speed km/h"
+                    android:gravity="center"
+                    android:textSize="20sp"
                     tools:layout_editor_absoluteX="5dp"
                     tools:layout_editor_absoluteY="5dp" />
 
@@ -78,64 +86,88 @@
                     android:id="@+id/tv_speed"
                     android:layout_width="match_parent"
                     android:layout_height="71dp"
-                    android:textSize="50sp"
-                    tools:text="00:00"
-                    android:textAlignment="center"
                     android:gravity="center"
-                    tools:layout_editor_absoluteX="5dp"
-                    tools:layout_editor_absoluteY="5dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="130dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:text="Time"
-                    tools:layout_editor_absoluteX="5dp"
-                    tools:layout_editor_absoluteY="5dp" />
-
-                <TextView
-                    android:id="@+id/tv_timeSpeed"
-                    android:layout_width="match_parent"
-                    android:layout_height="71dp"
-                    android:textSize="50sp"
-                    tools:text="0.0"
                     android:textAlignment="center"
-                    android:gravity="center"
+                    android:textSize="50sp"
                     tools:layout_editor_absoluteX="5dp"
-                    tools:layout_editor_absoluteY="5dp" />
+                    tools:layout_editor_absoluteY="5dp"
+                    android:text="0" />
             </LinearLayout>
         </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="4dp"
+                tools:layout_editor_absoluteY="115dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Time"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        tools:layout_editor_absoluteX="5dp"
+                        tools:layout_editor_absoluteY="5dp" />
+
+                    <TextView
+                        android:id="@+id/tv_timeSpeed"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:text="00:00:00"
+                        android:textSize="50sp"
+                        tools:layout_editor_absoluteX="5dp"
+                        tools:layout_editor_absoluteY="5dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="5dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
         <Button
             android:id="@+id/btn_start"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="100dp"
-            android:text="iniciar" />
-
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:text="Start"
+            android:textSize="30dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
         <Button
             android:id="@+id/btn_turnoff"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:text="apagar" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:text="Stop"
+            android:textSize="30dp"/>
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
