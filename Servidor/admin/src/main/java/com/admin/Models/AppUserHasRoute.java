@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.Optional;
 
@@ -28,20 +29,20 @@ public class AppUserHasRoute {
     @JoinColumn(name = "route_id_route")
     private Route route;
 
+    @Column(name= "distance")
+    private float distance;
+
+    @Column(name= "avg_speed")
+    private float avgSpeed;
+
+    @Column(name= "time")
+    private LocalTime time;
+
+    @Column(name= "time_created")
+    private Date timeCreated;
+
     @Column(name="weather")
     private String weather;
-
-    @Column(name= "speed")
-    private Double speed;
-
-    @Column(name= "timespeed")
-    private Double timeSpeed;
-
-    @Column(name= "kilometres")
-    private Double kilometres;
-
-    @Column(name= "timesession")
-    private LocalDate timesession;
 
 
     public AppUserHasRoute() {
@@ -79,35 +80,35 @@ public class AppUserHasRoute {
         this.route = route;
     }
 
-    public Double getSpeed() {
-        return speed;
+    public float getDistance() {
+        return distance;
     }
 
-    public void setSpeed(Double speed) {
-        this.speed = speed;
+    public void setDistance(float distance) {
+        this.distance = distance;
     }
 
-    public Double getTimeSpeed() {
-        return timeSpeed;
+    public float getAvgSpeed() {
+        return avgSpeed;
     }
 
-    public void setTimeSpeed(Double timeSpeed) {
-        this.timeSpeed = timeSpeed;
+    public void setAvgSpeed(float avgSpeed) {
+        this.avgSpeed = avgSpeed;
     }
 
-    public Double getKilometres() {
-        return kilometres;
+    public LocalTime getTime() {
+        return time;
     }
 
-    public void setKilometres(Double kilometres) {
-        this.kilometres = kilometres;
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 
-    public LocalDate getTimesession() {
-        return timesession;
+    public Date getTimeCreated() {
+        return timeCreated;
     }
 
-    public void setTimesession(LocalDate timesession) {
-        this.timesession = timesession;
+    public void setTimeCreated(Date timeCreated) {
+        this.timeCreated = timeCreated;
     }
 }

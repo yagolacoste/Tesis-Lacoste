@@ -22,11 +22,11 @@ public class StatisticsDTO implements Serializable {
     }
 
     public StatisticsDTO(AppUserHasRoute appUserHasRoute){
-        distance= appUserHasRoute.getKilometres();
-        speed=appUserHasRoute.getSpeed();
-        timeSpeed=appUserHasRoute.getTimeSpeed();
-        timeSession=appUserHasRoute.getTimesession();
-        weather=appUserHasRoute.getWeather();
+//        distance= appUserHasRoute.getDistance();
+//        speed=appUserHasRoute.getAvgSpeed();
+//        timeSpeed=appUserHasRoute.get();
+//        timeSession=appUserHasRoute.getTimesession();
+//        weather=appUserHasRoute.getWeather();
     }
 
     public Double getDistance() {

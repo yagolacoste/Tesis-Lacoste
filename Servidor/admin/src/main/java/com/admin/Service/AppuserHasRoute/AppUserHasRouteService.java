@@ -45,10 +45,10 @@ public class AppUserHasRouteService implements IAppUserHasRouteService {
     public void add(AppUserRouteRequestDto appUserRouteRequestDto) {
 
         //Guarda nueva ruta
-        if(appUserRouteRequestDto.getName()!=null) {
+        if(appUserRouteRequestDto.getTitle()!=null) {
             RouteNewRequestDto routeNewRequestDto = new RouteNewRequestDto();
             routeNewRequestDto.setId(appUserRouteRequestDto.getRoute());
-            routeNewRequestDto.setName(appUserRouteRequestDto.getName());
+            routeNewRequestDto.setName(appUserRouteRequestDto.getTitle());
             routeNewRequestDto.setDescription(appUserRouteRequestDto.getDescription());
             routeNewRequestDto.setCoordinates(appUserRouteRequestDto.getCoordinates());
             routeService.add(routeNewRequestDto);
@@ -63,10 +63,10 @@ public class AppUserHasRouteService implements IAppUserHasRouteService {
         appUserHasRoute.setId(RandomStringUtils.random(10,true,true));
         appUserHasRoute.setAppUser(u);///Transformar user
         appUserHasRoute.setRoute(route);
-        appUserHasRoute.setSpeed(appUserRouteRequestDto.getSpeed());
-        appUserHasRoute.setKilometres(appUserRouteRequestDto.getKilometres());
-        appUserHasRoute.setTimeSpeed(appUserRouteRequestDto.getTimeSpeed());
-        appUserHasRoute.setTimesession(appUserRouteRequestDto.getTimeSession());
+        appUserHasRoute.setDistance(appUserRouteRequestDto.getDistance());
+        appUserHasRoute.setAvgSpeed(appUserRouteRequestDto.getAvgSpeed());
+        appUserHasRoute.setTime(appUserRouteRequestDto.getTime());
+        appUserHasRoute.setTimeCreated(appUserRouteRequestDto.getTimeCreated());
         appUserHasRouteRepository.save(appUserHasRoute);
 
     }

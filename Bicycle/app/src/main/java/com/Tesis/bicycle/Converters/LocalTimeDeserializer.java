@@ -11,15 +11,16 @@ import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class LocalDateDeserializer implements JsonDeserializer<LocalDate> {
+public class LocalTimeDeserializer implements JsonDeserializer<LocalTime> {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public LocalDate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        return LocalDate.parse(json.getAsString(),
-                DateTimeFormatter.ofPattern("yyyy-MM-dd").withLocale(Locale.ENGLISH));
+    public LocalTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        return LocalTime.parse(json.getAsString(),
+                DateTimeFormatter.ofPattern("HH:mm:ss").withLocale(Locale.ENGLISH));
     }
 }

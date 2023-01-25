@@ -4,6 +4,8 @@ import com.admin.Models.AppUserHasRoute;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 
 public class AppUserHasRouteDto implements Serializable {
 
@@ -15,16 +17,16 @@ public class AppUserHasRouteDto implements Serializable {
 
     private String weather;
 
-    private Double speed;
+    private float avgSpeed;
 
 
-    private Double timeSpeed;
+    private LocalTime time;
 
 
-    private Double kilometres;
+    private float distance;
 
 
-    private LocalDate timeSession;
+    private Date timeCreated;
 
     public AppUserHasRouteDto() {
     }
@@ -34,10 +36,10 @@ public class AppUserHasRouteDto implements Serializable {
         this.appUser=r.getAppUser().getId();
         this.route=r.getRoute().getId();
         this.weather=r.getWeather();
-        this.speed=r.getSpeed();
-        this.timeSpeed=r.getTimeSpeed();
-        this.kilometres=r.getKilometres();
-        this.timeSession=r.getTimesession();
+        this.avgSpeed=r.getAvgSpeed();
+        this.time=r.getTime();
+        this.distance=r.getDistance();
+        this.timeCreated=r.getTimeCreated();
     }
 
     public String getId() {
@@ -72,35 +74,35 @@ public class AppUserHasRouteDto implements Serializable {
         this.weather = weather;
     }
 
-    public Double getSpeed() {
-        return speed;
+    public float getAvgSpeed() {
+        return avgSpeed;
     }
 
-    public void setSpeed(Double speed) {
-        this.speed = speed;
+    public void setAvgSpeed(float avgSpeed) {
+        this.avgSpeed = avgSpeed;
     }
 
-    public Double getTimeSpeed() {
-        return timeSpeed;
+    public LocalTime getTime() {
+        return time;
     }
 
-    public void setTimeSpeed(Double timeSpeed) {
-        this.timeSpeed = timeSpeed;
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 
-    public Double getKilometres() {
-        return kilometres;
+    public float getDistance() {
+        return distance;
     }
 
-    public void setKilometres(Double kilometres) {
-        this.kilometres = kilometres;
+    public void setDistance(float distance) {
+        this.distance = distance;
     }
 
-    public LocalDate getTimeSession() {
-        return timeSession;
+    public Date getTimeCreated() {
+        return timeCreated;
     }
 
-    public void setTimeSession(LocalDate timeSession) {
-        this.timeSession = timeSession;
+    public void setTimeCreated(Date timeCreated) {
+        this.timeCreated = timeCreated;
     }
 }

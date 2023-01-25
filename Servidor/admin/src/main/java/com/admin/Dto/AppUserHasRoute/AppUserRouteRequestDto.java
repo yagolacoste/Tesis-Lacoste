@@ -1,8 +1,11 @@
 package com.admin.Dto.AppUserHasRoute;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 public class AppUserRouteRequestDto implements Serializable {
@@ -11,17 +14,19 @@ public class AppUserRouteRequestDto implements Serializable {
 
     private String route;
 
-    private Double speed;
-
-    private Double timeSpeed;
-
-    private Double kilometres;
-
-    private LocalDate timeSession;
-
-    private String name;
+    private String title;
 
     private String description;
+
+    private float distance;
+
+    private float avgSpeed;
+
+    @JsonFormat(pattern = "H:mm:ss")
+    private LocalTime time;
+
+    @JsonFormat(pattern = "dd-MM-yyy")
+    private Date timeCreated;
 
     private String weather;
 
@@ -47,44 +52,12 @@ public class AppUserRouteRequestDto implements Serializable {
         this.route = route;
     }
 
-    public Double getSpeed() {
-        return speed;
+    public String getTitle() {
+        return title;
     }
 
-    public void setSpeed(Double speed) {
-        this.speed = speed;
-    }
-
-    public Double getTimeSpeed() {
-        return timeSpeed;
-    }
-
-    public void setTimeSpeed(Double timeSpeed) {
-        this.timeSpeed = timeSpeed;
-    }
-
-    public Double getKilometres() {
-        return kilometres;
-    }
-
-    public void setKilometres(Double kilometres) {
-        this.kilometres = kilometres;
-    }
-
-    public LocalDate getTimeSession() {
-        return timeSession;
-    }
-
-    public void setTimeSession(LocalDate timeSession) {
-        this.timeSession = timeSession;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -93,6 +66,38 @@ public class AppUserRouteRequestDto implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
+    }
+
+    public float getAvgSpeed() {
+        return avgSpeed;
+    }
+
+    public void setAvgSpeed(float avgSpeed) {
+        this.avgSpeed = avgSpeed;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
+    }
+
+    public Date getTimeCreated() {
+        return timeCreated;
+    }
+
+    public void setTimeCreated(Date timeCreated) {
+        this.timeCreated = timeCreated;
     }
 
     public String getWeather() {
@@ -110,6 +115,4 @@ public class AppUserRouteRequestDto implements Serializable {
     public void setCoordinates(String coordinates) {
         this.coordinates = coordinates;
     }
-
-
 }
