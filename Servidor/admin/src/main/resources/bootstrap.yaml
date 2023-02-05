@@ -7,8 +7,7 @@ spring:
     dialect : org.hibernate.dialect.MySQL8Dialect
   application:
     name: admin-service
-
-cloud:
-  config:
-    enable: true
-    uri: http://localhost:8082
+  cloud:
+    config:
+      enable: true
+      uri: http://localhost:8082
