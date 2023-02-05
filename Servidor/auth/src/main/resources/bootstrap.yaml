@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/bicycle
+    username: root
+    password: root
+    hibernate:
+      dialect : org.hibernate.dialect.MySQL8Dialect
+      dll-auto: update
+  application:
+    name: auth-service
+
+cloud:
+  config:
+  enable: true
+  uri: http://locahost:8082
+
+server:
+  port: 8081
+
+Bicycle:
+  app:
+    jwtSecret: bicycle
+    jwtExpirationMs: 60000
+    jwtRefreshExpirationMS: 120000

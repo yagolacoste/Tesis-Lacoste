@@ -45,15 +45,12 @@ public class AppUserHasRouteService implements IAppUserHasRouteService {
     public void add(AppUserRouteRequestDto appUserRouteRequestDto) {
 
         //Guarda nueva ruta
-        if(appUserRouteRequestDto.getTitle()!=null) {
             RouteNewRequestDto routeNewRequestDto = new RouteNewRequestDto();
             routeNewRequestDto.setId(appUserRouteRequestDto.getRoute());
             routeNewRequestDto.setName(appUserRouteRequestDto.getTitle());
             routeNewRequestDto.setDescription(appUserRouteRequestDto.getDescription());
             routeNewRequestDto.setCoordinates(appUserRouteRequestDto.getCoordinates());
             routeService.add(routeNewRequestDto);
-        }
-
         //Guarda nuevas estadisticas
         Route route=routeService.getById(appUserRouteRequestDto.getRoute());
         UserAppDto appUser=userService.getByUser(appUserRouteRequestDto.getAppUser());
@@ -85,7 +82,7 @@ public class AppUserHasRouteService implements IAppUserHasRouteService {
 
     @Override
     public AppUserHasRouteDetailsDto getRoutesByUser(Long appUser) {
-       List<RouteDetailsDto> result=appUserHasRouteRepository.findByRoute(appUser);
+        List<RouteDetailsDto> result=appUserHasRouteRepository.findByRoute(appUser);
         UserAppDto user=userService.getByUser(appUser);
         AppUserHasRouteDetailsDto appUserHasRouteDetailsDto= new AppUserHasRouteDetailsDto();
         appUserHasRouteDetailsDto.setUserId(appUser);

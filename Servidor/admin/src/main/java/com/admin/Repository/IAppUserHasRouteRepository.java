@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface IAppUserHasRouteRepository extends JpaRepository<AppUserHasRoute, String> {
 
-    @Query("SELECT new com.admin.Dto.Route.RouteDetailsDto(r.id,r.description,r.name,r.coordinates)  FROM AppUserHasRoute ar inner join Route r on (ar.route.id=r.id) where ar.appUser.id = :appUser")
+    @Query("SELECT distinct new com.admin.Dto.Route.RouteDetailsDto(r.id,r.description,r.name,r.coordinates)  FROM AppUserHasRoute ar inner join Route r on (ar.route.id=r.id) where ar.appUser.id = :appUser")
     List<RouteDetailsDto> findByRoute(long appUser);
 
     @Query("SELECT new com.admin.Dto.AppUserHasRoute.StatisticsDTO(ar) FROM AppUserHasRoute ar where ar.route.id = :routeId")

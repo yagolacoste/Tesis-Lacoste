@@ -14,7 +14,6 @@ public class RouteDetailsDto implements Serializable {
 
     private String description;
 
-
     private String coordinates;
 
     public RouteDetailsDto(String id, String description, String name, String coordinates) {
