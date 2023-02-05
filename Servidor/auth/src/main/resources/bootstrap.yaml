@@ -13,7 +13,7 @@ spring:
 cloud:
   config:
   enable: true
-  uri: http://locahost:8081
+  uri: http://locahost:8082
 
 
 
