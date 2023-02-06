@@ -9,15 +9,12 @@ spring:
       dll-auto: update
   application:
     name: auth-service
-  cloud:
-    config:
-      enable: true
-      uri: http://localhost:8082
 
-
+server:
+  port: 8081
 
 Bicycle:
-    app:
-      jwtSecret: bicycle
-      jwtExpirationMs: 60000
-      jwtRefreshExpirationMS: 120000
+  app:
+    jwtSecret: bicycle
+    jwtExpirationMs: 60000
+    jwtRefreshExpirationMS: 120000

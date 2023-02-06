@@ -5,16 +5,19 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 
 public class StatisticsDTO implements Serializable {
 
-    private Double distance;
+    private float distance;
 
-    private Double speed;
+    private float speed;
 
-    private Double timeSpeed;
+    private LocalTime timeSpeed;
 
-    private LocalDate timeSession;
+    @JsonFormat(timezone = "dd-MM-yyyy")
+    private Date timeSession;
 
     private String weather;
 
@@ -22,42 +25,42 @@ public class StatisticsDTO implements Serializable {
     }
 
     public StatisticsDTO(AppUserHasRoute appUserHasRoute){
-//        distance= appUserHasRoute.getDistance();
-//        speed=appUserHasRoute.getAvgSpeed();
-//        timeSpeed=appUserHasRoute.get();
-//        timeSession=appUserHasRoute.getTimesession();
-//        weather=appUserHasRoute.getWeather();
+        distance= appUserHasRoute.getDistance();
+        speed=appUserHasRoute.getAvgSpeed();
+        timeSpeed=appUserHasRoute.getTime();
+        timeSession=appUserHasRoute.getTimeCreated();
+        weather=appUserHasRoute.getWeather();
     }
 
-    public Double getDistance() {
+    public float getDistance() {
         return distance;
     }
 
-    public void setDistance(Double distance) {
+    public void setDistance(float distance) {
         this.distance = distance;
     }
 
-    public Double getSpeed() {
+    public float getSpeed() {
         return speed;
     }
 
-    public void setSpeed(Double speed) {
+    public void setSpeed(float speed) {
         this.speed = speed;
     }
 
-    public Double getTimeSpeed() {
+    public LocalTime getTimeSpeed() {
         return timeSpeed;
     }
 
-    public void setTimeSpeed(Double timeSpeed) {
+    public void setTimeSpeed(LocalTime timeSpeed) {
         this.timeSpeed = timeSpeed;
     }
 
-    public LocalDate getTimeSession() {
+    public Date getTimeSession() {
         return timeSession;
     }
 
-    public void setTimeSession(LocalDate timeSession) {
+    public void setTimeSession(Date timeSession) {
         this.timeSession = timeSession;
     }
 

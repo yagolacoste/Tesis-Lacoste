@@ -16,7 +16,7 @@ import java.util.UUID;
 @Service
 public class RefreshTokenService implements IRefreshTokenService{
 
-    @Value("${Bicycle.app.jwtRefreshExpirationMs}")
+    @Value("${Bicycle.app.jwtRefreshExpirationMS}")
     private long refreshTokenDurationMs;
 
     @Autowired
