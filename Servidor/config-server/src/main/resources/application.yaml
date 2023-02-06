@@ -1,6 +1,8 @@
 server:
   port: 8082
 spring:
+  application:
+    name: config-service
   cloud:
     config:
       server:
@@ -8,7 +10,4 @@ spring:
           default-label: FifthPoint
           uri: https://github.com/yagolacoste/Tesis-Lacoste
           search-paths: config-data
-          username: ${GIT_USER}
-          password: ${GIT_PASSWORD}
-  application:
-    name: config-server
+
