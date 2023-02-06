@@ -9,7 +9,7 @@ spring:
         git:
           default-label: FifthPoint
           uri: https://github.com/yagolacoste/Tesis-Lacoste.git
-          searchPath: config-data
+          searchPaths: config-data
           username : ${GIT_USER}
           password: ${GIT_PASSWORD}
   security:
