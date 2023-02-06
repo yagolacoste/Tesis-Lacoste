@@ -6,7 +6,9 @@ spring:
       server:
         git:
           default-label: FifthPoint
-          uri: https://github.com/yagolacoste/Tesis-Lacoste
+          uri: https://github.com/yagolacoste/Tesis-Lacoste/tree
           search-paths: config-data
+          username: ${GIT_USER}
+          password: ${GIT_PASSWORD}
   application:
     name: config-server
