@@ -1,13 +1,14 @@
 spring:
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/bicycle
-    username: root
-    password: root
-    dialect : org.hibernate.dialect.MySQL8Dialect
   application:
     name: admin-service
   cloud:
     config:
       enable: true
       uri: http://localhost:8082
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/bicycle
+    username: root
+    password: root
+    dialect : org.hibernate.dialect.MySQL8Dialect
+

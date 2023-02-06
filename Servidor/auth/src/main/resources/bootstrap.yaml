@@ -17,7 +17,7 @@ spring:
 
 
 Bicycle:
-  app:
-    jwtSecret: bicycle
-    jwtExpirationMs: 60000
-    jwtRefreshExpirationMS: 120000
+    app:
+      jwtSecret: bicycle
+      jwtExpirationMs: 60000
+      jwtRefreshExpirationMS: 120000
