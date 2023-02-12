@@ -12,7 +12,7 @@ import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.R;
 
 
-public class Menu extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity {
 
 
     private Button btn_free,btn_showPoint;
@@ -31,7 +31,7 @@ public class Menu extends AppCompatActivity {
         btn_free.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(Menu.this, TrackingActivity.class);
+                Intent i=new Intent(MenuActivity.this, TrackingActivity.class);
                 startActivity(i);
             }
         });
@@ -39,7 +39,7 @@ public class Menu extends AppCompatActivity {
         btn_showPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(Menu.this, ShowPointLocationList.class);
+                Intent i=new Intent(MenuActivity.this, ShowPointLocationList.class);
                 i.setAction(Constants.ACTION_REPLAY_MY_ROUTES);
                 startActivity(i);
             }

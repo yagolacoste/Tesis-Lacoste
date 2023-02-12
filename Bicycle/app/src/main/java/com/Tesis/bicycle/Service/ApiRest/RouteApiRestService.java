@@ -1,6 +1,6 @@
 package com.Tesis.bicycle.Service.ApiRest;
 
-import com.Tesis.bicycle.Model.ApiRest.RouteApiRest;
+import com.Tesis.bicycle.Dto.ApiRest.RouteApiRest;
 
 import java.util.List;
 

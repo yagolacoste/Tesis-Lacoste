@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -73,7 +74,8 @@ public class ShowPointLocationList extends Activity {
 //
             @Override
             public void onFailure(Call<AppUserHasRouteDetailsDto> call, Throwable t) {
-                Log.e("Error",t.getMessage());
+
+                    Toast.makeText(getApplicationContext(),"NO hay conexion a internet",Toast.LENGTH_SHORT).show();
             }
         });
     }

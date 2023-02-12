@@ -1,18 +1,17 @@
-package com.tesis.Auth.security.jwt;
+package com.Tesis.auth.security.Jwt;
 
-import com.tesis.Auth.config.UserDetailsImpl;
+import com.Tesis.auth.service.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @Component
-public class JwtUtils implements IJwtUtils{
+public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
     @Value("${Bicycle.app.jwtSecret}")
@@ -21,19 +20,21 @@ public class JwtUtils implements IJwtUtils{
     @Value("${Bicycle.app.jwtExpirationMs}")
     private int jwtExpirationMs;
 
-    @Override
-    public String generateJwtToken(UserDetailsImpl userDetailsServiceImpl){
-        return getUserNameFromJwtToken(userDetailsServiceImpl.getUsername());
+    public String generateJwtToken(UserDetailsImpl userPrincipal) {
+        return generateTokenFromUsername(userPrincipal.getUsername());
     }
 
-    @Override
-    public String getUserNameFromJwtToken(String token) {
-        return Jwts.builder().setSubject(token).setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime()+jwtExpirationMs)).signWith(SignatureAlgorithm.HS512,jwtSecret)
+    public String generateTokenFromUsername(String username) {
+        return Jwts.builder().setSubject(username).setIssuedAt(new Date())
+                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs)).signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
 
-    @Override
+
+    public String getUserNameFromJwtToken(String token) {
+        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+    }
+
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
@@ -52,11 +53,4 @@ public class JwtUtils implements IJwtUtils{
 
         return false;
     }
-
-    @Override
-    public Long getIdFromJwtToken(String jwt) {
-        return null;
-    }
-
-
 }

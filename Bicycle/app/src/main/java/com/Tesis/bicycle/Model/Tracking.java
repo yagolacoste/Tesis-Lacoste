@@ -3,151 +3,359 @@ package com.Tesis.bicycle.Model;
 import android.location.Location;
 import android.os.Build;
 
+import androidx.annotation.RequiresApi;
+
+import com.Tesis.bicycle.Activity.TrackingActivity;
+import com.Tesis.bicycle.Constants;
 import com.google.gson.annotations.SerializedName;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.osmdroid.util.GeoPoint;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 import kotlin.jvm.Transient;
 
 public class Tracking implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    private Double distance=0.0;
-    private Double speed=0.0;
-    private Double timeSpeed=0.0;
-    private LocalDate timeSession=null;
-
-
-    private transient List<Location> points;
+    private String id;
+    private String title="";
+    private String description="";
+    private float distance=0;
+    private float avgSpeed=0;
+    private Date timeCreated=null;
+    private Date timeStarted=null;
+    private Date timeStopped=null;
+    private int rating=5;
+    private int activityType;
+    private long timeElapsedBetweenStartStops = 0;
+    private float timeElapsedBetweenTrkPoints = 0;
+    private float totalSpeedForRunningAverage = 0;
+    private int totalTrkPointsWithSpeedForRunningAverage = 0;
+    private long timeInMilliseconds=0;
+    private transient List<Location> points=new ArrayList<>();
+    private transient List<GeoPoint> pointsDraw=new ArrayList<>();
+    private boolean repeat=false;
 
     public Tracking() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            timeSession=LocalDate.now();
-        }
-        points=new ArrayList<>();
+
+    }
+
+    public Tracking(Tracking tracking){
+        id=tracking.getId();
+        title=tracking.getTitle();
+        description=tracking.getDescription();
+        pointsDraw=tracking.getPointsDraw();
+        repeat=true;
     }
 
 
     public void addTracking(Location currentLocation) {
-        if(!points.isEmpty()) {
+
+        if(points.isEmpty()) {
+            avgSpeed=currentLocation.getSpeed();
+        }else{
             Location lastPoint = points.get(points.size() - 1);
-            distance += Double.valueOf((lastPoint.distanceTo(currentLocation)) / 1000);
-            if (currentLocation.hasSpeed())
-                speed += Double.valueOf(currentLocation.getSpeed());
-            timeSpeed +=Double.valueOf( currentLocation.getTime());
+            distance += lastPoint.distanceTo(currentLocation);
+            timeElapsedBetweenTrkPoints +=Math.abs(this.getLastPoint().getTime()-currentLocation.getTime());
         }
-        else{
-             if (currentLocation.hasSpeed())
-                 speed += Double.valueOf(currentLocation.getSpeed());
-             timeSpeed += Double.valueOf(currentLocation.getTime());
+        if(currentLocation.hasSpeed()){
+            totalSpeedForRunningAverage+=currentLocation.getSpeed();
+            totalTrkPointsWithSpeedForRunningAverage+=1;
+            avgSpeed=totalSpeedForRunningAverage/totalTrkPointsWithSpeedForRunningAverage;
         }
         points.add(currentLocation);
+    }
+
+    public Location getLastPoint(){
+        if(!points.isEmpty())
+            return points.get(points.size()-1);
+        return null;
+    }
+
+    public boolean isCreated(){
+        return !(timeCreated==null);
+    }
+
+    public void startTrackingActivity(){
+        timeCreated=new Date(System.currentTimeMillis());
+        timeStarted=new Date(System.currentTimeMillis());
+        if(id==null)
+            id= RandomStringUtils.random(Constants.MAX_CARACTER_ID,true,true);
+    }
+
+    public void stopTrackingActivity(){
+        timeStopped=new Date(System.currentTimeMillis());
 
     }
+
+    public long getCurrentTimeMillis(){
+        return timeElapsedBetweenStartStops+(System.currentTimeMillis()-timeStarted.getTime());
+    }
+
+    //return activity recognicion with determinate avgspeed
+    public static int getPredictedActivityType(float avgSpeed){
+        if(avgSpeed<8) {
+            return 2;
+        }else if(avgSpeed<15){
+            return 1;
+        }else return 3;
+    }
+    public LocalTime millsToLocalTime() {
+//        Instant instant = Instant.ofEpochMilli(timeInMilliseconds);
+        long timeSwapBuff = 0L;
+        long updateTime = timeSwapBuff + timeInMilliseconds;
+        int secs = (int) (updateTime / 1000);
+        int mins = secs / 60;
+        secs %= 60;
+        int hrs = mins / 60;
+        mins %= 60;
+        int milliseconds = (int) timeInMilliseconds % 1000;
+        int centisecs = milliseconds / 10;
+        LocalTime date = LocalTime.of(hrs, mins, secs);
+        return date;
+    }
+
+    public String getTimeString(){
+        timeInMilliseconds=getCurrentTimeMillis();
+        return timeToString(timeInMilliseconds);
+    }
+
+    public static String timeToString(long timeInMilliseconds) {
+        long timeSwapBuff = 0L;
+        long updateTime = timeSwapBuff + timeInMilliseconds;
+        int secs = (int) (updateTime / 1000);
+        int mins = secs / 60;
+        secs %= 60;
+        int hrs = mins / 60;
+        mins %= 60;
+        int milliseconds = (int) timeInMilliseconds % 1000;
+        int centisecs = milliseconds / 10;
+
+        if (hrs == 0) {
+            if (mins == 0) {
+                return String.format(Locale.US, "%d.%02ds", secs, centisecs);
+            } else {
+                return String.format(Locale.US, "%dm %02ds", mins, secs, centisecs);
+            }
+        }
+        return String.format(Locale.US, "%dh %02dm", hrs, mins);
+    }
+
+    public String getDistanceString(){return distanceToString(distance,true);}
+
+    public static String distanceToString(float distance, boolean b) {
+        int metres = Math.round(distance);
+        int km = metres / 1000;
+        metres = metres % 1000;
+        String format = "%d";//buscar
+
+        if (km == 0) {
+            if (b) {
+                format += "m";
+            }
+            return String.format(Locale.UK, format, metres);
+        }
+
+        metres = metres/10;
+        format = "%d.%02d";
+        if (b) {
+            format += "km";
+        }
+        return String.format(Locale.UK, format, km, metres);
+    }
+
+    public String getAvgSpeedString(){return String.format(Locale.UK, "%.2f", avgSpeed);}
 
     public  List<Location> getPoints() {
         return points;
     }
 
+
+    public List<GeoPoint> getGeoPoints(){
+        if(!isRepeat()){
+        List<GeoPoint>geoPoints=new ArrayList<>();
+        for (Location l:points){
+            GeoPoint g=new GeoPoint(l.getLatitude(),l.getLongitude());
+            geoPoints.add(g);
+            }
+            return geoPoints;
+        }
+        return pointsDraw;
+    }
+
+
     public  void setPoints(List<Location> points){
         this.points = points;
     }
 
-    public Double getDistance() {
+    public String getTitle() {
+        return title;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public float getDistance() {
         return distance;
     }
 
-    public void setDistance(Double distance) {
+    public void setDistance(float distance) {
         this.distance = distance;
     }
 
-    public Double getSpeed() {
-        return speed;
+    public float getAvgSpeed() {
+        return avgSpeed;
     }
 
-    public void setSpeed(Double speed) {
-        this.speed = speed;
+    public void setAvgSpeed(float avgSpeed) {
+        this.avgSpeed = avgSpeed;
     }
 
-    public Double getTimeSpeed() {
-        return timeSpeed;
+    public Date getTimeCreated() {
+        return timeCreated;
     }
 
-    public void setTimeSpeed(Double timeSpeed) {
-        this.timeSpeed = timeSpeed;
+    public void setTimeCreated(Date timeCreated) {
+        this.timeCreated = timeCreated;
     }
 
-    public LocalDate getTimeSession() {
-        return timeSession;
+    public Date getTimeStarted() {
+        return timeStarted;
     }
 
-    public void setTimeSession(LocalDate timeSession) {
-        this.timeSession = timeSession;
+    public void setTimeStarted(Date timeStarted) {
+        this.timeStarted = timeStarted;
     }
 
-    //    private double getSpeed(){
-//        double speed=0;
-//        int j=0;
-//        //
-//        for(int i=0;i<savedlocations.size();i++){
-//
-//            Location p1=savedlocations.get(i);
-//            if(p1.hasSpeed()){
-//                speed=speed+p1.getSpeed();
-//                j++;//--->sumo j para contar los puntos que tuvieorn velocidad
-//            }
-//        }
-//        return speed/j;
-//    }
+    public Date getTimeStopped() {
+        return timeStopped;
+    }
 
+    public void setTimeStopped(Date timeStopped) {
+        this.timeStopped = timeStopped;
+    }
 
-    //
-//    private double getTimeSpeed() {//acomodar esto size-getTime(0); para calcular el tiempo que tardo en hacerlo
-//        double time=0;
-//        for(int i=0;i<savedlocations.size();i++){
-//            time=time+savedlocations.get(i).getTime();
-//        }
-//        return time;
-//    }
-//
-//    //obtengo la velocidad promedio(metros por segundo)----->getSpeedAcuraccyMetersPerSecond()
-//    private double getSpeed(){
-//        double speed=0;
-//        int j=0;
-//        //
-//        for(int i=0;i<savedlocations.size();i++){
-//
-//            Location p1=savedlocations.get(i);
-//            if(p1.hasSpeed()){
-//            speed=speed+p1.getSpeed();
-//            j++;//--->sumo j para contar los puntos que tuvieorn velocidad
-//            }
-//        }
-//        return speed/j;
-//    }
-//
-//    //Obtengo la distancia entre los puntos
-//    private double getDistance() {
-//        double distance=0;
-//        int i=0;
-//        Location p1=null;
-//        while(i<savedlocations.size()){
-//            p1=savedlocations.get(i);
-//            if(i+1<savedlocations.size()){
-//                Location p2=savedlocations.get(i+1);
-//                distance=distance+p1.distanceTo(p2);
-//            }
-//            else
-//                break;
-//            i++;
-//        }
-//        return distance/1000;//lo da en metros
-//    }
+    public int getRating() {
+        return rating;
+    }
 
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public int getActivityType() {
+        return activityType;
+    }
+
+    public void setActivityType(int activityType) {
+        this.activityType = activityType;
+    }
+
+    public long getTimeElapsedBetweenStartStops() {
+        return timeElapsedBetweenStartStops;
+    }
+
+    public void setTimeElapsedBetweenStartStops(long timeElapsedBetweenStartStops) {
+        this.timeElapsedBetweenStartStops = timeElapsedBetweenStartStops;
+    }
+
+    public float getTimeElapsedBetweenTrkPoints() {
+        return timeElapsedBetweenTrkPoints;
+    }
+
+    public void setTimeElapsedBetweenTrkPoints(float timeElapsedBetweenTrkPoints) {
+        this.timeElapsedBetweenTrkPoints = timeElapsedBetweenTrkPoints;
+    }
+
+    public float getTotalSpeedForRunningAverage() {
+        return totalSpeedForRunningAverage;
+    }
+
+    public void setTotalSpeedForRunningAverage(float totalSpeedForRunningAverage) {
+        this.totalSpeedForRunningAverage = totalSpeedForRunningAverage;
+    }
+
+    public int getTotalTrkPointsWithSpeedForRunningAverage() {
+        return totalTrkPointsWithSpeedForRunningAverage;
+    }
+
+    public void setTotalTrkPointsWithSpeedForRunningAverage(int totalTrkPointsWithSpeedForRunningAverage) {
+        this.totalTrkPointsWithSpeedForRunningAverage = totalTrkPointsWithSpeedForRunningAverage;
+    }
+
+    public long getTimeInMilliseconds() {
+        return timeInMilliseconds;
+    }
+
+    public void setTimeInMilliseconds(long timeInMilliseconds) {
+        this.timeInMilliseconds = timeInMilliseconds;
+    }
+
+    public boolean isRepeat() {
+        return repeat;
+    }
+
+    public void setRepeat(boolean repeat) {
+        this.repeat = repeat;
+    }
+
+    public List<GeoPoint> getPointsDraw() {
+        return pointsDraw;
+    }
+
+    public void setPointsDraw(List<GeoPoint> pointsDraw) {
+        this.pointsDraw = pointsDraw;
+    }
+
+    @Override
+    public String toString() {
+        return "Tracking{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", distance=" + distance +
+                ", avgSpeed=" + avgSpeed +
+                ", timeCreated=" + timeCreated +
+                ", timeStarted=" + timeStarted +
+                ", timeStopped=" + timeStopped +
+                ", rating=" + rating +
+                ", activityType=" + activityType +
+                ", timeElapsedBetweenStartStops=" + timeElapsedBetweenStartStops +
+                ", timeElapsedBetweenTrkPoints=" + timeElapsedBetweenTrkPoints +
+                ", totalSpeedForRunningAverage=" + totalSpeedForRunningAverage +
+                ", totalTrkPointsWithSpeedForRunningAverage=" + totalTrkPointsWithSpeedForRunningAverage +
+                ", timeInMilliseconds=" + timeInMilliseconds +
+                ", points=" + points +
+                ", repeat=" + repeat +
+                '}';
+    }
 }

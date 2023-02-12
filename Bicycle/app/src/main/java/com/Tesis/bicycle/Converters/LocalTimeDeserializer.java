@@ -21,6 +21,6 @@ public class LocalTimeDeserializer implements JsonDeserializer<LocalTime> {
     @Override
     public LocalTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         return LocalTime.parse(json.getAsString(),
-                DateTimeFormatter.ofPattern("HH:mm:ss").withLocale(Locale.ENGLISH));
+                DateTimeFormatter.ofPattern("H:mm:ss").withLocale(Locale.US));
     }
 }

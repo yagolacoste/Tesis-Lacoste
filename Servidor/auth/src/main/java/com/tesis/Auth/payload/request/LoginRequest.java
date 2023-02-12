@@ -1,18 +1,14 @@
-package com.tesis.Auth.payload.request;
+package com.Tesis.auth.payload.request;
+
 
 import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
 
-public class LoginRequest implements Serializable {
-
+public class LoginRequest {
     @NotBlank
     private String username;
 
     @NotBlank
     private String password;
-
-    public LoginRequest() {
-    }
 
     public String getUsername() {
         return username;

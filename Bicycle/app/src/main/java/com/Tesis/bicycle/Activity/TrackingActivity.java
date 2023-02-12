@@ -3,28 +3,27 @@ package com.Tesis.bicycle.Activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.text.InputType;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Switch;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,21 +34,18 @@ import androidx.room.Room;
 
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
-import com.Tesis.bicycle.Dto.Room.RouteDTO;
-import com.Tesis.bicycle.Model.ApiRest.AppUserHasRouteApiRest;
 import com.Tesis.bicycle.Model.Room.AppUserHasRoute;
 import com.Tesis.bicycle.Model.Tracking;
-import com.Tesis.bicycle.Presenter.ApiRestConecction;
 import com.Tesis.bicycle.Presenter.AppDataBase;
 import com.Tesis.bicycle.Model.Room.Route;
 
 import com.Tesis.bicycle.R;
-import com.Tesis.bicycle.Service.ApiRest.AppUserHasRouteApiRestService;
 import com.Tesis.bicycle.ServiceTracking.GPSService;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONArray;
@@ -70,19 +66,19 @@ import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class TrackingActivity extends Activity  {
 
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
 
-    private static TextView tv_distance,tv_speed,tv_timeSpeed;
-    private Switch  sw_gps;
+    private TextView tv_distance,tv_avgSpeed,tv_time;
     private Button btn_start,btn_turnoff;
+
+    GPSService.LocationBinder locationBinder=null;
+    int activityTypeInd;
+    Tracking repeat=null;
+
+    boolean stopped = false,isRepeat=false;
 
     //Base de datos local utilizando room
     private AppDataBase db;
@@ -91,24 +87,84 @@ public class TrackingActivity extends Activity  {
     private RouteDetailsDto routeDetailsDto;
 
     //osm
-    private static MapView myOpenMapView;
+    private MapView myOpenMapView;
     private CompassOverlay mCompassOverlay;
-    public static Marker startMarker;
+    public  Marker startMarker;
 
 
-    BroadcastReceiver myReceiver= new BroadcastReceiver() {
+    Handler updateTimeHandler = new Handler();
+    Handler updateStatsHandler = new Handler();
+
+    Runnable updateTimeThread= new Runnable() {
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void run() {
+            String timeString=locationBinder.getTimeString();
+            tv_time.setText(timeString);
+            if (!stopped) updateTimeHandler.postDelayed(this, 0);
+        }
+    };
 
-            Tracking tracking= (Tracking)intent.getExtras().getSerializable(Constants.TRACKING);
-            tracking.setPoints(intent.getParcelableArrayListExtra("points"));
-            addRegisterRoute(tracking);
-            addRegisterStatistics(tracking);
+    Runnable updateStatsThread=new Runnable() {
+        @Override
+        public void run() {
+            tv_distance.setText(locationBinder.getDistanceString());
+            tv_avgSpeed.setText(locationBinder.getAvgSpeedString());
+            if(locationBinder.getLastLocation()!=null)
+                updatePosition(locationBinder.getLastLocation());
+            if (!stopped) updateStatsHandler.postDelayed(this, 1000);
         }
     };
 
 
 
+//    BroadcastReceiver myReceiver= new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//
+//            Tracking tracking= (Tracking)intent.getExtras().getSerializable(Constants.TRACKING);
+//            tracking.setPoints(intent.getParcelableArrayListExtra("points"));
+//            addRegisterRoute(tracking);
+//            addRegisterStatistics(tracking);
+//        }
+//    };
+    private BroadcastReceiver locationSettingStateReceiver = new BroadcastReceiver() {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (intent.getAction().matches("android.location.PROVIDERS_CHANGED")) {
+            if (!stopped) {
+                stopLocationService();
+                Toast.makeText(context, "Location must be on to track session", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    };
+
+
+    private ServiceConnection lsc=new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+
+            locationBinder= (GPSService.LocationBinder) iBinder;
+            if(repeat!=null){
+                locationBinder.setTrackingActivity(repeat);
+                repeat=null;
+            }
+            locationBinder.startTracking();
+            locationBinder.setActivityType(activityTypeInd);
+            registerReceiver(locationSettingStateReceiver,new IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION));
+            updateTimeHandler.postDelayed(updateTimeThread, 0);
+            updateStatsHandler.postDelayed(updateStatsThread, 0);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            locationBinder=null;
+
+        }
+    };
+
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -121,8 +177,8 @@ public class TrackingActivity extends Activity  {
         checkPermissions(true);
 
         tv_distance=findViewById(R.id.tv_distance);
-        tv_speed=findViewById(R.id.tv_speed);
-        tv_timeSpeed=findViewById(R.id.tv_timeSpeed);
+        tv_avgSpeed=findViewById(R.id.tv_avgSpeed);
+        tv_time=findViewById(R.id.tv_time);
         myOpenMapView=(MapView)findViewById(R.id.v_map);
         btn_start=findViewById(R.id.btn_start);
         btn_turnoff=findViewById(R.id.btn_turnoff);
@@ -137,6 +193,7 @@ public class TrackingActivity extends Activity  {
         if ( checkPermissions(true)) {
           initLayer(ctx);
             String writeExternalStorage = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
         }
 
 
@@ -152,7 +209,9 @@ public class TrackingActivity extends Activity  {
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startLocationService();
+                updateLastLocation();
+//                startLocationService();
+                btn_start.setEnabled(false);
             }
         });
 
@@ -161,8 +220,9 @@ public class TrackingActivity extends Activity  {
             @Override
             public void onClick(View view) {
                 stopLocationService();
-                registerReceiver(myReceiver,new IntentFilter(Constants.ACTION_UPDATE_SERVICE));
+//                registerReceiver(myReceiver,new IntentFilter(Constants.ACTION_UPDATE_SERVICE));
                 Intent i=new Intent(TrackingActivity.this,TrackingDetailActivity.class);
+
                 if(routeDetailsDto!=null){
                     i.setAction(Constants.REPLAY_MY_ROUTE);
                 }
@@ -207,7 +267,31 @@ public class TrackingActivity extends Activity  {
                 routeDetailsDto= (RouteDetailsDto) getIntent().getSerializableExtra("Route");
                 List<GeoPoint>route=getCoordinates();//Transformo la ruta en geopoint
                 drawRoute(route);
+                isRepeat=true;
+                repeat=new Tracking();
+                 String[] id=routeDetailsDto.getId().split("-");
+                repeat.setId(id[1]);
+                repeat.setTitle(routeDetailsDto.getName());
+                repeat.setDescription(routeDetailsDto.getDescription());
+                repeat.setPointsDraw(route);
             }
+
+    }
+
+    private void updateLastLocation() {
+       FusedLocationProviderClient fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(TrackingActivity.this);
+       LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);
+        locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);
+        locationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY); // Por defecto puse HIGH solo para verificar que andaba
+        if (!(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    startLocationService();
+                }
+            });
+        }
     }
 
     //This Alert is not gps service activated
@@ -262,7 +346,6 @@ public class TrackingActivity extends Activity  {
         try {
             JSONArray coordinates=new JSONArray(resultCoordinates);
             for(int i=0;i<coordinates.length();i++){
-//                JSONObject point=coordinates.getJSONObject(i);
                 String aux=coordinates.getString(i);
                 String[] split=aux.split(",");
                 result.add(new GeoPoint(Double.valueOf(split[0]),Double.valueOf(split[1])));
@@ -295,64 +378,30 @@ public class TrackingActivity extends Activity  {
     }
 
 
-    public static void updatePosition(Tracking tracking){
-        GeoPoint point=new GeoPoint(tracking.getPoints().get(tracking.getPoints().size()-1).getLatitude(),
-                tracking.getPoints().get(tracking.getPoints().size()-1).getLongitude());
-        tv_distance.setText(String.valueOf(tracking.getDistance()));
-        tv_speed.setText(String.valueOf(tracking.getSpeed()));
-//        tv_timeSpeed.setText(String.valueOf(tracking.getTimeSpeed()));
-        long hours = (long) (tracking.getTimeSpeed() / 3600);
-        long minutes = (long) ((tracking.getTimeSpeed() % 3600) / 60);
-        long seconds = (long) (tracking.getTimeSpeed() % 60);
-        tv_timeSpeed.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
+    public  void updatePosition(Location location){
+        GeoPoint point=new GeoPoint(location.getLatitude(),location.getLongitude());
         startMarker.setPosition(point);
         startMarker.setAnchor(Marker.ANCHOR_RIGHT,Marker.ANCHOR_BOTTOM);
         myOpenMapView.getOverlays().add((myOpenMapView.getOverlays().size()-1),startMarker);
         IMapController mapController=myOpenMapView.getController();
         mapController.setCenter(point);
         myOpenMapView.invalidate();
-
     }
 
-
-
-
-
-    /////////////////////////PRUEBA DE SERVICIO GPS///////////////////////////////
-    private boolean isLocationServiceRunning(){
-        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        if(activityManager!=null){
-            for(ActivityManager.RunningServiceInfo service:
-            activityManager.getRunningServices(Integer.MAX_VALUE)){
-                if(GPSService.class.getName().equals(service.service.getClassName())){
-                    if(service.foreground){
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-        return false;
-    }
 
     //Inicia el servicio de localizacion
     private void startLocationService(){
-        if(!isLocationServiceRunning()){
-            Intent intent =new Intent(getApplicationContext(),GPSService.class);
-            intent.setAction(Constants.ACTION_START_LOCATION_SERVICE);
-            startService(intent);
-            Toast.makeText(this,"service is running",Toast.LENGTH_LONG).show();
-        }
+
+        Intent intent = new Intent(this, GPSService.class);
+        getApplicationContext().bindService(intent, lsc, Context.BIND_ABOVE_CLIENT);
+        startService(intent);
     }
 
 
     private void stopLocationService(){
-        if(isLocationServiceRunning()){
-            Intent intent =new Intent(getApplicationContext(),GPSService.class);
-            intent.setAction(Constants.ACTION_STOP_LOCATION_SERVICE);
-            startService(intent);
-            Toast.makeText(this,"service is not running",Toast.LENGTH_LONG).show();
-        }
+            stopped = true;
+            locationBinder.stopTracking();
+            getApplicationContext().unbindService(lsc);
     }
 
 
@@ -372,10 +421,10 @@ public class TrackingActivity extends Activity  {
         AppUserHasRoute appUserHasRoute=new AppUserHasRoute();
         appUserHasRoute.setAppUser(1L);
         appUserHasRoute.setRoute(routeId);
-        appUserHasRoute.setKilometres(tracking.getDistance());
-        appUserHasRoute.setSpeed(tracking.getSpeed());
-        appUserHasRoute.setTimeSpeed(tracking.getTimeSpeed());
-        appUserHasRoute.setTimesSession(tracking.getTimeSession());
+//        appUserHasRoute.setKilometres(tracking.getDistance());
+//        appUserHasRoute.setSpeed(tracking.getAvgSpeed());
+//        appUserHasRoute.setTimeSpeed(tracking.getT());
+//        appUserHasRoute.setTimesSession(tracking.getTimeSession());
         appUserHasRoute.setWeather("");
         db.appUserHasRouteService().addAppUserHasRoute(appUserHasRoute);
     }

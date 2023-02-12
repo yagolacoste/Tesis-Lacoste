@@ -2,7 +2,7 @@ package com.Tesis.bicycle.Service.ApiRest;
 
 import com.Tesis.bicycle.Dto.ApiRest.AppUserHasRouteDetailsDto;
 import com.Tesis.bicycle.Dto.ApiRest.StatisticsDto;
-import com.Tesis.bicycle.Model.ApiRest.AppUserHasRouteApiRest;
+import com.Tesis.bicycle.Dto.ApiRest.AppUserHasRouteApiRest;
 
 import java.util.List;
 

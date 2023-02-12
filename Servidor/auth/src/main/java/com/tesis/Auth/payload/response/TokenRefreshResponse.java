@@ -1,4 +1,4 @@
-package com.tesis.Auth.payload.response;
+package com.Tesis.auth.payload.response;
 
 public class TokenRefreshResponse {
     private String accessToken;
@@ -14,8 +14,8 @@ public class TokenRefreshResponse {
         return accessToken;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setAccessToken(String token) {
+        this.accessToken = token;
     }
 
     public String getRefreshToken() {
@@ -33,4 +33,5 @@ public class TokenRefreshResponse {
     public void setTokenType(String tokenType) {
         this.tokenType = tokenType;
     }
+
 }

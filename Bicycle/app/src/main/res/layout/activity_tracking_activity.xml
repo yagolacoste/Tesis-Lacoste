@@ -83,7 +83,7 @@
                     tools:layout_editor_absoluteY="5dp" />
 
                 <TextView
-                    android:id="@+id/tv_speed"
+                    android:id="@+id/tv_avgSpeed"
                     android:layout_width="match_parent"
                     android:layout_height="71dp"
                     android:gravity="center"
@@ -122,7 +122,7 @@
                         tools:layout_editor_absoluteY="5dp" />
 
                     <TextView
-                        android:id="@+id/tv_timeSpeed"
+                        android:id="@+id/tv_time"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"

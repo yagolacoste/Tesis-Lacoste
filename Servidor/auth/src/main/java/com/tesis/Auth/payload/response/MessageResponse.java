@@ -1,8 +1,6 @@
-package com.tesis.Auth.payload.response;
+package com.Tesis.auth.payload.response;
 
-import java.io.Serializable;
-
-public class MessageResponse implements Serializable {
+public class MessageResponse {
     private String message;
 
     public MessageResponse(String message) {
