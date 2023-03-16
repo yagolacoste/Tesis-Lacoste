@@ -2,7 +2,7 @@ package com.Tesis.auth.security;
 
 import com.Tesis.auth.security.Jwt.AuthEntryPointJwt;
 import com.Tesis.auth.security.Jwt.AuthTokenFilter;
-import com.Tesis.auth.service.UserDetailsServiceImpl;
+import com.Tesis.auth.security.Service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

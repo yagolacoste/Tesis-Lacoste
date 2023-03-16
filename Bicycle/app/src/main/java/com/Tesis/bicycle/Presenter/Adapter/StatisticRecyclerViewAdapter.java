@@ -1,4 +1,4 @@
-package com.Tesis.bicycle.Presenter.CardView;
+package com.Tesis.bicycle.Presenter.Adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.Tesis.bicycle.Dto.ApiRest.StatisticsDto;
 import com.Tesis.bicycle.R;
 
-
-import org.mapsforge.core.graphics.Position;
 
 import java.util.List;
 

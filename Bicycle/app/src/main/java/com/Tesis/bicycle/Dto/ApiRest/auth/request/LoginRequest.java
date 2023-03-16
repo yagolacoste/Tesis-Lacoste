@@ -1,4 +1,4 @@
-package com.Tesis.bicycle.Dto.ApiRest.auth;
+package com.Tesis.bicycle.Dto.ApiRest.auth.request;
 
 import java.io.Serializable;
 

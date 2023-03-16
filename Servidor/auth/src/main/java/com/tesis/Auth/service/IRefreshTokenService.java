@@ -1,7 +1,6 @@
 package com.Tesis.auth.service;
 
 import com.Tesis.auth.entity.RefreshToken;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -13,6 +12,6 @@ public interface IRefreshTokenService {
 
     public RefreshToken verifyExpiration(RefreshToken token);
 
-    @Transactional
-    public int deleteByUserId(Long userId);
+
+    public void deleteByToken(String rToken);
 }

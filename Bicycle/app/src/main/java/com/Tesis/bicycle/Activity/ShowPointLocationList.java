@@ -3,7 +3,6 @@ package com.Tesis.bicycle.Activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,8 +13,8 @@ import com.Tesis.bicycle.Dto.ApiRest.AppUserHasRouteDetailsDto;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Dto.ApiRest.StatisticsDto;
 import com.Tesis.bicycle.Presenter.ApiRestConecction;
-import com.Tesis.bicycle.Presenter.CardView.RouteRecyclerViewAdapter;
-import com.Tesis.bicycle.Presenter.CardView.StatisticRecyclerViewAdapter;
+import com.Tesis.bicycle.Presenter.Adapter.RouteRecyclerViewAdapter;
+import com.Tesis.bicycle.Presenter.Adapter.StatisticRecyclerViewAdapter;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.Service.ApiRest.AppUserHasRouteApiRestService;
 
@@ -59,7 +58,7 @@ public class ShowPointLocationList extends Activity {
 
     ///Lista las rutas por usuarios
     public void  getRoutesByUser() {
-        AppUserHasRouteApiRestService appUserHasRouteApiRestService = ApiRestConecction.getServiceAppUserHasRoute();
+        AppUserHasRouteApiRestService appUserHasRouteApiRestService = ApiRestConecction.getServiceAppUserHasRoute(getApplicationContext());
         Call<AppUserHasRouteDetailsDto> call = appUserHasRouteApiRestService.getRouteById(1L);//es el usuario 1 por defecto
         call.enqueue(new Callback<AppUserHasRouteDetailsDto>() {
             @Override
@@ -83,7 +82,7 @@ public class ShowPointLocationList extends Activity {
     public void getStatisticByRoute(String routeId){
 //        recyclerView.setHasFixedSize(true);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        AppUserHasRouteApiRestService appUserHasRouteApiRestService = ApiRestConecction.getServiceAppUserHasRoute();
+        AppUserHasRouteApiRestService appUserHasRouteApiRestService = ApiRestConecction.getServiceAppUserHasRoute(getApplicationContext());
         Call<List<StatisticsDto>> call = appUserHasRouteApiRestService.getStatisticsByRoute(routeId);
         call.enqueue(new Callback<List<StatisticsDto>>() {
             @Override

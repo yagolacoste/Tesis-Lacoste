@@ -1,8 +1,10 @@
 package com.Tesis.bicycle.Presenter;
 
+import android.content.Context;
+
 import com.Tesis.bicycle.Presenter.Client.ClientRetrofit;
 import com.Tesis.bicycle.Service.ApiRest.AppUserHasRouteApiRestService;
-import com.Tesis.bicycle.Service.ApiRest.AuthService;
+import com.Tesis.bicycle.Service.ApiRest.AuthRestService;
 import com.Tesis.bicycle.Service.ApiRest.RouteApiRestService;
 
 public class ApiRestConecction {
@@ -12,15 +14,15 @@ public class ApiRestConecction {
     public static final String URL_APPUSERHASROUTE=ApiRestConecction.URL+"appuserroute/";
     public static final String URL_AUTH=ApiRestConecction.URL+"auth/";
 
-    public static RouteApiRestService getServiceRoute(){
-        return ClientRetrofit.getClient(URL_ROUTE).create(RouteApiRestService.class);
+    public static RouteApiRestService getServiceRoute(Context context){
+        return ClientRetrofit.getClient(URL_ROUTE,context).create(RouteApiRestService.class);
     }
 
-    public static AppUserHasRouteApiRestService getServiceAppUserHasRoute(){
-        return ClientRetrofit.getClient(URL_APPUSERHASROUTE).create(AppUserHasRouteApiRestService.class);
+    public static AppUserHasRouteApiRestService getServiceAppUserHasRoute(Context context){
+        return ClientRetrofit.getClient(URL_APPUSERHASROUTE,context).create(AppUserHasRouteApiRestService.class);
     }
 
-    public static AuthService getAuthService(){
-        return ClientRetrofit.getClient(URL_AUTH).create(AuthService.class);
+    public static AuthRestService getAuthService(Context context){
+        return ClientRetrofit.getClient(URL_AUTH,context).create(AuthRestService.class);
     }
 }

@@ -1,15 +1,19 @@
 package com.Tesis.auth.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 
-public class TokenDto implements Serializable {
+public class RefreshTokenDto implements Serializable {
 
+    @JsonProperty("token")
     private String token;
 
-    public TokenDto() {
+    public RefreshTokenDto() {
     }
 
-    public TokenDto(String token) {
+    public RefreshTokenDto(String token) {
         this.token = token;
     }
 

@@ -1,4 +1,4 @@
-package com.Tesis.bicycle.Presenter.CardView;
+package com.Tesis.bicycle.Presenter.Adapter;
 
 import android.content.Intent;
 import android.view.LayoutInflater;

@@ -1,11 +1,10 @@
-package com.Tesis.bicycle.Dto.ApiRest.auth;
+package com.Tesis.bicycle.Dto.ApiRest.auth.request;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 public class AuthUserDto implements Serializable {
-
-    private Long id;
 
     private String username;
 
@@ -29,23 +28,9 @@ public class AuthUserDto implements Serializable {
 
     private String email;
 
-    private Date creationTime;
-
-    private Date updateTime;
-
-    private boolean active;
-
-    private boolean deleted;
+    private Set<String> role;
 
     public AuthUserDto() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUsername() {
@@ -136,35 +121,11 @@ public class AuthUserDto implements Serializable {
         this.email = email;
     }
 
-    public Date getCreationTime() {
-        return creationTime;
+    public Set<String> getRole() {
+        return role;
     }
 
-    public void setCreationTime(Date creationTime) {
-        this.creationTime = creationTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
+    public void setRole(Set<String> role) {
+        this.role = role;
     }
 }

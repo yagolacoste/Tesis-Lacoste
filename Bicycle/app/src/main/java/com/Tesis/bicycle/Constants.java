@@ -1,10 +1,12 @@
 package com.Tesis.bicycle;
 
+import android.content.Context;
+
 public class Constants {
 
    public static final int MAX_CARACTER_ID=10;
    public static final String NAME_DATA_BASE="Bicycle";
-    public static final int LOCATION_SERVICE_ID=175;
+   public static final int LOCATION_SERVICE_ID=175;
    public  static final String ACTION_START_LOCATION_SERVICE="startLocationService";
    public static final String ACTION_STOP_LOCATION_SERVICE="stopLocationService";
    public static final int DEFAULT_UPDATE_INTERVAL = 7; // Puse un valor mas bajo solo para verificar que andaba
@@ -20,7 +22,9 @@ public class Constants {
 
 
 
-   ////////////////////// Constants defined for route
+   ////////////////////// Constants defined for route/////////////////////////////
    public static final String ROUTE="Route";
    public static final String ROUTE_ID="route_id";
+
+
 }

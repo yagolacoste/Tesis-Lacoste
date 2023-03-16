@@ -5,13 +5,10 @@ import com.Tesis.auth.payload.request.SignupRequest;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name="appuser",uniqueConstraints = {
-        @UniqueConstraint(columnNames = "username"),
         @UniqueConstraint(columnNames = "email")
 })
 public class User implements Serializable{
@@ -21,8 +18,8 @@ public class User implements Serializable{
     @Column(name= "id",columnDefinition = "serial")
     private Long id;
 
-    @Column(name= "username")
-    private String username;
+//    @Column(name= "username")
+//    private String username;
 
     @Column(name= "password")
     private String password;
@@ -72,11 +69,14 @@ public class User implements Serializable{
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumns({ @JoinColumn(name = "appuser_id", referencedColumnName = "id",updatable = false, insertable = false)})
+    private List<RefreshToken> refreshTokens = new ArrayList<>();
+
     public User() {
     }
 
     public User(SignupRequest signUpRequest) {
-        this.username = signUpRequest.getUsername();
         this.password = signUpRequest.getPassword();
         this.identityType = signUpRequest.getIdentityType();
         this.identity = signUpRequest.getIdentity();
@@ -224,11 +224,12 @@ public class User implements Serializable{
         this.roles = roles;
     }
 
-    public String getUsername() {
-        return username;
+
+    public List<RefreshToken> getRefreshTokens() {
+        return refreshTokens;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setRefreshTokens(List<RefreshToken> refreshTokens) {
+        this.refreshTokens = refreshTokens;
     }
 }

@@ -1,5 +1,7 @@
-package com.Tesis.auth.service;
+package com.Tesis.auth.security.Service;
 
+import com.Tesis.auth.advise.ErrorCodes;
+import com.Tesis.auth.advise.NotFoundException;
 import com.Tesis.auth.entity.User;
 import com.Tesis.auth.repository.IAuthUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException(ErrorCodes.NOT_FOUND.getCode(),"User Not Found with email: " + email));
 
         return UserDetailsImpl.build(user);
     }

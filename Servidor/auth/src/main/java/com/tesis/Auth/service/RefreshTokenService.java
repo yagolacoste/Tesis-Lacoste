@@ -52,8 +52,7 @@ public class RefreshTokenService implements IRefreshTokenService{
     }
 
     @Override
-    public int deleteByUserId(Long userId) {
-        return refreshTokenRepository.deleteByUser(userRepository.findById(userId).get());
-
+    public void deleteByToken(String rToken) {
+        refreshTokenRepository.deleteById(rToken);
     }
 }

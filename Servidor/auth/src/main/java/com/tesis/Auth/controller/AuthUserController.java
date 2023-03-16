@@ -1,9 +1,13 @@
 package com.Tesis.auth.controller;
 
-import com.Tesis.auth.dto.TokenDto;
+import com.Tesis.auth.advise.BadRequestException;
+import com.Tesis.auth.dto.RefreshTokenDto;
 import com.Tesis.auth.payload.request.LoginRequest;
 import com.Tesis.auth.payload.request.SignupRequest;
 import com.Tesis.auth.payload.request.TokenRefreshRequest;
+import com.Tesis.auth.payload.response.JwtResponse;
+import com.Tesis.auth.payload.response.MessageResponse;
+import com.Tesis.auth.payload.response.TokenRefreshResponse;
 import com.Tesis.auth.service.IAuthUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,31 +21,32 @@ public class AuthUserController implements IAuthUserController{
 
 
     @Override
-    public ResponseEntity<?> authenticateUser(LoginRequest loginRequest) {
+    public JwtResponse authenticateUser(LoginRequest loginRequest) {
         return authUserService.authenticateUser(loginRequest);
     }
 
     @Override
-    public ResponseEntity<?> validate(String token) {
-        TokenDto tokenDto = authUserService.validate(token);
-        if(tokenDto == null)
-            return ResponseEntity.badRequest().build();
-        return ResponseEntity.ok(tokenDto);
+    public RefreshTokenDto validate(String token) {
+
+        return authUserService.validate(token);
+//        if(tokenDto == null)
+//            return new BadRequestException()
+//        return tokenDto;
     }
 
     @Override
-    public ResponseEntity<?> registerUser(SignupRequest signUpRequest) {
+    public MessageResponse registerUser(SignupRequest signUpRequest) {
         return authUserService.registerUser(signUpRequest);
     }
 
     @Override
-    public ResponseEntity<?> refreshtoken(TokenRefreshRequest request) {
+    public TokenRefreshResponse refreshtoken(TokenRefreshRequest request) {
         return authUserService.refreshtoken(request);
     }
 
     @Override
-    public ResponseEntity<?> logoutUser() {
-        return authUserService.logoutUser();
+    public void logoutUser(RefreshTokenDto refreshTokenDto) {
+         authUserService.logoutUser(refreshTokenDto);
     }
 
 

@@ -207,7 +207,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
 
     //add statistics in server
     public void sendData(AppUserHasRouteApiRest appUserHasRouteApiRest){
-        AppUserHasRouteApiRestService appUserHasRouteApiRestService= ApiRestConecction.getServiceAppUserHasRoute();
+        AppUserHasRouteApiRestService appUserHasRouteApiRestService= ApiRestConecction.getServiceAppUserHasRoute(getApplicationContext());
         Call<Void> call=appUserHasRouteApiRestService.AddStatistics(appUserHasRouteApiRest);
         call.enqueue(new Callback<Void>() {
             @Override
