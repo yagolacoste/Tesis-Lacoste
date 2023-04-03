@@ -1,13 +1,13 @@
 package com.Tesis.auth.payload.request;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-public class SignupRequest {
+public class SignupRequest implements Serializable {
 
-    @NotBlank
-    private String username;
+
     @NotBlank
     private String password;
     @NotBlank
@@ -34,13 +34,7 @@ public class SignupRequest {
     public SignupRequest() {
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
+  
 
     public String getPassword() {
         return password;

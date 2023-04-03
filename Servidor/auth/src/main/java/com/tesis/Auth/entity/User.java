@@ -1,6 +1,9 @@
 package com.Tesis.auth.entity;
 
 
+
+
+
 import com.Tesis.auth.payload.request.SignupRequest;
 
 import javax.persistence.*;
@@ -17,9 +20,6 @@ public class User implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name= "id",columnDefinition = "serial")
     private Long id;
-
-//    @Column(name= "username")
-//    private String username;
 
     @Column(name= "password")
     private String password;
@@ -68,6 +68,10 @@ public class User implements Serializable{
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "stored_document_id")
+    private StoredDocument storedDocument;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumns({ @JoinColumn(name = "appuser_id", referencedColumnName = "id",updatable = false, insertable = false)})
@@ -231,5 +235,13 @@ public class User implements Serializable{
 
     public void setRefreshTokens(List<RefreshToken> refreshTokens) {
         this.refreshTokens = refreshTokens;
+    }
+
+    public StoredDocument getStoredDocument() {
+        return storedDocument;
+    }
+
+    public void setStoredDocument(StoredDocument storedDocument) {
+        this.storedDocument = storedDocument;
     }
 }

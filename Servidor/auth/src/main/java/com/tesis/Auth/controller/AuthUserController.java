@@ -35,8 +35,8 @@ public class AuthUserController implements IAuthUserController{
     }
 
     @Override
-    public MessageResponse registerUser(SignupRequest signUpRequest) {
-        return authUserService.registerUser(signUpRequest);
+    public void registerUser(SignupRequest signUpRequest) {
+         authUserService.registerUser(signUpRequest);
     }
 
     @Override

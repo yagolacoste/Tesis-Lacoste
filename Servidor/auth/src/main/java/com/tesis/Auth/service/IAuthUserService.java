@@ -15,7 +15,7 @@ public interface IAuthUserService {
 
     RefreshTokenDto validate(String token);
 
-    MessageResponse registerUser(SignupRequest signUpRequest);
+    void registerUser(SignupRequest signUpRequest);
 
     void logoutUser(RefreshTokenDto refreshTokenDto);
 

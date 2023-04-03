@@ -12,7 +12,6 @@ import com.Tesis.auth.payload.request.LoginRequest;
 import com.Tesis.auth.payload.request.SignupRequest;
 import com.Tesis.auth.payload.request.TokenRefreshRequest;
 import com.Tesis.auth.payload.response.JwtResponse;
-import com.Tesis.auth.payload.response.MessageResponse;
 import com.Tesis.auth.payload.response.TokenRefreshResponse;
 import com.Tesis.auth.repository.IAuthUserRepository;
 import com.Tesis.auth.repository.IRoleRepository;
@@ -29,7 +28,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -59,11 +57,11 @@ public class AuthUserService implements IAuthUserService{
 
     @Override
     public RefreshTokenDto validate(String token) {
-        try{
+        boolean condicion=jwtUtils.validateJwtToken(token);
+        if (jwtUtils.validateJwtToken(token)) {
             return new RefreshTokenDto(token);
-        }catch (Exception e){
-
-        }
+            }
+            //return ResponseEntity.badRequest().body(new TokenRefreshException(ErrorCodes.TOKEN_EXPIRATION.getCode(), "Expiro token"));
         return null;
     }
 
@@ -92,14 +90,11 @@ public class AuthUserService implements IAuthUserService{
     }
 
     @Override
-    public MessageResponse registerUser(SignupRequest signUpRequest) {
-//        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-//            return new MessageResponse("Error: Username is already taken!");
-//        }
+    public void registerUser(SignupRequest signUpRequest) {
 
         try{
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-             new AccessDeniedException(ErrorCodes.ACCESS_DENIED.getCode(), "Email not exists");
+             new AccessDeniedException(ErrorCodes.ACCESS_DENIED.getCode(), "Email Exists");
             }
         }catch (Exception e){
             //throw new AccessDeniedException(ErrorCodes.ACCESS_DENIED.getCode(), "Email not exists");
@@ -141,9 +136,6 @@ public class AuthUserService implements IAuthUserService{
 
         user.setRoles(roles);
         userRepository.save(user);
-
-//        return new MessageResponse("User registered successfully!");
-        return null;
     }
 
     @Override

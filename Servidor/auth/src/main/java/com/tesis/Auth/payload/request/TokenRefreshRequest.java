@@ -1,9 +1,13 @@
 package com.Tesis.auth.payload.request;
 
-import javax.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class TokenRefreshRequest {
+import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+
+public class TokenRefreshRequest implements Serializable {
     @NotBlank
+    @JsonProperty("refreshToken")
     private String refreshToken;
 
     public String getRefreshToken() {

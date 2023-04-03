@@ -28,7 +28,7 @@ public interface IAuthUserController {
     public RefreshTokenDto validate(@RequestParam String token);
 
     @PostMapping("/signup")
-    public MessageResponse registerUser(@Valid @RequestBody SignupRequest signUpRequest);
+    public void registerUser(@Valid @RequestBody SignupRequest signUpRequest);
 
     @PostMapping("/refreshtoken")
     public TokenRefreshResponse refreshtoken(@Valid @RequestBody TokenRefreshRequest request);
