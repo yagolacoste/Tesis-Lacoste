@@ -7,7 +7,7 @@ import com.Tesis.bicycle.Dto.ApiRest.auth.response.JwtResponse;
 
 public class RefreshTokenDto {
 
-    private String id;
+    private Long id;
 
     private String refreshToken;
 
@@ -19,12 +19,11 @@ public class RefreshTokenDto {
     }
 
 
-
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

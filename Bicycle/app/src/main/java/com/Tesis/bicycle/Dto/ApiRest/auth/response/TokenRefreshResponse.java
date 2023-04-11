@@ -1,9 +1,14 @@
 package com.Tesis.bicycle.Dto.ApiRest.auth.response;
 
-public class TokenRefreshResponse {
+import java.io.Serializable;
+
+public class TokenRefreshResponse implements Serializable {
     private String accessToken;
     private String refreshToken;
     private String tokenType = "Bearer";
+
+    public TokenRefreshResponse() {
+    }
 
     public TokenRefreshResponse(String accessToken, String refreshToken) {
         this.accessToken = accessToken;

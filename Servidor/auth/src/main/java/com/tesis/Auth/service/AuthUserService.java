@@ -4,10 +4,7 @@ import com.Tesis.auth.advise.AccessDeniedException;
 import com.Tesis.auth.advise.BadRequestException;
 import com.Tesis.auth.advise.ErrorCodes;
 import com.Tesis.auth.dto.RefreshTokenDto;
-import com.Tesis.auth.entity.ERole;
-import com.Tesis.auth.entity.RefreshToken;
-import com.Tesis.auth.entity.Role;
-import com.Tesis.auth.entity.User;
+import com.Tesis.auth.entity.*;
 import com.Tesis.auth.payload.request.LoginRequest;
 import com.Tesis.auth.payload.request.SignupRequest;
 import com.Tesis.auth.payload.request.TokenRefreshRequest;
@@ -15,6 +12,7 @@ import com.Tesis.auth.payload.response.JwtResponse;
 import com.Tesis.auth.payload.response.TokenRefreshResponse;
 import com.Tesis.auth.repository.IAuthUserRepository;
 import com.Tesis.auth.repository.IRoleRepository;
+import com.Tesis.auth.repository.IStoredDocumentRepository;
 import com.Tesis.auth.security.Jwt.JwtUtils;
 import com.Tesis.auth.security.Jwt.exception.TokenRefreshException;
 import com.Tesis.auth.security.Service.UserDetailsImpl;
@@ -51,6 +49,9 @@ public class AuthUserService implements IAuthUserService{
 
     @Autowired
     IRefreshTokenService refreshTokenService;
+
+    @Autowired
+    IStoredDocumentRepository storedDocumentRepository;
 
 
 
@@ -92,13 +93,10 @@ public class AuthUserService implements IAuthUserService{
     @Override
     public void registerUser(SignupRequest signUpRequest) {
 
-        try{
+
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-             new AccessDeniedException(ErrorCodes.ACCESS_DENIED.getCode(), "Email Exists");
+             throw new AccessDeniedException(ErrorCodes.ACCESS_DENIED.getCode(), "Email Exists");
             }
-        }catch (Exception e){
-            //throw new AccessDeniedException(ErrorCodes.ACCESS_DENIED.getCode(), "Email not exists");
-        }
 
         // Create new user's account
         User user = new User(signUpRequest);
@@ -133,7 +131,9 @@ public class AuthUserService implements IAuthUserService{
                 }
             });
         }
-
+        StoredDocument storedDocument=storedDocumentRepository.findById(signUpRequest.getPhoto())
+                .orElseThrow(() -> new RuntimeException("Error:Image not found"));
+        user.setStoredDocument(storedDocument);
         user.setRoles(roles);
         userRepository.save(user);
     }

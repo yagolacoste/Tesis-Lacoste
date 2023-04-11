@@ -2,6 +2,7 @@ package com.Tesis.bicycle.Service.Room;
 
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -25,9 +26,14 @@ public interface RefreshTokenService {
     @Update
     void update(RefreshToken refreshToken);
 
-    @Query("SELECT * FROM refresh_token")
+    @Query("SELECT * FROM refresh_token ")
     List<RefreshTokenDto> getAll();
 
+    @Query("DELETE FROM refresh_token")
+    void delete();
+
+    @Query("SELECT * FROM refresh_token LIMIT 1")
+    RefreshTokenDto getFirst();
 //    @Query("SELECT * FROM refresh_token where user_id=:id")
 //    AppUserHasRouteDTO getRefreshById(String id);
 //

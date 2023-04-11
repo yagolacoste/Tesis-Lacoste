@@ -17,6 +17,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.io.OutputStream;
+
 @Component
 public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config>{
 

@@ -7,9 +7,13 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.Tesis.bicycle.Dto.ApiRest.auth.request.AuthUserDto;
 import com.Tesis.bicycle.Dto.ApiRest.auth.request.LoginRequest;
+import com.Tesis.bicycle.Dto.ApiRest.auth.request.SignupRequest;
 import com.Tesis.bicycle.Dto.ApiRest.auth.request.TokenRefreshRequest;
 import com.Tesis.bicycle.Dto.ApiRest.auth.response.JwtResponse;
+import com.Tesis.bicycle.Dto.ApiRest.auth.response.MessageResponse;
 import com.Tesis.bicycle.Dto.ApiRest.auth.response.TokenRefreshResponse;
+import com.Tesis.bicycle.Dto.ApiRest.auth.response.TokenResponse;
+import com.Tesis.bicycle.Dto.Room.RefreshTokenDto;
 import com.Tesis.bicycle.Presenter.ApiRestConecction;
 import com.Tesis.bicycle.Service.ApiRest.AuthRestService;
 
@@ -23,7 +27,7 @@ public class UserApiRestRepository {
 
 
     public UserApiRestRepository(Context context) {
-        this.authService = ApiRestConecction.getAuthService(context);
+        this.authService = ApiRestConecction.getAuthService();
     }
 
     public static UserApiRestRepository getInstance(Context context){
@@ -53,35 +57,17 @@ public class UserApiRestRepository {
     }
 
 
-    public LiveData<Response<?>>validate(String token){
-        final MutableLiveData<Response<?>>mld=new MutableLiveData<>();
-        this.authService.validate(token).enqueue(new Callback<Response<?>>() {
+    public LiveData<Void> registerUser(SignupRequest dto){
+        final MutableLiveData<Void>mld=new MutableLiveData<>();
+        this.authService.registerUser(dto).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Response<?>> call, Response<Response<?>> response) {
-                mld.setValue(response.body());
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
             }
 
             @Override
-            public void onFailure(Call<Response<?>> call, Throwable t) {
-                System.out.println("se produjo error al validar token"+ t.getMessage());
-                t.printStackTrace();
-            }
-        });
-        return mld;
-    }
+            public void onFailure(Call<Void> call, Throwable t) {
 
-    public LiveData<Response<?>>registerUser(AuthUserDto dto){
-        final MutableLiveData<Response<?>>mld=new MutableLiveData<>();
-        this.authService.registerUser(dto).enqueue(new Callback<Response<?>>() {
-            @Override
-            public void onResponse(Call<Response<?>> call, Response<Response<?>> response) {
-                mld.setValue(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<Response<?>> call, Throwable t) {
-                System.out.println("se produjo error al iniciar session"+ t.getMessage());
-                t.printStackTrace();
             }
         });
         return mld;
@@ -105,16 +91,16 @@ public class UserApiRestRepository {
         return mld;
     }
 
-    public LiveData<Response<?>>logoutUser(){
-        final MutableLiveData<Response<?>>mld=new MutableLiveData<>();
-        this.authService.logoutUser().enqueue(new Callback<Response<?>>() {
+    public LiveData<Void>logoutUser(TokenRefreshRequest refreshTokenDto){
+        final MutableLiveData<Void>mld=new MutableLiveData<>();
+        this.authService.logoutUser(refreshTokenDto).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Response<?>> call, Response<Response<?>> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 mld.setValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<Response<?>> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 System.out.println("se produjo error al salir de session"+ t.getMessage());
                 t.printStackTrace();
             }

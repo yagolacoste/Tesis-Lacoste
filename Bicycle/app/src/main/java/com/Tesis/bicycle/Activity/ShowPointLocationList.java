@@ -16,7 +16,7 @@ import com.Tesis.bicycle.Presenter.ApiRestConecction;
 import com.Tesis.bicycle.Presenter.Adapter.RouteRecyclerViewAdapter;
 import com.Tesis.bicycle.Presenter.Adapter.StatisticRecyclerViewAdapter;
 import com.Tesis.bicycle.R;
-import com.Tesis.bicycle.Service.ApiRest.AppUserHasRouteApiRestService;
+import com.Tesis.bicycle.Service.ApiRest.AppUserHasRouteRestService;
 
 import java.util.List;
 
@@ -58,8 +58,8 @@ public class ShowPointLocationList extends Activity {
 
     ///Lista las rutas por usuarios
     public void  getRoutesByUser() {
-        AppUserHasRouteApiRestService appUserHasRouteApiRestService = ApiRestConecction.getServiceAppUserHasRoute(getApplicationContext());
-        Call<AppUserHasRouteDetailsDto> call = appUserHasRouteApiRestService.getRouteById(1L);//es el usuario 1 por defecto
+        AppUserHasRouteRestService appUserHasRouteRestService = ApiRestConecction.getServiceAppUserHasRoute(getApplicationContext());
+        Call<AppUserHasRouteDetailsDto> call = appUserHasRouteRestService.getRouteById(1L);//es el usuario 1 por defecto
         call.enqueue(new Callback<AppUserHasRouteDetailsDto>() {
             @Override
             public void onResponse(Call<AppUserHasRouteDetailsDto> call, Response<AppUserHasRouteDetailsDto> response) {
@@ -82,8 +82,8 @@ public class ShowPointLocationList extends Activity {
     public void getStatisticByRoute(String routeId){
 //        recyclerView.setHasFixedSize(true);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        AppUserHasRouteApiRestService appUserHasRouteApiRestService = ApiRestConecction.getServiceAppUserHasRoute(getApplicationContext());
-        Call<List<StatisticsDto>> call = appUserHasRouteApiRestService.getStatisticsByRoute(routeId);
+        AppUserHasRouteRestService appUserHasRouteRestService = ApiRestConecction.getServiceAppUserHasRoute(getApplicationContext());
+        Call<List<StatisticsDto>> call = appUserHasRouteRestService.getStatisticsByRoute(routeId);
         call.enqueue(new Callback<List<StatisticsDto>>() {
             @Override
             public void onResponse(Call<List<StatisticsDto>> call, Response<List<StatisticsDto>> response) {

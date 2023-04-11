@@ -31,7 +31,7 @@ public class StoredDocumentService implements IStoredDocumentService {
 
 
     @Override
-    public void save(StoredDocument obj) {
+    public Long save(StoredDocument obj) {
         String fileName = (repo.findById(obj.getId())).orElse(new StoredDocument()).getFileName();
 
         String originalFilename = obj.getFile().getOriginalFilename();
@@ -42,7 +42,7 @@ public class StoredDocumentService implements IStoredDocumentService {
         obj.setFileName(fileName);
         obj.setExtension(extension);
 
-        repo.save(obj);
+        return repo.save(obj).getId();
     }
 
     public ResponseEntity<Resource> download(String completeFileName, HttpServletRequest request) {

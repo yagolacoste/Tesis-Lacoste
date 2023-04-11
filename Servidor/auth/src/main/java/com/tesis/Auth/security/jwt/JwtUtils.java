@@ -50,6 +50,7 @@ public class JwtUtils {
         } catch ( ExpiredJwtException e) {
             logger.error("JWT token is expired: {}", e.getMessage());//mensaje de expiracion
           // throw new TokenRefreshException(ErrorCodes.TOKEN_EXPIRATION.getCode(), e.getMessage());
+
         } catch (UnsupportedJwtException e) {
             logger.error("JWT token is unsupported: {}", e.getMessage());
            // throw new TokenRefreshException(ErrorCodes.TOKEN_EXPIRATION.getCode(), e.getMessage());

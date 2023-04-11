@@ -1,23 +1,21 @@
 package com.Tesis.bicycle.Presenter.Client;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 
 import com.Tesis.bicycle.Constants;
-import com.Tesis.bicycle.Dto.ApiRest.auth.response.JwtResponse;
+import com.Tesis.bicycle.Dto.ApiRest.auth.request.TokenRefreshRequest;
+import com.Tesis.bicycle.Dto.ApiRest.auth.response.TokenRefreshResponse;
 import com.Tesis.bicycle.Dto.Room.RefreshTokenDto;
 import com.Tesis.bicycle.Model.Room.RefreshToken;
+import com.Tesis.bicycle.Presenter.ApiRestConecction;
 import com.Tesis.bicycle.Presenter.AppDataBase;
-import com.Tesis.bicycle.Repository.AccessTokenRoomRepository;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.Tesis.bicycle.Service.ApiRest.AuthRestService;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.List;
 
 import okhttp3.Interceptor;
@@ -28,11 +26,13 @@ public class AccessTokenInterceptor implements Interceptor {
 
     private Context context;
     private AppDataBase db;
+    private AuthRestService service;
 
     public AccessTokenInterceptor(Context context) {
         this.context = context;
         this.db = Room.databaseBuilder(context,AppDataBase.class, Constants.NAME_DATA_BASE)
                 .allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        this.service= ApiRestConecction.getAuthService();
     }
 
     public Context getContext() {
@@ -46,13 +46,32 @@ public class AccessTokenInterceptor implements Interceptor {
     @NonNull
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
-        Request.Builder requestBuilder = chain.request().newBuilder();
-        if (context != null) {
-            List<RefreshTokenDto> refreshToken=db.refreshTokenService().getAll();
-            if (!refreshToken.isEmpty()) {
-                 requestBuilder.addHeader("Authorization", "Bearer "+refreshToken.get(0).getAccessToken()).build();
-            }
+        Request request=chain.request();
+        List<RefreshTokenDto> refreshToken=db.refreshTokenService().getAll();
+        Response response=chain.proceed(newRequestWithAccessToken(request,refreshToken.get(0).getAccessToken()));
+
+        if(response.code()== HttpURLConnection.HTTP_UNAUTHORIZED){
+            TokenRefreshRequest tokenRefreshRequest=new TokenRefreshRequest(refreshToken.get(0).getRefreshToken());
+            TokenRefreshResponse refreshResponse=service.refreshtoken(tokenRefreshRequest).execute().body();
+            RefreshToken refToken=new RefreshToken();
+            refToken.setRefreshToken(refreshResponse.getRefreshToken());
+            refToken.setAccessToken(refreshResponse.getAccessToken());
+            refToken.setId(refreshToken.get(0).getId());
+            db.refreshTokenService().add(refToken);
+            response= chain.proceed(newRequestWithAccessToken(request,refreshResponse.getAccessToken()));
         }
-        return chain.proceed(requestBuilder.build());
+        return response;
+
+
+//        Request.Builder requestBuilder = chain.request().newBuilder();
+//            List<RefreshTokenDto> refreshToken=db.refreshTokenService().getAll();
+//            if (!refreshToken.isEmpty()) {
+//                 requestBuilder.addHeader("Authorization", "Bearer "+refreshToken.get(0).getAccessToken()).build();
+//            }
+//        return chain.proceed(requestBuilder.build());
+    }
+
+    private Request newRequestWithAccessToken(Request request, String accessToken){
+        return request.newBuilder().addHeader("Authorization","Bearer "+ accessToken).build();
     }
 }

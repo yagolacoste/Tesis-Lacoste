@@ -1,6 +1,7 @@
 package com.Tesis.bicycle.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.room.Room;
 
 import android.content.ComponentName;
@@ -21,11 +22,14 @@ import android.widget.Toast;
 
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.AppUserHasRouteApiRest;
+import com.Tesis.bicycle.Dto.Room.RefreshTokenDto;
 import com.Tesis.bicycle.Presenter.ApiRestConecction;
 import com.Tesis.bicycle.Presenter.AppDataBase;
 import com.Tesis.bicycle.R;
-import com.Tesis.bicycle.Service.ApiRest.AppUserHasRouteApiRestService;
+import com.Tesis.bicycle.Service.ApiRest.AppUserHasRouteRestService;
 import com.Tesis.bicycle.ServiceTracking.GPSService;
+import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
+import com.Tesis.bicycle.ViewModel.AppUserHasRouteViewModel;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.routing.OSRMRoadManager;
@@ -52,9 +56,11 @@ public class TrackingDetailActivity extends AppCompatActivity {
     private TextView tv_distance_value,tv_speed_value,tv_time_value,tv_date_value,tv_session_value;
     private Button btn_save,btn_discard;
     private MapView myOpenMapView;
-    private AppDataBase db;
     private CompassOverlay mCompassOverlay;
     private GPSService.LocationBinder locationBinder=null;
+    private AccessTokenRoomViewModel accessTokenRoomViewModel;
+    private AppUserHasRouteViewModel appUserHasRouteViewModel;
+
 
 
     private ServiceConnection lsc=new ServiceConnection() {
@@ -87,6 +93,19 @@ public class TrackingDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracking_detail);
 
+        InitViewModel();
+        init();
+
+
+    }
+
+    private void InitViewModel() {
+        final ViewModelProvider vmp = new ViewModelProvider(this);
+        this.accessTokenRoomViewModel=vmp.get(AccessTokenRoomViewModel.class);
+        this.appUserHasRouteViewModel=vmp.get(AppUserHasRouteViewModel.class);
+    }
+
+    private void init(){
         //Inicializo los textview
         tv_distance_value=findViewById(R.id.tv_distance_value);
         tv_speed_value=findViewById(R.id.tv_speed_value);
@@ -95,18 +114,17 @@ public class TrackingDetailActivity extends AppCompatActivity {
         tv_session_value=findViewById(R.id.tv_session_value);
         btn_save=findViewById(R.id.btn_save);
         btn_discard=findViewById(R.id.btn_discard);
-        db= Room.databaseBuilder(getApplicationContext(),AppDataBase.class, Constants.NAME_DATA_BASE)
-                .allowMainThreadQueries().fallbackToDestructiveMigration().build();
         myOpenMapView=findViewById(R.id.v_map);
         this.initLayer(this);
         Intent intent = new Intent(this, GPSService.class);
         getApplicationContext().bindService(intent, lsc, Context.BIND_ABOVE_CLIENT);
 
-        btn_save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+
+        btn_save.setOnClickListener(view -> {
+            this.accessTokenRoomViewModel.getFirst().observe(this,response->{
+                RefreshTokenDto refreshTokenDto=response;
                 AppUserHasRouteApiRest appUserHasRouteApiRest=new AppUserHasRouteApiRest();
-                appUserHasRouteApiRest.setAppUser(1L);
+                appUserHasRouteApiRest.setAppUser(refreshTokenDto.getId());
                 appUserHasRouteApiRest.setDistance(locationBinder.getDistance());
                 appUserHasRouteApiRest.setAvgSpeed(locationBinder.getAvgSpeed());
                 appUserHasRouteApiRest.setTime(locationBinder.getTimeLocalTime());
@@ -114,16 +132,18 @@ public class TrackingDetailActivity extends AppCompatActivity {
                 appUserHasRouteApiRest.setWeather("");
                 appUserHasRouteApiRest.setDescription(locationBinder.getDescription());
                 appUserHasRouteApiRest.setTitle(locationBinder.getTitle());
-                appUserHasRouteApiRest.setRoute(1L+"-"+locationBinder.getId());
+                appUserHasRouteApiRest.setRoute(refreshTokenDto.getId()+"-"+locationBinder.getId());
                 appUserHasRouteApiRest.setCoordinates(locationBinder.getGeoPoints());
-                sendData(appUserHasRouteApiRest);
-                backToMenuActivity();
-            }
+                appUserHasRouteViewModel.addStatistic(appUserHasRouteApiRest).observe(this,resp->{
+                });
+            });
+            backToMenuActivity();
         });
+
         btn_discard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //borrar y volver a la pagina anterior
+                backToMenuActivity();
             }
         });
     }
@@ -205,22 +225,4 @@ public class TrackingDetailActivity extends AppCompatActivity {
     }
 
 
-    //add statistics in server
-    public void sendData(AppUserHasRouteApiRest appUserHasRouteApiRest){
-        AppUserHasRouteApiRestService appUserHasRouteApiRestService= ApiRestConecction.getServiceAppUserHasRoute(getApplicationContext());
-        Call<Void> call=appUserHasRouteApiRestService.AddStatistics(appUserHasRouteApiRest);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if(response.isSuccessful()){
-                    Toast.makeText(TrackingDetailActivity.this,"add is success",Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.e("Error",t.getMessage());
-            }
-        });
-    }
 }

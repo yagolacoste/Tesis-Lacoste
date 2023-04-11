@@ -1,8 +1,16 @@
 package com.Tesis.bicycle.Dto.ApiRest.auth.request;
 
-public class TokenRefreshRequest {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
+
+public class TokenRefreshRequest implements Serializable {
+
+    @JsonProperty("refreshToken")
     private String refreshToken;
+
+    public TokenRefreshRequest() {
+    }
 
     public TokenRefreshRequest(String refreshToken) {
         this.refreshToken = refreshToken;

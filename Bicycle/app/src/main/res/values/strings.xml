@@ -13,11 +13,10 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="label_bienvenida">Hola - inicie session</string>
     <string name="label_usuario">email</string>
     <string name="label_password">password</string>
     <string name="label_start_session">start session</string>
-    <string name="label_nuevoUser">new user</string>
+    <string name="label_nuevoUser"><u>REGISTER</u></string>
     <string name="label_olvide_password">forget password</string>
     <string name="title_activity_inicio">InicioActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -30,4 +29,30 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="close_session">Close session</string>
+    <string name="credencial_register">Credencial Register</string>
+    <string name="credentials_register">Credentials Register</string>
+
+
+    <string-array name="typeDoc">
+        <item>DNI</item>
+        <item>PASSPORT</item>
+        <item>CARNET</item>
+    </string-array>
+    <string-array name="Country">
+        <item>Argentina</item>
+    </string-array>
+    <string-array name="State">
+        <item>Buenos Aires</item>
+        <item>Cordoba</item>
+        <item>La Pampa</item>
+    </string-array>
+    <string-array name="City">
+        <item>Azul</item>
+        <item>Tandil</item>
+        <item>Rauch</item>
+        <item>Balcarse</item>
+        <item>Mar del plata</item>
+        <item>Bolivar</item>
+    </string-array>
 </resources>

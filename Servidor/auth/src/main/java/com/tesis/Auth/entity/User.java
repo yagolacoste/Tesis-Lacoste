@@ -69,7 +69,7 @@ public class User implements Serializable{
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = true)
     @JoinColumn(name = "stored_document_id")
     private StoredDocument storedDocument;
 
@@ -91,6 +91,7 @@ public class User implements Serializable{
         this.birthday = signUpRequest.getBirthday();
         this.phone = signUpRequest.getPhone();
         this.email = signUpRequest.getEmail();
+//        this.storedDocument=signUpRequest.getPhoto();
         this.creationTime = new Date();
         this.updateTime =  new Date();
         this.active = true;

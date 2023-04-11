@@ -23,6 +23,10 @@ spring:
             - Path=/route/**
           filters:
             - AuthFilter
+        - id: admin-service
+          uri: lb://admin-service
+          predicates:
+            - Path=/storeddocument/**
         - id: auth-service
           uri: lb://auth-service
           predicates:

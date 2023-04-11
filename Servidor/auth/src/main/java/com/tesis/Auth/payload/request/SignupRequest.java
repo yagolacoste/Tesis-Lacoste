@@ -1,6 +1,10 @@
 package com.Tesis.auth.payload.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -12,7 +16,7 @@ public class SignupRequest implements Serializable {
     private String password;
     @NotBlank
     private String identityType;
-    @NotBlank
+    @NotNull
     private String identity;
     @NotBlank
     private String address;
@@ -20,9 +24,11 @@ public class SignupRequest implements Serializable {
     private String firstName;
     @NotBlank
     private String lastName;
-    @NotBlank
+    @NotNull
     private int age;
-    @NotBlank
+    @NotNull
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonProperty("birthday")
     private Date birthday;
     @NotBlank
     private String phone;
@@ -30,6 +36,8 @@ public class SignupRequest implements Serializable {
     private String email;
 
     private Set<String> role;
+
+    private Long photo;
 
     public SignupRequest() {
     }
@@ -122,5 +130,13 @@ public class SignupRequest implements Serializable {
 
     public void setRole(Set<String> role) {
         this.role = role;
+    }
+
+    public Long getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Long photo) {
+        this.photo = photo;
     }
 }

@@ -14,7 +14,7 @@ public class RefreshToken {
     @PrimaryKey
     @NonNull
     @ColumnInfo(name="id")
-    private String id;
+    private Long id;
 
     @ColumnInfo(name="refreshToken")
     private String refreshToken;
@@ -29,7 +29,7 @@ public class RefreshToken {
     }
 
     public RefreshToken(JwtResponse jwtResponse) {
-        this.id = String.valueOf(jwtResponse.getId());
+        this.id = jwtResponse.getId();
         this.refreshToken = jwtResponse.getRefreshToken();
         this.accessToken = jwtResponse.getAccessToken();
         this.tokenType = jwtResponse.getTokenType();
@@ -43,11 +43,12 @@ public class RefreshToken {
     }
 
 
-    public String getId() {
+    @NonNull
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(@NonNull Long id) {
         this.id = id;
     }
 

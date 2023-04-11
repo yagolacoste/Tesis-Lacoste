@@ -27,7 +27,7 @@ public interface IAuthUserController {
     @PostMapping(value = "/validate",produces = MediaType.APPLICATION_JSON_VALUE)
     public RefreshTokenDto validate(@RequestParam String token);
 
-    @PostMapping("/signup")
+    @PostMapping(value = "/signup",produces = MediaType.APPLICATION_JSON_VALUE)
     public void registerUser(@Valid @RequestBody SignupRequest signUpRequest);
 
     @PostMapping("/refreshtoken")

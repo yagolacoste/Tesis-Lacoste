@@ -1,8 +1,6 @@
 package com.Tesis.bicycle.Dto.ApiRest;
 
-import org.json.JSONObject;
-
-public class RouteApiRest {
+public class RouteApiRestDto {
 
     private  String id;
 
@@ -12,7 +10,7 @@ public class RouteApiRest {
 
     private String coordinates;
 
-    public RouteApiRest() {
+    public RouteApiRestDto() {
     }
 
     public String getId() {

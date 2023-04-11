@@ -2,10 +2,13 @@ package com.Tesis.bicycle.Service.ApiRest;
 
 import com.Tesis.bicycle.Dto.ApiRest.auth.request.AuthUserDto;
 import com.Tesis.bicycle.Dto.ApiRest.auth.request.LoginRequest;
+import com.Tesis.bicycle.Dto.ApiRest.auth.request.SignupRequest;
 import com.Tesis.bicycle.Dto.ApiRest.auth.request.TokenRefreshRequest;
 import com.Tesis.bicycle.Dto.ApiRest.auth.response.JwtResponse;
 import com.Tesis.bicycle.Dto.ApiRest.auth.response.MessageResponse;
 import com.Tesis.bicycle.Dto.ApiRest.auth.response.TokenRefreshResponse;
+import com.Tesis.bicycle.Dto.ApiRest.auth.response.TokenResponse;
+import com.Tesis.bicycle.Dto.Room.RefreshTokenDto;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -22,15 +25,13 @@ public interface AuthRestService {
     @POST("signin")
     Call<JwtResponse> login(@Body LoginRequest dto);
 
-    @POST("validate")
-     Call<Response<?>> validate(@Field("token") String token);
 
-    @POST("create")
-     Call<MessageResponse> registerUser(@Body AuthUserDto dto);
+    @POST("signup")
+    Call<Void> registerUser(@Body SignupRequest signupRequest);
 
     @POST("refreshtoken")
     Call<TokenRefreshResponse> refreshtoken(@Body TokenRefreshRequest refresh);
 
     @POST("signout")
-    Call<Response<?>> logoutUser();
+    Call<Void> logoutUser(@Body TokenRefreshRequest refreshTokenDto);
 }

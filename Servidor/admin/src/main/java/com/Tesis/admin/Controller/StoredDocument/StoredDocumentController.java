@@ -27,8 +27,9 @@ public class StoredDocumentController implements IStoredDocumentController {
     }
 
     @Override
-    public void save(StoredDocument obj) {
-        service.save(obj);
+    public Long save(StoredDocument obj) {
+
+        return service.save(obj);
     }
 
 

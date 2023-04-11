@@ -1,14 +1,20 @@
 package com.Tesis.bicycle.Activity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
+import com.Tesis.bicycle.Dto.ApiRest.auth.request.TokenRefreshRequest;
 import com.Tesis.bicycle.R;
+import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
+import com.Tesis.bicycle.ViewModel.UserViewModel;
 import com.Tesis.bicycle.databinding.ActivityInicioBinding;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -22,6 +28,9 @@ public class InicioActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityInicioBinding binding;
+    private UserViewModel userViewModel;
+    private AccessTokenRoomViewModel accessTokenRoomViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +58,7 @@ public class InicioActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_inicio);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        initViewModel();
     }
 
     @Override
@@ -59,9 +69,39 @@ public class InicioActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.closeSession:
+                this.logOut();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void logOut() {
+        accessTokenRoomViewModel.getAccessToken().observe(this,response->{
+            if(!response.isEmpty()){
+                String token=response.get(0).getRefreshToken();
+                TokenRefreshRequest refreshToken=new TokenRefreshRequest(token);
+                userViewModel.logoutUser(refreshToken);
+            }
+        });
+
+        accessTokenRoomViewModel.logout();
+        this.finish();
+        this.overridePendingTransition(R.anim.left_in,R.anim.left_out);
+    }
+
+    @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_inicio);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    private void initViewModel() {
+        userViewModel=new ViewModelProvider(this).get(UserViewModel.class);
+        accessTokenRoomViewModel=new ViewModelProvider(this).get(AccessTokenRoomViewModel.class);
     }
 }

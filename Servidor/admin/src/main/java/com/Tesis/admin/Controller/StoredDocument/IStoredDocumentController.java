@@ -14,15 +14,15 @@ public interface IStoredDocumentController {
     public static final String PATH="/storeddocument";
 
 
-    @GetMapping()
+    @GetMapping("/")
     public List<StoredDocument> list();
 
 
     @GetMapping("/download/{fileName}")
     public ResponseEntity<Resource> download(@PathVariable String fileName, HttpServletRequest request);
 
-    @PostMapping("")
-    public void save(@ModelAttribute StoredDocument obj) ;
+    @PostMapping("/")
+    public Long save(@ModelAttribute StoredDocument obj) ;
 
 
 }

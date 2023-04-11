@@ -12,7 +12,7 @@ public interface IStoredDocumentService {
 
     List<StoredDocument> list();
 
-    void save(StoredDocument obj);
+    Long save(StoredDocument obj);
 
      ResponseEntity<Resource> downloadByFileName(String fileName, HttpServletRequest request);
 
