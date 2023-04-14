@@ -31,4 +31,6 @@ public class ApiRestConecction {
     public static StoredDocumentRestService getStoredDocumentService(){
         return ClientRetrofit.getClient(URL_STORED_DOCUMENT).create(StoredDocumentRestService.class);
     }
+
+
 }

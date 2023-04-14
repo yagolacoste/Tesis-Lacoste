@@ -87,7 +87,6 @@ public class AppUserHasRouteService implements IAppUserHasRouteService {
         UserAppDto user=userService.getByUser(appUser);
         AppUserHasRouteDetailsDto appUserHasRouteDetailsDto= new AppUserHasRouteDetailsDto();
         appUserHasRouteDetailsDto.setUserId(appUser);
-        appUserHasRouteDetailsDto.setUserName(user.getUserName());
         appUserHasRouteDetailsDto.setRoutes(result);
         return appUserHasRouteDetailsDto;
     }

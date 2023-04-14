@@ -190,7 +190,6 @@ public class TrackingActivity extends Activity  {
                 @Override
                 public void onClick(View view) {
                     stopLocationService();
-//                registerReceiver(myReceiver,new IntentFilter(Constants.ACTION_UPDATE_SERVICE));
                     Intent i = new Intent(TrackingActivity.this, TrackingDetailActivity.class);
 
                     if (routeDetailsDto != null) {

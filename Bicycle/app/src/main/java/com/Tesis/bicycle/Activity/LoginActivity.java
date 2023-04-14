@@ -17,7 +17,7 @@ import com.Tesis.bicycle.Dto.ApiRest.auth.response.JwtResponse;
 import com.Tesis.bicycle.Model.Room.RefreshToken;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
-import com.Tesis.bicycle.ViewModel.UserViewModel;
+import com.Tesis.bicycle.ViewModel.AuthViewModel;
 
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText editMail,editPassword;
     private Button btnInitSession;
-    private UserViewModel userViewModel;
+    private AuthViewModel authViewModel;
     private AccessTokenRoomViewModel accessTokenRoomViewModel;
     private TextView txtNewUser;
     private TextInputLayout txtInputEmail, txtInputPassword;
@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initViewModel() {
-        userViewModel=new ViewModelProvider(this).get(UserViewModel.class);
+        authViewModel =new ViewModelProvider(this).get(AuthViewModel.class);
         accessTokenRoomViewModel=new ViewModelProvider(this).get(AccessTokenRoomViewModel.class);
     }
 
@@ -64,8 +64,8 @@ public class LoginActivity extends AppCompatActivity {
                 LoginRequest loginRequest=new LoginRequest();
                 loginRequest.setEmail(editMail.getText().toString());
                 loginRequest.setPassword(editPassword.getText().toString());
-                userViewModel.login(loginRequest).observe(this,response ->{
-                    if(response!=null){
+                authViewModel.login(loginRequest).observe(this, response ->{
+                    if(response.getAccessToken()!=null){
                         Toast.makeText(this,"access",Toast.LENGTH_SHORT).show();
                         JwtResponse tokenDto= response;
                         RefreshToken refreshToken=new RefreshToken(tokenDto);
@@ -121,8 +121,6 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     private boolean validate() {

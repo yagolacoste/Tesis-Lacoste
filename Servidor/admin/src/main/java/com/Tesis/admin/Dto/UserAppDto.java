@@ -1,6 +1,9 @@
 package com.Tesis.admin.Dto;
 
+
 import com.Tesis.admin.Models.User;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,29 +12,38 @@ public class UserAppDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @JsonProperty("id")
     private Long id;
 
-    private String userName;
-
-    private String password;
-
+    @JsonProperty("identityType")
     private String identityType;
 
+    @JsonProperty("identity")
     private String identity;
 
+    @JsonProperty("address")
     private String address;
 
+    @JsonProperty("firstName")
     private String firstName;
 
+    @JsonProperty("lastName")
     private String lastName;
 
+    @JsonProperty("age")
     private int age;
 
+    @JsonProperty("phone")
     private String phone;
 
+    @JsonProperty("email")
     private String email;
 
+    @JsonProperty("birthday")
     private Date birthday;
+
+    @JsonProperty("fileName")
+    private String fileName;
 
     public UserAppDto() {
     }
@@ -39,7 +51,6 @@ public class UserAppDto implements Serializable {
 
     public UserAppDto( User user) {
         this.id=user.getId();
-//        this.userName = user.getUsername();
         this.identityType = user.getIdentity();
         this.identity = user.getIdentity();
         this.address = user.getAddress();
@@ -49,6 +60,7 @@ public class UserAppDto implements Serializable {
         this.phone = user.getPhone();
         this.email = user.getEmail();
         this.birthday = user.getBirthday();
+        this.fileName=user.getStoredDocument().getFileName()+user.getStoredDocument().getExtension();
     }
 
     public Long getId() {
@@ -123,21 +135,6 @@ public class UserAppDto implements Serializable {
         this.birthday = birthday;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getAddress() {
         return address;
@@ -145,5 +142,13 @@ public class UserAppDto implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

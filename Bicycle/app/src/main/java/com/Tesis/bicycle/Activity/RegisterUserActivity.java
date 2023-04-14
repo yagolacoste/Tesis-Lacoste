@@ -16,31 +16,24 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.Tesis.bicycle.Dto.ApiRest.auth.request.SignupRequest;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.StoredDocumentViewModel;
-import com.Tesis.bicycle.ViewModel.UserViewModel;
+import com.Tesis.bicycle.ViewModel.AuthViewModel;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -50,7 +43,7 @@ import okhttp3.RequestBody;
 
 public class RegisterUserActivity extends AppCompatActivity {
     private File f;
-    private UserViewModel userViewModel;
+    private AuthViewModel authViewModel;
     private StoredDocumentViewModel storedDocumentViewModel;
     private Button btnUploadImage, btnStoredData;
     private CircleImageView imageUser;
@@ -96,7 +89,7 @@ public class RegisterUserActivity extends AppCompatActivity {
 
     private void initViewModel() {
         final ViewModelProvider vmp = new ViewModelProvider(this);
-        this.userViewModel = vmp.get(UserViewModel.class);
+        this.authViewModel = vmp.get(AuthViewModel.class);
         this.storedDocumentViewModel = vmp.get(StoredDocumentViewModel.class);
     }
 
@@ -368,7 +361,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                     user.setPhoto(response);
                     user.setPassword(edtPasswordUser.getText().toString());
                     user.setEmail(edtEmailUser.getText().toString());
-                    this.userViewModel.registerUser(user).observe(this,resp->{
+                    this.authViewModel.registerUser(user).observe(this, resp->{
                         successMessage("Estupendo! " + "Su información ha sido guardada con éxito en el sistema.");
                         this.finish();
                     });

@@ -63,25 +63,6 @@ public class GPSService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-//
-//        //Get first location
-//        tracking=new Tracking();
-//        locationCallback=new LocationCallback() {
-//            @Override
-//            public void onLocationResult(@NonNull LocationResult locationResult) {
-//                super.onLocationResult(locationResult);
-//                if(locationResult.getLastLocation()!=null){
-//                    currentLocation=locationResult.getLastLocation();
-//                }
-//            }
-//        };
-//
-//        if (!(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
-//            fusedLocationProviderClient
-//                    .requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
-//        }
-//
-//        startLocationService();
     }
 
     @Override
@@ -152,16 +133,6 @@ public class GPSService extends Service {
             }
         }
             startForeground(Constants.LOCATION_SERVICE_ID, builder.build());
-//        Intent notificationIntent=new Intent(this,TrackingActivity.class);
-//        PendingIntent pendingIntent=PendingIntent.getActivity(this,0,notificationIntent,0);
-//
-//        Notification notification=new NotificationCompat.Builder(this,CHANNEL_ID)
-//                .setContentTitle("Bicycle")
-//                .setContentText("Tracking Runn...")
-//                .setSmallIcon(R.drawable.ic_bicycle)
-//                .setContentIntent(pendingIntent)
-//                .build();
-//        return notification;
             }
 
     @Override
@@ -180,38 +151,9 @@ public class GPSService extends Service {
     }
 
 
-    //        private final Runnable sendData = new Runnable(){
-//        public void run(){
-//                if(currentLocation!=null) {
-//                    if ((lastLocation == null)) {
-//                        //preguntar por el tiempo
-//                        tracking.addTracking(currentLocation);
-//                    }
-//                    else if((currentLocation.getLongitude() != lastLocation.getLongitude()) || (currentLocation.getLatitude() != lastLocation.getLatitude()))
-//                        if( currentLocation.getTime()!=lastLocation.getTime()){
-//                        tracking.addTracking(currentLocation);
-//                    }
-//                }
-//                lastLocation=currentLocation;//Agrege lastLocation porque sino me guardaba la misma ubicacion y tengo asincronismo en los timpos
-//            TrackingActivity.updatePosition(tracking);
-//            handler.postDelayed(this, 1000);
-//            }
-//
-//
-//    };
-
     private void stopLocationService(){
         tracking.stopTrackingActivity();
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);
-//        LocationServices.getFusedLocationProviderClient(this)
-//                .removeLocationUpdates(locationCallback);
-//        Intent i = new Intent("location_update");
-//        i.putExtra("tracking",tracking);
-//        i.putParcelableArrayListExtra("points", (ArrayList<? extends Parcelable>) tracking.getPoints());
-//        sendBroadcast(i);
-//        stopForeground(true);
-//        stopSelf();
-
     }
 
 

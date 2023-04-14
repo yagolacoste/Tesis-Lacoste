@@ -8,7 +8,7 @@ import android.view.Menu;
 import com.Tesis.bicycle.Dto.ApiRest.auth.request.TokenRefreshRequest;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
-import com.Tesis.bicycle.ViewModel.UserViewModel;
+import com.Tesis.bicycle.ViewModel.AuthViewModel;
 import com.Tesis.bicycle.databinding.ActivityInicioBinding;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -28,7 +28,7 @@ public class InicioActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityInicioBinding binding;
-    private UserViewModel userViewModel;
+    private AuthViewModel authViewModel;
     private AccessTokenRoomViewModel accessTokenRoomViewModel;
 
 
@@ -79,12 +79,22 @@ public class InicioActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadData();
+    }
+
+    private void loadData() {
+
+    }
+
     private void logOut() {
         accessTokenRoomViewModel.getAccessToken().observe(this,response->{
             if(!response.isEmpty()){
                 String token=response.get(0).getRefreshToken();
                 TokenRefreshRequest refreshToken=new TokenRefreshRequest(token);
-                userViewModel.logoutUser(refreshToken);
+                authViewModel.logoutUser(refreshToken);
             }
         });
 
@@ -101,7 +111,7 @@ public class InicioActivity extends AppCompatActivity {
     }
 
     private void initViewModel() {
-        userViewModel=new ViewModelProvider(this).get(UserViewModel.class);
+        authViewModel =new ViewModelProvider(this).get(AuthViewModel.class);
         accessTokenRoomViewModel=new ViewModelProvider(this).get(AccessTokenRoomViewModel.class);
     }
 }

@@ -5,15 +5,11 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.Tesis.bicycle.Dto.ApiRest.auth.request.AuthUserDto;
 import com.Tesis.bicycle.Dto.ApiRest.auth.request.LoginRequest;
 import com.Tesis.bicycle.Dto.ApiRest.auth.request.SignupRequest;
 import com.Tesis.bicycle.Dto.ApiRest.auth.request.TokenRefreshRequest;
 import com.Tesis.bicycle.Dto.ApiRest.auth.response.JwtResponse;
-import com.Tesis.bicycle.Dto.ApiRest.auth.response.MessageResponse;
 import com.Tesis.bicycle.Dto.ApiRest.auth.response.TokenRefreshResponse;
-import com.Tesis.bicycle.Dto.ApiRest.auth.response.TokenResponse;
-import com.Tesis.bicycle.Dto.Room.RefreshTokenDto;
 import com.Tesis.bicycle.Presenter.ApiRestConecction;
 import com.Tesis.bicycle.Service.ApiRest.AuthRestService;
 
@@ -21,18 +17,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserApiRestRepository {
-    private static UserApiRestRepository repository;
+public class AuthApiRestRepository {
+    private static AuthApiRestRepository repository;
     private final AuthRestService authService;
 
 
-    public UserApiRestRepository(Context context) {
+    public AuthApiRestRepository(Context context) {
         this.authService = ApiRestConecction.getAuthService();
     }
 
-    public static UserApiRestRepository getInstance(Context context){
+    public static AuthApiRestRepository getInstance(Context context){
         if(repository==null){
-            repository=new UserApiRestRepository(context);
+            repository=new AuthApiRestRepository(context);
         }
         return repository;
     }

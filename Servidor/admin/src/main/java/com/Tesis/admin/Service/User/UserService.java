@@ -33,8 +33,6 @@ public class UserService implements IUserService{
     @Override
     public void add(UserAppDto userAppDto) {
         User user = new User();
-//        user.setUsername(userAppDto.getUserName());
-        user.setPassword(userAppDto.getPassword());
         user.setFirstName(userAppDto.getFirstName());
         user.setLastName(userAppDto.getLastName());
         user.setIdentity(userAppDto.getIdentityType());

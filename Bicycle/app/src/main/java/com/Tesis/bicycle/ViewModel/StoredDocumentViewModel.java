@@ -5,10 +5,8 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.Tesis.bicycle.Repository.StoredDocumentRepository;
-import com.Tesis.bicycle.Repository.UserApiRestRepository;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;

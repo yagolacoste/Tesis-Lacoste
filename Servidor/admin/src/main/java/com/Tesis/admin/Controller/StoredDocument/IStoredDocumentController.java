@@ -18,11 +18,15 @@ public interface IStoredDocumentController {
     public List<StoredDocument> list();
 
 
-    @GetMapping("/download/{fileName}")
-    public ResponseEntity<Resource> download(@PathVariable String fileName, HttpServletRequest request);
+    @GetMapping("/download")
+    public ResponseEntity<Resource> download(@RequestParam(value = "fileName") String fileName, HttpServletRequest request);
 
     @PostMapping("/")
     public Long save(@ModelAttribute StoredDocument obj) ;
+
+
+//    @GetMapping("/download/{fileName}")
+//    public ResponseEntity<Resource> downloadByFileName(@PathVariable String fileName, HttpServletRequest request);
 
 
 }

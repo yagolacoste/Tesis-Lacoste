@@ -5,54 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7729f06-1757-4dfa-ac9d-78d48a9c1c01" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/modules/Tesis Lacoste.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/InicioActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/InicioActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/RegisterUserActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/RegisterUserActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ShowPointLocationList.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ShowPointLocationList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/StatisticActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/StatisticActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/TrackingActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/TrackingActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/TrackingDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/TrackingDetailActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Dto/ApiRest/RouteApiRestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Dto/ApiRest/RouteApiRestDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Dto/ApiRest/auth/request/LoginRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Dto/ApiRest/auth/request/LoginRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Dto/ApiRest/auth/request/TokenRefreshRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Dto/ApiRest/auth/request/TokenRefreshRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Dto/ApiRest/auth/response/TokenRefreshResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Dto/ApiRest/auth/response/TokenRefreshResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Adapter/RouteRecyclerViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Adapter/RouteRecyclerViewAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ApiRestConecction.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ApiRestConecction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Client/AccessTokenInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Client/AccessTokenInterceptor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Client/ClientRetrofit.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Client/ClientRetrofit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Client/TokenAuthenticator.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Client/TokenAuthenticator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/AccessTokenRoomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/AccessTokenRoomRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/UserApiRestRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/UserApiRestRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Service/ApiRest/AppUserHasRouteApiRestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Service/ApiRest/AppUserHasRouteRestService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Service/ApiRest/AuthRestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Service/ApiRest/AuthRestService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Service/ApiRest/RouteApiRestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Service/ApiRest/RouteApiRestService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Service/Room/RefreshTokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Service/Room/RefreshTokenService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/ViewModel/AccessTokenRoomViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/ViewModel/AccessTokenRoomViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/ViewModel/UserViewRoomModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/ViewModel/UserViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/res/layout/activity_login.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/res/menu/inicio.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/res/menu/inicio.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/res/values/colors.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/AppDataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/AppDataBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/AppUserHasRouteApiRestRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/AppUserHasRouteApiRestRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/UserApiRestRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/AuthApiRestRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Service/ApiRest/StoredDocumentRestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Service/ApiRest/StoredDocumentRestService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/ServiceTracking/GPSService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/ServiceTracking/GPSService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/ViewModel/AppUserHasRouteViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/ViewModel/AppUserHasRouteViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/ViewModel/StoredDocumentViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/ViewModel/StoredDocumentViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/ViewModel/UserViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/ViewModel/AuthViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/res/layout/nav_header_inicio.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/res/layout/nav_header_inicio.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Controller/StoredDocument/IStoredDocumentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Controller/StoredDocument/IStoredDocumentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Controller/StoredDocument/StoredDocumentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Controller/StoredDocument/StoredDocumentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/StoredDocument/IStoredDocumentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/StoredDocument/IStoredDocumentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/StoredDocument/StoredDocumentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/StoredDocument/StoredDocumentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/controller/IAuthUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/controller/IAuthUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/payload/request/SignupRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/payload/request/SignupRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/repository/IStoredDocumentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/repository/IStoredDocumentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/security/jwt/AuthEntryPointJwt.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/security/jwt/AuthEntryPointJwt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/security/jwt/JwtUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/security/jwt/JwtUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/service/AuthUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/service/AuthUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/Tesis/gateway/config/AuthFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/Tesis/gateway/config/AuthFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/UserAppDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/UserAppDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/AppuserHasRoute/AppUserHasRouteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/AppuserHasRoute/AppUserHasRouteService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/User/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/User/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/src/main/resources/bootstrap.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/resources/bootstrap.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +80,7 @@
       <recent name="C:\Users\yago_\OneDrive\Escritorio\Tesis\Tesis-Lacoste\Servidor\admin\src\main\java\com\Tesis\admin" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.AuthApplication">
+  <component name="RunManager" selected="Application.AdminApplication">
     <configuration name="AdminApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.Tesis.admin.AdminApplication" />
       <module name="admin" />
@@ -173,9 +148,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.AuthApplication" />
         <item itemvalue="Application.AdminApplication" />
         <item itemvalue="Application.GatewayApplication" />
+        <item itemvalue="Application.AuthApplication" />
         <item itemvalue="Application.DiscoveryApplication" />
       </list>
     </recent_temporary>
@@ -209,6 +184,36 @@
           <url>file://$PROJECT_DIR$/auth/src/main/java/com/Tesis/auth/service/AuthUserService.java</url>
           <line>133</line>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/auth/src/main/java/com/Tesis/auth/service/AuthUserService.java</url>
+          <line>87</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/auth/src/main/java/com/Tesis/auth/service/AuthUserService.java</url>
+          <line>71</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/auth/src/main/java/com/Tesis/auth/service/AuthUserService.java</url>
+          <line>80</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/StoredDocument/FileStorageService.java</url>
+          <line>49</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/StoredDocument/FileStorageService.java</url>
+          <line>65</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/StoredDocument/StoredDocumentService.java</url>
+          <line>48</line>
+          <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
