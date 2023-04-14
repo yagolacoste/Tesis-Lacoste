@@ -1,0 +1,44 @@
+server:
+  port: 9191
+spring:
+  application:
+    name: api-gateway
+  main:
+    allow-circular-references: true
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: admin-service
+          uri: lb://admin-service
+          predicates:
+            - Path=/appuserroute/**
+          filters:
+            - AuthFilter
+        - id: admin-service
+          uri: lb://admin-service
+          predicates:
+            - Path=/route/**
+          filters:
+            - AuthFilter
+        - id: admin-service
+          uri: lb://admin-service
+          predicates:
+            - Path=/storeddocument/**
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      default-zone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+
+

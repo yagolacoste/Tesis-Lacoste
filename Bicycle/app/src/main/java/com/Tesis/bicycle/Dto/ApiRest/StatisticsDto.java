@@ -1,52 +1,57 @@
 package com.Tesis.bicycle.Dto.ApiRest;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 
 public class StatisticsDto implements Serializable {
 
-   private Double distance;
+   private float distance;
 
-   private Double speed;
+   private float speed;
 
-   private Double timeSpeed;
+   @JsonFormat(timezone = JsonFormat.DEFAULT_TIMEZONE,pattern = "H:mm:ss")
+   private LocalTime timeSpeed;
 
-   private LocalDate timeSession;
+   private Date timeSession;
 
    private String weather;
 
     public StatisticsDto() {
     }
 
-    public Double getDistance() {
+    public float getDistance() {
         return distance;
     }
 
-    public void setDistance(Double distance) {
+    public void setDistance(float distance) {
         this.distance = distance;
     }
 
-    public Double getSpeed() {
+    public float getSpeed() {
         return speed;
     }
 
-    public void setSpeed(Double speed) {
+    public void setSpeed(float speed) {
         this.speed = speed;
     }
 
-    public Double getTimeSpeed() {
+    public LocalTime getTimeSpeed() {
         return timeSpeed;
     }
 
-    public void setTimeSpeed(Double timeSpeed) {
+    public void setTimeSpeed(LocalTime timeSpeed) {
         this.timeSpeed = timeSpeed;
     }
 
-    public LocalDate getTimeSession() {
+    public Date getTimeSession() {
         return timeSession;
     }
 
-    public void setTimeSession(LocalDate timeSession) {
+    public void setTimeSession(Date timeSession) {
         this.timeSession = timeSession;
     }
 

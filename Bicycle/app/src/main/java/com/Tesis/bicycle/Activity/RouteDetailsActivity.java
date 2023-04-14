@@ -6,16 +6,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.Tesis.bicycle.Constants;
-import com.Tesis.bicycle.Dto.ApiRest.AppUserHasRouteDetailsDto;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
-import com.Tesis.bicycle.Presenter.ApiRestConecction;
-import com.Tesis.bicycle.Presenter.CardView.RouteRecyclerViewAdapter;
 import com.Tesis.bicycle.R;
-import com.Tesis.bicycle.Service.ApiRest.AppUserHasRouteApiRestService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,10 +30,6 @@ import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class RouteDetailsActivity extends AppCompatActivity {
 

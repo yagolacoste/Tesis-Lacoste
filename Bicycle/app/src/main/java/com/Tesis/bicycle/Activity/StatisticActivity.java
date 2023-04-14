@@ -61,8 +61,6 @@ public class StatisticActivity extends AppCompatActivity {
         RoadManager roadManager=new OSRMRoadManager(StatisticActivity.this,"OBP_Tuto/1.0");
         ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
         Road road=roadManager.getRoad((ArrayList<GeoPoint>) routes);
-//        Polyline roadOverlay=new Polyline();
-//        roadOverlay.setWidth(20f);
         Polyline roadOverlay=RoadManager.buildRoadOverlay(road, 0x800000FF, 25.0f);
 
 

@@ -3,8 +3,10 @@ package com.Tesis.bicycle.Activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ListView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,10 +15,13 @@ import com.Tesis.bicycle.Dto.ApiRest.AppUserHasRouteDetailsDto;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Dto.ApiRest.StatisticsDto;
 import com.Tesis.bicycle.Presenter.ApiRestConecction;
-import com.Tesis.bicycle.Presenter.CardView.RouteRecyclerViewAdapter;
-import com.Tesis.bicycle.Presenter.CardView.StatisticRecyclerViewAdapter;
+import com.Tesis.bicycle.Presenter.Adapter.RouteRecyclerViewAdapter;
+import com.Tesis.bicycle.Presenter.Adapter.StatisticRecyclerViewAdapter;
 import com.Tesis.bicycle.R;
-import com.Tesis.bicycle.Service.ApiRest.AppUserHasRouteApiRestService;
+import com.Tesis.bicycle.Repository.AppUserHasRouteApiRestRepository;
+import com.Tesis.bicycle.Service.ApiRest.AppUserHasRouteRestService;
+import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
+import com.Tesis.bicycle.ViewModel.AppUserHasRouteViewModel;
 
 import java.util.List;
 
@@ -24,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ShowPointLocationList extends Activity {
+public class ShowPointLocationList extends AppCompatActivity {
 
     List<RouteDetailsDto>routes;
     List<StatisticsDto>statistics;
@@ -32,6 +37,8 @@ public class ShowPointLocationList extends Activity {
     private RecyclerView recyclerView;
     private RouteRecyclerViewAdapter adaptorRoute;
     private StatisticRecyclerViewAdapter adaptorStatistics;
+    private AccessTokenRoomViewModel accessTokenRoomViewModel;
+    private AppUserHasRouteViewModel appUserHasRouteViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +49,8 @@ public class ShowPointLocationList extends Activity {
         recyclerView= (RecyclerView) findViewById(R.id.lv_showLocations);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        accessTokenRoomViewModel=new ViewModelProvider(this).get(AccessTokenRoomViewModel.class);
+        appUserHasRouteViewModel=new ViewModelProvider(this).get(AppUserHasRouteViewModel.class);
 
 
         String action=getIntent().getAction();
@@ -58,44 +67,34 @@ public class ShowPointLocationList extends Activity {
 
     ///Lista las rutas por usuarios
     public void  getRoutesByUser() {
-        AppUserHasRouteApiRestService appUserHasRouteApiRestService = ApiRestConecction.getServiceAppUserHasRoute();
-        Call<AppUserHasRouteDetailsDto> call = appUserHasRouteApiRestService.getRouteById(1L);//es el usuario 1 por defecto
-        call.enqueue(new Callback<AppUserHasRouteDetailsDto>() {
-            @Override
-            public void onResponse(Call<AppUserHasRouteDetailsDto> call, Response<AppUserHasRouteDetailsDto> response) {
-                if (response.isSuccessful()) {
-                    routes = response.body().getRoutes();
-                    // lv_saveLocations.setAdapter(new ArrayAdapter<RouteDetailsDto>(ShowPointLocationList.this, android.R.layout.));
-                    adaptorRoute = new RouteRecyclerViewAdapter(routes);
-                    recyclerView.setAdapter(adaptorRoute);
-                }
-            }
-//
-            @Override
-            public void onFailure(Call<AppUserHasRouteDetailsDto> call, Throwable t) {
-                Log.e("Error",t.getMessage());
+        accessTokenRoomViewModel.getFirst().observe(this,response->{
+            if(response.getAccessToken()!=null){
+                appUserHasRouteViewModel.getRouteById(response.getId()).observe(this,resp->{
+                    if(!resp.getRoutes().isEmpty()){
+                        routes = resp.getRoutes();
+                        adaptorRoute = new RouteRecyclerViewAdapter(routes);
+                        recyclerView.setAdapter(adaptorRoute);
+                    }
+                    else
+                        Toast.makeText(this,"Not exist routes for user: "+resp.getUserId(),Toast.LENGTH_SHORT).show();
+                });
             }
         });
+
     }
 
-    public void getStatisticByRoute(String routeId){
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        AppUserHasRouteApiRestService appUserHasRouteApiRestService = ApiRestConecction.getServiceAppUserHasRoute();
-        Call<List<StatisticsDto>> call = appUserHasRouteApiRestService.getStatisticsByRoute(routeId);
-        call.enqueue(new Callback<List<StatisticsDto>>() {
-            @Override
-            public void onResponse(Call<List<StatisticsDto>> call, Response<List<StatisticsDto>> response) {
-                if(response.isSuccessful()){
-                    statistics=response.body();
-                    adaptorStatistics=new StatisticRecyclerViewAdapter(statistics);
-                    recyclerView.setAdapter(adaptorStatistics);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<StatisticsDto>> call, Throwable t) {
-                Log.e("Error",t.getMessage());
+    public void getStatisticByRoute(String routeId){//se va a cambiar cuando haya varios usuarios
+        accessTokenRoomViewModel.getFirst().observe(this,response->{
+            if(response.getAccessToken()!=null){
+                appUserHasRouteViewModel.getStatisticByRoute(routeId).observe(this,resp->{
+                    if(!resp.isEmpty()){
+                        statistics = resp;
+                        adaptorStatistics=new StatisticRecyclerViewAdapter(statistics);
+                        recyclerView.setAdapter(adaptorStatistics);
+                    }
+                    else
+                        Toast.makeText(this,"Not exist statistics for route: ",Toast.LENGTH_SHORT).show();
+                });
             }
         });
     }

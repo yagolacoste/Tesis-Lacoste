@@ -1,6 +1,6 @@
 package com.Tesis.bicycle.Service.ApiRest;
 
-import com.Tesis.bicycle.Model.ApiRest.RouteApiRest;
+import com.Tesis.bicycle.Dto.ApiRest.RouteApiRestDto;
 
 import java.util.List;
 
@@ -12,10 +12,10 @@ import retrofit2.http.POST;
 public interface RouteApiRestService {
 
     @GET("list")
-    Call<List<RouteApiRest>> getRoutes();
+    Call<List<RouteApiRestDto>> getRoutes();
 
     @POST("add")
-    Call<Void> addRoute(@Body RouteApiRest routeApiRest);
+    Call<Void> addRoute(@Body RouteApiRestDto routeApiRestDto);
 
 
 }
