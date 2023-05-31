@@ -1,4 +1,4 @@
-package com.Tesis.auth.dto;
+package com.tesis.Auth.dto;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;

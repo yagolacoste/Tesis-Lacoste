@@ -1,4 +1,4 @@
-package com.Tesis.auth.security.Jwt;
+package com.tesis.Auth.security.jwt;
 
 
 import org.slf4j.Logger;
@@ -13,7 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStream;
+
 
 @Component
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {

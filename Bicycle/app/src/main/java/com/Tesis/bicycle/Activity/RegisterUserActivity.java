@@ -246,7 +246,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                     user.setPassword(edtPasswordUser.getText().toString());
                     user.setEmail(edtEmailUser.getText().toString());
                     this.authViewModel.registerUser(user).observe(this, resp->{
-                        if(resp!=null){
+                        if(resp){
                             successMessage("Estupendo! " + "Su información ha sido guardada con éxito en el sistema.");
                             this.finish();
                         }

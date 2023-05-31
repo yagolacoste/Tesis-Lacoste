@@ -1,6 +1,6 @@
-package com.Tesis.auth.security.Service;
+package com.tesis.Auth.security.Service;
 
-import com.Tesis.auth.entity.User;
+import com.tesis.Auth.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

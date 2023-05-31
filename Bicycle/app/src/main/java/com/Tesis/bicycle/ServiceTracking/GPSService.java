@@ -108,7 +108,7 @@ public class GPSService extends Service {
         String channelId="Location_notification_channel";
         notificationManager= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Intent resultIntent=new Intent();
-        PendingIntent pendingIntent=PendingIntent.getActivity(getApplicationContext(),0,resultIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent=PendingIntent.getActivity(getApplicationContext(),0,resultIntent,PendingIntent.FLAG_MUTABLE);
         NotificationCompat.Builder builder= new NotificationCompat.Builder(
                 getApplicationContext(),
                 channelId

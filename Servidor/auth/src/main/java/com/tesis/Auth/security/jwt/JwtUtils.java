@@ -1,9 +1,6 @@
-package com.Tesis.auth.security.Jwt;
+package com.tesis.Auth.security.jwt;
 
-import com.Tesis.auth.advise.BadRequestException;
-import com.Tesis.auth.advise.ErrorCodes;
-import com.Tesis.auth.security.Jwt.exception.TokenRefreshException;
-import com.Tesis.auth.security.Service.UserDetailsImpl;
+import com.tesis.Auth.security.Service.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

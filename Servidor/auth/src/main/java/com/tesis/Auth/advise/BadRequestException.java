@@ -1,4 +1,4 @@
-package com.Tesis.auth.advise;
+package com.tesis.Auth.advise;
 
 public class BadRequestException extends RuntimeException {
 

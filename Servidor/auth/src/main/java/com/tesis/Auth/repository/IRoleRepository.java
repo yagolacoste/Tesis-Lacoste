@@ -1,7 +1,7 @@
-package com.Tesis.auth.repository;
+package com.tesis.Auth.repository;
 
-import com.Tesis.auth.entity.ERole;
-import com.Tesis.auth.entity.Role;
+import com.tesis.Auth.entity.ERole;
+import com.tesis.Auth.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

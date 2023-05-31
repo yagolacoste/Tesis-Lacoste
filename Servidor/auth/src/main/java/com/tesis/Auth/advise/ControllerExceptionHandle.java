@@ -1,15 +1,11 @@
-package com.Tesis.auth.advise;
+package com.tesis.Auth.advise;
 
-import com.Tesis.auth.security.Jwt.exception.TokenRefreshException;
+import com.tesis.Auth.security.jwt.exception.TokenRefreshException;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.WebRequest;
 
-import java.util.Date;
 
 @RestControllerAdvice
 public class ControllerExceptionHandle {

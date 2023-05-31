@@ -1,9 +1,8 @@
-package com.Tesis.auth.service;
+package com.tesis.Auth.service;
 
-import com.Tesis.auth.entity.RefreshToken;
-import com.Tesis.auth.repository.IAuthUserRepository;
-import com.Tesis.auth.repository.IRefreshTokenRepository;
-import com.Tesis.auth.security.Jwt.exception.TokenRefreshException;
+import com.tesis.Auth.entity.RefreshToken;
+import com.tesis.Auth.repository.IAuthUserRepository;
+import com.tesis.Auth.repository.IRefreshTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
-package com.Tesis.auth.security.Jwt;
+package com.tesis.Auth.security.jwt;
 
-import com.Tesis.auth.security.Service.UserDetailsServiceImpl;
+import com.tesis.Auth.security.Service.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.Tesis.auth;
+package com.tesis.Auth;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.Tesis.auth.payload.response;
+package com.tesis.Auth.payload.response;
 
 public class MessageResponse {
     private String message;

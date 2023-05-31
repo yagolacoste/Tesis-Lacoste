@@ -1,4 +1,4 @@
-package com.Tesis.auth.payload.request;
+package com.tesis.Auth.payload.request;
 
 
 import javax.validation.constraints.NotBlank;

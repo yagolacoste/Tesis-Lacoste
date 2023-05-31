@@ -1,9 +1,9 @@
-package com.Tesis.auth.security.Service;
+package com.tesis.Auth.security.Service;
 
-import com.Tesis.auth.advise.ErrorCodes;
-import com.Tesis.auth.advise.NotFoundException;
-import com.Tesis.auth.entity.User;
-import com.Tesis.auth.repository.IAuthUserRepository;
+import com.tesis.Auth.advise.ErrorCodes;
+import com.tesis.Auth.advise.NotFoundException;
+import com.tesis.Auth.entity.User;
+import com.tesis.Auth.repository.IAuthUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

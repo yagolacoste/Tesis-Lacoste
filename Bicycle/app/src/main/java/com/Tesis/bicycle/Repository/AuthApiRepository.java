@@ -53,12 +53,15 @@ public class AuthApiRepository {
     }
 
 
-    public LiveData<Void> registerUser(SignupRequest dto){
-        final MutableLiveData<Void>mld=new MutableLiveData<>();
+    public LiveData<Boolean> registerUser(SignupRequest dto){
+        final MutableLiveData<Boolean>mld=new MutableLiveData<>();
         this.authService.registerUser(dto).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-
+                if(response.isSuccessful()){
+                    mld.setValue(true);
+                }
+                else mld.setValue(false);
             }
 
             @Override

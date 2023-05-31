@@ -1,17 +1,14 @@
-package com.Tesis.auth.controller;
+package com.tesis.Auth.controller;
 
 
-import com.Tesis.auth.dto.RefreshTokenDto;
-import com.Tesis.auth.entity.RefreshToken;
-import com.Tesis.auth.payload.request.LoginRequest;
-import com.Tesis.auth.payload.request.SignupRequest;
-import com.Tesis.auth.payload.request.TokenRefreshRequest;
-import com.Tesis.auth.payload.response.JwtResponse;
-import com.Tesis.auth.payload.response.MessageResponse;
-import com.Tesis.auth.payload.response.TokenRefreshResponse;
+import com.tesis.Auth.dto.RefreshTokenDto;
+import com.tesis.Auth.payload.request.LoginRequest;
+import com.tesis.Auth.payload.request.SignupRequest;
+import com.tesis.Auth.payload.request.TokenRefreshRequest;
+import com.tesis.Auth.payload.response.JwtResponse;
+import com.tesis.Auth.payload.response.TokenRefreshResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

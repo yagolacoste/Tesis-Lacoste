@@ -26,7 +26,7 @@ public class AuthViewModel extends AndroidViewModel {
         return this.repository.login(loginRequest);
     }
 
-    public LiveData<Void> registerUser(SignupRequest dto){
+    public LiveData<Boolean> registerUser(SignupRequest dto){
          return this.repository.registerUser(dto);
     }
     public LiveData<TokenRefreshResponse>refreshToken(TokenRefreshRequest refresh){

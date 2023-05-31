@@ -1,10 +1,10 @@
-package com.Tesis.auth.entity;
+package com.tesis.Auth.entity;
 
 
 
 
 
-import com.Tesis.auth.payload.request.SignupRequest;
+import com.tesis.Auth.payload.request.SignupRequest;
 
 import javax.persistence.*;
 import java.io.Serializable;

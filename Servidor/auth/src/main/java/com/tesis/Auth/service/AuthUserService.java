@@ -1,21 +1,23 @@
-package com.Tesis.auth.service;
+package com.tesis.Auth.service;
 
-import com.Tesis.auth.advise.AccessDeniedException;
-import com.Tesis.auth.advise.BadRequestException;
-import com.Tesis.auth.advise.ErrorCodes;
-import com.Tesis.auth.dto.RefreshTokenDto;
-import com.Tesis.auth.entity.*;
-import com.Tesis.auth.payload.request.LoginRequest;
-import com.Tesis.auth.payload.request.SignupRequest;
-import com.Tesis.auth.payload.request.TokenRefreshRequest;
-import com.Tesis.auth.payload.response.JwtResponse;
-import com.Tesis.auth.payload.response.TokenRefreshResponse;
-import com.Tesis.auth.repository.IAuthUserRepository;
-import com.Tesis.auth.repository.IRoleRepository;
-import com.Tesis.auth.repository.IStoredDocumentRepository;
-import com.Tesis.auth.security.Jwt.JwtUtils;
-import com.Tesis.auth.security.Jwt.exception.TokenRefreshException;
-import com.Tesis.auth.security.Service.UserDetailsImpl;
+
+
+import com.tesis.Auth.advise.AccessDeniedException;
+import com.tesis.Auth.advise.BadRequestException;
+import com.tesis.Auth.advise.ErrorCodes;
+import com.tesis.Auth.dto.RefreshTokenDto;
+import com.tesis.Auth.entity.*;
+import com.tesis.Auth.payload.request.LoginRequest;
+import com.tesis.Auth.payload.request.SignupRequest;
+import com.tesis.Auth.payload.request.TokenRefreshRequest;
+import com.tesis.Auth.payload.response.JwtResponse;
+import com.tesis.Auth.payload.response.TokenRefreshResponse;
+import com.tesis.Auth.repository.IAuthUserRepository;
+import com.tesis.Auth.repository.IRoleRepository;
+import com.tesis.Auth.repository.IStoredDocumentRepository;
+import com.tesis.Auth.security.jwt.JwtUtils;
+import com.tesis.Auth.security.jwt.exception.TokenRefreshException;
+import com.tesis.Auth.security.Service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,23 +37,19 @@ public class AuthUserService implements IAuthUserService{
     @Autowired
     AuthenticationManager authenticationManager;
 
-    @Autowired
-    IAuthUserRepository userRepository;
+    @Autowired IAuthUserRepository userRepository;
 
-    @Autowired
-    IRoleRepository roleRepository;
+    @Autowired IRoleRepository roleRepository;
 
     @Autowired
     PasswordEncoder encoder;
 
-    @Autowired
-    JwtUtils jwtUtils;
+    @Autowired JwtUtils jwtUtils;
 
     @Autowired
     IRefreshTokenService refreshTokenService;
 
-    @Autowired
-    IStoredDocumentRepository storedDocumentRepository;
+    @Autowired IStoredDocumentRepository storedDocumentRepository;
 
 
 

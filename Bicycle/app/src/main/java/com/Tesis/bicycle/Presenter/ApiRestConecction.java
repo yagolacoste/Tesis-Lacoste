@@ -12,7 +12,8 @@ import com.Tesis.bicycle.Service.ApiRest.UserApiService;
 
 public class ApiRestConecction {
 
-    public static final String URL="http://192.168.0.7:9191/";
+   // public static final String URL="http://192.168.0.7:9191/";
+    public static final String URL="http://172.16.1.162:9191/";
     public static final String URL_ROUTES=ApiRestConecction.URL+"routes/";
     public static final String URL_APPUSERHASROUTES=ApiRestConecction.URL+"statistics/";
     public static final String URL_STORED_DOCUMENT=ApiRestConecction.URL+"storeddocuments/";
