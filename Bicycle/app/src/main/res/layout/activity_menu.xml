@@ -30,4 +30,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.077" />
 
+    <Button
+        android:id="@+id/btnRun"
+        android:layout_width="131dp"
+        android:layout_height="66dp"
+        android:text="Competir"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.157"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.298" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

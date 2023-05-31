@@ -2,8 +2,10 @@ package com.Tesis.admin.Controller.User;
 
 
 
-import com.Tesis.admin.Dto.UserAppDto;
+import com.Tesis.admin.Dto.AppUser.UserAppDto;
+import com.Tesis.admin.Dto.Battle.BattleDto;
 import com.Tesis.admin.Models.User;
+import com.Tesis.admin.Service.Battle.IBattleService;
 import com.Tesis.admin.Service.User.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,8 @@ public class UserController implements IUserController {
 
     @Autowired
     private IUserService userService;
+
+
 
     @Override
     public UserAppDto getById(Long id) {
@@ -37,7 +41,22 @@ public class UserController implements IUserController {
     }
 
     @Override
-    public List<User> getUsers() {
+    public List<UserAppDto> getUsers() {
         return userService.list();
+    }
+
+    @Override
+    public List<UserAppDto> getFriends(Long id) {
+        return userService.getFriends(id);
+    }
+
+    @Override
+    public void saveFriend(UserAppDto userAppDto) {
+        userService.saveFriend(userAppDto);
+    }
+
+    @Override
+    public List<BattleDto> getBattleByUser(Long id) {
+        return userService.getBattlesByUser(id);
     }
 }

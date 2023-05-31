@@ -44,7 +44,7 @@ public class Tracking implements Serializable {
     private float totalSpeedForRunningAverage = 0;
     private int totalTrkPointsWithSpeedForRunningAverage = 0;
     private long timeInMilliseconds=0;
-    private transient List<Location> points=new ArrayList<>();
+    private transient List<Location> points=new ArrayList<>();//puntos que captura el gps
     private transient List<GeoPoint> pointsDraw=new ArrayList<>();
     private boolean repeat=false;
 

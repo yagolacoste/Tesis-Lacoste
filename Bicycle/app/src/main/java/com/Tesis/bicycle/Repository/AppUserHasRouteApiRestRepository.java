@@ -9,8 +9,7 @@ import com.Tesis.bicycle.Dto.ApiRest.AppUserHasRouteApiRest;
 import com.Tesis.bicycle.Dto.ApiRest.AppUserHasRouteDetailsDto;
 import com.Tesis.bicycle.Dto.ApiRest.StatisticsDto;
 import com.Tesis.bicycle.Presenter.ApiRestConecction;
-import com.Tesis.bicycle.Service.ApiRest.AppUserHasRouteRestService;
-import com.Tesis.bicycle.Service.ApiRest.AuthRestService;
+import com.Tesis.bicycle.Service.ApiRest.AppUserHasRouteApiService;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ import retrofit2.Response;
 public class AppUserHasRouteApiRestRepository {
 
     private static AppUserHasRouteApiRestRepository repository;
-    private final AppUserHasRouteRestService appUserHasRouteApiRestService;
+    private final AppUserHasRouteApiService appUserHasRouteApiRestService;
 
 
     public AppUserHasRouteApiRestRepository(Context context) {

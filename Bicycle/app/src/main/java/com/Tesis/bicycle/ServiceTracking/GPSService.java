@@ -52,11 +52,11 @@ public class GPSService extends Service {
     private LocationRequest locationRequest;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LocationCallback locationCallback;
-
+    private  NotificationManager notificationManager;
     //Binder
     private final IBinder binder =new LocationBinder();
 
-
+    private  NotificationChannel notificationChannel;
     private Tracking tracking;
 
 
@@ -106,7 +106,7 @@ public class GPSService extends Service {
 
     private void addNotification(){
         String channelId="Location_notification_channel";
-        NotificationManager notificationManager= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Intent resultIntent=new Intent();
         PendingIntent pendingIntent=PendingIntent.getActivity(getApplicationContext(),0,resultIntent,PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder= new NotificationCompat.Builder(
@@ -154,6 +154,7 @@ public class GPSService extends Service {
     private void stopLocationService(){
         tracking.stopTrackingActivity();
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+        notificationManager.cancel(1);
     }
 
 

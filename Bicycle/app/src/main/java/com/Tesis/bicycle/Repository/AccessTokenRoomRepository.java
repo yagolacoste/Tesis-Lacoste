@@ -36,9 +36,9 @@ public class AccessTokenRoomRepository {
         return repository;
     }
 
-    public LiveData<List<RefreshTokenDto>>get(){
-        final MutableLiveData<List<RefreshTokenDto>> mld=new MutableLiveData<>();
-        List<RefreshTokenDto> refreshTokenDto=this.db.refreshTokenService().getAll();
+    public LiveData<RefreshTokenDto>getAccessToken(){
+        final MutableLiveData<RefreshTokenDto> mld=new MutableLiveData<>();
+        RefreshTokenDto refreshTokenDto=this.db.refreshTokenService().getFirst();
         mld.setValue(refreshTokenDto);
         return mld;
     }

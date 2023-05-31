@@ -2,16 +2,20 @@ package com.Tesis.admin.Service.User;
 
 
 import com.Tesis.admin.Controller.Exception.TypeExceptions.NotFoundException;
-import com.Tesis.admin.Dto.UserAppDto;
+import com.Tesis.admin.Dto.AppUser.UserAppDto;
+import com.Tesis.admin.Dto.Battle.BattleDto;
 import com.Tesis.admin.Exception.ErrorCodes;
 import com.Tesis.admin.Models.User;
 import com.Tesis.admin.Repository.IUserRepository;
+import com.Tesis.admin.Service.Battle.IBattleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -21,6 +25,9 @@ public class UserService implements IUserService{
 
     @Autowired
     private IUserRepository userRepository;
+
+    @Autowired
+    private IBattleService battleService;
 
 
     @Override
@@ -35,18 +42,16 @@ public class UserService implements IUserService{
         User user = new User();
         user.setFirstName(userAppDto.getFirstName());
         user.setLastName(userAppDto.getLastName());
-        user.setIdentity(userAppDto.getIdentityType());
-        user.setIdentityType(userAppDto.getIdentityType());
-        user.setAddress(userAppDto.getAddress());
+
         user.setAge(userAppDto.getAge());
-        user.setBirthday(userAppDto.getBirthday());
+
         user.setPhone(userAppDto.getPhone());
         user.setEmail(userAppDto.getEmail());
-        List<User> repeat=this.list();
-        if(!repeat.contains(user))
+       // List<User> repeat=this.list();
+//        if(!repeat.contains(user))
             userRepository.save(user);
-        else
-            throw new NotFoundException("User is Exist", ErrorCodes.NOT_FOUND.getCode());
+//        else
+//            throw new NotFoundException("User is Exist", ErrorCodes.NOT_FOUND.getCode());
 
     }
 
@@ -56,8 +61,32 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public List<User> list() {
-        List<User> result=userRepository.findAll();
+    public List<UserAppDto> list() {
+        List<UserAppDto> result=userRepository.findAll().stream().map(u->new UserAppDto(u)).collect(Collectors.toList());
+        return result;
+    }
+
+    @Override
+    public List<UserAppDto> getFriends(Long id) {
+        User user= userRepository.findById(id)
+                .orElseThrow(()->new NotFoundException("User by id not found", ErrorCodes.NOT_FOUND.getCode()));
+        return user.getFriends().stream().map(UserAppDto::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public void saveFriend(UserAppDto userAppDto) {
+
+    }
+
+    @Override
+    public List<BattleDto> getBattlesByUser(Long id) {
+        List<BattleDto> result=new ArrayList<>();
+        User user= userRepository.findById(id)
+                .orElseThrow(()->new NotFoundException("User by id not found", ErrorCodes.NOT_FOUND.getCode()));
+        if(user!=null){
+            result=battleService.getBattlesByUser(id);
+            return result;
+        }
         return result;
     }
 }

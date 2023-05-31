@@ -9,13 +9,14 @@ import android.view.View;
 import android.widget.Button;
 
 import com.Tesis.bicycle.Constants;
+import com.Tesis.bicycle.Presenter.ListView.RouteListView;
 import com.Tesis.bicycle.R;
 
 
 public class MenuActivity extends AppCompatActivity {
 
 
-    private Button btn_free,btn_showPoint;
+    private Button btn_free,btn_showPoint,btn_run;
 
 
     @SuppressLint("MissingInflatedId")
@@ -26,6 +27,7 @@ public class MenuActivity extends AppCompatActivity {
 
         btn_free=findViewById(R.id.btn_free);
         btn_showPoint=findViewById(R.id.btn_showRoute);
+        btn_run=findViewById(R.id.btnRun);
 
 
         btn_free.setOnClickListener(new View.OnClickListener() {
@@ -39,8 +41,17 @@ public class MenuActivity extends AppCompatActivity {
         btn_showPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(MenuActivity.this, ShowPointLocationList.class);
+                Intent i=new Intent(MenuActivity.this, RouteListView.class);
                 i.setAction(Constants.ACTION_REPLAY_MY_ROUTES);
+                startActivity(i);
+            }
+        });
+
+        btn_run.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(MenuActivity.this, ListBattleActivity.class);
+//                i.setAction(Constants.ACTION_REPLAY_MY_ROUTES);
                 startActivity(i);
             }
         });

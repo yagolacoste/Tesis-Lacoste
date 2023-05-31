@@ -34,9 +34,4 @@ public interface RefreshTokenService {
 
     @Query("SELECT * FROM refresh_token LIMIT 1")
     RefreshTokenDto getFirst();
-//    @Query("SELECT * FROM refresh_token where user_id=:id")
-//    AppUserHasRouteDTO getRefreshById(String id);
-//
-//    @Query("SELECT TOP(1) FROM refresh_token")
-//    AppUserHasRouteDTO getLast();
 }

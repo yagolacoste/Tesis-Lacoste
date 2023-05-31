@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
 
 import org.osmdroid.util.GeoPoint;
 
@@ -30,6 +31,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -65,6 +67,21 @@ public class ClientRetrofit {
         return retrofit;
 
     }
+    public static OkHttpClient getHttp() {
+        HttpLoggingInterceptor loggin = new HttpLoggingInterceptor();
+        loggin.level(HttpLoggingInterceptor.Level.BODY);
+
+//        StethoInterceptor stetho = new StethoInterceptor();
+
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+        builder.addInterceptor(loggin)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS);
+//                .addNetworkInterceptor(stetho);
+        return builder.build();
+    }
 
 
     public static Gson getRegisterTypeAdapter(){
@@ -74,8 +91,9 @@ public class ClientRetrofit {
             gsonBuilder.registerTypeAdapter(LocalTime.class, new LocalTimeDeserializer());
             gsonBuilder.registerTypeAdapter(Date.class, new DateSerializer());
             gsonBuilder.registerTypeAdapter(Date.class, new DateDeserializer());
-            // gsonBuilder.registerTypeAdapter(List.class,new ListOfGeoPointDeserializer());
-            gsonBuilder.registerTypeAdapter(List.class,new ListOfGeoPointSerializer());
+            Type listType = new TypeToken<List<GeoPoint>>() {}.getType();
+//            gsonBuilder.registerTypeAdapter(listType,new ListOfGeoPointDeserializer());
+            gsonBuilder.registerTypeAdapter(listType,new ListOfGeoPointSerializer());
         }
         Gson gson = gsonBuilder.setPrettyPrinting().create();
         return gson;

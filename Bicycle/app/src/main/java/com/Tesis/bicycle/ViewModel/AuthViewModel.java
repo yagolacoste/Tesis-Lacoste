@@ -11,15 +11,15 @@ import com.Tesis.bicycle.Dto.ApiRest.auth.request.SignupRequest;
 import com.Tesis.bicycle.Dto.ApiRest.auth.request.TokenRefreshRequest;
 import com.Tesis.bicycle.Dto.ApiRest.auth.response.JwtResponse;
 import com.Tesis.bicycle.Dto.ApiRest.auth.response.TokenRefreshResponse;
-import com.Tesis.bicycle.Repository.AuthApiRestRepository;
+import com.Tesis.bicycle.Repository.AuthApiRepository;
 
 public class AuthViewModel extends AndroidViewModel {
 
-    private final AuthApiRestRepository repository;
+    private final AuthApiRepository repository;
 
     public AuthViewModel(@NonNull Application application) {
         super(application);
-        this.repository= AuthApiRestRepository.getInstance(application.getApplicationContext());
+        this.repository= AuthApiRepository.getInstance(application.getApplicationContext());
     }
 
     public LiveData<JwtResponse> login(LoginRequest loginRequest){

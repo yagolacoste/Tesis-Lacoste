@@ -16,7 +16,7 @@
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/tv_date_text"
+                android:id="@+id/tv_img"
                 android:layout_width="89dp"
                 android:layout_height="36dp"
                 android:text="Name"

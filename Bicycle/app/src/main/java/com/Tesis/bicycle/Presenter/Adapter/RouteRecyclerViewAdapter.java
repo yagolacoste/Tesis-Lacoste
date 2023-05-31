@@ -15,6 +15,7 @@ import com.Tesis.bicycle.Activity.ShowPointLocationList;
 import com.Tesis.bicycle.Activity.TrackingActivity;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
+import com.Tesis.bicycle.Presenter.ListView.StatisticsListView;
 import com.Tesis.bicycle.R;
 
 import java.util.List;
@@ -61,7 +62,7 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            name=itemView.findViewById(R.id.tv_date_text);
+            name=itemView.findViewById(R.id.tv_img);
             run=itemView.findViewById(R.id.btn_run);
             statistics=itemView.findViewById(R.id.btn_statistics);
             details=itemView.findViewById(R.id.btn_details);
@@ -82,7 +83,7 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
             statistics.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent=new Intent(rootView.getContext(), ShowPointLocationList.class);
+                    Intent intent=new Intent(rootView.getContext(), StatisticsListView.class);
                     intent.setAction(Constants.VIEW_STATISTICS);
                     intent.putExtra(Constants.ROUTE_ID,route.getId());
                     rootView.getContext().startActivity(intent);
@@ -104,7 +105,7 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
 
 //    ///Lista las rutas por usuarios
 //    public void  getRoutesByUser(String action) {
-//        AppUserHasRouteRestService appUserHasRouteApiRestService = ApiRestConecction.getServiceAppUserHasRoute();
+//        AppUserHasRouteApiService appUserHasRouteApiRestService = ApiRestConecction.getServiceAppUserHasRoute();
 //        Call<AppUserHasRouteDetailsDto> call = appUserHasRouteApiRestService.getRouteById(1L);//es el usuario 1 por defecto
 //        call.enqueue(new Callback<AppUserHasRouteDetailsDto>() {
 //            @Override

@@ -14,19 +14,31 @@ spring:
         - id: admin-service
           uri: lb://admin-service
           predicates:
-            - Path=/appuserroute/**
+            - Path=/statistics/**
           filters:
             - AuthFilter
         - id: admin-service
           uri: lb://admin-service
           predicates:
-            - Path=/route/**
+            - Path=/routes/**
           filters:
             - AuthFilter
         - id: admin-service
           uri: lb://admin-service
           predicates:
-            - Path=/storeddocument/**
+            - Path=/battles/**
+          filters:
+            - AuthFilter
+        - id: admin-service
+          uri: lb://admin-service
+          predicates:
+            - Path=/users/**
+          filters:
+            - AuthFilter
+        - id: admin-service
+          uri: lb://admin-service
+          predicates:
+            - Path=/storeddocuments/**
         - id: auth-service
           uri: lb://auth-service
           predicates:

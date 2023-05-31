@@ -5,7 +5,8 @@
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_more"
         android:iconTint="@color/white"
-        app:showAsAction="always">
+        app:showAsAction="always"
+        android:title="TODO">
         <menu>
             <item
                 android:id="@+id/closeSession"

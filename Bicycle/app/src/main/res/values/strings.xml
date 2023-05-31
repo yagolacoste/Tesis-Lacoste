@@ -26,33 +26,12 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_new_route">New Route</string>
+    <string name="menu_my_routes">My Routes</string>
+    <string name="menu_my_statistics">My Statistics</string>
+    <string name="menu_compete">Compete</string>
     <string name="close_session">Close session</string>
     <string name="credencial_register">Credencial Register</string>
     <string name="credentials_register">Credentials Register</string>
-
-
-    <string-array name="typeDoc">
-        <item>DNI</item>
-        <item>PASSPORT</item>
-        <item>CARNET</item>
-    </string-array>
-    <string-array name="Country">
-        <item>Argentina</item>
-    </string-array>
-    <string-array name="State">
-        <item>Buenos Aires</item>
-        <item>Cordoba</item>
-        <item>La Pampa</item>
-    </string-array>
-    <string-array name="City">
-        <item>Azul</item>
-        <item>Tandil</item>
-        <item>Rauch</item>
-        <item>Balcarse</item>
-        <item>Mar del plata</item>
-        <item>Bolivar</item>
-    </string-array>
+    <string name="finished_date">Finish Date</string>
 </resources>

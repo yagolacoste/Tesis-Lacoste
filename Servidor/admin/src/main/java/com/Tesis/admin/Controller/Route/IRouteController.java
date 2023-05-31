@@ -14,7 +14,7 @@ import java.util.List;
 
 @RequestMapping(IRouteController.PATH)
 public interface IRouteController {
-    static final String PATH ="/route";
+    static final String PATH ="/routes";
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = {"/get"},produces = MediaType.APPLICATION_JSON_VALUE)

@@ -24,15 +24,6 @@ public class User implements Serializable{
     @Column(name= "password")
     private String password;
 
-    @Column(name= "id_identity_type")
-    private String identityType;
-
-    @Column(name= "identity")
-    private String identity;
-
-    @Column(name= "address")
-    private String address;
-
     @Column(name= "first_name")
     private String firstName;
 
@@ -42,26 +33,18 @@ public class User implements Serializable{
     @Column(name= "age")
     private int age;
 
-    @Column(name="birthday")
-    private Date birthday;
-
     @Column(name= "phone")
     private String phone;
 
     @Column(name= "email")
     private String email;
 
-    @Column(name= "creation_time")
-    private Date creationTime;
+    @Column(name= "weight")
+    private Integer weight;
 
-    @Column(name= "update_time")
-    private Date updateTime;
+    @Column(name= "height")
+    private Integer height;
 
-    @Column(name= "active")
-    private boolean active;
-
-    @Column(name= "deleted")
-    private boolean deleted;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
@@ -82,21 +65,13 @@ public class User implements Serializable{
 
     public User(SignupRequest signUpRequest) {
         this.password = signUpRequest.getPassword();
-        this.identityType = signUpRequest.getIdentityType();
-        this.identity = signUpRequest.getIdentity();
-        this.address = signUpRequest.getAddress();
         this.firstName = signUpRequest.getFirstName();
         this.lastName = signUpRequest.getLastName();
         this.age = signUpRequest.getAge();
-        this.birthday = signUpRequest.getBirthday();
         this.phone = signUpRequest.getPhone();
         this.email = signUpRequest.getEmail();
-//        this.storedDocument=signUpRequest.getPhoto();
-        this.creationTime = new Date();
-        this.updateTime =  new Date();
-        this.active = true;
-        this.deleted = false;
-
+        this.weight=signUpRequest.getWeight();
+        this.height=signUpRequest.getHeight();
     }
 
     public Long getId() {
@@ -117,29 +92,6 @@ public class User implements Serializable{
         this.password = password;
     }
 
-    public String getIdentityType() {
-        return identityType;
-    }
-
-    public void setIdentityType(String identityType) {
-        this.identityType = identityType;
-    }
-
-    public String getIdentity() {
-        return identity;
-    }
-
-    public void setIdentity(String identity) {
-        this.identity = identity;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -165,14 +117,6 @@ public class User implements Serializable{
         this.age = age;
     }
 
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -189,37 +133,6 @@ public class User implements Serializable{
         this.email = email;
     }
 
-    public Date getCreationTime() {
-        return creationTime;
-    }
-
-    public void setCreationTime(Date creationTime) {
-        this.creationTime = creationTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     public Set<Role> getRoles() {
         return roles;
@@ -244,5 +157,21 @@ public class User implements Serializable{
 
     public void setStoredDocument(StoredDocument storedDocument) {
         this.storedDocument = storedDocument;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
     }
 }

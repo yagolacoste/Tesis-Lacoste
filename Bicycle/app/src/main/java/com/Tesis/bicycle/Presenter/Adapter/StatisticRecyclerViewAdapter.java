@@ -16,7 +16,7 @@ import java.util.List;
 
 public class StatisticRecyclerViewAdapter extends RecyclerView.Adapter<StatisticRecyclerViewAdapter.ViewHolder> {
 
-    public List<StatisticsDto> statistics;
+    private List<StatisticsDto> statistics;
 
     public StatisticRecyclerViewAdapter(List<StatisticsDto> statistics) {
         this.statistics = statistics;

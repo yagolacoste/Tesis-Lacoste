@@ -23,8 +23,8 @@ public class AccessTokenRoomViewModel extends AndroidViewModel {
 
     }
 
-    public LiveData<List<RefreshTokenDto>> getAccessToken(){
-        return repository.get();
+    public LiveData<RefreshTokenDto> getAccessToken(){
+        return repository.getAccessToken();
     }
 
     public void addAccessToken(RefreshToken refreshToken){

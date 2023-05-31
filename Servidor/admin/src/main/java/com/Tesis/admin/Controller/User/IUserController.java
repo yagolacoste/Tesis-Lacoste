@@ -2,7 +2,8 @@ package com.Tesis.admin.Controller.User;
 
 
 
-import com.Tesis.admin.Dto.UserAppDto;
+import com.Tesis.admin.Dto.AppUser.UserAppDto;
+import com.Tesis.admin.Dto.Battle.BattleDto;
 import com.Tesis.admin.Models.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @RequestMapping(IUserController.PATH)
 public interface IUserController {
-    static final String PATH ="/user";
+    static final String PATH ="/users";
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = {"/get"},produces = MediaType.APPLICATION_JSON_VALUE)
@@ -30,9 +31,21 @@ public interface IUserController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = {"/list"},produces = MediaType.APPLICATION_JSON_VALUE)
-    List<User> getUsers();
+    List<UserAppDto> getUsers();
 
 
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(path={"{id}/friends"},produces = MediaType.APPLICATION_JSON_VALUE)
+    List<UserAppDto> getFriends(@PathVariable (value = "id") Long id);
 
-    
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping(path= {"/savefriend"}, consumes=MediaType.APPLICATION_JSON_VALUE)
+    void saveFriend(@RequestBody UserAppDto userAppDto);
+
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(path = {"{id}/battles"},produces = MediaType.APPLICATION_JSON_VALUE)
+    List<BattleDto> getBattleByUser(@PathVariable Long id);
+
+
 }

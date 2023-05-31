@@ -11,7 +11,7 @@ import java.util.List;
 
 @RequestMapping(IStoredDocumentController.PATH)
 public interface IStoredDocumentController {
-    public static final String PATH="/storeddocument";
+    public static final String PATH="/storeddocuments";
 
 
     @GetMapping("/")

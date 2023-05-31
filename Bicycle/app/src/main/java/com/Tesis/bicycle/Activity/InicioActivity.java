@@ -4,14 +4,21 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
 import com.Tesis.bicycle.Dto.ApiRest.auth.request.TokenRefreshRequest;
+import com.Tesis.bicycle.Presenter.ApiRestConecction;
+import com.Tesis.bicycle.Presenter.Client.ClientRetrofit;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
 import com.Tesis.bicycle.ViewModel.AuthViewModel;
+import com.Tesis.bicycle.ViewModel.StoredDocumentViewModel;
+import com.Tesis.bicycle.ViewModel.UserViewModel;
 import com.Tesis.bicycle.databinding.ActivityInicioBinding;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.squareup.picasso.OkHttp3Downloader;
+import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
@@ -22,6 +29,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class InicioActivity extends AppCompatActivity {
@@ -30,6 +38,8 @@ public class InicioActivity extends AppCompatActivity {
     private ActivityInicioBinding binding;
     private AuthViewModel authViewModel;
     private AccessTokenRoomViewModel accessTokenRoomViewModel;
+    private StoredDocumentViewModel storedDocumentViewModel;
+    private UserViewModel userViewModel;
 
 
     @Override
@@ -52,8 +62,8 @@ public class InicioActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
-                .setOpenableLayout(drawer)
+                R.layout.fragment_home,R.id.nav_newroute, R.id.nav_myroutes, R.id.nav_statistics)
+                .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_inicio);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -82,22 +92,43 @@ public class InicioActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        initViewModel();
         loadData();
     }
 
     private void loadData() {
+        accessTokenRoomViewModel.getFirst().observe(this,response->{
+            if(response.getAccessToken()!=null){
+                userViewModel.getById(response.getId()).observe(this,resp->{
+                    if(resp!=null){
+                        final View vistaHeader = binding.navView.getHeaderView(0);
+                        final TextView tvName=vistaHeader.findViewById(R.id.tvName);
+                        final TextView tvEmail=vistaHeader.findViewById(R.id.tvEmail);
+                        final CircleImageView photo=vistaHeader.findViewById(R.id.imgProfilePhoto);
+                        tvName.setText(resp.getFirstName()+" "+resp.getLastName());
+                        tvEmail.setText(resp.getEmail());
+                        String url =ApiRestConecction.URL_STORED_DOCUMENT + "download?fileName=" + resp.getFileName();
+                        final Picasso picasso = new Picasso.Builder(this)
+                                .downloader(new OkHttp3Downloader(ClientRetrofit.getHttp()))
+                                .build();
+                        picasso.load(url)
+                                .error(R.drawable.image_not_found)
+                                .into(photo);
+                    }
+                });
+            }
+        });
 
     }
 
     private void logOut() {
         accessTokenRoomViewModel.getAccessToken().observe(this,response->{
-            if(!response.isEmpty()){
-                String token=response.get(0).getRefreshToken();
+            if(response!=null){
+                String token=response.getRefreshToken();
                 TokenRefreshRequest refreshToken=new TokenRefreshRequest(token);
                 authViewModel.logoutUser(refreshToken);
             }
         });
-
         accessTokenRoomViewModel.logout();
         this.finish();
         this.overridePendingTransition(R.anim.left_in,R.anim.left_out);
@@ -113,5 +144,7 @@ public class InicioActivity extends AppCompatActivity {
     private void initViewModel() {
         authViewModel =new ViewModelProvider(this).get(AuthViewModel.class);
         accessTokenRoomViewModel=new ViewModelProvider(this).get(AccessTokenRoomViewModel.class);
+        storedDocumentViewModel=new ViewModelProvider(this).get(StoredDocumentViewModel.class);
+        userViewModel=new ViewModelProvider(this).get(UserViewModel.class);
     }
 }

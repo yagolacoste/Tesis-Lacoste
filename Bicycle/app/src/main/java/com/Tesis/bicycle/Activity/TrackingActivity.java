@@ -27,27 +27,28 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.room.Room;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
-import com.Tesis.bicycle.Model.Room.AppUserHasRoute;
 import com.Tesis.bicycle.Model.Tracking;
-import com.Tesis.bicycle.Presenter.AppDataBase;
-import com.Tesis.bicycle.Model.Room.Route;
 
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ServiceTracking.GPSService;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.osmdroid.api.IMapController;
@@ -66,6 +67,7 @@ import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class TrackingActivity extends Activity  {
 
@@ -110,12 +112,12 @@ public class TrackingActivity extends Activity  {
     };
 
     private BroadcastReceiver locationSettingStateReceiver = new BroadcastReceiver() {
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        if (intent.getAction().matches("android.location.PROVIDERS_CHANGED")) {
-            if (!stopped) {
-                stopLocationService();
-                Toast.makeText(context, "Location must be on to track session", Toast.LENGTH_SHORT).show();
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().matches("android.location.PROVIDERS_CHANGED")) {
+                if (!stopped) {
+                    stopLocationService();
+                    Toast.makeText(context, "Location must be on to track session", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -196,6 +198,7 @@ public class TrackingActivity extends Activity  {
                         i.setAction(Constants.REPLAY_MY_ROUTE);
                     }
                     startActivity(i);
+                    btn_turnoff.setEnabled(false);
                 }
             });
 
@@ -217,8 +220,8 @@ public class TrackingActivity extends Activity  {
     }
 
     private void updateLastLocation() {
-       FusedLocationProviderClient fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(TrackingActivity.this);
-       LocationRequest locationRequest = LocationRequest.create();
+        FusedLocationProviderClient fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(TrackingActivity.this);
+        LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);
         locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);
         locationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY); // Por defecto puse HIGH solo para verificar que andaba
@@ -266,7 +269,7 @@ public class TrackingActivity extends Activity  {
         Polyline roadOverlay=RoadManager.buildRoadOverlay(road, 0x800000FF, 25.0f);
 
 
-       // Polyline roadOverlay=RoadManager.buildRoadOverlay(road).setWidth(2.0f);
+        // Polyline roadOverlay=RoadManager.buildRoadOverlay(road).setWidth(2.0f);
         myOpenMapView.getOverlays().add(roadOverlay);
         Marker endMarker=new Marker(myOpenMapView);
         endMarker.setPosition(routes.get(routes.size()-1));
@@ -336,9 +339,9 @@ public class TrackingActivity extends Activity  {
 
 
     private void stopLocationService(){
-            stopped = true;
-            locationBinder.stopTracking();
-            getApplicationContext().unbindService(lsc);
+        stopped = true;
+        locationBinder.stopTracking();
+        getApplicationContext().unbindService(lsc);
     }
 
 
@@ -408,7 +411,7 @@ public class TrackingActivity extends Activity  {
 
         if (code == REQUEST_PERMISSIONS_REQUEST_CODE) {
             if (this.checkPermissions(false)) {
-                    //startLocationUpdates();
+                //startLocationUpdates();
 //                    updateGPS();
                 startLocationService();
                 initLayer(TrackingActivity.this);
@@ -424,6 +427,7 @@ public class TrackingActivity extends Activity  {
         //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
         myOpenMapView.onResume(); //needed for compass, my location overlays, v6.0.0 and up
+        btn_turnoff.setEnabled(false);
     }
 
     @Override
@@ -435,5 +439,6 @@ public class TrackingActivity extends Activity  {
         //Configuration.getInstance().save(this, prefs);
         myOpenMapView.onPause();  //needed for compass, my location overlays, v6.0.0 and up
         //unregisterReceiver(myReceiver);
+        btn_turnoff.setEnabled(false);
     }
 }

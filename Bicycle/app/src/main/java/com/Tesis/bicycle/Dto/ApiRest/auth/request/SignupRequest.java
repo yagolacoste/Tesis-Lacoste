@@ -1,34 +1,50 @@
 package com.Tesis.bicycle.Dto.ApiRest.auth.request;
 
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Set;
 
 public class SignupRequest implements Serializable {
 
 
+
+    @JsonProperty("password")
     private String password;
 
-    private String identityType;
 
-    private String identity;
-
-    private String address;
-
+    @JsonProperty("firstName")
     private String firstName;
 
+
+    @JsonProperty("lastName")
     private String lastName;
 
+
+    @JsonProperty("age")
     private int age;
 
-    private Date birthday;
 
+    @JsonProperty("phone")
     private String phone;
 
+
+    @JsonProperty("email")
     private String email;
 
+
+    @JsonProperty("weigth")
+    private Integer weight;
+
+
+    @JsonProperty("heigth")
+    private Integer height;
+
+    @JsonProperty("role")
     private Set<String> role;
 
+    @JsonProperty("photo")
     private Long photo;
 
     public SignupRequest() {
@@ -44,29 +60,6 @@ public class SignupRequest implements Serializable {
         this.password = password;
     }
 
-    public String getIdentityType() {
-        return identityType;
-    }
-
-    public void setIdentityType(String identityType) {
-        this.identityType = identityType;
-    }
-
-    public String getIdentity() {
-        return identity;
-    }
-
-    public void setIdentity(String identity) {
-        this.identity = identity;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -90,10 +83,6 @@ public class SignupRequest implements Serializable {
 
     public void setAge(int age) {
         this.age = age;
-    }
-
-    public Date getBirthday() {
-        return birthday;
     }
 
 
@@ -121,15 +110,27 @@ public class SignupRequest implements Serializable {
         this.role = role;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
     public Long getPhoto() {
         return photo;
     }
 
     public void setPhoto(Long photo) {
         this.photo = photo;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
     }
 }

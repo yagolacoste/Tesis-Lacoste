@@ -2,7 +2,6 @@ package com.Tesis.bicycle.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.room.Room;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -12,21 +11,15 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.AppUserHasRouteApiRest;
 import com.Tesis.bicycle.Dto.Room.RefreshTokenDto;
-import com.Tesis.bicycle.Presenter.ApiRestConecction;
-import com.Tesis.bicycle.Presenter.AppDataBase;
 import com.Tesis.bicycle.R;
-import com.Tesis.bicycle.Service.ApiRest.AppUserHasRouteRestService;
 import com.Tesis.bicycle.ServiceTracking.GPSService;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
 import com.Tesis.bicycle.ViewModel.AppUserHasRouteViewModel;
@@ -46,10 +39,6 @@ import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class TrackingDetailActivity extends AppCompatActivity {
 
@@ -115,7 +104,6 @@ public class TrackingDetailActivity extends AppCompatActivity {
         this.initLayer(this);
         Intent intent = new Intent(this, GPSService.class);
         getApplicationContext().bindService(intent, lsc, Context.BIND_ABOVE_CLIENT);
-
 
         btn_save.setOnClickListener(view -> {
             this.accessTokenRoomViewModel.getFirst().observe(this,response->{

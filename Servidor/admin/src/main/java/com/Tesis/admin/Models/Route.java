@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="route")
@@ -24,11 +25,12 @@ public class Route implements Serializable {
     @Column(name = "description")
     private String description;
 
-
     @Column(name = "coordinates")
     @JsonRawValue
     private String coordinates;
 
+    @OneToMany(mappedBy = "route")
+    private List<Battle> battles;
 
     public String getId() {
         return id;
@@ -61,5 +63,13 @@ public class Route implements Serializable {
 
     public void setCoordinates(String coordinates) {
         this.coordinates = coordinates;
+    }
+
+    public List<Battle> getBattles() {
+        return battles;
+    }
+
+    public void setBattles(List<Battle> battles) {
+        this.battles = battles;
     }
 }

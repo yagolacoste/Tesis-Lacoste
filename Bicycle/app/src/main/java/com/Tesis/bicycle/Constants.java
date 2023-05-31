@@ -4,6 +4,7 @@ import android.content.Context;
 
 public class Constants {
 
+   public static final int REQUEST_CODE=1;
    public static final int MAX_CARACTER_ID=10;
    public static final String NAME_DATA_BASE="Bicycle";
    public static final int LOCATION_SERVICE_ID=175;
@@ -25,6 +26,13 @@ public class Constants {
    ////////////////////// Constants defined for route/////////////////////////////
    public static final String ROUTE="Route";
    public static final String ROUTE_ID="route_id";
+   public static final String ACTION_VIEW_MY_ROUTES="view_my_routes";
 
+   public static final String ROUTE_ITEM="route_item";
+   public static final String ROUTE_SELECT="route_select";
+
+   /////////////////////Constants defined for User/////////////////////////
+   public static final String USER_ITEM="User_item";
+   public static final String USER_SELECT="User_item";
 
 }

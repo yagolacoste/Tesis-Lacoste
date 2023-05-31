@@ -3,6 +3,7 @@ package com.Tesis.auth.payload.request;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -13,30 +14,41 @@ public class SignupRequest implements Serializable {
 
 
     @NotBlank
+    @JsonProperty("password")
     private String password;
+
     @NotBlank
-    private String identityType;
-    @NotNull
-    private String identity;
-    @NotBlank
-    private String address;
-    @NotBlank
+    @JsonProperty("firstName")
     private String firstName;
+
     @NotBlank
+    @JsonProperty("lastName")
     private String lastName;
+
     @NotNull
+    @JsonProperty("age")
     private int age;
-    @NotNull
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    @JsonProperty("birthday")
-    private Date birthday;
+
     @NotBlank
+    @JsonProperty("phone")
     private String phone;
+
     @NotBlank
+    @JsonProperty("email")
     private String email;
 
+    @NotNull
+    @JsonProperty("weight")
+    private Integer weight;
+
+    @NotNull
+    @JsonProperty("height")
+    private Integer height;
+
+    @JsonProperty("role")
     private Set<String> role;
 
+    @JsonProperty("photo")
     private Long photo;
 
     public SignupRequest() {
@@ -52,29 +64,6 @@ public class SignupRequest implements Serializable {
         this.password = password;
     }
 
-    public String getIdentityType() {
-        return identityType;
-    }
-
-    public void setIdentityType(String identityType) {
-        this.identityType = identityType;
-    }
-
-    public String getIdentity() {
-        return identity;
-    }
-
-    public void setIdentity(String identity) {
-        this.identity = identity;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -100,13 +89,6 @@ public class SignupRequest implements Serializable {
         this.age = age;
     }
 
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
 
     public String getPhone() {
         return phone;
@@ -138,5 +120,21 @@ public class SignupRequest implements Serializable {
 
     public void setPhoto(Long photo) {
         this.photo = photo;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
     }
 }

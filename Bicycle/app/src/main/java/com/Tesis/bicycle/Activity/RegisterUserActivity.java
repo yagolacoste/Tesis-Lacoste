@@ -47,12 +47,11 @@ public class RegisterUserActivity extends AppCompatActivity {
     private StoredDocumentViewModel storedDocumentViewModel;
     private Button btnUploadImage, btnStoredData;
     private CircleImageView imageUser;
-    private AutoCompleteTextView dropdownTypeDoc, dropdownCity, dropdownState, dropdownCountry;
-    private EditText edtNameUser, edtLastName, edtAge, edtNumDocU, edtTelephone,
-            edtDirection, edtPasswordUser, edtEmailUser, edtBirthday;
+    private EditText edtNameUser, edtLastName, edtAge, edtHeight, edtTelephone,
+            edtDirection, edtPasswordUser, edtEmailUser, edtWeight;
     private TextInputLayout txtInputNameUser, txtInputLastName, txtInputAge,
-            txtInputTypeDoc, txtInputNumberDoc, txtInputCity, txtInputState,
-            txtInputCountry, txtInputTelephone, txtInputDirection, txtInputEmailUser, txtInputPasswordUser,txtInputBirthday;
+            txtInputTypeHeight,
+             txtInputTelephone, txtInputEmailUser, txtInputPasswordUser,txtInputTypeWeight;
     private final static int LOCATION_REQUEST_CODE = 23;
     private final static String USER_DEFAULT="user";
 
@@ -62,31 +61,10 @@ public class RegisterUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_user);
         this.init();
         this.initViewModel();
-        this.spinners();
 
     }
-
-    private void spinners() {
-        //LISTA DE TIPOS DE DOCUMENTOS
-        String[] tipoDoc = getResources().getStringArray(R.array.typeDoc);
-        ArrayAdapter arrayTipoDoc = new ArrayAdapter(this, R.layout.dropdown_item, tipoDoc);
-        dropdownTypeDoc.setAdapter(arrayTipoDoc);
-        //LISTA DE DEPARTAMENTOS
-        String[] departamentos = getResources().getStringArray(R.array.Country);
-        ArrayAdapter arrayDepartamentos = new ArrayAdapter(this, R.layout.dropdown_item, departamentos);
-        dropdownCountry.setAdapter(arrayDepartamentos);
-        //LISTA DE PROVINCIAS
-        String[] provincias = getResources().getStringArray(R.array.State);
-        ArrayAdapter arrayProvincias = new ArrayAdapter(this, R.layout.dropdown_item, provincias);
-        dropdownState.setAdapter(arrayProvincias);
-        //LISTA DE DISTRITOS
-        String[] distritos = getResources().getStringArray(R.array.City);
-        ArrayAdapter arrayDistritos = new ArrayAdapter(this, R.layout.dropdown_item, distritos);
-        dropdownCity.setAdapter(arrayDistritos);
-
-    }
-
-
+    
+    
     private void initViewModel() {
         final ViewModelProvider vmp = new ViewModelProvider(this);
         this.authViewModel = vmp.get(AuthViewModel.class);
@@ -125,32 +103,21 @@ public class RegisterUserActivity extends AppCompatActivity {
         imageUser = findViewById(R.id.imageUser);
         edtNameUser = findViewById(R.id.edtNameUser);
         edtLastName = findViewById(R.id.edtLastName);
-        edtAge = findViewById(R.id.editAge);
-        edtNumDocU = findViewById(R.id.edtNumDocU);
+        edtAge = findViewById(R.id.edtAge);
+        edtHeight = findViewById(R.id.edtHeight);
         edtTelephone = findViewById(R.id.edtTelephone);
-        edtDirection = findViewById(R.id.edtDirection);
         edtPasswordUser = findViewById(R.id.edtPasswordUser);
         edtEmailUser = findViewById(R.id.edtEmailUser);
-        edtBirthday=findViewById(R.id.edtBirthday);
-        //AutoCompleteTextView
-        dropdownTypeDoc = findViewById(R.id.dropdownTypeDoc);
-        dropdownCity = findViewById(R.id.dropdownCity);
-        dropdownState = findViewById(R.id.dropdownState);
-        dropdownCountry = findViewById(R.id.dropdownCountry);
+        edtWeight=findViewById(R.id.edtWeight);
         //TextInputLayout
         txtInputNameUser = findViewById(R.id.txtInputNameUser);
         txtInputLastName = findViewById(R.id.txtInputLastName);
         txtInputAge = findViewById(R.id.txtInputAge);
-        txtInputTypeDoc = findViewById(R.id.txtInputTypeDoc);
-        txtInputNumberDoc = findViewById(R.id.txtInputNumberDoc);
-        txtInputCity = findViewById(R.id.txtInputCity);
-        txtInputState = findViewById(R.id.txtInputState);
-        txtInputCountry = findViewById(R.id.txtInputCountry);
+        txtInputTypeHeight = findViewById(R.id.txtInputHeight);
         txtInputTelephone = findViewById(R.id.txtInputTelephone);
-        txtInputDirection = findViewById(R.id.txtInputDirection);
         txtInputEmailUser = findViewById(R.id.txtInputEmailUser);
         txtInputPasswordUser = findViewById(R.id.txtInputPasswordUser);
-        txtInputBirthday=findViewById(R.id.txtInputBirthday);
+        txtInputTypeWeight=findViewById(R.id.txtInputWeight);
         btnUploadImage.setOnClickListener(v -> {
             this.uploadImage();
         });
@@ -206,7 +173,7 @@ public class RegisterUserActivity extends AppCompatActivity {
 
             }
         });
-        edtNumDocU.addTextChangedListener(new TextWatcher() {
+        edtHeight.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -214,7 +181,7 @@ public class RegisterUserActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                txtInputNumberDoc.setErrorEnabled(false);
+                txtInputTypeHeight.setErrorEnabled(false);
             }
 
             @Override
@@ -238,7 +205,7 @@ public class RegisterUserActivity extends AppCompatActivity {
 
             }
         });
-        edtDirection.addTextChangedListener(new TextWatcher() {
+        edtWeight.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -246,87 +213,7 @@ public class RegisterUserActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                txtInputDirection.setErrorEnabled(false);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        edtBirthday.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                txtInputBirthday.setErrorEnabled(false);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        dropdownTypeDoc.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                txtInputTypeDoc.setErrorEnabled(false);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        dropdownCity.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                txtInputCity.setErrorEnabled(false);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        dropdownState.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                txtInputState.setErrorEnabled(false);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        dropdownCountry.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                txtInputCity.setErrorEnabled(false);
+                txtInputTypeWeight.setErrorEnabled(false);
             }
 
             @Override
@@ -343,15 +230,12 @@ public class RegisterUserActivity extends AppCompatActivity {
             try{
                 user.setFirstName(edtNameUser.getText().toString());
                 user.setLastName(edtLastName.getText().toString());
-                user.setIdentityType(dropdownTypeDoc.getText().toString());
-                user.setIdentity(edtNumDocU.getText().toString());
-                user.setAddress(edtDirection.getText().toString());
+                user.setHeight(Integer.valueOf(edtHeight.getText().toString()));
+                user.setWeight(Integer.valueOf(edtWeight.getText().toString()));
                 Set<String>userDefault=new HashSet<String>();
                 userDefault.add(USER_DEFAULT);
                 user.setRole(userDefault);
                 user.setAge(Integer.parseInt(edtAge.getText().toString()));
-                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-                user.setBirthday(formato.parse(edtBirthday.getText().toString()));
                 user.setPhone(edtTelephone.getText().toString());
                 RequestBody rb = RequestBody.create(f, MediaType.parse("multipart/form-data")),somedata;
                 String filename = f.getName();
@@ -362,9 +246,15 @@ public class RegisterUserActivity extends AppCompatActivity {
                     user.setPassword(edtPasswordUser.getText().toString());
                     user.setEmail(edtEmailUser.getText().toString());
                     this.authViewModel.registerUser(user).observe(this, resp->{
-                        successMessage("Estupendo! " + "Su información ha sido guardada con éxito en el sistema.");
-                        this.finish();
+                        if(resp!=null){
+                            successMessage("Estupendo! " + "Su información ha sido guardada con éxito en el sistema.");
+                            this.finish();
+                        }
+                        else {
+                            warningMessage("Se ha producido un error : ");
+                        }
                     });
+
                 });
             }catch (Exception e){
                 warningMessage("Se ha producido un error : " + e.getMessage());
@@ -405,109 +295,74 @@ public class RegisterUserActivity extends AppCompatActivity {
 
     private boolean validate() {
         boolean retorno = true;
-        String nombres, apellidoPaterno, age,birthday, numDoc, telefono, direccion, correo, clave,
-                dropTipoDoc, dropDepartamento, dropProvincia, dropDistrito;
-        nombres = edtNameUser.getText().toString();
-        apellidoPaterno = edtLastName.getText().toString();
+        String firstName, lastName, age, telephone, email, password,height,weight;
+        firstName = edtNameUser.getText().toString();
+        lastName = edtLastName.getText().toString();
         age = edtAge.getText().toString();
-        numDoc = edtNumDocU.getText().toString();
-        telefono = edtTelephone.getText().toString();
-        direccion = edtDirection.getText().toString();
-        birthday=edtBirthday.getText().toString();
-        correo = edtEmailUser.getText().toString();
-        clave = edtPasswordUser.getText().toString();
-        dropTipoDoc = dropdownTypeDoc.getText().toString();
-        dropDepartamento = dropdownCity.getText().toString();
-        dropProvincia = dropdownState.getText().toString();
-        dropDistrito = dropdownCountry.getText().toString();
+        height = edtHeight.getText().toString();
+        telephone = edtTelephone.getText().toString();
+        weight=edtWeight.getText().toString();
+        email = edtEmailUser.getText().toString();
+        password = edtPasswordUser.getText().toString();
         if (this.f == null) {
-            errorMessage("debe selecionar una foto de perfil");
+            errorMessage("you must select a profile picture");
             retorno = false;
         }
-        if (nombres.isEmpty()) {
-            txtInputNameUser.setError("Ingresar nombres");
+        if (firstName.isEmpty()) {
+            txtInputNameUser.setError("enter your name");
             retorno = false;
         } else {
             txtInputNameUser.setErrorEnabled(false);
         }
-        if (apellidoPaterno.isEmpty()) {
-            txtInputLastName.setError("Ingresar apellido paterno");
+        if (lastName.isEmpty()) {
+            txtInputLastName.setError("enter your lastname");
             retorno = false;
         } else {
             txtInputLastName.setErrorEnabled(false);
         }
         if (age.isEmpty()) {
-            txtInputAge.setError("Ingresar age");
+            txtInputAge.setError("enter your age");
             retorno = false;
         } else {
             txtInputAge.setErrorEnabled(false);
         }
-        if (numDoc.isEmpty()) {
-            txtInputNumberDoc.setError("Ingresar número documento");
-            retorno = false;
-        } else {
-            txtInputNumberDoc.setErrorEnabled(false);
-        }
-        if (telefono.isEmpty()) {
-            txtInputTelephone.setError("Ingresar número telefónico");
+        if (telephone.isEmpty()) {
+            txtInputTelephone.setError("enter your telephone");
             retorno = false;
         } else {
             txtInputTelephone.setErrorEnabled(false);
         }
-        if (direccion.isEmpty()) {
-            txtInputDirection.setError("Ingresar dirección de su casa");
+        if (height.isEmpty()) {
+            txtInputTypeHeight.setError("enter your height");
             retorno = false;
         } else {
-            txtInputDirection.setErrorEnabled(false);
+            txtInputTypeHeight.setErrorEnabled(false);
         }
-        if (birthday.isEmpty()) {
-            txtInputBirthday.setError("Insert birthday");
+        if (weight.isEmpty()) {
+            txtInputTypeWeight.setError("enter your weight");
             retorno = false;
         } else {
-            txtInputBirthday.setErrorEnabled(false);
+            txtInputTypeWeight.setErrorEnabled(false);
         }
-        if (correo.isEmpty()) {
-            txtInputEmailUser.setError("Ingresar correo electrónico");
+        if (email.isEmpty()) {
+            txtInputEmailUser.setError("enter your email");
             retorno = false;
         } else {
             txtInputEmailUser.setErrorEnabled(false);
         }
-        if (clave.isEmpty()) {
-            txtInputPasswordUser.setError("Ingresar clave para el inicio de sesión");
+        if (password.isEmpty()) {
+            txtInputPasswordUser.setError("Enter password for login");
             retorno = false;
         } else {
             txtInputPasswordUser.setErrorEnabled(false);
         }
-        if (dropTipoDoc.isEmpty()) {
-            txtInputTypeDoc.setError("Seleccionar Tipo Doc");
-            retorno = false;
-        } else {
-            txtInputTypeDoc.setErrorEnabled(false);
-        }
-        if (dropDepartamento.isEmpty()) {
-            txtInputCity.setError("Seleccionar Departamento");
-            retorno = false;
-        } else {
-            txtInputCity.setErrorEnabled(false);
-        }
-        if (dropProvincia.isEmpty()) {
-            txtInputState.setError("Seleccionar Provincia");
-            retorno = false;
-        } else {
-            txtInputState.setErrorEnabled(false);
-        }
-        if (dropDistrito.isEmpty()) {
-            txtInputCity.setError("Seleccionar Distrito");
-            retorno = false;
-        } else {
-            txtInputCity.setErrorEnabled(false);
-        }
+
         return retorno;
     }
 
     public void successMessage(String message) {
         new SweetAlertDialog(this,
-                SweetAlertDialog.SUCCESS_TYPE).setTitleText("Buen Trabajo!")
+                SweetAlertDialog.SUCCESS_TYPE).setTitleText("Good Job!")
                 .setContentText(message).show();
     }
 
