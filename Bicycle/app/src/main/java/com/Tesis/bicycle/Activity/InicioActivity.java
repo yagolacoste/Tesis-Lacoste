@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.widget.TextView;
 
 import com.Tesis.bicycle.Dto.ApiRest.auth.request.TokenRefreshRequest;
-import com.Tesis.bicycle.Presenter.ApiRestConecction;
+import com.Tesis.bicycle.Presenter.ApiRestConnection;
 import com.Tesis.bicycle.Presenter.Client.ClientRetrofit;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
@@ -107,7 +107,7 @@ public class InicioActivity extends AppCompatActivity {
                         final CircleImageView photo=vistaHeader.findViewById(R.id.imgProfilePhoto);
                         tvName.setText(resp.getFirstName()+" "+resp.getLastName());
                         tvEmail.setText(resp.getEmail());
-                        String url =ApiRestConecction.URL_STORED_DOCUMENT + "download?fileName=" + resp.getFileName();
+                        String url = ApiRestConnection.URL_STORED_DOCUMENT + "download?fileName=" + resp.getFileName();
                         final Picasso picasso = new Picasso.Builder(this)
                                 .downloader(new OkHttp3Downloader(ClientRetrofit.getHttp()))
                                 .build();

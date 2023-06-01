@@ -1,6 +1,6 @@
-package com.tesis.Auth.repository;
+package com.Tesis.auth.repository;
 
-import com.tesis.Auth.entity.RefreshToken;
+import com.Tesis.auth.entity.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

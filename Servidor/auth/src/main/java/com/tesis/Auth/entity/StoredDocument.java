@@ -1,4 +1,4 @@
-package com.tesis.Auth.entity;
+package com.Tesis.auth.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.web.multipart.MultipartFile;

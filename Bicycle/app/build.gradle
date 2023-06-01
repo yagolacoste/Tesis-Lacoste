@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 31
 
     defaultConfig {
         applicationId "com.Tesis.bicycle"
         minSdk 23
-        targetSdk 32
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
@@ -25,10 +25,14 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
-    buildToolsVersion '30.0.3'
+    buildToolsVersion '30.0.2'
     namespace 'com.Tesis.bicycle'
     buildFeatures {
         viewBinding true
+    }
+    dependenciesInfo {
+        includeInApk true
+        includeInBundle true
     }
 
 }

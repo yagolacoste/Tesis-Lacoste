@@ -1,14 +1,13 @@
 package com.Tesis.bicycle.Repository;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.Tesis.bicycle.Dto.ApiRest.Battle.NewBattleDto;
 import com.Tesis.bicycle.Dto.ApiRest.Battle.BattleDto;
-import com.Tesis.bicycle.Presenter.ApiRestConecction;
+import com.Tesis.bicycle.Presenter.ApiRestConnection;
 import com.Tesis.bicycle.Service.ApiRest.BattleApiService;
 
 import java.io.IOException;
@@ -26,7 +25,7 @@ public class BattleApiRepository {
 
 
     public BattleApiRepository(Context context) {
-        this.battleApiService = ApiRestConecction.getBattleApiService(context);
+        this.battleApiService = ApiRestConnection.getBattleApiService(context);
     }
 
     public static BattleApiRepository getInstance(Context context) {

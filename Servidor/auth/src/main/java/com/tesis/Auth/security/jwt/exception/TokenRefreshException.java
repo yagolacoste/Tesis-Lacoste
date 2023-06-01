@@ -1,6 +1,6 @@
-package com.tesis.Auth.security.jwt.exception;
+package com.Tesis.auth.security.Jwt.exception;
 
-import com.tesis.Auth.advise.RuntimeException;
+import com.Tesis.auth.advise.RuntimeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 

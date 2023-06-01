@@ -1,4 +1,4 @@
-package com.tesis.Auth.security.jwt;
+package com.Tesis.auth.security.Jwt;
 
 
 import org.slf4j.Logger;

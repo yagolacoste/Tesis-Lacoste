@@ -1,4 +1,4 @@
-package com.tesis.Auth.payload.request;
+package com.Tesis.auth.payload.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

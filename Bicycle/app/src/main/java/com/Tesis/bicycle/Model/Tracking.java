@@ -67,7 +67,8 @@ public class Tracking implements Serializable {
             avgSpeed=currentLocation.getSpeed();
         }else{
             Location lastPoint = points.get(points.size() - 1);
-            distance += lastPoint.distanceTo(currentLocation);
+            if(lastPoint.distanceTo(currentLocation)>3.0f)//preguntar por el umbral
+                distance += lastPoint.distanceTo(currentLocation);
             timeElapsedBetweenTrkPoints +=Math.abs(this.getLastPoint().getTime()-currentLocation.getTime());
         }
         if(currentLocation.hasSpeed()){

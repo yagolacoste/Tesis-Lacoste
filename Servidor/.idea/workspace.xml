@@ -5,99 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7729f06-1757-4dfa-ac9d-78d48a9c1c01" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/Servidor.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/InicioActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/InicioActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Adapter/RouteRecyclerViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Adapter/RouteRecyclerViewAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ApiRestConecction.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ApiRestConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Client/AccessTokenInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Client/AccessTokenInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/AppUserHasRouteApiRestRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/AppUserHasRouteApiRestRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/AuthApiRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/AuthApiRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/BattleApiRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/BattleApiRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/StoredDocumentApiRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/StoredDocumentApiRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/UserApiRestRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/UserApiRestRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Statistics/StatisticsDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Statistics/StatisticsDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/AuthApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/AuthApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/advise/AccessDeniedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/advise/AccessDeniedException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/advise/BadRequestException.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/advise/BadRequestException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/advise/ControllerExceptionHandle.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/advise/ControllerExceptionHandle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/advise/ErrorCodes.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/advise/ErrorCodes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/advise/ErrorMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/advise/ErrorMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/advise/NotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/advise/NotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/advise/RuntimeException.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/advise/RuntimeException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/controller/AuthUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/controller/AuthUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/controller/IAuthUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/controller/IAuthUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/dto/AuthUserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/dto/AuthUserDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/dto/RefreshTokenDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/dto/RefreshTokenDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/dto/StoredDocumentDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/dto/StoredDocumentDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/entity/ERole.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/entity/ERole.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/entity/RefreshToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/entity/RefreshToken.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/entity/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/entity/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/entity/StoredDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/entity/StoredDocument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/payload/request/LoginRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/payload/request/LoginRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/payload/request/SignupRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/payload/request/SignupRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/payload/request/TokenRefreshRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/payload/request/TokenRefreshRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/payload/response/JwtResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/payload/response/JwtResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/payload/response/MessageResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/payload/response/MessageResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/payload/response/TokenRefreshResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/payload/response/TokenRefreshResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/repository/IAuthUserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/repository/IAuthUserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/repository/IRefreshTokenRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/repository/IRefreshTokenRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/repository/IRoleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/repository/IRoleRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/repository/IStoredDocumentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/repository/IStoredDocumentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/security/Service/UserDetailsImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/security/Service/UserDetailsImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/security/Service/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/security/Service/UserDetailsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/security/WebSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/security/jwt/AuthEntryPointJwt.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/security/jwt/AuthEntryPointJwt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/security/jwt/AuthTokenFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/security/jwt/AuthTokenFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/security/jwt/JwtUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/security/jwt/JwtUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/security/jwt/exception/TokenRefreshException.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/security/jwt/exception/TokenRefreshException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/service/AuthUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/service/AuthUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/service/IAuthUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/service/IAuthUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/service/IRefreshTokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/service/IRefreshTokenService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/service/RefreshTokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/service/RefreshTokenService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/src/test/java/com/tesis/Auth/AuthApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth/src/test/java/com/tesis/Auth/AuthApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/06e4eb1e-7d37-4515-bbc1-cf575e8d9c43.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/2218dd56-cbe8-453b-a952-c54d8db234d6.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/3e372657-20eb-4c88-99a1-dd578cea56f9.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/52a190de-94f0-476a-bdd5-4407102f61fd.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/562c27c7-e602-4a6f-a8e8-07474cf89305.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/7fe7981c-cc35-49ab-8799-303ec40ac875.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/8b3fb09a-91b7-40ed-b4af-7880f2b826c0.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/906c17f2-2012-40a8-8f90-554241d2d698.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/a95e5298-26c8-4e19-8641-32ed51225947.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/d545fd41-5cdf-4b77-b34c-2d9f0bf17653.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/e4b2c4de-eaff-4a8d-b358-e218f91ed6e6.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/f2dc6590-7a2f-43b8-94b0-77390d4a4221.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/f5534f25-9460-4ae3-af5c-809cb017ffbc.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/fabceabe-2887-44a2-af75-4fca04bab118.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/062ad962-8bda-45b4-b01b-7a26f0fc4c99.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/0b83aa4f-2c4b-4968-b6df-f72d44302f85.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/205bf94e-dce1-4840-9536-420cf4685365.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/3396a70b-9196-4910-a61e-d2b022f5651d.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/431c2228-516a-4ebd-87cf-a25a2f86cd5d.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/55878c2e-7e04-4d54-8d4a-d1e747ea86c2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/626bc9f9-9b57-4278-a986-4e4ca1438bdf.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/70feb102-dc99-4ed3-b79b-27d64dcf1f52.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/76d64301-acda-49fc-be12-a4a11d5fe964.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/7c1be094-6379-4bd4-8724-52dbb1cba6cb.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/7e22c2b8-7db7-4089-9a45-246d70052831.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/87fafd67-1670-4721-9a26-7f635464ca0b.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/8800b910-0d38-4e66-a16b-187a66c1914c.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/911d67c0-7e54-42c1-ab47-d454735982ba.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/93539c64-54aa-4198-a679-3e6ad8368b69.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/97c3610d-85b8-42fb-a65f-cc5529a9c2d5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/98c1aa71-5c8f-4e1e-abec-34e18c1f6173.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/a60206ef-7d18-4798-8741-338efd8fd3f7.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/a8b23039-056c-407a-9bfd-4c0c96c22d50.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/ab9382b5-e5ed-404d-9124-0160ccd5ce70.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/abf37ce9-3cc5-4874-9f74-52ec060802d1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/ad3c5f9c-a6fc-43c4-81e1-81d4a06e7aaf.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/bcd8443d-7f5e-411b-a671-98ed4c345753.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/bd4820eb-52b1-49a1-a5cb-ec5966881571.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/ca10ea96-21b7-4bcb-bc3a-490fb935243e.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/d989e608-0b8f-49b0-bfd2-59a9d126f8de.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/e706ffe2-e90c-4fe1-9b4a-2b0640702d20.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/e7a5af01-309f-4993-8838-ee9f98fd69ac.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,7 +78,7 @@
       <recent name="C:\Users\yago_\OneDrive\Escritorio\Tesis\Tesis-Lacoste\Servidor\admin\src\main\java\com\Tesis\admin" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.AuthApplication">
+  <component name="RunManager" selected="Application.GatewayApplication">
     <configuration name="AdminApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.Tesis.admin.AdminApplication" />
       <module name="admin" />
@@ -176,7 +93,7 @@
       </method>
     </configuration>
     <configuration name="AuthApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.tesis.Auth.AuthApplication" />
+      <option name="MAIN_CLASS_NAME" value="com.Tesis.auth.AuthApplication" />
       <module name="auth" />
       <extension name="coverage">
         <pattern>
@@ -222,9 +139,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.AuthApplication" />
         <item itemvalue="Application.GatewayApplication" />
         <item itemvalue="Application.AdminApplication" />
+        <item itemvalue="Application.AuthApplication" />
         <item itemvalue="Application.DiscoveryApplication" />
       </list>
     </recent_temporary>
@@ -250,16 +167,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/auth/src/main/java/com/tesis/Auth/service/AuthUserService.java</url>
-          <line>94</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

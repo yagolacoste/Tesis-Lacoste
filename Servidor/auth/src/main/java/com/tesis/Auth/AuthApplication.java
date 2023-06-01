@@ -1,4 +1,4 @@
-package com.tesis.Auth;
+package com.Tesis.auth;
 
 //import com.Tesis.admin.Models.StoredDocument;
 import org.springframework.boot.SpringApplication;

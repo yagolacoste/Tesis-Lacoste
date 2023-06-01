@@ -1,18 +1,16 @@
 package com.Tesis.bicycle.Presenter.Client;
 
 import android.content.Context;
-import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.room.Room;
 
-import com.Tesis.bicycle.Activity.LoginActivity;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.auth.request.TokenRefreshRequest;
 import com.Tesis.bicycle.Dto.ApiRest.auth.response.TokenRefreshResponse;
 import com.Tesis.bicycle.Dto.Room.RefreshTokenDto;
 import com.Tesis.bicycle.Model.Room.RefreshToken;
-import com.Tesis.bicycle.Presenter.ApiRestConecction;
+import com.Tesis.bicycle.Presenter.ApiRestConnection;
 import com.Tesis.bicycle.Presenter.AppDataBase;
 import com.Tesis.bicycle.Service.ApiRest.AuthApiService;
 
@@ -34,7 +32,7 @@ public class AccessTokenInterceptor implements Interceptor {
         this.context = context;
         this.db = Room.databaseBuilder(context,AppDataBase.class, Constants.NAME_DATA_BASE)
                 .allowMainThreadQueries().fallbackToDestructiveMigration().build();
-        this.service= ApiRestConecction.getAuthService();
+        this.service= ApiRestConnection.getAuthService();
     }
 
     public Context getContext() {

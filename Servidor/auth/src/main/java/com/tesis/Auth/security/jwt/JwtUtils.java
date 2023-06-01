@@ -1,6 +1,6 @@
-package com.tesis.Auth.security.jwt;
+package com.Tesis.auth.security.Jwt;
 
-import com.tesis.Auth.security.Service.UserDetailsImpl;
+import com.Tesis.auth.security.Service.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

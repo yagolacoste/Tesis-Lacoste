@@ -1,4 +1,4 @@
-package com.tesis.Auth.advise;
+package com.Tesis.auth.advise;
 
 public class RuntimeException extends java.lang.RuntimeException {
     private static final long serialVersionUID = 1L;

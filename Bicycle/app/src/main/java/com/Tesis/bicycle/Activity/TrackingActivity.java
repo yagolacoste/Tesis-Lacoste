@@ -39,6 +39,7 @@ import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Model.Tracking;
 
+import com.Tesis.bicycle.Presenter.OpenStreetMap;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ServiceTracking.GPSService;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -84,9 +85,9 @@ public class TrackingActivity extends Activity  {
     private RouteDetailsDto routeDetailsDto;
     //osm
     private MapView myOpenMapView;
-    private CompassOverlay mCompassOverlay;
-    public  Marker startMarker;
+    private OpenStreetMap openStreetMap;
 
+    private FusedLocationProviderClient fusedLocationProviderClient;
 
     Handler updateTimeHandler = new Handler();
     Handler updateStatsHandler = new Handler();
@@ -106,7 +107,7 @@ public class TrackingActivity extends Activity  {
             tv_distance.setText(locationBinder.getDistanceString());
             tv_avgSpeed.setText(locationBinder.getAvgSpeedString());
             if(locationBinder.getLastLocation()!=null)
-                updatePosition(locationBinder.getLastLocation());
+                openStreetMap.updatePosition(locationBinder.getLastLocation());
             if (!stopped) updateStatsHandler.postDelayed(this, 1000);
         }
     };
@@ -169,57 +170,56 @@ public class TrackingActivity extends Activity  {
         myOpenMapView=(MapView)findViewById(R.id.v_map);
         btn_start=findViewById(R.id.btn_start);
         btn_turnoff=findViewById(R.id.btn_turnoff);
-        startMarker=new Marker(myOpenMapView);
-        startMarker.setIcon(getResources().getDrawable(R.drawable.ic_bicycle));
         if(checkPermissions(true)) {
             LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 AlertNoGps();
             }
-            initLayer(this);
+            openStreetMap=new OpenStreetMap(myOpenMapView);
+           // updateLastLocation();
 
-            //capturo coordenadas cada 5segundos
-            btn_start.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-//                    updateLastLocation();
-                    startLocationService();
-                    btn_start.setEnabled(false);
+
+        //capturo coordenadas cada 5segundos
+        btn_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               // openStreetMap.removeMarker();
+                startLocationService();
+                btn_start.setEnabled(false);
+            }
+        });
+        //Boton de fenar trackeo y guarda en la room la infomracion
+        btn_turnoff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                stopLocationService();
+                Intent i = new Intent(TrackingActivity.this, TrackingDetailActivity.class);
+                if (routeDetailsDto != null) {
+                    i.setAction(Constants.REPLAY_MY_ROUTE);
                 }
-            });
+                startActivity(i);
+                btn_turnoff.setEnabled(false);
+            }
+        });
 
-            //Boton de fenar trackeo y guarda en la room la infomracion
-            btn_turnoff.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    stopLocationService();
-                    Intent i = new Intent(TrackingActivity.this, TrackingDetailActivity.class);
-                    if (routeDetailsDto != null) {
-                        i.setAction(Constants.REPLAY_MY_ROUTE);
-                    }
-                    startActivity(i);
-                }
-            });
-
-            String action = getIntent().getAction();
-            if (action != null && action.equals(Constants.REPLAY_MY_ROUTE)) {
-                routeDetailsDto = (RouteDetailsDto) getIntent().getSerializableExtra("Route");
-                List<GeoPoint> route = getCoordinates();//Transformo la ruta en geopoint
-                drawRoute(route);
-                isRepeat = true;
-                repeat = new Tracking();
-                String[] id = routeDetailsDto.getId().split("-");
-                repeat.setId(id[1]);
-                repeat.setTitle(routeDetailsDto.getName());
-                repeat.setDescription(routeDetailsDto.getDescription());
-                repeat.setPointsDraw(route);
+        String action = getIntent().getAction();
+        if (action != null && action.equals(Constants.REPLAY_MY_ROUTE)) {
+            routeDetailsDto = (RouteDetailsDto) getIntent().getSerializableExtra("Route");
+            List<GeoPoint> route = getCoordinates();//Transformo la ruta en geopoint
+            drawRoute(route);
+            isRepeat = true;
+            repeat = new Tracking();
+            String[] id = routeDetailsDto.getId().split("-");
+            repeat.setId(id[1]);
+            repeat.setTitle(routeDetailsDto.getName());
+            repeat.setDescription(routeDetailsDto.getDescription());
+            repeat.setPointsDraw(route);
             }
         }
-
     }
 
     private void updateLastLocation() {
-        FusedLocationProviderClient fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(TrackingActivity.this);
+         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(TrackingActivity.this);
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);
         locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);
@@ -228,7 +228,12 @@ public class TrackingActivity extends Activity  {
             fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
-                    startLocationService();
+                    if(location!=null){
+                    openStreetMap.initLayer(TrackingActivity.this,location);
+                   // openStreetMap.updatePosition(location);
+                   // initLayer(TrackingActivity.this);
+                   // updatePosition(location);
+                    }
                 }
             });
         }
@@ -297,36 +302,35 @@ public class TrackingActivity extends Activity  {
     }
 
     //Init osmodroid map with position
-    private void initLayer(Context ctx) {
-        //Seteo de mapa en tandil statico
-        GeoPoint tandil=new GeoPoint(-37.32359319563445,-59.12548631254784);
-        myOpenMapView.setTileSource(TileSourceFactory.MAPNIK);
-        myOpenMapView.setBuiltInZoomControls(true);
-        myOpenMapView.setMultiTouchControls(true);
-        IMapController mapController=myOpenMapView.getController();
-        mapController.setZoom(18);
-        mapController.setCenter(tandil);
-        RotationGestureOverlay mRotationGestureOverlay = new RotationGestureOverlay(ctx, myOpenMapView);
-        mRotationGestureOverlay.setEnabled(true);
-        myOpenMapView.setMultiTouchControls(true);
-        myOpenMapView.getOverlays().add(mRotationGestureOverlay);
-        this.mCompassOverlay = new CompassOverlay(this, new InternalCompassOrientationProvider(this), myOpenMapView);
-        this.mCompassOverlay.enableCompass();
-        myOpenMapView.getOverlays().add(this.mCompassOverlay);
-        myOpenMapView.invalidate();
+//    private void initLayer(Context ctx) {
+//        //Seteo de mapa en tandil statico
+//        GeoPoint tandil=new GeoPoint(currentLocation.getLatitude(),currentLocation.getLongitude());
+//        myOpenMapView.setTileSource(TileSourceFactory.MAPNIK);
+//        myOpenMapView.setBuiltInZoomControls(true);
+//        myOpenMapView.setMultiTouchControls(true);
+//        IMapController mapController=myOpenMapView.getController();
+//        mapController.setZoom(18);
+//        mapController.setCenter(tandil);
+//        RotationGestureOverlay mRotationGestureOverlay = new RotationGestureOverlay(ctx, myOpenMapView);
+//        mRotationGestureOverlay.setEnabled(true);
+//        myOpenMapView.setMultiTouchControls(true);
+//        myOpenMapView.getOverlays().add(mRotationGestureOverlay);
+//        this.mCompassOverlay = new CompassOverlay(this, new InternalCompassOrientationProvider(this), myOpenMapView);
+//        this.mCompassOverlay.enableCompass();
+//        myOpenMapView.getOverlays().add(this.mCompassOverlay);
+//        myOpenMapView.invalidate();
+//    }
 
-    }
 
-
-    public  void updatePosition(Location location){
-        GeoPoint point=new GeoPoint(location.getLatitude(),location.getLongitude());
-        startMarker.setPosition(point);
-        startMarker.setAnchor(Marker.ANCHOR_RIGHT,Marker.ANCHOR_BOTTOM);
-        myOpenMapView.getOverlays().add((myOpenMapView.getOverlays().size()-1),startMarker);
-        IMapController mapController=myOpenMapView.getController();
-        mapController.setCenter(point);
-        myOpenMapView.invalidate();
-    }
+//    public  void updatePosition(Location location){
+//        GeoPoint point=new GeoPoint(location.getLatitude(),location.getLongitude());
+//        startMarker.setPosition(point);
+//        startMarker.setAnchor(Marker.ANCHOR_RIGHT,Marker.ANCHOR_BOTTOM);
+//        myOpenMapView.getOverlays().add((myOpenMapView.getOverlays().size()-1),startMarker);
+//        IMapController mapController=myOpenMapView.getController();
+//        mapController.setCenter(point);
+//        myOpenMapView.invalidate();
+//    }
 
 
     //Inicia el servicio de localizacion
@@ -364,10 +368,7 @@ public class TrackingActivity extends Activity  {
 
         if (code == REQUEST_PERMISSIONS_REQUEST_CODE) {
             if (this.checkPermissions(false)) {
-                //startLocationUpdates();
-//                    updateGPS();
-                startLocationService();
-                initLayer(TrackingActivity.this);
+                updateLastLocation();
             }
         }
     }
@@ -375,12 +376,12 @@ public class TrackingActivity extends Activity  {
     @Override
     public void onResume() {
         super.onResume();
+       // updateLastLocation();
         //this will refresh the osmdroid configuration on resuming.
         //if you make changes to the configuration, use
         //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
-        myOpenMapView.onResume(); //needed for compass, my location overlays, v6.0.0 and up
-        btn_turnoff.setEnabled(false);
+//        ope.onResume(); //needed for compass, my location overlays, v6.0.0 and up
     }
 
     @Override

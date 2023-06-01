@@ -1,4 +1,4 @@
-package com.tesis.Auth.entity;
+package com.Tesis.auth.entity;
 
 public enum ERole {
     ROLE_USER,

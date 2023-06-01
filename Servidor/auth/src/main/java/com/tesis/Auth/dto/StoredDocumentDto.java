@@ -1,4 +1,4 @@
-package com.tesis.Auth.dto;
+package com.Tesis.auth.dto;
 
 import javax.persistence.Column;
 import java.io.Serializable;

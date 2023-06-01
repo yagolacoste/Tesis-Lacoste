@@ -1,4 +1,4 @@
-package com.tesis.Auth.entity;
+package com.Tesis.auth.entity;
 
 import javax.persistence.*;
 

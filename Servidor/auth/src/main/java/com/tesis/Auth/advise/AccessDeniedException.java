@@ -1,4 +1,4 @@
-package com.tesis.Auth.advise;
+package com.Tesis.auth.advise;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -1,6 +1,6 @@
-package com.tesis.Auth.advise;
+package com.Tesis.auth.advise;
 
-import com.tesis.Auth.security.jwt.exception.TokenRefreshException;
+import com.Tesis.auth.security.Jwt.exception.TokenRefreshException;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;

@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.Tesis.bicycle.Dto.ApiRest.AppUserHasRouteApiRest;
 import com.Tesis.bicycle.Dto.ApiRest.AppUserHasRouteDetailsDto;
 import com.Tesis.bicycle.Dto.ApiRest.StatisticsDto;
-import com.Tesis.bicycle.Presenter.ApiRestConecction;
+import com.Tesis.bicycle.Presenter.ApiRestConnection;
 import com.Tesis.bicycle.Service.ApiRest.AppUserHasRouteApiService;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class AppUserHasRouteApiRestRepository {
 
 
     public AppUserHasRouteApiRestRepository(Context context) {
-        this.appUserHasRouteApiRestService = ApiRestConecction.getServiceAppUserHasRoute(context);
+        this.appUserHasRouteApiRestService = ApiRestConnection.getServiceAppUserHasRoute(context);
     }
 
     public static AppUserHasRouteApiRestRepository getInstance(Context context){

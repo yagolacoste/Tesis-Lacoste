@@ -10,7 +10,7 @@ import com.Tesis.bicycle.Dto.ApiRest.auth.request.SignupRequest;
 import com.Tesis.bicycle.Dto.ApiRest.auth.request.TokenRefreshRequest;
 import com.Tesis.bicycle.Dto.ApiRest.auth.response.JwtResponse;
 import com.Tesis.bicycle.Dto.ApiRest.auth.response.TokenRefreshResponse;
-import com.Tesis.bicycle.Presenter.ApiRestConecction;
+import com.Tesis.bicycle.Presenter.ApiRestConnection;
 import com.Tesis.bicycle.Service.ApiRest.AuthApiService;
 
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class AuthApiRepository {
 
 
     public AuthApiRepository(Context context) {
-        this.authService = ApiRestConecction.getAuthService();
+        this.authService = ApiRestConnection.getAuthService();
     }
 
     public static AuthApiRepository getInstance(Context context){

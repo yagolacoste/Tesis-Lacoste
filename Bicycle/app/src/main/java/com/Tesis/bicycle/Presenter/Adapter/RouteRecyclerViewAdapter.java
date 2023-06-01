@@ -105,7 +105,7 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
 
 //    ///Lista las rutas por usuarios
 //    public void  getRoutesByUser(String action) {
-//        AppUserHasRouteApiService appUserHasRouteApiRestService = ApiRestConecction.getServiceAppUserHasRoute();
+//        AppUserHasRouteApiService appUserHasRouteApiRestService = ApiRestConnection.getServiceAppUserHasRoute();
 //        Call<AppUserHasRouteDetailsDto> call = appUserHasRouteApiRestService.getRouteById(1L);//es el usuario 1 por defecto
 //        call.enqueue(new Callback<AppUserHasRouteDetailsDto>() {
 //            @Override

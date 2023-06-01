@@ -1,17 +1,15 @@
 package com.Tesis.bicycle.Repository;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.Tesis.bicycle.Dto.ApiRest.Battle.BattleDto;
 import com.Tesis.bicycle.Dto.ApiRest.UserAppDto;
-import com.Tesis.bicycle.Presenter.ApiRestConecction;
+import com.Tesis.bicycle.Presenter.ApiRestConnection;
 import com.Tesis.bicycle.Service.ApiRest.UserApiService;
 
-import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -25,7 +23,7 @@ public class UserApiRestRepository {
 
 
     public UserApiRestRepository(Context context) {
-        this.userApiService = ApiRestConecction.getUserService(context);
+        this.userApiService = ApiRestConnection.getUserService(context);
     }
 
     public static UserApiRestRepository getInstance(Context context){

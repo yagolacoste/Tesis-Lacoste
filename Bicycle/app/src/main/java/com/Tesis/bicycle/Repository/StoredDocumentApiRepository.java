@@ -3,7 +3,7 @@ package com.Tesis.bicycle.Repository;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.Tesis.bicycle.Presenter.ApiRestConecction;
+import com.Tesis.bicycle.Presenter.ApiRestConnection;
 import com.Tesis.bicycle.Service.ApiRest.StoredDocumentApiService;
 
 import okhttp3.MultipartBody;
@@ -18,7 +18,7 @@ public class StoredDocumentApiRepository {
 
 
     public StoredDocumentApiRepository() {
-        this.storedDocumentApiService = ApiRestConecction.getStoredDocumentService();
+        this.storedDocumentApiService = ApiRestConnection.getStoredDocumentService();
     }
 
     public static StoredDocumentApiRepository getInstance(){

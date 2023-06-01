@@ -1,12 +1,12 @@
-package com.tesis.Auth.controller;
+package com.Tesis.auth.controller;
 
-import com.tesis.Auth.dto.RefreshTokenDto;
-import com.tesis.Auth.payload.request.LoginRequest;
-import com.tesis.Auth.payload.request.SignupRequest;
-import com.tesis.Auth.payload.request.TokenRefreshRequest;
-import com.tesis.Auth.payload.response.JwtResponse;
-import com.tesis.Auth.payload.response.TokenRefreshResponse;
-import com.tesis.Auth.service.IAuthUserService;
+import com.Tesis.auth.dto.RefreshTokenDto;
+import com.Tesis.auth.payload.request.LoginRequest;
+import com.Tesis.auth.payload.request.SignupRequest;
+import com.Tesis.auth.payload.request.TokenRefreshRequest;
+import com.Tesis.auth.payload.response.JwtResponse;
+import com.Tesis.auth.payload.response.TokenRefreshResponse;
+import com.Tesis.auth.service.IAuthUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 

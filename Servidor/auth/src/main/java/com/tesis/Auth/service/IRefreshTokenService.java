@@ -1,6 +1,6 @@
-package com.tesis.Auth.service;
+package com.Tesis.auth.service;
 
-import com.tesis.Auth.entity.RefreshToken;
+import com.Tesis.auth.entity.RefreshToken;
 
 import java.util.Optional;
 

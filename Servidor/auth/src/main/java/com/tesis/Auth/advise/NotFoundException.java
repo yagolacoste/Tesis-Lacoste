@@ -1,4 +1,4 @@
-package com.tesis.Auth.advise;
+package com.Tesis.auth.advise;
 
 public class NotFoundException extends RuntimeException {
 

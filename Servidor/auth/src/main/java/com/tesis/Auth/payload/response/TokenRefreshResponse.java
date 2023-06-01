@@ -1,4 +1,4 @@
-package com.tesis.Auth.payload.response;
+package com.Tesis.auth.payload.response;
 
 public class TokenRefreshResponse {
     private String accessToken;

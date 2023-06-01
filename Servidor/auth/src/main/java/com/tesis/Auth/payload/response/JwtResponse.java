@@ -1,4 +1,4 @@
-package com.tesis.Auth.payload.response;
+package com.Tesis.auth.payload.response;
 
 import java.util.List;
 

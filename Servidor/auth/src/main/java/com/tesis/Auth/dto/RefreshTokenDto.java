@@ -1,4 +1,4 @@
-package com.tesis.Auth.dto;
+package com.Tesis.auth.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
