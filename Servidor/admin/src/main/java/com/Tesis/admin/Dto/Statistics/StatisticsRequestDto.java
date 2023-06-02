@@ -1,10 +1,13 @@
 package com.Tesis.admin.Dto.Statistics;
 
+import com.Tesis.admin.Dto.Route.GeoPoint;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
+
 
 public class StatisticsRequestDto implements Serializable {
 
@@ -28,7 +31,7 @@ public class StatisticsRequestDto implements Serializable {
 
     private String weather;
 
-    private String coordinates;
+    private List<GeoPoint> coordinates;
 
 
     public StatisticsRequestDto() {
@@ -106,11 +109,25 @@ public class StatisticsRequestDto implements Serializable {
         this.weather = weather;
     }
 
-    public String getCoordinates() {
+//    public String getCoordinates() {
+//        return coordinates;
+//    }
+//
+//    public void setCoordinates(String coordinates) {
+//        this.coordinates = coordinates;
+//    }
+
+
+
+    public List<GeoPoint> getCoordinates() {
+
         return coordinates;
     }
 
-    public void setCoordinates(String coordinates) {
+
+
+    public void setCoordinates(List<GeoPoint> coordinates) {
+
         this.coordinates = coordinates;
     }
 }

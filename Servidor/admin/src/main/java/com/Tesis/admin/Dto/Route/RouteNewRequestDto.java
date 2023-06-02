@@ -1,9 +1,9 @@
 package com.Tesis.admin.Dto.Route;
 
-import org.json.JSONObject;
-
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.List;
+
 
 public class RouteNewRequestDto implements Serializable {
     @NotBlank(message = "id is required")
@@ -14,7 +14,7 @@ public class RouteNewRequestDto implements Serializable {
     private String  name;
 
     @NotBlank(message = "Coordinates is required")
-    private String coordinates;
+    private List<GeoPoint> coordinates;
 
     public String getId() {
         return id;
@@ -40,11 +40,25 @@ public class RouteNewRequestDto implements Serializable {
         this.name = name;
     }
 
-    public String getCoordinates() {
+//    public String getCoordinates() {
+//        return coordinates;
+//    }
+//
+//    public void setCoordinates(String coordinates) {
+//        this.coordinates = coordinates;
+//    }
+
+
+
+    public List<GeoPoint> getCoordinates() {
+
         return coordinates;
     }
 
-    public void setCoordinates(String coordinates) {
+
+
+    public void setCoordinates(List<GeoPoint> coordinates) {
+
         this.coordinates = coordinates;
     }
 }

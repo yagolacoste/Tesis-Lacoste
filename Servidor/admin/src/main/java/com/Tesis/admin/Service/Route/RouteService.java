@@ -6,6 +6,7 @@ import com.Tesis.admin.Dto.Route.RouteNewRequestDto;
 import com.Tesis.admin.Exception.ErrorCodes;
 import com.Tesis.admin.Models.Route;
 import com.Tesis.admin.Repository.IRouteRepository;
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,9 @@ public class RouteService implements IRouteService{
         routeReal.setId(route.getId());
         routeReal.setDescription(route.getDescription());
         routeReal.setName(route.getName());
-        routeReal.setCoordinates(route.getCoordinates());
+        Gson gson=new Gson();
+        String json=gson.toJson(route.getCoordinates());
+        routeReal.setCoordinates(json);
         routeRepository.save(routeReal);
     }
 

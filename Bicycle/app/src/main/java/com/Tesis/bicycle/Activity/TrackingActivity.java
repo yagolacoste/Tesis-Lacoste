@@ -17,6 +17,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -88,6 +89,8 @@ public class TrackingActivity extends Activity  {
     private OpenStreetMap openStreetMap;
 
     private FusedLocationProviderClient fusedLocationProviderClient;
+
+    private LocationCallback locationCallback;
 
     Handler updateTimeHandler = new Handler();
     Handler updateStatsHandler = new Handler();
@@ -176,14 +179,14 @@ public class TrackingActivity extends Activity  {
                 AlertNoGps();
             }
             openStreetMap=new OpenStreetMap(myOpenMapView);
-           // updateLastLocation();
-
+            updateLastLocation();
 
         //capturo coordenadas cada 5segundos
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // openStreetMap.removeMarker();
+                openStreetMap.removeMarker();
+                stopLocationUpdates();
                 startLocationService();
                 btn_start.setEnabled(false);
             }
@@ -219,24 +222,32 @@ public class TrackingActivity extends Activity  {
     }
 
     private void updateLastLocation() {
-         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(TrackingActivity.this);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(TrackingActivity.this);
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);
         locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);
-        locationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY); // Por defecto puse HIGH solo para verificar que andaba
-        if (!(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
-            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
-                @Override
-                public void onSuccess(Location location) {
-                    if(location!=null){
-                    openStreetMap.initLayer(TrackingActivity.this,location);
-                   // openStreetMap.updatePosition(location);
-                   // initLayer(TrackingActivity.this);
-                   // updatePosition(location);
-                    }
+        locationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY);
+
+         locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+                Location location = locationResult.getLastLocation();
+                if (location != null) {
+                    openStreetMap.initLayer(TrackingActivity.this, location);
                 }
-            });
+            }
+        };
+
+        if (!(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
         }
+    }
+
+    // Método para cancelar las actualizaciones de ubicación
+    private void stopLocationUpdates() {
+
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
     }
 
     //This Alert is not gps service activated
