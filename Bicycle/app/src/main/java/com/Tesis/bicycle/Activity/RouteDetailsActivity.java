@@ -3,6 +3,7 @@ package com.Tesis.bicycle.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
+import com.Tesis.bicycle.Presenter.OpenStreetMap;
 import com.Tesis.bicycle.R;
 
 import org.json.JSONArray;
@@ -37,6 +39,7 @@ public class RouteDetailsActivity extends AppCompatActivity {
     private CompassOverlay mCompassOverlay;
     private TextView title,description,distance,timeProm;
     private RouteDetailsDto route;
+    private OpenStreetMap openStreetMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +55,16 @@ public class RouteDetailsActivity extends AppCompatActivity {
         distance=findViewById(R.id.tv_route_details_distance);
         timeProm=findViewById(R.id.tv_route_details_time_prom);
         myOpenMapView=findViewById(R.id.v_map);
-        initLayer(this);
-
         route= (RouteDetailsDto) getIntent().getSerializableExtra(Constants.ROUTE);
-        title.setText(route.getName());
-        description.setText(route.getDescription());
-        List<GeoPoint>points=getCoordinates();
-        drawRoute(points);
+        openStreetMap.initLayer(this,route.getCoordinates().get(0));
+        openStreetMap.draw(route.getCoordinates());
+//        //initLayer(this);
+//
+//
+//        title.setText(route.getName());
+//        description.setText(route.getDescription());
+//        List<GeoPoint>points=getCoordinates();
+//        drawRoute(points);
 
     }
 
@@ -111,7 +117,7 @@ public class RouteDetailsActivity extends AppCompatActivity {
     public List<GeoPoint> getCoordinates(){
         //routeDetailsDto= (RouteDetailsDto) getIntent().getSerializableExtra("Route");
         List<GeoPoint> result=new ArrayList<>();
-        String resultCoordinates=route.getCoordinates();
+        String resultCoordinates=route.getCoordinates().toString();
         try {
             JSONArray coordinates=new JSONArray(resultCoordinates);
             for(int i=0;i<coordinates.length();i++){

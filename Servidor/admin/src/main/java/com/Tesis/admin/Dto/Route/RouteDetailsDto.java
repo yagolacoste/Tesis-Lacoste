@@ -1,10 +1,14 @@
 package com.Tesis.admin.Dto.Route;
 
 import com.fasterxml.jackson.annotation.JsonRawValue;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.json.JSONObject;
 
 import javax.persistence.Column;
 import java.io.Serializable;
+import java.lang.reflect.Type;
+import java.util.List;
 
 public class RouteDetailsDto implements Serializable {
 
@@ -14,13 +18,16 @@ public class RouteDetailsDto implements Serializable {
 
     private String description;
 
-    private String coordinates;
+    private List<GeoPoint> coordinates;
 
     public RouteDetailsDto(String id, String description, String name, String coordinates) {
         this.id = id;
         this.description = description;
         this.name = name;
-        this.coordinates = coordinates;
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<GeoPoint>>() {}.getType();
+        this.coordinates = gson.fromJson(coordinates, listType);
+
     }
 
     public String getId() {
@@ -47,11 +54,11 @@ public class RouteDetailsDto implements Serializable {
         this.name = name;
     }
 
-    public String getCoordinates() {
+    public List<GeoPoint> getCoordinates() {
         return coordinates;
     }
 
-    public void setCoordinates(String coordinates) {
+    public void setCoordinates(List<GeoPoint> coordinates) {
         this.coordinates = coordinates;
     }
 }

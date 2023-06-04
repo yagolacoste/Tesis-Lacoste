@@ -1,13 +1,10 @@
 package com.Tesis.bicycle.Presenter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
 
-import com.Tesis.bicycle.Activity.TrackingActivity;
 import com.Tesis.bicycle.R;
 
 import org.osmdroid.api.IMapController;
@@ -39,7 +36,7 @@ public class OpenStreetMap {
         this.myOpenMapView = myOpenMapView;
     }
 
-    public void initLayer(Context ctx, Location location) {
+    public void initLayer(Context ctx, GeoPoint location) {
         context=ctx;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -48,19 +45,19 @@ public class OpenStreetMap {
         startMarker=new Marker(myOpenMapView);
         startMarker.setIcon(ctx.getResources().getDrawable(R.drawable.ic_bicycle));
         //Seteo de mapa en tandil statico
-        GeoPoint tandil=new GeoPoint(location.getLatitude(),location.getLongitude());
-        startMarker.setPosition(tandil);
+//        GeoPoint tandil=new GeoPoint(location.getLatitude(),location.getLongitude());
+        startMarker.setPosition(location);
         myOpenMapView.setTileSource(TileSourceFactory.MAPNIK);
         myOpenMapView.setBuiltInZoomControls(true);
         myOpenMapView.setMultiTouchControls(true);
         IMapController mapController=myOpenMapView.getController();
-        mapController.setZoom(18);
-        mapController.setCenter(tandil);
+        mapController.setZoom(14);
+        mapController.setCenter(location);
         RotationGestureOverlay mRotationGestureOverlay = new RotationGestureOverlay(ctx, myOpenMapView);
         mRotationGestureOverlay.setEnabled(true);
         myOpenMapView.setMultiTouchControls(true);
         myOpenMapView.getOverlays().add(mRotationGestureOverlay);
-        myOpenMapView.getOverlays().add(startMarker);
+//        myOpenMapView.getOverlays().add(startMarker);
         this.mCompassOverlay = new CompassOverlay(ctx, new InternalCompassOrientationProvider(ctx), myOpenMapView);
         this.mCompassOverlay.enableCompass();
         myOpenMapView.getOverlays().add(this.mCompassOverlay);
@@ -73,6 +70,7 @@ public class OpenStreetMap {
         startMarker.setAnchor(Marker.ANCHOR_RIGHT,Marker.ANCHOR_BOTTOM);
         myOpenMapView.getOverlays().add((myOpenMapView.getOverlays().size()-1),startMarker);
         IMapController mapController=myOpenMapView.getController();
+        mapController.setZoom(19);
         mapController.setCenter(point);
         myOpenMapView.invalidate();
     }

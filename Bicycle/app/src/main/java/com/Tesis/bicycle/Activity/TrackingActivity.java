@@ -84,13 +84,16 @@ public class TrackingActivity extends Activity  {
     boolean stopped = false,isRepeat=false;
     //retrofit
     private RouteDetailsDto routeDetailsDto;
-    //osm
+
+    //osm init layer and position user
     private MapView myOpenMapView;
     private OpenStreetMap openStreetMap;
 
     private FusedLocationProviderClient fusedLocationProviderClient;
 
     private LocationCallback locationCallback;
+
+    private static GeoPoint location=new GeoPoint(-37.32345,-59.12558);
 
     Handler updateTimeHandler = new Handler();
     Handler updateStatsHandler = new Handler();
@@ -179,6 +182,7 @@ public class TrackingActivity extends Activity  {
                 AlertNoGps();
             }
             openStreetMap=new OpenStreetMap(myOpenMapView);
+            openStreetMap.initLayer(TrackingActivity.this, location);
             updateLastLocation();
 
         //capturo coordenadas cada 5segundos
@@ -208,15 +212,16 @@ public class TrackingActivity extends Activity  {
         String action = getIntent().getAction();
         if (action != null && action.equals(Constants.REPLAY_MY_ROUTE)) {
             routeDetailsDto = (RouteDetailsDto) getIntent().getSerializableExtra("Route");
-            List<GeoPoint> route = getCoordinates();//Transformo la ruta en geopoint
-            drawRoute(route);
+            openStreetMap.draw(routeDetailsDto.getCoordinates());
+           // List<GeoPoint> route = getCoordinates();//Transformo la ruta en geopoint
+//            drawRoute(route);
             isRepeat = true;
             repeat = new Tracking();
-            String[] id = routeDetailsDto.getId().split("-");
-            repeat.setId(id[1]);
+            //String[] id = routeDetailsDto.getId().split("-");
+            repeat.setId(routeDetailsDto.getId());
             repeat.setTitle(routeDetailsDto.getName());
             repeat.setDescription(routeDetailsDto.getDescription());
-            repeat.setPointsDraw(route);
+            repeat.setPointsDraw(routeDetailsDto.getCoordinates());
             }
         }
     }
@@ -234,7 +239,8 @@ public class TrackingActivity extends Activity  {
                 super.onLocationResult(locationResult);
                 Location location = locationResult.getLastLocation();
                 if (location != null) {
-                    openStreetMap.initLayer(TrackingActivity.this, location);
+                    openStreetMap.updatePosition(location);
+//                    openStreetMap.removeMarker();
                 }
             }
         };
@@ -246,7 +252,6 @@ public class TrackingActivity extends Activity  {
 
     // Método para cancelar las actualizaciones de ubicación
     private void stopLocationUpdates() {
-
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);
     }
 
@@ -271,46 +276,46 @@ public class TrackingActivity extends Activity  {
         alert.show();
     }
 
-    private void drawRoute(List<GeoPoint> routes) {
-        Marker startMarker=new Marker(myOpenMapView);
-        startMarker.setPosition(routes.get(0));
-
-        myOpenMapView.getOverlays().add(startMarker);
-        RoadManager roadManager=new OSRMRoadManager(TrackingActivity.this,"OBP_Tuto/1.0");
-        ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
-        Road road=roadManager.getRoad((ArrayList<GeoPoint>) routes);
-//        Polyline roadOverlay=new Polyline();
-//        roadOverlay.setWidth(20f);
-        Polyline roadOverlay=RoadManager.buildRoadOverlay(road, 0x800000FF, 25.0f);
-
-
-        // Polyline roadOverlay=RoadManager.buildRoadOverlay(road).setWidth(2.0f);
-        myOpenMapView.getOverlays().add(roadOverlay);
-        Marker endMarker=new Marker(myOpenMapView);
-        endMarker.setPosition(routes.get(routes.size()-1));
-
-        myOpenMapView.getOverlays().add(endMarker);
-
-        myOpenMapView.invalidate();
-    }
+//    private void drawRoute(List<GeoPoint> routes) {
+//        Marker startMarker=new Marker(myOpenMapView);
+//        startMarker.setPosition(routes.get(0));
+//
+//        myOpenMapView.getOverlays().add(startMarker);
+//        RoadManager roadManager=new OSRMRoadManager(TrackingActivity.this,"OBP_Tuto/1.0");
+//        ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
+//        Road road=roadManager.getRoad((ArrayList<GeoPoint>) routes);
+////        Polyline roadOverlay=new Polyline();
+////        roadOverlay.setWidth(20f);
+//        Polyline roadOverlay=RoadManager.buildRoadOverlay(road, 0x800000FF, 25.0f);
+//
+//
+//        // Polyline roadOverlay=RoadManager.buildRoadOverlay(road).setWidth(2.0f);
+//        myOpenMapView.getOverlays().add(roadOverlay);
+//        Marker endMarker=new Marker(myOpenMapView);
+//        endMarker.setPosition(routes.get(routes.size()-1));
+//
+//        myOpenMapView.getOverlays().add(endMarker);
+//
+//        myOpenMapView.invalidate();
+//    }
 
     //Transformation coordinates in GeoPoint
-    public List<GeoPoint> getCoordinates(){
-        //routeDetailsDto= (RouteDetailsDto) getIntent().getSerializableExtra("Route");
-        List<GeoPoint> result=new ArrayList<>();
-        String resultCoordinates=routeDetailsDto.getCoordinates();
-        try {
-            JSONArray coordinates=new JSONArray(resultCoordinates);
-            for(int i=0;i<coordinates.length();i++){
-                String aux=coordinates.getString(i);
-                String[] split=aux.split(",");
-                result.add(new GeoPoint(Double.valueOf(split[0]),Double.valueOf(split[1])));
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
+//    public List<GeoPoint> getCoordinates(){
+//        //routeDetailsDto= (RouteDetailsDto) getIntent().getSerializableExtra("Route");
+//        List<GeoPoint> result=new ArrayList<>();
+//        String resultCoordinates=routeDetailsDto.getCoordinates();
+//        try {
+//            JSONArray coordinates=new JSONArray(resultCoordinates);
+//            for(int i=0;i<coordinates.length();i++){
+//                String aux=coordinates.getString(i);
+//                String[] split=aux.split(",");
+//                result.add(new GeoPoint(Double.valueOf(split[0]),Double.valueOf(split[1])));
+//            }
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        return result;
+//    }
 
     //Init osmodroid map with position
 //    private void initLayer(Context ctx) {

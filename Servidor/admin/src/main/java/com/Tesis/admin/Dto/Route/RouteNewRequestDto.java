@@ -1,5 +1,7 @@
 package com.Tesis.admin.Dto.Route;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.List;
@@ -13,7 +15,7 @@ public class RouteNewRequestDto implements Serializable {
 
     private String  name;
 
-    @NotBlank(message = "Coordinates is required")
+    @JsonProperty("coordinates")
     private List<GeoPoint> coordinates;
 
     public String getId() {
@@ -49,16 +51,11 @@ public class RouteNewRequestDto implements Serializable {
 //    }
 
 
-
     public List<GeoPoint> getCoordinates() {
-
         return coordinates;
     }
 
-
-
     public void setCoordinates(List<GeoPoint> coordinates) {
-
         this.coordinates = coordinates;
     }
 }

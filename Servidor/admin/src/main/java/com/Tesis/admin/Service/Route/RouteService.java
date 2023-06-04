@@ -2,17 +2,24 @@ package com.Tesis.admin.Service.Route;
 
 
 import com.Tesis.admin.Controller.Exception.TypeExceptions.NotFoundException;
+import com.Tesis.admin.Dto.Route.GeoPoint;
 import com.Tesis.admin.Dto.Route.RouteNewRequestDto;
 import com.Tesis.admin.Exception.ErrorCodes;
 import com.Tesis.admin.Models.Route;
 import com.Tesis.admin.Repository.IRouteRepository;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonPrimitive;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RouteService implements IRouteService{
@@ -25,8 +32,11 @@ public class RouteService implements IRouteService{
     @Override
     public Route getById(String id) {
 
-        Route route= routeRepository.findById(id).orElseThrow(() -> new NotFoundException("Router by id not found", ErrorCodes.NOT_FOUND.getCode()));
-        return route;
+
+        if(!routeRepository.findById(id).isEmpty()){
+            return routeRepository.findById(id).get();
+        }
+        return null;
     }
 
     @Override
@@ -35,8 +45,18 @@ public class RouteService implements IRouteService{
         routeReal.setId(route.getId());
         routeReal.setDescription(route.getDescription());
         routeReal.setName(route.getName());
+       // List<GeoPoint>points=route.getCoordinates().stream(r->new GeoPoint(r)).collect(Collectors.toList());
+       List<GeoPoint> geoPoints= route.getCoordinates();
+
+//            for (GeoPoint geoPoint : geoPoints) {
+////                coordinates.add(new JsonPrimitive(geoPoint.getLatitude()));
+////                coordinates.add(new JsonPrimitive(geoPoint.getLongitude()));
+//                jsonArray.add(geoPoint);
+//
+//        }
+
         Gson gson=new Gson();
-        String json=gson.toJson(route.getCoordinates());
+        String json=gson.toJson(geoPoints);
         routeReal.setCoordinates(json);
         routeRepository.save(routeReal);
     }

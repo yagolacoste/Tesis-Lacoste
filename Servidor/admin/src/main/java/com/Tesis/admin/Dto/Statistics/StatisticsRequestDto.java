@@ -1,7 +1,12 @@
 package com.Tesis.admin.Dto.Statistics;
 
+import com.Tesis.admin.Convert.GeoPointListDeserializer;
+import com.Tesis.admin.Convert.GeoPointListSerializer;
 import com.Tesis.admin.Dto.Route.GeoPoint;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.io.Serializable;
 import java.time.LocalTime;
@@ -31,6 +36,9 @@ public class StatisticsRequestDto implements Serializable {
 
     private String weather;
 
+    @JsonProperty("coordinates")
+    @JsonSerialize(using = GeoPointListSerializer.class)
+    @JsonDeserialize(using = GeoPointListDeserializer.class)
     private List<GeoPoint> coordinates;
 
 
@@ -118,16 +126,11 @@ public class StatisticsRequestDto implements Serializable {
 //    }
 
 
-
     public List<GeoPoint> getCoordinates() {
-
         return coordinates;
     }
 
-
-
     public void setCoordinates(List<GeoPoint> coordinates) {
-
         this.coordinates = coordinates;
     }
 }

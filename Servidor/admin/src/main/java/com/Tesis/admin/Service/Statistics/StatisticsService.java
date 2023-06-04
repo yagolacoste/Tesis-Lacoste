@@ -45,12 +45,15 @@ public class StatisticsService implements IStatisticsService {
     public void add(StatisticsRequestDto statisticsRequestDto) {
 
         //Guarda nueva ruta
+        Route r=routeService.getById(statisticsRequestDto.getRoute());
+        if(r==null){
             RouteNewRequestDto routeNewRequestDto = new RouteNewRequestDto();
             routeNewRequestDto.setId(statisticsRequestDto.getRoute());
             routeNewRequestDto.setName(statisticsRequestDto.getTitle());
             routeNewRequestDto.setDescription(statisticsRequestDto.getDescription());
             routeNewRequestDto.setCoordinates(statisticsRequestDto.getCoordinates());
             routeService.add(routeNewRequestDto);
+        }
         //Guarda nuevas estadisticas
         Route route=routeService.getById(statisticsRequestDto.getRoute());
         UserAppDto appUser=userService.getByUser(statisticsRequestDto.getAppUser());

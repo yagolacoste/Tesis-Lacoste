@@ -5,10 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7729f06-1757-4dfa-ac9d-78d48a9c1c01" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/TrackingActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/TrackingActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/TrackingDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/TrackingDetailActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Converters/ListOfGeoPointSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Converters/ListOfGeoPointSerializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Dto/ApiRest/RouteDetailsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Dto/ApiRest/RouteDetailsDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Model/Tracking.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Model/Tracking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/OpenStreetMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/OpenStreetMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/ServiceTracking/GPSService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/ServiceTracking/GPSService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Convert/GeoPointListDeserializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Convert/GeoPointListDeserializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Route/GeoPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Route/GeoPoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Route/RouteDetailsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Route/RouteDetailsDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Route/RouteNewRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Route/RouteNewRequestDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Statistics/StatisticsRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Statistics/StatisticsRequestDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Route/RouteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Route/RouteService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Statistics/StatisticsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Statistics/StatisticsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/resources/bootstrap.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/bootstrap.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,20 +67,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "SixthPoint",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/User/Desktop/Curso de android/Tesis/Tesis-Lacoste/Servidor",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15332031",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;SixthPoint&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/Desktop/Curso de android/Tesis/Tesis-Lacoste/Servidor&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15332031&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.Tesis.admin.Models" />
@@ -78,7 +90,7 @@
       <recent name="C:\Users\yago_\OneDrive\Escritorio\Tesis\Tesis-Lacoste\Servidor\admin\src\main\java\com\Tesis\admin" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GatewayApplication">
+  <component name="RunManager" selected="Application.AdminApplication">
     <configuration name="AdminApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.Tesis.admin.AdminApplication" />
       <module name="admin" />
@@ -139,8 +151,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.GatewayApplication" />
         <item itemvalue="Application.AdminApplication" />
+        <item itemvalue="Application.GatewayApplication" />
         <item itemvalue="Application.AuthApplication" />
         <item itemvalue="Application.DiscoveryApplication" />
       </list>
@@ -167,5 +179,21 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Route/RouteService.java</url>
+          <line>48</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Statistics/StatisticsService.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

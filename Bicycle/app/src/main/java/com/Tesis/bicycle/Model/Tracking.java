@@ -48,6 +48,8 @@ public class Tracking implements Serializable {
     private transient List<GeoPoint> pointsDraw=new ArrayList<>();
     private boolean repeat=false;
 
+    private Integer user;
+
     public Tracking() {
 
     }
@@ -67,7 +69,7 @@ public class Tracking implements Serializable {
             avgSpeed=currentLocation.getSpeed();
         }else{
             Location lastPoint = points.get(points.size() - 1);
-            if(lastPoint.distanceTo(currentLocation)>3.0f)//preguntar por el umbral
+            if(lastPoint.distanceTo(currentLocation)>1.5f)//preguntar por el umbral
                 distance += lastPoint.distanceTo(currentLocation);
             timeElapsedBetweenTrkPoints +=Math.abs(this.getLastPoint().getTime()-currentLocation.getTime());
         }
@@ -124,7 +126,10 @@ public class Tracking implements Serializable {
         mins %= 60;
         int milliseconds = (int) timeInMilliseconds % 1000;
         int centisecs = milliseconds / 10;
-        LocalTime date = LocalTime.of(hrs, mins, secs);
+        LocalTime date = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            date = LocalTime.of(hrs, mins, secs);
+        }
         return date;
     }
 
@@ -336,6 +341,7 @@ public class Tracking implements Serializable {
     public void setPointsDraw(List<GeoPoint> pointsDraw) {
         this.pointsDraw = pointsDraw;
     }
+
 
     @Override
     public String toString() {

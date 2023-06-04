@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.Tesis.bicycle.Dto.ApiRest.AppUserHasRouteApiRest;
 import com.Tesis.bicycle.Dto.Room.RefreshTokenDto;
+import com.Tesis.bicycle.Presenter.OpenStreetMap;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ServiceTracking.GPSService;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
@@ -50,6 +51,8 @@ public class TrackingDetailActivity extends AppCompatActivity {
     private AccessTokenRoomViewModel accessTokenRoomViewModel;
     private AppUserHasRouteViewModel appUserHasRouteViewModel;
 
+    private OpenStreetMap openStreetMap;
+
 
 
     private ServiceConnection lsc=new ServiceConnection() {
@@ -73,7 +76,8 @@ public class TrackingDetailActivity extends AppCompatActivity {
         tv_speed_value.setText(String.valueOf(locationBinder.getAvgSpeedString()));
         tv_time_value.setText(String.valueOf(locationBinder.getTimeString()));
         tv_date_value.setText(String.valueOf(locationBinder.getTimeCreated()));
-        this.drawRoute(locationBinder.getGeoPoints());
+        openStreetMap.draw(locationBinder.getGeoPoints());
+//        this.drawRoute(locationBinder.getGeoPoints());
 //        tv_session_value.setText(String.valueOf(locationBinder.));//agregar el id session
     }
 
@@ -101,6 +105,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
         btn_save=findViewById(R.id.btn_save);
         btn_discard=findViewById(R.id.btn_discard);
         myOpenMapView=findViewById(R.id.v_map);
+        openStreetMap=new OpenStreetMap(myOpenMapView);
         this.initLayer(this);
         Intent intent = new Intent(this, GPSService.class);
         getApplicationContext().bindService(intent, lsc, Context.BIND_ABOVE_CLIENT);
@@ -117,7 +122,10 @@ public class TrackingDetailActivity extends AppCompatActivity {
                 appUserHasRouteApiRest.setWeather("");
                 appUserHasRouteApiRest.setDescription(locationBinder.getDescription());
                 appUserHasRouteApiRest.setTitle(locationBinder.getTitle());
-                appUserHasRouteApiRest.setRoute(refreshTokenDto.getId()+"-"+locationBinder.getId());
+                if(!locationBinder.getId().contains("-"))
+                    appUserHasRouteApiRest.setRoute(refreshTokenDto.getId()+"-"+locationBinder.getId());
+                else
+                    appUserHasRouteApiRest.setRoute(locationBinder.getId());
                 appUserHasRouteApiRest.setCoordinates(locationBinder.getGeoPoints());
                 appUserHasRouteViewModel.addStatistic(appUserHasRouteApiRest).observe(this,resp->{
                 });

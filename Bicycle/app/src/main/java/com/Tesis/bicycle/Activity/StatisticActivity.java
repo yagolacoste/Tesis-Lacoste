@@ -78,7 +78,7 @@ public class StatisticActivity extends AppCompatActivity {
     public List<GeoPoint> getCoordinates(){
         routeDetailsDto= (RouteDetailsDto) getIntent().getSerializableExtra("Route");
         List<GeoPoint> result=new ArrayList<>();
-        String resultCoordinates=routeDetailsDto.getCoordinates();
+        String resultCoordinates=routeDetailsDto.getCoordinates().toString();
         try {
             JSONArray coordinates=new JSONArray(resultCoordinates);
             for(int i=0;i<coordinates.length();i++){

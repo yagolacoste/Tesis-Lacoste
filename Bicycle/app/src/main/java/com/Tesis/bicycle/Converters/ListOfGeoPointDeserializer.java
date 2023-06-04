@@ -7,6 +7,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
@@ -47,9 +48,11 @@ public class ListOfGeoPointDeserializer implements JsonDeserializer<List<GeoPoin
         List<GeoPoint> geoPoints = new ArrayList<>();
         JsonArray jsonArray = json.getAsJsonArray();
         for (JsonElement element : jsonArray) {
-            JsonArray coordinates = element.getAsJsonArray();
-            double latitude = coordinates.get(0).getAsDouble();
-            double longitude = coordinates.get(1).getAsDouble();
+            JsonObject coordinates = element.getAsJsonObject();
+            double latitude = coordinates.get("latitude").getAsDouble();
+            double longitude = coordinates.get("longitude").getAsDouble();
+
+            // Crear un objeto GeoPoint y agregarlo a la lista
             GeoPoint geoPoint = new GeoPoint(latitude, longitude);
             geoPoints.add(geoPoint);
         }

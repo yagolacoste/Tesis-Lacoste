@@ -8,8 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.io.Serializable;
 
-@JsonSerialize(using = GeoPointListSerializer.class)
-@JsonDeserialize(using = GeoPointListDeserializer.class)
+
 public class GeoPoint implements Serializable {
 
   private double Longitude;
@@ -20,6 +19,8 @@ public class GeoPoint implements Serializable {
     this.Longitude = aLongitudeE6 ;
   }
 
+  public GeoPoint(Object r) {
+  }
 
 
   public double getLongitude() {
@@ -46,5 +47,12 @@ public class GeoPoint implements Serializable {
   public void setLatitude(double latitude) {
 
     Latitude = latitude;
+  }
+
+  @Override
+  public String toString() {
+    return "GeoPoint{" + Longitude +
+            "," + Latitude +
+            '}';
   }
 }

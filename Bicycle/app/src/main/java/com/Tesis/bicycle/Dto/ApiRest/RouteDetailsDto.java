@@ -4,7 +4,10 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.osmdroid.util.GeoPoint;
+
 import java.io.Serializable;
+import java.util.List;
 
 public class RouteDetailsDto implements Serializable {
 
@@ -15,9 +18,9 @@ public class RouteDetailsDto implements Serializable {
 
     private String name;
 
-    private String coordinates;
+    private List<GeoPoint> coordinates;
 
-    public RouteDetailsDto(String id, String description, String name, String coordinates) {
+    public RouteDetailsDto(String id, String description, String name, List<GeoPoint> coordinates) {
         this.id = id;
         this.description = description;
         this.name = name;
@@ -48,14 +51,13 @@ public class RouteDetailsDto implements Serializable {
         this.name = name;
     }
 
-    public String getCoordinates() {
+    public List<GeoPoint> getCoordinates() {
         return coordinates;
     }
 
-    public void setCoordinates(String coordinates) {
+    public void setCoordinates(List<GeoPoint> coordinates) {
         this.coordinates = coordinates;
     }
-
 
     @Override
     public String toString() {
