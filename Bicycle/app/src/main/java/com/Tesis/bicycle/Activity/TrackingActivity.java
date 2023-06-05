@@ -95,6 +95,7 @@ public class TrackingActivity extends Activity  {
 
     private static GeoPoint location=new GeoPoint(-37.32345,-59.12558);
 
+
     Handler updateTimeHandler = new Handler();
     Handler updateStatsHandler = new Handler();
 
@@ -183,14 +184,15 @@ public class TrackingActivity extends Activity  {
             }
             openStreetMap=new OpenStreetMap(myOpenMapView);
             openStreetMap.initLayer(TrackingActivity.this, location);
-            updateLastLocation();
+            updateLastLocation();////////////////preguntar si me conviene actualizar posiicon o no
+
 
         //capturo coordenadas cada 5segundos
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //stopLocationUpdates();
                 openStreetMap.removeMarker();
-                stopLocationUpdates();
                 startLocationService();
                 btn_start.setEnabled(false);
             }
@@ -205,7 +207,7 @@ public class TrackingActivity extends Activity  {
                     i.setAction(Constants.REPLAY_MY_ROUTE);
                 }
                 startActivity(i);
-                btn_turnoff.setEnabled(false);
+               // btn_turnoff.setEnabled(false);
             }
         });
 
@@ -227,27 +229,30 @@ public class TrackingActivity extends Activity  {
     }
 
     private void updateLastLocation() {
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(TrackingActivity.this);
-        LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);
-        locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);
-        locationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY);
 
-         locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                super.onLocationResult(locationResult);
-                Location location = locationResult.getLastLocation();
-                if (location != null) {
-                    openStreetMap.updatePosition(location);
-//                    openStreetMap.removeMarker();
+            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(TrackingActivity.this);
+            LocationRequest locationRequest = LocationRequest.create();
+            locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);
+            locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);
+            locationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY);
+
+             locationCallback = new LocationCallback() {
+                @Override
+                public void onLocationResult(LocationResult locationResult) {
+                    super.onLocationResult(locationResult);
+                    Location location = locationResult.getLastLocation();
+                    if (location != null) {
+                            openStreetMap.updatePosition(location);
+        //                    openStreetMap.removeMarker();
+                            stopLocationUpdates();
+                            return;
+                    }
                 }
-            }
-        };
+            };
 
-        if (!(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
-            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
-        }
+            if (!(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+                fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
+            }
     }
 
     // Método para cancelar las actualizaciones de ubicación
@@ -275,78 +280,6 @@ public class TrackingActivity extends Activity  {
         AlertDialog alert = builder.create();
         alert.show();
     }
-
-//    private void drawRoute(List<GeoPoint> routes) {
-//        Marker startMarker=new Marker(myOpenMapView);
-//        startMarker.setPosition(routes.get(0));
-//
-//        myOpenMapView.getOverlays().add(startMarker);
-//        RoadManager roadManager=new OSRMRoadManager(TrackingActivity.this,"OBP_Tuto/1.0");
-//        ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
-//        Road road=roadManager.getRoad((ArrayList<GeoPoint>) routes);
-////        Polyline roadOverlay=new Polyline();
-////        roadOverlay.setWidth(20f);
-//        Polyline roadOverlay=RoadManager.buildRoadOverlay(road, 0x800000FF, 25.0f);
-//
-//
-//        // Polyline roadOverlay=RoadManager.buildRoadOverlay(road).setWidth(2.0f);
-//        myOpenMapView.getOverlays().add(roadOverlay);
-//        Marker endMarker=new Marker(myOpenMapView);
-//        endMarker.setPosition(routes.get(routes.size()-1));
-//
-//        myOpenMapView.getOverlays().add(endMarker);
-//
-//        myOpenMapView.invalidate();
-//    }
-
-    //Transformation coordinates in GeoPoint
-//    public List<GeoPoint> getCoordinates(){
-//        //routeDetailsDto= (RouteDetailsDto) getIntent().getSerializableExtra("Route");
-//        List<GeoPoint> result=new ArrayList<>();
-//        String resultCoordinates=routeDetailsDto.getCoordinates();
-//        try {
-//            JSONArray coordinates=new JSONArray(resultCoordinates);
-//            for(int i=0;i<coordinates.length();i++){
-//                String aux=coordinates.getString(i);
-//                String[] split=aux.split(",");
-//                result.add(new GeoPoint(Double.valueOf(split[0]),Double.valueOf(split[1])));
-//            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        return result;
-//    }
-
-    //Init osmodroid map with position
-//    private void initLayer(Context ctx) {
-//        //Seteo de mapa en tandil statico
-//        GeoPoint tandil=new GeoPoint(currentLocation.getLatitude(),currentLocation.getLongitude());
-//        myOpenMapView.setTileSource(TileSourceFactory.MAPNIK);
-//        myOpenMapView.setBuiltInZoomControls(true);
-//        myOpenMapView.setMultiTouchControls(true);
-//        IMapController mapController=myOpenMapView.getController();
-//        mapController.setZoom(18);
-//        mapController.setCenter(tandil);
-//        RotationGestureOverlay mRotationGestureOverlay = new RotationGestureOverlay(ctx, myOpenMapView);
-//        mRotationGestureOverlay.setEnabled(true);
-//        myOpenMapView.setMultiTouchControls(true);
-//        myOpenMapView.getOverlays().add(mRotationGestureOverlay);
-//        this.mCompassOverlay = new CompassOverlay(this, new InternalCompassOrientationProvider(this), myOpenMapView);
-//        this.mCompassOverlay.enableCompass();
-//        myOpenMapView.getOverlays().add(this.mCompassOverlay);
-//        myOpenMapView.invalidate();
-//    }
-
-
-//    public  void updatePosition(Location location){
-//        GeoPoint point=new GeoPoint(location.getLatitude(),location.getLongitude());
-//        startMarker.setPosition(point);
-//        startMarker.setAnchor(Marker.ANCHOR_RIGHT,Marker.ANCHOR_BOTTOM);
-//        myOpenMapView.getOverlays().add((myOpenMapView.getOverlays().size()-1),startMarker);
-//        IMapController mapController=myOpenMapView.getController();
-//        mapController.setCenter(point);
-//        myOpenMapView.invalidate();
-//    }
 
 
     //Inicia el servicio de localizacion

@@ -1,5 +1,6 @@
 package com.Tesis.admin.Dto.Route;
 
+import com.Tesis.admin.Models.Route;
 import com.fasterxml.jackson.annotation.JsonRawValue;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -8,6 +9,7 @@ import org.json.JSONObject;
 import javax.persistence.Column;
 import java.io.Serializable;
 import java.lang.reflect.Type;
+import java.time.LocalTime;
 import java.util.List;
 
 public class RouteDetailsDto implements Serializable {
@@ -20,15 +22,32 @@ public class RouteDetailsDto implements Serializable {
 
     private List<GeoPoint> coordinates;
 
-    public RouteDetailsDto(String id, String description, String name, String coordinates) {
-        this.id = id;
-        this.description = description;
-        this.name = name;
+    private float avgDistance;
+
+    private LocalTime avgTime;
+
+//    public RouteDetailsDto(String id, String description, String name, String coordinates) {
+//        this.id = id;
+//        this.description = description;
+//        this.name = name;
+//        Gson gson = new Gson();
+//        Type listType = new TypeToken<List<GeoPoint>>() {}.getType();
+//        this.coordinates = gson.fromJson(coordinates, listType);
+//
+//    }
+
+    public RouteDetailsDto(Route r) {
+        this.id = r.getId();
+        this.description = r.getDescription();
+        this.name = r.getName();
+        this.avgDistance=r.getDistance();
+        this.avgTime=r.getAvgProm();
         Gson gson = new Gson();
         Type listType = new TypeToken<List<GeoPoint>>() {}.getType();
-        this.coordinates = gson.fromJson(coordinates, listType);
+        this.coordinates = gson.fromJson(r.getCoordinates(), listType);
 
     }
+
 
     public String getId() {
         return id;
@@ -60,5 +79,33 @@ public class RouteDetailsDto implements Serializable {
 
     public void setCoordinates(List<GeoPoint> coordinates) {
         this.coordinates = coordinates;
+    }
+
+
+
+    public float getAvgDistance() {
+
+        return avgDistance;
+    }
+
+
+
+    public void setAvgDistance(float avgDistance) {
+
+        this.avgDistance = avgDistance;
+    }
+
+
+
+    public LocalTime getAvgTime() {
+
+        return avgTime;
+    }
+
+
+
+    public void setAvgTime(LocalTime avgTime) {
+
+        this.avgTime = avgTime;
     }
 }

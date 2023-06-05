@@ -51,7 +51,7 @@ public class OpenStreetMap {
         myOpenMapView.setBuiltInZoomControls(true);
         myOpenMapView.setMultiTouchControls(true);
         IMapController mapController=myOpenMapView.getController();
-        mapController.setZoom(14);
+        mapController.setZoom(16);
         mapController.setCenter(location);
         RotationGestureOverlay mRotationGestureOverlay = new RotationGestureOverlay(ctx, myOpenMapView);
         mRotationGestureOverlay.setEnabled(true);

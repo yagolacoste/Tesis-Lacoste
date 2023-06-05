@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +30,11 @@ public class Route implements Serializable {
     @JsonRawValue
     private String coordinates;
 
+    @Column(name = "distance")
+    private float distance;
+
+    @Column(name = "avgProm")
+    private LocalTime avgProm;
     @OneToMany(mappedBy = "route")
     private List<Battle> battles;
 
@@ -71,5 +77,33 @@ public class Route implements Serializable {
 
     public void setBattles(List<Battle> battles) {
         this.battles = battles;
+    }
+
+
+
+    public float getDistance() {
+
+        return distance;
+    }
+
+
+
+    public void setDistance(float distance) {
+
+        this.distance = distance;
+    }
+
+
+
+    public LocalTime getAvgProm() {
+
+        return avgProm;
+    }
+
+
+
+    public void setAvgProm(LocalTime avgProm) {
+
+        this.avgProm = avgProm;
     }
 }

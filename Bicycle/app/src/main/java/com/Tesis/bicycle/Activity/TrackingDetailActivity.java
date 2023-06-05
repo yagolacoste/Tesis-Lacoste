@@ -109,7 +109,6 @@ public class TrackingDetailActivity extends AppCompatActivity {
         this.initLayer(this);
         Intent intent = new Intent(this, GPSService.class);
         getApplicationContext().bindService(intent, lsc, Context.BIND_ABOVE_CLIENT);
-
         btn_save.setOnClickListener(view -> {
             this.accessTokenRoomViewModel.getFirst().observe(this,response->{
                 RefreshTokenDto refreshTokenDto=response;
