@@ -29,7 +29,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/txtName"
+                        android:id="@+id/txtViewNameDistance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/san_francisco"
@@ -39,12 +39,12 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/txtValueCodPurchases"
+                        android:id="@+id/txtViewValueDistance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="5dp"
-                        android:layout_toEndOf="@+id/txtNameCodCompras"
+                        android:layout_toEndOf="@+id/txtViewNameDistance"
                         android:fontFamily="@font/san_francisco"
                         android:text="C0001"
                         android:textColor="#F4EDED"
@@ -56,22 +56,22 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/txtNameDatePurchases"
+                        android:id="@+id/txtViewNameDateCompete"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/san_francisco"
-                        android:text="Fecha Compras : "
+                        android:text="Date complete : "
                         android:textColor="#fff"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/txtValueDatePurchases"
+                        android:id="@+id/txtValueDateCompete"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="5dp"
-                        android:layout_toEndOf="@+id/txtNameDatePurchases"
+                        android:layout_toEndOf="@+id/txtViewNameDateCompete"
                         android:fontFamily="@font/san_francisco"
                         android:text="10/07/2021"
                         android:textColor="#F4EDED"
@@ -83,22 +83,22 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/txtNameAmount"
+                        android:id="@+id/txtViewNameAvgSpeed"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/san_francisco"
-                        android:text="Monto :  "
+                        android:text="Speed :  "
                         android:textColor="#fff"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/txtValueAmount"
+                        android:id="@+id/txtViewValueAvgSpeed"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="5dp"
-                        android:layout_toEndOf="@+id/txtNameAmount"
+                        android:layout_toEndOf="@+id/txtViewNameAvgSpeed"
                         android:fontFamily="@font/san_francisco"
                         android:text="S/. 3500.00"
                         android:textColor="#F4EDED"
@@ -110,24 +110,24 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/txtNameOrder"
+                        android:id="@+id/txtNameTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/san_francisco"
-                        android:text="Estado del Pedido : "
+                        android:text="Time : "
                         android:textColor="#fff"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/txtValueOrder"
+                        android:id="@+id/txtValueTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="5dp"
-                        android:layout_toEndOf="@+id/txtNameOrder"
+                        android:layout_toEndOf="@+id/txtNameTime"
                         android:fontFamily="@font/san_francisco"
-                        android:text="Despachado y Enviando ..."
+                        android:text="0:00:00"
                         android:textColor="#F4EDED"
                         android:textSize="15sp" />
                 </RelativeLayout>

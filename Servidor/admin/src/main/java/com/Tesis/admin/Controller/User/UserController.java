@@ -51,8 +51,8 @@ public class UserController implements IUserController {
     }
 
     @Override
-    public void saveFriend(UserAppDto userAppDto) {
-        userService.saveFriend(userAppDto);
+    public void saveFriend(String email,Long id) {
+        userService.saveFriend(email,id);
     }
 
     @Override

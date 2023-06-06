@@ -89,4 +89,23 @@ public class UserApiRestRepository {
         });
         return mld;
     }
+
+    public LiveData<Boolean> addFriend(String email,Long id){
+        final MutableLiveData<Boolean> mld=new MutableLiveData<>();
+        userApiService.saveFriend(id,email).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()){
+                    mld.setValue(true);
+                }
+                else mld.setValue(false);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
+        return mld;
+    }
 }

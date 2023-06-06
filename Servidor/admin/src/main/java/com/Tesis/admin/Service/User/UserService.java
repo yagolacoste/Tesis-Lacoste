@@ -74,8 +74,17 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public void saveFriend(UserAppDto userAppDto) {
-
+    public void saveFriend(String email,Long id) {
+        if (!userRepository.existsByEmail(email)) {
+            throw new NotFoundException(ErrorCodes.ACCESS_DENIED.getCode(), "Email not Exists");
+        }
+        User friend=userRepository.findByEmail(email);
+        User user= userRepository.findById(id)
+            .orElseThrow(()->new NotFoundException("User by id not found", ErrorCodes.NOT_FOUND.getCode()));
+        if(friend!=null){
+                user.getFriends().add(friend);
+                userRepository.save(user);
+            }
     }
 
     @Override

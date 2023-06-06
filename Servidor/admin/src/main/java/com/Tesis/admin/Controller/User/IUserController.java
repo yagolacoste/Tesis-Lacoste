@@ -39,8 +39,8 @@ public interface IUserController {
     List<UserAppDto> getFriends(@PathVariable (value = "id") Long id);
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping(path= {"/savefriend"}, consumes=MediaType.APPLICATION_JSON_VALUE)
-    void saveFriend(@RequestBody UserAppDto userAppDto);
+    @PostMapping(path= {"{id}/savefriend"})
+    void saveFriend(@RequestParam (value = "email") String email,@PathVariable (value = "id") Long id);
 
 
     @ResponseStatus(HttpStatus.OK)

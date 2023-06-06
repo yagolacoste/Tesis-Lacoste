@@ -33,4 +33,8 @@ public class UserViewModel extends AndroidViewModel {
     public LiveData<List<UserAppDto>> getFriends(Long id){
         return repository.getFriends(id);
     }
+
+    public LiveData<Boolean> saveFriend(String email,Long id){
+        return repository.addFriend(email,id);
+    }
 }

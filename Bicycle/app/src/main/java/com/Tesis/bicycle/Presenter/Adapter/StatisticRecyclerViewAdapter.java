@@ -29,10 +29,10 @@ public class StatisticRecyclerViewAdapter extends RecyclerView.Adapter<Statistic
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            distance=(TextView) itemView.findViewById(R.id.tv_card_distance);
-            speed=(TextView) itemView.findViewById(R.id.tv_card_speed);
-            speedTime=(TextView) itemView.findViewById(R.id.tv_card_speedTime);
-            timeSession=(TextView) itemView.findViewById(R.id.tv_card_timeSession);
+            distance=(TextView) itemView.findViewById(R.id.txtViewValueDistance);
+            speed=(TextView) itemView.findViewById(R.id.txtViewValueAvgSpeed);
+            speedTime=(TextView) itemView.findViewById(R.id.txtValueTime);
+            timeSession=(TextView) itemView.findViewById(R.id.txtValueDateCompete);
             rootView=itemView;
         }
     }

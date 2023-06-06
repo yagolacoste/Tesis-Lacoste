@@ -17,7 +17,7 @@ public interface IUserService {
 
     List<UserAppDto> getFriends(Long id);
 
-    void saveFriend(UserAppDto userAppDto);
+    void saveFriend(String email,Long id);
 
     List<BattleDto> getBattlesByUser(Long id);
 }

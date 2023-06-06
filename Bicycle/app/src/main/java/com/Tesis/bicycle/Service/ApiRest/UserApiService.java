@@ -7,6 +7,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -21,5 +22,8 @@ public interface UserApiService {
 
     @GET("{id}/friends")
     Call<List<UserAppDto>> getFriends(@Path("id") Long id);
+
+    @POST("{id}/savefriend")
+    Call<Void> saveFriend(@Path("id")Long id,@Query("email")String email);
 
 }

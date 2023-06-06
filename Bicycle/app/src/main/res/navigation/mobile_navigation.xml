@@ -28,4 +28,22 @@
         android:name="com.Tesis.bicycle.Activity.ui.Statistics.StatisticFragment"
         android:label="@string/menu_my_statistics"
         tools:layout="@layout/fragment_statistic" />
+    <activity
+        android:id="@+id/routeDetailsActivity"
+        android:name="com.Tesis.bicycle.Activity.RouteDetailsActivity"
+        android:label="activity_route_details"
+        tools:layout="@layout/activity_route_details" />
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.Tesis.bicycle.Activity.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
+    <activity
+        android:id="@+id/registerUserActivity"
+        android:name="com.Tesis.bicycle.Activity.RegisterUserActivity"
+        android:label="activity_register_user"
+        tools:layout="@layout/activity_register_user" />
+    <action
+        android:id="@+id/action_global_registerUserActivity"
+        app:destination="@id/registerUserActivity" />
 </navigation>
