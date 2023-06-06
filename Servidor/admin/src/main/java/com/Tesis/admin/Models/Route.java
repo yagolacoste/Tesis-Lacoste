@@ -33,8 +33,9 @@ public class Route implements Serializable {
     @Column(name = "distance")
     private float distance;
 
-    @Column(name = "avgProm")
+    @Column(name = "avg_prom")
     private LocalTime avgProm;
+
     @OneToMany(mappedBy = "route")
     private List<Battle> battles;
 

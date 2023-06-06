@@ -6,6 +6,7 @@ import android.widget.Toast;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.Tesis.bicycle.Activity.ShowPointLocationList;
+import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.StatisticsDto;
 import com.Tesis.bicycle.Presenter.Adapter.StatisticRecyclerViewAdapter;
 import com.Tesis.bicycle.ViewModel.AppUserHasRouteViewModel;
@@ -22,7 +23,8 @@ public class StatisticsListView extends ShowPointLocationList  {
         super.onCreate(savedInstanceState);
 
         appUserHasRouteViewModel=new ViewModelProvider(this).get(AppUserHasRouteViewModel.class);
-
+        String id=getIntent().getStringExtra(Constants.ROUTE_ID);
+        getStatisticByRoute(id);
 
     }
 

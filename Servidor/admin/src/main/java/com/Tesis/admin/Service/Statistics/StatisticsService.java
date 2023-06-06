@@ -52,6 +52,8 @@ public class StatisticsService implements IStatisticsService {
             routeNewRequestDto.setName(statisticsRequestDto.getTitle());
             routeNewRequestDto.setDescription(statisticsRequestDto.getDescription());
             routeNewRequestDto.setCoordinates(statisticsRequestDto.getCoordinates());
+            routeNewRequestDto.setDistance(statisticsRequestDto.getDistance());
+            routeNewRequestDto.setAvgTime(statisticsRequestDto.getTime());
             routeService.add(routeNewRequestDto);
         }
         //Guarda nuevas estadisticas

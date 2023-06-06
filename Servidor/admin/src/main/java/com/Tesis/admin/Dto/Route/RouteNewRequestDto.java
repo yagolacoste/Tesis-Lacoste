@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.List;
 
 
@@ -17,6 +18,10 @@ public class RouteNewRequestDto implements Serializable {
 
     @JsonProperty("coordinates")
     private List<GeoPoint> coordinates;
+
+    private float distance;
+
+    private LocalTime avgTime;//Preguntar si saco el promedio de alguna fomra?
 
     public String getId() {
         return id;
@@ -57,5 +62,21 @@ public class RouteNewRequestDto implements Serializable {
 
     public void setCoordinates(List<GeoPoint> coordinates) {
         this.coordinates = coordinates;
+    }
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
+    }
+
+    public LocalTime getAvgTime() {
+        return avgTime;
+    }
+
+    public void setAvgTime(LocalTime avgTime) {
+        this.avgTime = avgTime;
     }
 }

@@ -1,6 +1,7 @@
 package com.Tesis.bicycle.Dto.ApiRest;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -9,50 +10,53 @@ import java.util.Date;
 
 public class StatisticsDto implements Serializable {
 
-   private float distance;
+    @JsonProperty("id")
+    private String id;
 
-   private float speed;
+    @JsonProperty("appUser")
+    private Long appUser;
 
-   @JsonFormat(timezone = JsonFormat.DEFAULT_TIMEZONE,pattern = "H:mm:ss")
-   private LocalTime timeSpeed;
+    @JsonProperty("route")
+    private String route;
 
-   private Date timeSession;
+    @JsonProperty("weather")
+    private String weather;
 
-   private String weather;
+    @JsonProperty("avgSpeed")
+    private float avgSpeed;
 
-    public StatisticsDto() {
+    @JsonProperty("time")
+    @JsonFormat(timezone = JsonFormat.DEFAULT_TIMEZONE,pattern = "H:mm:ss")
+    private LocalTime time;
+
+    @JsonProperty("distance")
+    private float distance;
+
+    @JsonProperty("timeCreated")
+    private Date timeCreated;
+
+    public String getId() {
+        return id;
     }
 
-    public float getDistance() {
-        return distance;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setDistance(float distance) {
-        this.distance = distance;
+    public Long getAppUser() {
+        return appUser;
     }
 
-    public float getSpeed() {
-        return speed;
+    public void setAppUser(Long appUser) {
+        this.appUser = appUser;
     }
 
-    public void setSpeed(float speed) {
-        this.speed = speed;
+    public String getRoute() {
+        return route;
     }
 
-    public LocalTime getTimeSpeed() {
-        return timeSpeed;
-    }
-
-    public void setTimeSpeed(LocalTime timeSpeed) {
-        this.timeSpeed = timeSpeed;
-    }
-
-    public Date getTimeSession() {
-        return timeSession;
-    }
-
-    public void setTimeSession(Date timeSession) {
-        this.timeSession = timeSession;
+    public void setRoute(String route) {
+        this.route = route;
     }
 
     public String getWeather() {
@@ -63,14 +67,35 @@ public class StatisticsDto implements Serializable {
         this.weather = weather;
     }
 
-    @Override
-    public String toString() {
-        return "StatisticsDto{" +
-                "distance=" + distance +
-                ", speed=" + speed +
-                ", timeSpeed=" + timeSpeed +
-                ", timeSession=" + timeSession +
-                ", weather='" + weather + '\'' +
-                '}';
+    public float getAvgSpeed() {
+        return avgSpeed;
+    }
+
+    public void setAvgSpeed(float avgSpeed) {
+        this.avgSpeed = avgSpeed;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
+    }
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
+    }
+
+    public Date getTimeCreated() {
+        return timeCreated;
+    }
+
+    public void setTimeCreated(Date timeCreated) {
+        this.timeCreated = timeCreated;
     }
 }

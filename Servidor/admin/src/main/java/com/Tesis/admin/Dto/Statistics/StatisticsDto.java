@@ -3,6 +3,8 @@ package com.Tesis.admin.Dto.Statistics;
 
 
 import com.Tesis.admin.Models.Statistics;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.time.LocalTime;
@@ -10,23 +12,28 @@ import java.util.Date;
 
 public class StatisticsDto implements Serializable {
 
+    @JsonProperty("id")
     private String id;
 
+    @JsonProperty("appUser")
     private Long appUser;
 
+    @JsonProperty("route")
     private String route;
 
+    @JsonProperty("weather")
     private String weather;
 
+    @JsonProperty("avgSpeed")
     private float avgSpeed;
 
-
+    @JsonProperty("time")
     private LocalTime time;
 
-
+    @JsonProperty("distance")
     private float distance;
 
-
+    @JsonProperty("timeCreated")
     private Date timeCreated;
 
     public StatisticsDto() {

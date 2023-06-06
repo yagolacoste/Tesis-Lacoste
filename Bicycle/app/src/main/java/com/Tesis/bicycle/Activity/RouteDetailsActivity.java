@@ -30,6 +30,7 @@ import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,8 +62,10 @@ public class RouteDetailsActivity extends AppCompatActivity {
         openStreetMap.draw(route.getCoordinates());
         title.setText(route.getName());
         description.setText(route.getDescription());
-
+        distance.setText(String.valueOf(route.getAvgDistance()));
+        timeProm.setText(String.valueOf(route.getAvgTime()));
 
     }
+
 
 }

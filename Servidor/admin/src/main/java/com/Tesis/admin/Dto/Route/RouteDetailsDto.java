@@ -1,6 +1,7 @@
 package com.Tesis.admin.Dto.Route;
 
 import com.Tesis.admin.Models.Route;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRawValue;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -14,16 +15,22 @@ import java.util.List;
 
 public class RouteDetailsDto implements Serializable {
 
+    @JsonProperty("id")
     private String id;
 
+    @JsonProperty("name")
     private String name;
 
+    @JsonProperty("description")
     private String description;
 
+    @JsonProperty("coordinates")
     private List<GeoPoint> coordinates;
 
+    @JsonProperty("distance")
     private float avgDistance;
 
+    @JsonProperty("time")
     private LocalTime avgTime;
 
 //    public RouteDetailsDto(String id, String description, String name, String coordinates) {

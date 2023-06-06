@@ -48,9 +48,9 @@ public class StatisticRecyclerViewAdapter extends RecyclerView.Adapter<Statistic
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.distance.setText(String.valueOf(statistics.get(position).getDistance()));
-        holder.speed.setText(String.valueOf(statistics.get(position).getSpeed()));
-        holder.speedTime.setText(String.valueOf(statistics.get(position).getTimeSpeed()));
-        holder.timeSession.setText(String.valueOf(statistics.get(position).getTimeSession()));
+        holder.speed.setText(String.valueOf(statistics.get(position).getAvgSpeed()));
+        holder.speedTime.setText(String.valueOf(statistics.get(position).getTime()));
+        holder.timeSession.setText(String.valueOf(statistics.get(position).getTimeCreated()));
     }
 
     @Override

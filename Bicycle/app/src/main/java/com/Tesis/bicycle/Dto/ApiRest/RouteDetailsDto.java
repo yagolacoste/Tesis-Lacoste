@@ -7,7 +7,9 @@ import com.google.gson.annotations.SerializedName;
 import org.osmdroid.util.GeoPoint;
 
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Locale;
 
 public class RouteDetailsDto implements Serializable {
 
@@ -19,6 +21,10 @@ public class RouteDetailsDto implements Serializable {
     private String name;
 
     private List<GeoPoint> coordinates;
+
+    private float avgDistance;
+
+    private LocalTime avgTime;
 
     public RouteDetailsDto(String id, String description, String name, List<GeoPoint> coordinates) {
         this.id = id;
@@ -58,6 +64,24 @@ public class RouteDetailsDto implements Serializable {
     public void setCoordinates(List<GeoPoint> coordinates) {
         this.coordinates = coordinates;
     }
+
+    public float getAvgDistance() {
+        return avgDistance;
+    }
+
+    public void setAvgDistance(float avgDistance) {
+        this.avgDistance = avgDistance;
+    }
+
+    public LocalTime getAvgTime() {
+        return avgTime;
+    }
+
+    public void setAvgTime(LocalTime avgTime) {
+        this.avgTime = avgTime;
+    }
+
+
 
     @Override
     public String toString() {
