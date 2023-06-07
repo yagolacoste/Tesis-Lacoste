@@ -1,5 +1,7 @@
 package com.Tesis.admin.Dto.Battle;
 
+import com.Tesis.admin.Dto.Statistics.StatisticsDto;
+import com.Tesis.admin.Dto.Statistics.StatisticsRequestDto;
 import com.Tesis.admin.Models.Battle;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -8,6 +10,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
+
 
 public class BattleDto implements Serializable {
 
@@ -26,6 +30,9 @@ public class BattleDto implements Serializable {
 
     @JsonProperty("cantParticipant")
     private Integer cantParticipant;
+
+    @JsonProperty("ranking")
+    List<StatisticsDto> ranking;
 
     public BattleDto() {
     }
@@ -77,5 +84,19 @@ public class BattleDto implements Serializable {
 
     public void setCantParticipant(Integer cantParticipant) {
         this.cantParticipant = cantParticipant;
+    }
+
+
+
+    public List<StatisticsDto> getRanking() {
+
+        return ranking;
+    }
+
+
+
+    public void setRanking(List<StatisticsDto> ranking) {
+
+        this.ranking = ranking;
     }
 }

@@ -2,6 +2,8 @@ package com.Tesis.bicycle;
 
 import android.content.Context;
 
+import org.osmdroid.util.GeoPoint;
+
 public class Constants {
 
    public static final int REQUEST_CODE=1;
@@ -19,6 +21,8 @@ public class Constants {
    public static final String ACTION_REPLAY_MY_ROUTES="replay_my_routes";
    public static final String VIEW_STATISTICS="view_statistics";
 
+   public static GeoPoint LOCATION_INITIAL=new GeoPoint(-37.32345,-59.12558);
+
 
 
 
@@ -34,5 +38,9 @@ public class Constants {
    /////////////////////Constants defined for User/////////////////////////
    public static final String USER_ITEM="User_item";
    public static final String USER_SELECT="User_item";
+
+
+   //////////////////Constants defined for battle///////////////////
+   public final static String BATTLE_ITEM="Battle";
 
 }

@@ -14,4 +14,6 @@ public interface IBattleService {
     public void addBattle(NewBattleDto battleDto);
 
     List<BattleDto> getBattlesByUser(Long id);
+
+  BattleDto getRanking(Long id);
 }

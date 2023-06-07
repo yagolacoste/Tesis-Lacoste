@@ -3,6 +3,8 @@ package com.Tesis.admin.Service.Battle;
 import com.Tesis.admin.Controller.Exception.TypeExceptions.NotFoundException;
 import com.Tesis.admin.Dto.Battle.BattleDto;
 import com.Tesis.admin.Dto.Battle.NewBattleDto;
+import com.Tesis.admin.Dto.Statistics.StatisticsDto;
+import com.Tesis.admin.Dto.Statistics.StatisticsRequestDto;
 import com.Tesis.admin.Exception.ErrorCodes;
 import com.Tesis.admin.Models.*;
 import com.Tesis.admin.Repository.*;
@@ -85,4 +87,13 @@ public class BattleService implements IBattleService{
             return  result;
        return new ArrayList<>();
     }
+
+
+
+  @Override public BattleDto getRanking(Long id) {
+      BattleDto battleDto=this.getById(id);
+      List<StatisticsDto> ranking=this.battleParticipationRepository.getRanking(id);
+      battleDto.setRanking(ranking);
+      return battleDto;
+  }
 }

@@ -1,6 +1,7 @@
 package com.Tesis.admin.Repository;
 
 import com.Tesis.admin.Dto.Battle.BattleDto;
+import com.Tesis.admin.Dto.Statistics.StatisticsDto;
 import com.Tesis.admin.Models.Battle;
 import com.Tesis.admin.Models.BattleParticipation;
 import com.Tesis.admin.Models.BattleParticipationId;
@@ -15,4 +16,7 @@ public interface IBattleParticipationRepository extends JpaRepository<BattlePart
     @Query("SELECT DISTINCT b " +
             "from Battle b inner join BattleParticipation bp on (b.idBattle=bp.id.battleId) where bp.id.appuserId =:id")
     List<Battle> findByBattlesByUser(Long id);
+
+    @Query("select new com.Tesis.admin.Dto.Statistics.StatisticsDto(s) from BattleParticipation bp inner join Statistics s on bp.statistics.id=s.id where bp.id.battleId=:id")
+    List<StatisticsDto> getRanking(Long id);
 }

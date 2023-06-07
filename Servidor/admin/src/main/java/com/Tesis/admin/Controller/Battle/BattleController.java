@@ -31,4 +31,11 @@ public class BattleController implements IBattleController{
         battleService.addBattle(battle);
     }
 
+
+
+    @Override public BattleDto getRanking(Long id) {
+
+        return battleService.getRanking(id);
+    }
+
 }

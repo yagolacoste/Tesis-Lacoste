@@ -25,6 +25,9 @@ public interface IBattleController {
     @PostMapping(path = {""},consumes = MediaType.APPLICATION_JSON_VALUE)
     void addBattle(@RequestBody NewBattleDto battle);
 
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(path={"/ranking"},produces = MediaType.APPLICATION_JSON_VALUE)
+    public BattleDto getRanking(@RequestParam(value = "id")Long id);
 
 
 }

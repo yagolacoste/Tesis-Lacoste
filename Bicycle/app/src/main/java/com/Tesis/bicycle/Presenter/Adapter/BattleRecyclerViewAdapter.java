@@ -1,5 +1,6 @@
 package com.Tesis.bicycle.Presenter.Adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.Tesis.bicycle.Activity.BattleInformationActivity;
+import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.Battle.BattleDto;
 import com.Tesis.bicycle.Dto.ApiRest.Battle.NewBattleDto;
+import com.Tesis.bicycle.Presenter.ListView.StatisticsListViewViewActivity;
 import com.Tesis.bicycle.R;
 
 import java.util.List;
@@ -32,10 +36,11 @@ public class BattleRecyclerViewAdapter extends RecyclerView.Adapter<BattleRecycl
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BattleRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.txtValueNameRoute.setText(String.valueOf(battles.get(position).getRouteName()));
         holder.txtValueCompleteDate.setText(String.valueOf(battles.get(position).getCompleteDate()));
         holder.txtValueCantParticipant.setText(String.valueOf(battles.get(position).getCantParticipant()));
+        holder.battleDto=battles.get(position);
     }
 
     @Override
@@ -49,16 +54,22 @@ public class BattleRecyclerViewAdapter extends RecyclerView.Adapter<BattleRecycl
         private Button btn_Information;
         private View rootView;
 
+        private BattleDto battleDto;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtValueNameRoute=(TextView) itemView.findViewById(R.id.txtValueNameRoute);
             txtValueCompleteDate=(TextView) itemView.findViewById(R.id.txtValueCompleteDate);
             txtValueCantParticipant=itemView.findViewById(R.id.txtValueCantParticipant);
-//            btn_Information=itemView.findViewById(R.id.btn_Information);
-//            btn_Information.setOnClickListener(view -> {
-//
-//            });
+            btn_Information=itemView.findViewById(R.id.btn_Information);
+
+            rootView=itemView;
+
+            btn_Information.setOnClickListener(view -> {
+                Intent intent=new Intent(rootView.getContext(), BattleInformationActivity.class);
+                intent.putExtra(Constants.BATTLE_ITEM,battleDto);
+                rootView.getContext().startActivity(intent);
+            });
         }
     }
 }

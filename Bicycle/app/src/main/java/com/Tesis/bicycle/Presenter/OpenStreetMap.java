@@ -41,11 +41,8 @@ public class OpenStreetMap {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
-//        myOpenMapView=(MapView) ctx.findViewById(R.id.v_map);
         startMarker=new Marker(myOpenMapView);
         startMarker.setIcon(ctx.getResources().getDrawable(R.drawable.ic_bicycle));
-        //Seteo de mapa en tandil statico
-//        GeoPoint tandil=new GeoPoint(location.getLatitude(),location.getLongitude());
         startMarker.setPosition(location);
         myOpenMapView.setTileSource(TileSourceFactory.MAPNIK);
         myOpenMapView.setBuiltInZoomControls(true);
@@ -57,12 +54,12 @@ public class OpenStreetMap {
         mRotationGestureOverlay.setEnabled(true);
         myOpenMapView.setMultiTouchControls(true);
         myOpenMapView.getOverlays().add(mRotationGestureOverlay);
-//        myOpenMapView.getOverlays().add(startMarker);
         this.mCompassOverlay = new CompassOverlay(ctx, new InternalCompassOrientationProvider(ctx), myOpenMapView);
         this.mCompassOverlay.enableCompass();
         myOpenMapView.getOverlays().add(this.mCompassOverlay);
         myOpenMapView.invalidate();
     }
+
 
     public  void updatePosition(Location location){
         GeoPoint point=new GeoPoint(location.getLatitude(),location.getLongitude());

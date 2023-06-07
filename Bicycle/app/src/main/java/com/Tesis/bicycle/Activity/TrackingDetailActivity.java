@@ -59,6 +59,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             locationBinder= (GPSService.LocationBinder) iBinder;
+            openStreetMap.initLayer(TrackingDetailActivity.this,locationBinder.getGeoPoints().get(0));//Probar el delay sino volver a lo viejo
             updateUI();
             if(locationBinder.getTitle().equals("")){
                 inputNameAndDescription();
@@ -106,7 +107,6 @@ public class TrackingDetailActivity extends AppCompatActivity {
         btn_discard=findViewById(R.id.btn_discard);
         myOpenMapView=findViewById(R.id.v_map);
         openStreetMap=new OpenStreetMap(myOpenMapView);
-        this.initLayer(this);
         Intent intent = new Intent(this, GPSService.class);
         getApplicationContext().bindService(intent, lsc, Context.BIND_ABOVE_CLIENT);
         btn_save.setOnClickListener(view -> {
@@ -172,49 +172,48 @@ public class TrackingDetailActivity extends AppCompatActivity {
         myDialog.show();
     }
 
-    private void drawRoute(List<GeoPoint> routes) {
-        Marker startMarker=new Marker(myOpenMapView);
-        startMarker.setPosition(routes.get(0));
-
-        myOpenMapView.getOverlays().add(startMarker);
-        RoadManager roadManager=new OSRMRoadManager(TrackingDetailActivity.this,"OBP_Tuto/1.0");
-        ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
-        Road road=roadManager.getRoad((ArrayList<GeoPoint>) routes);
-//        Polyline roadOverlay=new Polyline();
-//        roadOverlay.setWidth(20f);
-        Polyline roadOverlay=RoadManager.buildRoadOverlay(road, 0x800000FF, 25.0f);
-
-
-        // Polyline roadOverlay=RoadManager.buildRoadOverlay(road).setWidth(2.0f);
-        myOpenMapView.getOverlays().add(roadOverlay);
-        Marker endMarker=new Marker(myOpenMapView);
-        endMarker.setPosition(routes.get(routes.size()-1));
-
-        myOpenMapView.getOverlays().add(endMarker);
-
-        myOpenMapView.invalidate();
-    }
-
-    //Init osmodroid map with position
-    private void initLayer(Context ctx) {
-        //Seteo de mapa en tandil statico
-        GeoPoint tandil=new GeoPoint(-37.32359319563445,-59.12548631254784);
-        myOpenMapView.setTileSource(TileSourceFactory.MAPNIK);
-        myOpenMapView.setBuiltInZoomControls(true);
-        myOpenMapView.setMultiTouchControls(true);
-        IMapController mapController=myOpenMapView.getController();
-        mapController.setZoom(12);
-        mapController.setCenter(tandil);
-        RotationGestureOverlay mRotationGestureOverlay = new RotationGestureOverlay(ctx, myOpenMapView);
-        mRotationGestureOverlay.setEnabled(true);
-        myOpenMapView.setMultiTouchControls(true);
-        myOpenMapView.getOverlays().add(mRotationGestureOverlay);
-        this.mCompassOverlay = new CompassOverlay(this, new InternalCompassOrientationProvider(this), myOpenMapView);
-        this.mCompassOverlay.enableCompass();
-        myOpenMapView.getOverlays().add(this.mCompassOverlay);
-        myOpenMapView.invalidate();
-
-    }
+//    private void drawRoute(List<GeoPoint> routes) {
+//        Marker startMarker=new Marker(myOpenMapView);
+//        startMarker.setPosition(routes.get(0));
+//
+//        myOpenMapView.getOverlays().add(startMarker);
+//        RoadManager roadManager=new OSRMRoadManager(TrackingDetailActivity.this,"OBP_Tuto/1.0");
+//        ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
+//        Road road=roadManager.getRoad((ArrayList<GeoPoint>) routes);
+////        Polyline roadOverlay=new Polyline();
+////        roadOverlay.setWidth(20f);
+//        Polyline roadOverlay=RoadManager.buildRoadOverlay(road, 0x800000FF, 25.0f);
+//
+//
+//        // Polyline roadOverlay=RoadManager.buildRoadOverlay(road).setWidth(2.0f);
+//        myOpenMapView.getOverlays().add(roadOverlay);
+//        Marker endMarker=new Marker(myOpenMapView);
+//        endMarker.setPosition(routes.get(routes.size()-1));
+//
+//        myOpenMapView.getOverlays().add(endMarker);
+//
+//        myOpenMapView.invalidate();
+//    }
+//
+//    private void initLayer(Context ctx) {
+//        //Seteo de mapa en tandil statico
+//        GeoPoint tandil=new GeoPoint(-37.32359319563445,-59.12548631254784);
+//        myOpenMapView.setTileSource(TileSourceFactory.MAPNIK);
+//        myOpenMapView.setBuiltInZoomControls(true);
+//        myOpenMapView.setMultiTouchControls(true);
+//        IMapController mapController=myOpenMapView.getController();
+//        mapController.setZoom(15);
+//        mapController.setCenter(tandil);
+//        RotationGestureOverlay mRotationGestureOverlay = new RotationGestureOverlay(ctx, myOpenMapView);
+//        mRotationGestureOverlay.setEnabled(true);
+//        myOpenMapView.setMultiTouchControls(true);
+//        myOpenMapView.getOverlays().add(mRotationGestureOverlay);
+//        this.mCompassOverlay = new CompassOverlay(this, new InternalCompassOrientationProvider(this), myOpenMapView);
+//        this.mCompassOverlay.enableCompass();
+//        myOpenMapView.getOverlays().add(this.mCompassOverlay);
+//        myOpenMapView.invalidate();
+//
+//    }
 
 
 }

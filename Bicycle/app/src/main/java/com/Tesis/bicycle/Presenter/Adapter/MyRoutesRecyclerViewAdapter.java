@@ -75,7 +75,7 @@ public class MyRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyRoutesRe
         public void bind(RouteDetailsDto route) {
             txtValueNameRoute.setText(route.getName());
             txtValueDescription.setText(route.getDescription());
-            txtValueDistance.setText("0");//ver distancia
+            txtValueDistance.setText(String.valueOf(route.getAvgDistance()));
         }
     }
 }

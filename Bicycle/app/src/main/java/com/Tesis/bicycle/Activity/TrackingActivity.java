@@ -93,7 +93,7 @@ public class TrackingActivity extends Activity  {
 
     private LocationCallback locationCallback;
 
-    private static GeoPoint location=new GeoPoint(-37.32345,-59.12558);
+
 
 
     Handler updateTimeHandler = new Handler();
@@ -183,7 +183,7 @@ public class TrackingActivity extends Activity  {
                 AlertNoGps();
             }
             openStreetMap=new OpenStreetMap(myOpenMapView);
-            openStreetMap.initLayer(TrackingActivity.this, location);
+            openStreetMap.initLayer(TrackingActivity.this, Constants.LOCATION_INITIAL);
             updateLastLocation();////////////////preguntar si me conviene actualizar posiicon o no
 
 
