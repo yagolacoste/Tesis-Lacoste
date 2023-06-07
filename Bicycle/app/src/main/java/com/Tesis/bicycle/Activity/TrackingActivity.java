@@ -191,7 +191,7 @@ public class TrackingActivity extends Activity  {
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //stopLocationUpdates();
+                stopLocationUpdates();
                 openStreetMap.removeMarker();
                 startLocationService();
                 btn_start.setEnabled(false);
@@ -244,7 +244,7 @@ public class TrackingActivity extends Activity  {
                     if (location != null) {
                             openStreetMap.updatePosition(location);
         //                    openStreetMap.removeMarker();
-                            stopLocationUpdates();
+                            //stopLocationUpdates();
                             return;
                     }
                 }

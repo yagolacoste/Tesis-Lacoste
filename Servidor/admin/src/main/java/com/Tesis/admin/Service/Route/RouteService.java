@@ -45,6 +45,8 @@ public class RouteService implements IRouteService{
         routeReal.setId(route.getId());
         routeReal.setDescription(route.getDescription());
         routeReal.setName(route.getName());
+        routeReal.setDistance(route.getDistance());
+        routeReal.setAvgProm(route.getAvgTime());
        // List<GeoPoint>points=route.getCoordinates().stream(r->new GeoPoint(r)).collect(Collectors.toList());
        List<GeoPoint> geoPoints= route.getCoordinates();
 

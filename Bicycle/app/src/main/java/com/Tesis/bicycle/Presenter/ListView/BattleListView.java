@@ -1,4 +1,4 @@
-package com.Tesis.bicycle.Activity;
+package com.Tesis.bicycle.Presenter.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.Tesis.bicycle.Activity.NewBattleActivity;
 import com.Tesis.bicycle.Dto.ApiRest.Battle.BattleDto;
 import com.Tesis.bicycle.Presenter.Adapter.BattleRecyclerViewAdapter;
 import com.Tesis.bicycle.R;
@@ -20,7 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.io.IOException;
 import java.util.List;
 
-public class ListBattleActivity extends AppCompatActivity {
+public class BattleListView extends AppCompatActivity {
 
     private BattleRecyclerViewAdapter battleRecyclerViewAdapter;
     private RecyclerView recyclerView;
@@ -61,7 +62,7 @@ public class ListBattleActivity extends AppCompatActivity {
         floatingactionbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(view.getContext(),NewBattleActivity.class);
+                Intent i=new Intent(view.getContext(), NewBattleActivity.class);
                 startActivity(i);
             }
         });

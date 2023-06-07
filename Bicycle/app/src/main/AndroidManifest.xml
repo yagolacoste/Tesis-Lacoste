@@ -63,7 +63,7 @@
             android:name=".Activity.StatisticActivity"
             android:exported="true" />
         <activity
-            android:name=".Activity.ShowPointLocationList"
+            android:name=".Activity.ListViewActivity"
             android:exported="true" />
         <activity
             android:name=".Activity.TrackingActivity"
@@ -78,16 +78,16 @@
             android:name=".Activity.RegisterUserActivity"
             android:exported="true" />
         <activity
-            android:name=".Activity.ListBattleActivity"
+            android:name=".Presenter.ListView.ListBattleActivity"
             android:exported="true" />
         <activity
-            android:name=".Presenter.ListView.RouteListView"
+            android:name=".Presenter.ListView.RouteListViewViewActivity"
             android:exported="true" />
         <activity
-            android:name=".Presenter.ListView.StatisticsListView"
+            android:name=".Presenter.ListView.StatisticsListViewViewActivity"
             android:exported="true" />
         <activity
-            android:name=".Presenter.ListView.UserListView"
+            android:name=".Presenter.ListView.UserListViewViewActivity"
             android:exported="true" />
     </application>
 

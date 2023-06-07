@@ -70,7 +70,7 @@ public class OpenStreetMap {
         startMarker.setAnchor(Marker.ANCHOR_RIGHT,Marker.ANCHOR_BOTTOM);
         myOpenMapView.getOverlays().add((myOpenMapView.getOverlays().size()-1),startMarker);
         IMapController mapController=myOpenMapView.getController();
-//        mapController.setZoom(19);
+        mapController.setZoom(19);
         mapController.setCenter(point);
         myOpenMapView.invalidate();
     }

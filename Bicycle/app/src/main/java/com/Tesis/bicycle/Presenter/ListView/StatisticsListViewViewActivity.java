@@ -5,7 +5,7 @@ import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import com.Tesis.bicycle.Activity.ShowPointLocationList;
+import com.Tesis.bicycle.Activity.ListViewActivity;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.StatisticsDto;
 import com.Tesis.bicycle.Presenter.Adapter.StatisticRecyclerViewAdapter;
@@ -13,7 +13,7 @@ import com.Tesis.bicycle.ViewModel.AppUserHasRouteViewModel;
 
 import java.util.List;
 
-public class StatisticsListView extends ShowPointLocationList  {
+public class StatisticsListViewViewActivity extends ListViewActivity {
     List<StatisticsDto> statistics;
     private StatisticRecyclerViewAdapter adaptorStatistics;
     private AppUserHasRouteViewModel appUserHasRouteViewModel;

@@ -11,11 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Tesis.bicycle.Activity.RouteDetailsActivity;
-import com.Tesis.bicycle.Activity.ShowPointLocationList;
 import com.Tesis.bicycle.Activity.TrackingActivity;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
-import com.Tesis.bicycle.Presenter.ListView.StatisticsListView;
+import com.Tesis.bicycle.Presenter.ListView.StatisticsListViewViewActivity;
 import com.Tesis.bicycle.R;
 
 import java.util.List;
@@ -83,7 +82,7 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
             statistics.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent=new Intent(rootView.getContext(), StatisticsListView.class);
+                    Intent intent=new Intent(rootView.getContext(), StatisticsListViewViewActivity.class);
                     intent.setAction(Constants.VIEW_STATISTICS);
                     intent.putExtra(Constants.ROUTE_ID,route.getId());
                     rootView.getContext().startActivity(intent);

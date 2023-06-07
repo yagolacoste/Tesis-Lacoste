@@ -5,7 +5,7 @@
     android:id="@+id/lv_showLocation"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.ShowPointLocationList">
+    tools:context=".Activity.ListViewActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lv_showLocations"

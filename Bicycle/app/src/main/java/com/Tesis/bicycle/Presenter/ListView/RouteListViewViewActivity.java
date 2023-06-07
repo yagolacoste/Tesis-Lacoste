@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import com.Tesis.bicycle.Activity.ShowPointLocationList;
+import com.Tesis.bicycle.Activity.ListViewActivity;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Presenter.Adapter.MyRoutesRecyclerViewAdapter;
@@ -16,7 +16,7 @@ import com.Tesis.bicycle.ViewModel.AppUserHasRouteViewModel;
 
 import java.util.List;
 
-public class RouteListView extends ShowPointLocationList  implements MyRoutesRecyclerViewAdapter.OnItemClickListener{
+public class RouteListViewViewActivity extends ListViewActivity implements MyRoutesRecyclerViewAdapter.OnItemClickListener{
 
     List<RouteDetailsDto> routes;
     private RouteRecyclerViewAdapter adaptorRoute;

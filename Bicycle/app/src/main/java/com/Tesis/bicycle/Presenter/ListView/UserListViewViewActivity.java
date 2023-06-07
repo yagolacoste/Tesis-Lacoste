@@ -7,18 +7,15 @@ import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import com.Tesis.bicycle.Activity.ShowPointLocationList;
+import com.Tesis.bicycle.Activity.ListViewActivity;
 import com.Tesis.bicycle.Constants;
-import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Dto.ApiRest.UserAppDto;
-import com.Tesis.bicycle.Presenter.Adapter.MyRoutesRecyclerViewAdapter;
-import com.Tesis.bicycle.Presenter.Adapter.StatisticRecyclerViewAdapter;
 import com.Tesis.bicycle.Presenter.Adapter.UserRecyclerViewAdapter;
 import com.Tesis.bicycle.ViewModel.UserViewModel;
 
 import java.util.List;
 
-public class UserListView extends ShowPointLocationList implements UserRecyclerViewAdapter.OnItemClickListener{
+public class UserListViewViewActivity extends ListViewActivity implements UserRecyclerViewAdapter.OnItemClickListener{
 
     private List<UserAppDto> friends;
 

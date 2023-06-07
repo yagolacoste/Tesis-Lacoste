@@ -4,20 +4,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.icu.util.LocaleData;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,8 +21,8 @@ import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.Battle.NewBattleDto;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Dto.ApiRest.UserAppDto;
-import com.Tesis.bicycle.Presenter.ListView.RouteListView;
-import com.Tesis.bicycle.Presenter.ListView.UserListView;
+import com.Tesis.bicycle.Presenter.ListView.RouteListViewViewActivity;
+import com.Tesis.bicycle.Presenter.ListView.UserListViewViewActivity;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
 import com.Tesis.bicycle.ViewModel.BattleViewModel;
@@ -35,7 +31,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -80,7 +75,7 @@ public class NewBattleActivity extends AppCompatActivity {
         btnSelectRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(view.getContext(), RouteListView.class);
+                Intent i=new Intent(view.getContext(), RouteListViewViewActivity.class);
                 i.setAction(Constants.ACTION_VIEW_MY_ROUTES);
                 startActivityForResult(i,Constants.REQUEST_CODE);
             }
@@ -101,7 +96,7 @@ public class NewBattleActivity extends AppCompatActivity {
         btnAddUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(view.getContext(), UserListView.class);
+                Intent i=new Intent(view.getContext(), UserListViewViewActivity.class);
                 startActivityForResult(i,Constants.REQUEST_CODE);
             }
         });

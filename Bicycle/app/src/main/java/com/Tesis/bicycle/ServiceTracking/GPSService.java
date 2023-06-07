@@ -88,9 +88,12 @@ public class GPSService extends Service {
                 @Override
                 public void onLocationResult(@NonNull LocationResult locationResult) {
                     super.onLocationResult(locationResult);
+                    if (locationResult == null) {
+                        return;
+                    }
                     if (locationResult != null ) {
-//                        for(Location location:locationResult.getLastLocation())
-                            tracking.addTracking(locationResult.getLastLocation());
+                       for(Location location:locationResult.getLocations())
+                            tracking.addTracking(location);
                     }
                 }
             };
