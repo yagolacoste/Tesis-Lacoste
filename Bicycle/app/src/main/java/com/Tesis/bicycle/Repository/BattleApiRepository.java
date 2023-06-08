@@ -54,7 +54,7 @@ public class BattleApiRepository {
         return mld;
     }
 
-    public LiveData<BattleDto> getById(Long id) throws IOException {
+    public LiveData<BattleDto> getById(Long id) {
         final MutableLiveData<BattleDto> mld=new MutableLiveData<>();
         battleApiService.getById(id).enqueue(new Callback<BattleDto>() {
             @Override
@@ -88,5 +88,6 @@ public class BattleApiRepository {
 
         return mld;
     }
+
 
 }

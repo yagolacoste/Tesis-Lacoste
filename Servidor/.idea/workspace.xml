@@ -5,14 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7729f06-1757-4dfa-ac9d-78d48a9c1c01" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Bicycle/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/BattleInformationActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/MenuActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/MenuActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/NewBattleActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/NewBattleActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/TrackingDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/TrackingDetailActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Dto/ApiRest/StatisticsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Dto/ApiRest/StatisticsDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Adapter/BattleRecyclerViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Adapter/BattleRecyclerViewAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Adapter/RankingViewAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Adapter/RouteRecyclerViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Adapter/RouteRecyclerViewAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ListView/RouteListViewViewActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ListView/RouteListViewActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ListView/StatisticsListViewViewActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ListView/StatisticsListViewActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ListView/UserListViewViewActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ListView/UserListViewActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/AppUserHasRouteApiRestRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/StatisticsApiRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/ViewModel/AppUserHasRouteViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/ViewModel/StatisticsViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/res/layout/activity_battle_information.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Controller/Battle/BattleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Controller/Battle/BattleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Controller/Battle/IBattleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Controller/Battle/IBattleController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Battle/BattleDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Battle/BattleDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Repository/IBattleParticipationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Repository/IBattleParticipationRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Battle/BattleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Battle/BattleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Battle/IBattleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Battle/IBattleService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +93,7 @@
       <recent name="C:\Users\yago_\OneDrive\Escritorio\Tesis\Tesis-Lacoste\Servidor\admin\src\main\java\com\Tesis\admin" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.AdminApplication">
+  <component name="RunManager" selected="Application.GatewayApplication">
     <configuration name="AdminApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.Tesis.admin.AdminApplication" />
       <module name="admin" />
@@ -143,9 +154,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.AdminApplication" />
         <item itemvalue="Application.GatewayApplication" />
         <item itemvalue="Application.AuthApplication" />
+        <item itemvalue="Application.AdminApplication" />
         <item itemvalue="Application.DiscoveryApplication" />
       </list>
     </recent_temporary>

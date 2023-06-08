@@ -17,19 +17,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AppUserHasRouteApiRestRepository {
+public class StatisticsApiRepository {
 
-    private static AppUserHasRouteApiRestRepository repository;
+    private static StatisticsApiRepository repository;
     private final AppUserHasRouteApiService appUserHasRouteApiRestService;
 
 
-    public AppUserHasRouteApiRestRepository(Context context) {
+    public StatisticsApiRepository(Context context) {
         this.appUserHasRouteApiRestService = ApiRestConnection.getServiceAppUserHasRoute(context);
     }
 
-    public static AppUserHasRouteApiRestRepository getInstance(Context context){
+    public static StatisticsApiRepository getInstance(Context context){
         if(repository==null){
-            repository=new AppUserHasRouteApiRestRepository(context);
+            repository=new StatisticsApiRepository(context);
         }
         return repository;
     }

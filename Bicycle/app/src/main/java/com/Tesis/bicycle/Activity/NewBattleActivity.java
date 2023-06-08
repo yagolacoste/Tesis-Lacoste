@@ -21,8 +21,8 @@ import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.Battle.NewBattleDto;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Dto.ApiRest.UserAppDto;
-import com.Tesis.bicycle.Presenter.ListView.RouteListViewViewActivity;
-import com.Tesis.bicycle.Presenter.ListView.UserListViewViewActivity;
+import com.Tesis.bicycle.Presenter.ListView.RouteListViewActivity;
+import com.Tesis.bicycle.Presenter.ListView.UserListViewActivity;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
 import com.Tesis.bicycle.ViewModel.BattleViewModel;
@@ -75,7 +75,7 @@ public class NewBattleActivity extends AppCompatActivity {
         btnSelectRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(view.getContext(), RouteListViewViewActivity.class);
+                Intent i=new Intent(view.getContext(), RouteListViewActivity.class);
                 i.setAction(Constants.ACTION_VIEW_MY_ROUTES);
                 startActivityForResult(i,Constants.REQUEST_CODE);
             }
@@ -96,7 +96,7 @@ public class NewBattleActivity extends AppCompatActivity {
         btnAddUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(view.getContext(), UserListViewViewActivity.class);
+                Intent i=new Intent(view.getContext(), UserListViewActivity.class);
                 startActivityForResult(i,Constants.REQUEST_CODE);
             }
         });

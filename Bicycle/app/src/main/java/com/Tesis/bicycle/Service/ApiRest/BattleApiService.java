@@ -22,4 +22,5 @@ public interface BattleApiService {
     @POST("./")
     Call<Void> addBattle(@Body NewBattleDto battleDto);
 
+
 }

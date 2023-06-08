@@ -1,11 +1,14 @@
 package com.Tesis.bicycle.Dto.ApiRest.Battle;
 
+import com.Tesis.bicycle.Dto.ApiRest.StatisticsDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 public class BattleDto implements Serializable {
 
@@ -23,6 +26,10 @@ public class BattleDto implements Serializable {
 
     @JsonProperty("cantParticipant")
     private Integer cantParticipant;
+
+    @SerializedName("ranking")
+    //@JsonProperty("ranking")
+    List<StatisticsDto> ranking;
 
     public BattleDto() {
     }
@@ -66,5 +73,13 @@ public class BattleDto implements Serializable {
 
     public void setCantParticipant(Integer cantParticipant) {
         this.cantParticipant = cantParticipant;
+    }
+
+    public List<StatisticsDto> getRanking() {
+        return ranking;
+    }
+
+    public void setRanking(List<StatisticsDto> ranking) {
+        this.ranking = ranking;
     }
 }

@@ -3,6 +3,7 @@ package com.Tesis.admin.Dto.Battle;
 import com.Tesis.admin.Dto.Statistics.StatisticsDto;
 import com.Tesis.admin.Dto.Statistics.StatisticsRequestDto;
 import com.Tesis.admin.Models.Battle;
+import com.Tesis.admin.Models.Statistics;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Column;

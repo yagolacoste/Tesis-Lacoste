@@ -27,11 +27,12 @@ public class BattleViewModel extends AndroidViewModel {
         return repository.getBattles();
     }
 
-    public LiveData<BattleDto> getById(Long id) throws IOException {
+    public LiveData<BattleDto> getById(Long id) {
         return repository.getById(id);
     }
 
     public LiveData<Void> addBattle(NewBattleDto battleDto) throws IOException {
        return repository.addBattle(battleDto);
     }
+
 }

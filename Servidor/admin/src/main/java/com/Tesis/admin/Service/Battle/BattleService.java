@@ -49,9 +49,11 @@ public class BattleService implements IBattleService{
 
     @Override
     public BattleDto getById(Long id) {
-
-        return battleRepository.findById(id).map(BattleDto::new)
+      List<StatisticsDto> ranking=this.battleParticipationRepository.getRanking(id);
+      BattleDto battleDto= battleRepository.findById(id).map(BattleDto::new)
                 .orElseThrow(()->new NotFoundException("Battle by id not found",ErrorCodes.NOT_FOUND.getCode()));
+      battleDto.setRanking(ranking);
+      return battleDto;
     }
 
     @Override

@@ -12,25 +12,25 @@ import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Presenter.Adapter.MyRoutesRecyclerViewAdapter;
 import com.Tesis.bicycle.Presenter.Adapter.RouteRecyclerViewAdapter;
-import com.Tesis.bicycle.ViewModel.AppUserHasRouteViewModel;
+import com.Tesis.bicycle.ViewModel.StatisticsViewModel;
 
 import java.util.List;
 
-public class RouteListViewViewActivity extends ListViewActivity implements MyRoutesRecyclerViewAdapter.OnItemClickListener{
+public class RouteListViewActivity extends ListViewActivity implements MyRoutesRecyclerViewAdapter.OnItemClickListener{
 
     List<RouteDetailsDto> routes;
     private RouteRecyclerViewAdapter adaptorRoute;
 
     private MyRoutesRecyclerViewAdapter recyclerRoutesDetails;
 
-    private AppUserHasRouteViewModel appUserHasRouteViewModel;
+    private StatisticsViewModel statisticsViewModel;
 
     boolean recyclerViewReplay=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        appUserHasRouteViewModel=new ViewModelProvider(this).get(AppUserHasRouteViewModel.class);
+        statisticsViewModel =new ViewModelProvider(this).get(StatisticsViewModel.class);
         String action=getIntent().getAction();
         if(action!=null&& action.equals(Constants.ACTION_REPLAY_MY_ROUTES)) {
             recyclerViewReplay=true;
@@ -45,7 +45,7 @@ public class RouteListViewViewActivity extends ListViewActivity implements MyRou
     public void getRoutesByUser() {
         accessTokenRoomViewModel.getFirst().observe(this,response->{
             if(response.getAccessToken()!=null){
-                appUserHasRouteViewModel.getRouteById(response.getId()).observe(this,resp->{
+                statisticsViewModel.getRouteById(response.getId()).observe(this, resp->{
                     if(!resp.getRoutes().isEmpty()){
                         routes = resp.getRoutes();
                         if(recyclerViewReplay){

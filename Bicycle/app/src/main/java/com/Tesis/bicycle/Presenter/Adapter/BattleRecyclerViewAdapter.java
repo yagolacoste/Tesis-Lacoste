@@ -10,11 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.Tesis.bicycle.Activity.BattleInformationActivity;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.Battle.BattleDto;
-import com.Tesis.bicycle.Dto.ApiRest.Battle.NewBattleDto;
-import com.Tesis.bicycle.Presenter.ListView.StatisticsListViewViewActivity;
+import com.Tesis.bicycle.Presenter.ListView.RankingListViewActivity;
 import com.Tesis.bicycle.R;
 
 import java.util.List;
@@ -31,7 +29,7 @@ public class BattleRecyclerViewAdapter extends RecyclerView.Adapter<BattleRecycl
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_battle,parent,false);
-        BattleRecyclerViewAdapter.ViewHolder viewHolder=new BattleRecyclerViewAdapter.ViewHolder(view);
+        ViewHolder viewHolder=new ViewHolder(view);
         return viewHolder;
     }
 
@@ -65,11 +63,16 @@ public class BattleRecyclerViewAdapter extends RecyclerView.Adapter<BattleRecycl
 
             rootView=itemView;
 
-            btn_Information.setOnClickListener(view -> {
-                Intent intent=new Intent(rootView.getContext(), BattleInformationActivity.class);
-                intent.putExtra(Constants.BATTLE_ITEM,battleDto);
-                rootView.getContext().startActivity(intent);
+            btn_Information.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(rootView.getContext(), RankingListViewActivity.class);
+                    intent.putSerializableArrayListExtra(Constants.BATTLE_ITEM,battleDto.getRanking());
+                    rootView.getContext().startActivity(intent);
+                }
             });
+
+
         }
     }
 }

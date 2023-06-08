@@ -9,20 +9,20 @@ import com.Tesis.bicycle.Activity.ListViewActivity;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.StatisticsDto;
 import com.Tesis.bicycle.Presenter.Adapter.StatisticRecyclerViewAdapter;
-import com.Tesis.bicycle.ViewModel.AppUserHasRouteViewModel;
+import com.Tesis.bicycle.ViewModel.StatisticsViewModel;
 
 import java.util.List;
 
-public class StatisticsListViewViewActivity extends ListViewActivity {
+public class StatisticsListViewActivity extends ListViewActivity {
     List<StatisticsDto> statistics;
     private StatisticRecyclerViewAdapter adaptorStatistics;
-    private AppUserHasRouteViewModel appUserHasRouteViewModel;
+    private StatisticsViewModel statisticsViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        appUserHasRouteViewModel=new ViewModelProvider(this).get(AppUserHasRouteViewModel.class);
+        statisticsViewModel =new ViewModelProvider(this).get(StatisticsViewModel.class);
         String id=getIntent().getStringExtra(Constants.ROUTE_ID);
         getStatisticByRoute(id);
 
@@ -31,7 +31,7 @@ public class StatisticsListViewViewActivity extends ListViewActivity {
     public void getStatisticByRoute(String routeId){//se va a cambiar cuando haya varios usuarios
         accessTokenRoomViewModel.getFirst().observe(this,response->{
             if(response.getAccessToken()!=null){
-                appUserHasRouteViewModel.getStatisticByRoute(routeId).observe(this,resp->{
+                statisticsViewModel.getStatisticByRoute(routeId).observe(this, resp->{
                     if(!resp.isEmpty()){
                         statistics = resp;
                         adaptorStatistics=new StatisticRecyclerViewAdapter(statistics);

@@ -23,23 +23,10 @@ import com.Tesis.bicycle.Presenter.OpenStreetMap;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ServiceTracking.GPSService;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
-import com.Tesis.bicycle.ViewModel.AppUserHasRouteViewModel;
+import com.Tesis.bicycle.ViewModel.StatisticsViewModel;
 
-import org.osmdroid.api.IMapController;
-import org.osmdroid.bonuspack.routing.OSRMRoadManager;
-import org.osmdroid.bonuspack.routing.Road;
-import org.osmdroid.bonuspack.routing.RoadManager;
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
-import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.Marker;
-import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.compass.CompassOverlay;
-import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
-import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TrackingDetailActivity extends AppCompatActivity {
 
@@ -49,7 +36,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
     private CompassOverlay mCompassOverlay;
     private GPSService.LocationBinder locationBinder=null;
     private AccessTokenRoomViewModel accessTokenRoomViewModel;
-    private AppUserHasRouteViewModel appUserHasRouteViewModel;
+    private StatisticsViewModel statisticsViewModel;
 
     private OpenStreetMap openStreetMap;
 
@@ -93,7 +80,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
     private void InitViewModel() {
         final ViewModelProvider vmp = new ViewModelProvider(this);
         this.accessTokenRoomViewModel=vmp.get(AccessTokenRoomViewModel.class);
-        this.appUserHasRouteViewModel=vmp.get(AppUserHasRouteViewModel.class);
+        this.statisticsViewModel =vmp.get(StatisticsViewModel.class);
     }
 
     private void init(){
@@ -126,7 +113,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
                 else
                     appUserHasRouteApiRest.setRoute(locationBinder.getId());
                 appUserHasRouteApiRest.setCoordinates(locationBinder.getGeoPoints());
-                appUserHasRouteViewModel.addStatistic(appUserHasRouteApiRest).observe(this,resp->{
+                statisticsViewModel.addStatistic(appUserHasRouteApiRest).observe(this, resp->{
                 });
             });
             backToMenuActivity();

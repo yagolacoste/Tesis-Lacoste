@@ -35,6 +35,11 @@ public class StatisticsDto implements Serializable {
     @JsonProperty("timeCreated")
     private Date timeCreated;
 
+    private boolean expandable=false;
+
+    public StatisticsDto() {
+    }
+
     public String getId() {
         return id;
     }
@@ -97,5 +102,13 @@ public class StatisticsDto implements Serializable {
 
     public void setTimeCreated(Date timeCreated) {
         this.timeCreated = timeCreated;
+    }
+
+    public boolean isExpandable() {
+        return expandable;
+    }
+
+    public void setExpandable(boolean expandable) {
+        this.expandable = expandable;
     }
 }

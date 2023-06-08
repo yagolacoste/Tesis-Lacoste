@@ -50,8 +50,8 @@ public class BattleListView extends AppCompatActivity {
                 try {
                     userViewModel.getBattlesByUser(resp.getId()).observe(this,response->{
                         if(response!=null){
-                        battleRecyclerViewAdapter=new BattleRecyclerViewAdapter(response);
-                        recyclerView.setAdapter(battleRecyclerViewAdapter);
+                            battleRecyclerViewAdapter=new BattleRecyclerViewAdapter(response);
+                            recyclerView.setAdapter(battleRecyclerViewAdapter);
                         }
                     });
                 } catch (IOException e) {

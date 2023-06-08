@@ -15,7 +15,7 @@ import com.Tesis.bicycle.ViewModel.UserViewModel;
 
 import java.util.List;
 
-public class UserListViewViewActivity extends ListViewActivity implements UserRecyclerViewAdapter.OnItemClickListener{
+public class UserListViewActivity extends ListViewActivity implements UserRecyclerViewAdapter.OnItemClickListener{
 
     private List<UserAppDto> friends;
 

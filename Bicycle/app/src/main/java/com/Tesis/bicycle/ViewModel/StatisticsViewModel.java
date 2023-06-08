@@ -9,18 +9,17 @@ import androidx.lifecycle.LiveData;
 import com.Tesis.bicycle.Dto.ApiRest.AppUserHasRouteApiRest;
 import com.Tesis.bicycle.Dto.ApiRest.AppUserHasRouteDetailsDto;
 import com.Tesis.bicycle.Dto.ApiRest.StatisticsDto;
-import com.Tesis.bicycle.Dto.ApiRest.auth.request.SignupRequest;
-import com.Tesis.bicycle.Repository.AppUserHasRouteApiRestRepository;
+import com.Tesis.bicycle.Repository.StatisticsApiRepository;
 
 import java.util.List;
 
-public class AppUserHasRouteViewModel extends AndroidViewModel {
-    private final AppUserHasRouteApiRestRepository repository;
+public class StatisticsViewModel extends AndroidViewModel {
+    private final StatisticsApiRepository repository;
 
 
-    public AppUserHasRouteViewModel(@NonNull Application application) {
+    public StatisticsViewModel(@NonNull Application application) {
         super(application);
-        this.repository=AppUserHasRouteApiRestRepository.getInstance(application.getApplicationContext());
+        this.repository= StatisticsApiRepository.getInstance(application.getApplicationContext());
 
     }
 

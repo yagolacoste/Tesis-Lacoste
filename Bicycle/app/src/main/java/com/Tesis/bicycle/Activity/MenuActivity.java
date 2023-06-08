@@ -10,7 +10,7 @@ import android.widget.Button;
 
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Presenter.ListView.BattleListView;
-import com.Tesis.bicycle.Presenter.ListView.RouteListViewViewActivity;
+import com.Tesis.bicycle.Presenter.ListView.RouteListViewActivity;
 import com.Tesis.bicycle.R;
 
 
@@ -43,7 +43,7 @@ public class MenuActivity extends AppCompatActivity {
         btn_showPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(MenuActivity.this, RouteListViewViewActivity.class);
+                Intent i=new Intent(MenuActivity.this, RouteListViewActivity.class);
                 i.setAction(Constants.ACTION_REPLAY_MY_ROUTES);
                 startActivity(i);
             }

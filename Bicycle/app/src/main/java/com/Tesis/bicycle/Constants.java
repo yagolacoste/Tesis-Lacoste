@@ -43,4 +43,6 @@ public class Constants {
    //////////////////Constants defined for battle///////////////////
    public final static String BATTLE_ITEM="Battle";
 
+   public final static String BATTLE_ID="Battle_ID";
+
 }

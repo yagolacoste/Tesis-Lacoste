@@ -25,15 +25,7 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup"
         tools:targetApi="31">
-        <activity
-            android:name=".Activity.BattleInformationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.AddFriendActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.NewBattleActivity"
-            android:exported="false" />
+
         <activity
             android:name=".Activity.LoginActivity"
             android:exported="true"
@@ -84,13 +76,22 @@
             android:name=".Presenter.ListView.BattleListView"
             android:exported="true" />
         <activity
-            android:name=".Presenter.ListView.RouteListViewViewActivity"
+            android:name=".Presenter.ListView.RouteListViewActivity"
             android:exported="true" />
         <activity
-            android:name=".Presenter.ListView.StatisticsListViewViewActivity"
+            android:name=".Presenter.ListView.StatisticsListViewActivity"
             android:exported="true" />
         <activity
-            android:name=".Presenter.ListView.UserListViewViewActivity"
+            android:name=".Presenter.ListView.UserListViewActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activity.AddFriendActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activity.NewBattleActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Presenter.ListView.RankingListViewActivity"
             android:exported="true" />
     </application>
 
