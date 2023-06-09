@@ -85,8 +85,13 @@ public class BattleService implements IBattleService{
     @Override
     public List<BattleDto> getBattlesByUser(Long id) {
        List<BattleDto>result=battleParticipationRepository.findByBattlesByUser(id).stream().map(BattleDto::new).collect(Collectors.toList());
-       if(!result.isEmpty())
-            return  result;
+       if(!result.isEmpty()){
+         for(BattleDto battleDto:result){
+           List<StatisticsDto>ranking=this.battleParticipationRepository.getRanking(battleDto.getIdBattle());
+           battleDto.setRanking(ranking);
+         }
+         return  result;
+       }
        return new ArrayList<>();
     }
 
@@ -97,5 +102,19 @@ public class BattleService implements IBattleService{
       List<StatisticsDto> ranking=this.battleParticipationRepository.getRanking(id);
       battleDto.setRanking(ranking);
       return battleDto;
+  }
+
+
+
+  @Override
+  public void updateBattleParticipation(Long appUserId, Long battleId, String statisticsId) {
+      BattleParticipationId battleParticipationId=new BattleParticipationId();
+      battleParticipationId.setAppuserId(appUserId);
+      battleParticipationId.setBattleId(battleId);
+      BattleParticipation battleParticipation=battleParticipationRepository.findById(battleParticipationId)
+          .orElseThrow(()->new NotFoundException("Battle by id not found",ErrorCodes.NOT_FOUND.getCode()));
+      Statistics statistics=StatisticsRepository.getById(statisticsId);
+    battleParticipation.setStatistics(statistics);
+    battleParticipationRepository.saveAndFlush(battleParticipation);
   }
 }

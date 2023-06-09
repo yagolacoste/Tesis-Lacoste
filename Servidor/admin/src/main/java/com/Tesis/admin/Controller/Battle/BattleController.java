@@ -33,6 +33,13 @@ public class BattleController implements IBattleController{
 
 
 
+    @Override
+    public void updateBattleParticipation(Long appUserId, Long battleId, String statisticsId) {
+        battleService.updateBattleParticipation(appUserId,battleId,statisticsId);
+    }
+
+
+
     @Override public BattleDto getRanking(Long id) {
 
         return battleService.getRanking(id);

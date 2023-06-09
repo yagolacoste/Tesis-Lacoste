@@ -22,24 +22,17 @@ public class RankingListViewActivity extends ListViewActivity {
 
     private RankingAdapter rankingAdapter;
 
-    private BattleViewModel battleViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        battleViewModel =new ViewModelProvider(this).get(BattleViewModel.class);
         BattleDto battleDto= (BattleDto) getIntent().getSerializableExtra(Constants.BATTLE_ITEM);
         getRanking(battleDto);
     }
 
     private void getRanking(BattleDto battleDto) {
-        accessTokenRoomViewModel.getFirst().observe(this,response->{
-            if(response.getAccessToken()!=null){
-                        ranking=battleDto.getRanking();
-                        rankingAdapter=new RankingAdapter(ranking);
-                        recyclerView.setAdapter(rankingAdapter);
-            }
-        });
+        ranking=battleDto.getRanking();
+        rankingAdapter=new RankingAdapter(ranking);
+        recyclerView.setAdapter(rankingAdapter);
     }
 }

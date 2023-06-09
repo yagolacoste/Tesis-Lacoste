@@ -67,7 +67,7 @@ public class BattleRecyclerViewAdapter extends RecyclerView.Adapter<BattleRecycl
                 @Override
                 public void onClick(View v) {
                     Intent intent=new Intent(rootView.getContext(), RankingListViewActivity.class);
-                    intent.putSerializableArrayListExtra(Constants.BATTLE_ITEM,battleDto.getRanking());
+                   intent.putExtra(Constants.BATTLE_ITEM,battleDto);
                     rootView.getContext().startActivity(intent);
                 }
             });

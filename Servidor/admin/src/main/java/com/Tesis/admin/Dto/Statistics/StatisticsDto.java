@@ -10,13 +10,16 @@ import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.Date;
 
-public class StatisticsDto implements Serializable {
+public class StatisticsDto implements Serializable  {
 
     @JsonProperty("id")
     private String id;
 
     @JsonProperty("appUser")
     private Long appUser;
+
+    @JsonProperty("nameComplete")
+    private String nameComplete;
 
     @JsonProperty("route")
     private String route;
@@ -41,6 +44,7 @@ public class StatisticsDto implements Serializable {
 
     public StatisticsDto(Statistics r) {
         this.id=r.getId();
+        this.nameComplete=r.getAppUser().getFirstName()+" "+r.getAppUser().getLastName();
         this.appUser=r.getAppUser().getId();
         this.route=r.getRoute().getId();
         this.weather=r.getWeather();
@@ -113,4 +117,20 @@ public class StatisticsDto implements Serializable {
     public void setTimeCreated(Date timeCreated) {
         this.timeCreated = timeCreated;
     }
+
+
+
+    public String getNameComplete() {
+
+        return nameComplete;
+    }
+
+
+
+    public void setNameComplete(String nameComplete) {
+
+        this.nameComplete = nameComplete;
+    }
+
+
 }

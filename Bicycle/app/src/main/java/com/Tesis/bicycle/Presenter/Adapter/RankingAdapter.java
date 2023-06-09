@@ -35,10 +35,10 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         StatisticsDto statisticsDto=ranking.get(position);
-        holder.userItem.setText(String.valueOf(statisticsDto.getAppUser()));
+        holder.userItem.setText(String.valueOf(statisticsDto.getNameComplete()));
         holder.txtTimeValue.setText(String.valueOf(statisticsDto.getTime()));
-        holder.txtSpeedValue.setText(String.valueOf(statisticsDto.getAvgSpeed()));
-        holder.txtDistValue.setText(String.valueOf(statisticsDto.getDistance()));
+        holder.txtSpeedValue.setText(String.valueOf(statisticsDto.getAvgSpeedString())+"km/h");
+        holder.txtDistValue.setText(String.valueOf(statisticsDto.getDistanceString()));
 
         boolean isExpandable=ranking.get(position).isExpandable();
         holder.expandible_layout.setVisibility(isExpandable ? View.VISIBLE:View.GONE);

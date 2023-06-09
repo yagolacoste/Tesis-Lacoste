@@ -16,6 +16,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Query;
 
 public class BattleApiRepository {
 
@@ -89,5 +90,25 @@ public class BattleApiRepository {
         return mld;
     }
 
+
+    public LiveData<Boolean> updateBattle(Long appuser, Long battleId, String statisticsId){
+        final MutableLiveData<Boolean> mld=new MutableLiveData<>();
+        battleApiService.updateBattleParticipation(appuser, battleId, statisticsId).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()){
+                    mld.setValue(true);
+                }else{
+                    mld.setValue(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
+        return mld;
+    }
 
 }

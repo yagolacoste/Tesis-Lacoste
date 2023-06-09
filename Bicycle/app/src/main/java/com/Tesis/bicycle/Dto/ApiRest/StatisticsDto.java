@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.Locale;
 
 public class StatisticsDto implements Serializable {
 
@@ -15,6 +16,9 @@ public class StatisticsDto implements Serializable {
 
     @JsonProperty("appUser")
     private Long appUser;
+
+    @JsonProperty("nameComplete")
+    private String nameComplete;
 
     @JsonProperty("route")
     private String route;
@@ -111,4 +115,36 @@ public class StatisticsDto implements Serializable {
     public void setExpandable(boolean expandable) {
         this.expandable = expandable;
     }
+
+    public String getNameComplete() {
+        return nameComplete;
+    }
+
+    public void setNameComplete(String nameComplete) {
+        this.nameComplete = nameComplete;
+    }
+
+    public String getDistanceString(){return distanceToString(distance,true);}
+    public static String distanceToString(float distance, boolean b) {
+        int metres = Math.round(distance);
+        int km = metres / 1000;
+        metres = metres % 1000;
+        String format = "%d";//buscar
+
+        if (km == 0) {
+            if (b) {
+                format += "m";
+            }
+            return String.format(Locale.UK, format, metres);
+        }
+
+        metres = metres/10;
+        format = "%d.%02d";
+        if (b) {
+            format += "km";
+        }
+        return String.format(Locale.UK, format, km, metres);
+    }
+
+    public String getAvgSpeedString(){return String.format(Locale.UK, "%.2f", avgSpeed);}
 }

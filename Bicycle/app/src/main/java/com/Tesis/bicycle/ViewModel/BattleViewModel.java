@@ -35,4 +35,8 @@ public class BattleViewModel extends AndroidViewModel {
        return repository.addBattle(battleDto);
     }
 
+    public LiveData<Boolean> updateBattle(Long appuser, Long battleId, String statisticsId){
+        return repository.updateBattle(appuser, battleId, statisticsId);
+    }
+
 }

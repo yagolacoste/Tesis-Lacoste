@@ -130,7 +130,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
     private void backToMenuActivity() {
         Intent i=new Intent(TrackingDetailActivity.this, MenuActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        stopService(new Intent(this,GPSService.class));
+        stopService(new Intent(this,GPSService.class));///Esto puedo ver si ponerlo antes
         startActivity(i);
     }
 
@@ -158,49 +158,6 @@ public class TrackingDetailActivity extends AppCompatActivity {
         });
         myDialog.show();
     }
-
-//    private void drawRoute(List<GeoPoint> routes) {
-//        Marker startMarker=new Marker(myOpenMapView);
-//        startMarker.setPosition(routes.get(0));
-//
-//        myOpenMapView.getOverlays().add(startMarker);
-//        RoadManager roadManager=new OSRMRoadManager(TrackingDetailActivity.this,"OBP_Tuto/1.0");
-//        ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
-//        Road road=roadManager.getRoad((ArrayList<GeoPoint>) routes);
-////        Polyline roadOverlay=new Polyline();
-////        roadOverlay.setWidth(20f);
-//        Polyline roadOverlay=RoadManager.buildRoadOverlay(road, 0x800000FF, 25.0f);
-//
-//
-//        // Polyline roadOverlay=RoadManager.buildRoadOverlay(road).setWidth(2.0f);
-//        myOpenMapView.getOverlays().add(roadOverlay);
-//        Marker endMarker=new Marker(myOpenMapView);
-//        endMarker.setPosition(routes.get(routes.size()-1));
-//
-//        myOpenMapView.getOverlays().add(endMarker);
-//
-//        myOpenMapView.invalidate();
-//    }
-//
-//    private void initLayer(Context ctx) {
-//        //Seteo de mapa en tandil statico
-//        GeoPoint tandil=new GeoPoint(-37.32359319563445,-59.12548631254784);
-//        myOpenMapView.setTileSource(TileSourceFactory.MAPNIK);
-//        myOpenMapView.setBuiltInZoomControls(true);
-//        myOpenMapView.setMultiTouchControls(true);
-//        IMapController mapController=myOpenMapView.getController();
-//        mapController.setZoom(15);
-//        mapController.setCenter(tandil);
-//        RotationGestureOverlay mRotationGestureOverlay = new RotationGestureOverlay(ctx, myOpenMapView);
-//        mRotationGestureOverlay.setEnabled(true);
-//        myOpenMapView.setMultiTouchControls(true);
-//        myOpenMapView.getOverlays().add(mRotationGestureOverlay);
-//        this.mCompassOverlay = new CompassOverlay(this, new InternalCompassOrientationProvider(this), myOpenMapView);
-//        this.mCompassOverlay.enableCompass();
-//        myOpenMapView.getOverlays().add(this.mCompassOverlay);
-//        myOpenMapView.invalidate();
-//
-//    }
 
 
 }

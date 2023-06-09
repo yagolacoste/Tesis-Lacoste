@@ -9,6 +9,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 public interface BattleApiService {
@@ -21,6 +22,9 @@ public interface BattleApiService {
 
     @POST("./")
     Call<Void> addBattle(@Body NewBattleDto battleDto);
+
+    @PUT("./")
+    Call<Void> updateBattleParticipation(@Query("appuser") Long appuser,@Query("battleId") Long battleId,@Query("statisticsId") String statisticsId);
 
 
 }

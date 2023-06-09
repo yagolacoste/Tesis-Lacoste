@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,9 +28,9 @@ public class BattleDto implements Serializable {
     @JsonProperty("cantParticipant")
     private Integer cantParticipant;
 
-    @SerializedName("ranking")
-    //@JsonProperty("ranking")
-    List<StatisticsDto> ranking;
+
+    @JsonProperty("ranking")
+    private List<StatisticsDto> ranking;
 
     public BattleDto() {
     }

@@ -21,9 +21,11 @@ import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.Battle.NewBattleDto;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Dto.ApiRest.UserAppDto;
+import com.Tesis.bicycle.Presenter.ListView.BattleListView;
 import com.Tesis.bicycle.Presenter.ListView.RouteListViewActivity;
 import com.Tesis.bicycle.Presenter.ListView.UserListViewActivity;
 import com.Tesis.bicycle.R;
+import com.Tesis.bicycle.ServiceTracking.GPSService;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
 import com.Tesis.bicycle.ViewModel.BattleViewModel;
 
@@ -144,15 +146,22 @@ public class NewBattleActivity extends AppCompatActivity {
                 try {
                     battleViewModel.addBattle(battleDto).observe(this,response->{
                     });
-                    Intent i=new Intent(this, TrackingActivity.class);
-                    i.setAction(Constants.REPLAY_MY_ROUTE);
-                    i.putExtra(Constants.ROUTE,routeDetailsDto);
-                    startActivity(i);
+//                    Intent i=new Intent(this, TrackingActivity.class);
+//                    i.setAction(Constants.REPLAY_MY_ROUTE);
+//                    i.putExtra(Constants.ROUTE,routeDetailsDto);
+//                    startActivity(i);
+                    BackToList();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
         });
+    }
+
+    private void BackToList() {
+        Intent i=new Intent(NewBattleActivity.this, BattleListView.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
     }
 
 

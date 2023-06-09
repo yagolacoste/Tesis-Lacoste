@@ -94,8 +94,6 @@ public class TrackingActivity extends Activity  {
     private LocationCallback locationCallback;
 
 
-
-
     Handler updateTimeHandler = new Handler();
     Handler updateStatsHandler = new Handler();
 
@@ -215,11 +213,8 @@ public class TrackingActivity extends Activity  {
         if (action != null && action.equals(Constants.REPLAY_MY_ROUTE)) {
             routeDetailsDto = (RouteDetailsDto) getIntent().getSerializableExtra("Route");
             openStreetMap.draw(routeDetailsDto.getCoordinates());
-           // List<GeoPoint> route = getCoordinates();//Transformo la ruta en geopoint
-//            drawRoute(route);
             isRepeat = true;
             repeat = new Tracking();
-            //String[] id = routeDetailsDto.getId().split("-");
             repeat.setId(routeDetailsDto.getId());
             repeat.setTitle(routeDetailsDto.getName());
             repeat.setDescription(routeDetailsDto.getDescription());
