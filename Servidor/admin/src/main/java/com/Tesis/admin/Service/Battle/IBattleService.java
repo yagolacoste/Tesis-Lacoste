@@ -15,7 +15,7 @@ public interface IBattleService {
 
     List<BattleDto> getBattlesByUser(Long id);
 
-  BattleDto getRanking(Long id);
+    BattleDto getRanking(Long id);
 
-  void updateBattleParticipation(Long appUserId, Long battleId, String statisticsId);
+    void updateBattleParticipation(Long appUserId, Long battleId, String statisticsId);
 }

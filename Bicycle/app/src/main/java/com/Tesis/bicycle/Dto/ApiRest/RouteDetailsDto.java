@@ -2,6 +2,7 @@ package com.Tesis.bicycle.Dto.ApiRest;
 
 import android.os.Parcelable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
 import org.osmdroid.util.GeoPoint;
@@ -14,23 +15,26 @@ import java.util.Locale;
 public class RouteDetailsDto implements Serializable {
 
 
+    @JsonProperty("id")
     private String id;
 
-    private String description;
-
+    @JsonProperty("name")
     private String name;
 
+    @JsonProperty("description")
+    private String description;
+
+    @JsonProperty("coordinates")
     private List<GeoPoint> coordinates;
 
-    private float avgDistance;
+    @JsonProperty("avgDistance")
+    private float distance;
 
-    private LocalTime avgTime;
+    @JsonProperty("avgTime")
+    private LocalTime time;
 
-    public RouteDetailsDto(String id, String description, String name, List<GeoPoint> coordinates) {
-        this.id = id;
-        this.description = description;
-        this.name = name;
-        this.coordinates = coordinates;
+
+    public RouteDetailsDto() {
     }
 
     public String getId() {
@@ -65,32 +69,41 @@ public class RouteDetailsDto implements Serializable {
         this.coordinates = coordinates;
     }
 
-    public float getAvgDistance() {
-        return avgDistance;
+    public String getDistance() {
+        return distanceToString(distance,true);
     }
 
-    public void setAvgDistance(float avgDistance) {
-        this.avgDistance = avgDistance;
+    public void setDistance(float distance) {
+        this.distance = distance;
     }
 
-    public LocalTime getAvgTime() {
-        return avgTime;
+    public LocalTime getTime() {
+        return time;
     }
 
-    public void setAvgTime(LocalTime avgTime) {
-        this.avgTime = avgTime;
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 
+    public static String distanceToString(float distance, boolean b) {
+        int metres = Math.round(distance);
+        int km = metres / 1000;
+        metres = metres % 1000;
+        String format = "%d";//buscar
 
+        if (km == 0) {
+            if (b) {
+                format += "m";
+            }
+            return String.format(Locale.UK, format, metres);
+        }
 
-
-    @Override
-    public String toString() {
-        return "RouteDetailsDto{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", name='" + name + '\'' +
-                ", coordinates='" + coordinates + '\'' +
-                '}';
+        metres = metres/10;
+        format = "%d.%02d";
+        if (b) {
+            format += "km";
+        }
+        return String.format(Locale.UK, format, km, metres);
     }
+
 }

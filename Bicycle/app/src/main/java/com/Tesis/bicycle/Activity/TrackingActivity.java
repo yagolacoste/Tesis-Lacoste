@@ -37,6 +37,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 
 import com.Tesis.bicycle.Constants;
+import com.Tesis.bicycle.Dto.ApiRest.Battle.BattleDto;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Model.Tracking;
 
@@ -70,6 +71,8 @@ import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 
 public class TrackingActivity extends Activity  {
 
@@ -92,6 +95,10 @@ public class TrackingActivity extends Activity  {
     private FusedLocationProviderClient fusedLocationProviderClient;
 
     private LocationCallback locationCallback;
+
+    private Location currentLocation;
+
+    private String action=null;
 
 
     Handler updateTimeHandler = new Handler();
@@ -182,18 +189,25 @@ public class TrackingActivity extends Activity  {
             }
             openStreetMap=new OpenStreetMap(myOpenMapView);
             openStreetMap.initLayer(TrackingActivity.this, Constants.LOCATION_INITIAL);
-            updateLastLocation();////////////////preguntar si me conviene actualizar posiicon o no
+            updateLastLocation();
 
 
         //capturo coordenadas cada 5segundos
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stopLocationUpdates();
-                openStreetMap.removeMarker();
-                startLocationService();
-                btn_start.setEnabled(false);
+                if(action!=null){
+                    while(!equalsPosition()){
+                        warningMessage("Pro favor esta en el inicio de la carrera");
+                    }
+                }
+                    stopLocationUpdates();
+                    openStreetMap.removeMarker();
+                    startLocationService();
+                    btn_start.setEnabled(false);
             }
+
+
         });
         //Boton de fenar trackeo y guarda en la room la infomracion
         btn_turnoff.setOnClickListener(new View.OnClickListener() {
@@ -209,18 +223,45 @@ public class TrackingActivity extends Activity  {
             }
         });
 
-        String action = getIntent().getAction();
-        if (action != null && action.equals(Constants.REPLAY_MY_ROUTE)) {
-            routeDetailsDto = (RouteDetailsDto) getIntent().getSerializableExtra("Route");
-            openStreetMap.draw(routeDetailsDto.getCoordinates());
-            isRepeat = true;
-            repeat = new Tracking();
-            repeat.setId(routeDetailsDto.getId());
-            repeat.setTitle(routeDetailsDto.getName());
-            repeat.setDescription(routeDetailsDto.getDescription());
-            repeat.setPointsDraw(routeDetailsDto.getCoordinates());
+        action = getIntent().getAction();
+        if(action!=null){
+            setTracking(action);
             }
         }
+    }
+
+    private boolean equalsPosition() {
+        while(currentLocation!=null){
+            GeoPoint curtPosition=new GeoPoint(currentLocation.getLatitude(), currentLocation.getLongitude());
+            GeoPoint Compare=repeat.getGeoPoints().get(0);
+            Double distance=curtPosition.distanceToAsDouble(repeat.getGeoPoints().get(0));
+            if(curtPosition.distanceToAsDouble(repeat.getGeoPoints().get(0))>10.0){
+                return true;
+            }
+                return false;
+        }
+        return false;
+    }
+
+    private void setTracking(String action){
+        repeat = new Tracking();
+        if (action.equals(Constants.REPLAY_MY_ROUTE)) {
+            routeDetailsDto = (RouteDetailsDto) getIntent().getSerializableExtra("Route");
+
+            repeat.setBattle(null);
+        }
+        else if(action.equals(Constants.REPLAY_BATTLE)){
+            BattleDto battleDto= (BattleDto) getIntent().getSerializableExtra(Constants.BATTLE_ITEM);
+            routeDetailsDto=battleDto.getRoute();
+            repeat.setBattle(battleDto.getIdBattle());
+        }
+        openStreetMap.draw(routeDetailsDto.getCoordinates());
+        isRepeat = true;
+        repeat.setId(routeDetailsDto.getId());
+        repeat.setTitle(routeDetailsDto.getName());
+        repeat.setDescription(routeDetailsDto.getDescription());
+        repeat.setPointsDraw(routeDetailsDto.getCoordinates());
+
     }
 
     private void updateLastLocation() {
@@ -238,8 +279,7 @@ public class TrackingActivity extends Activity  {
                     Location location = locationResult.getLastLocation();
                     if (location != null) {
                             openStreetMap.updatePosition(location);
-        //                    openStreetMap.removeMarker();
-                            //stopLocationUpdates();
+                            currentLocation = location;
                             return;
                     }
                 }
@@ -338,5 +378,22 @@ public class TrackingActivity extends Activity  {
         myOpenMapView.onPause();  //needed for compass, my location overlays, v6.0.0 and up
         //unregisterReceiver(myReceiver);
         btn_turnoff.setEnabled(false);
+    }
+
+    public void successMessage(String message) {
+        new SweetAlertDialog(this,
+                SweetAlertDialog.SUCCESS_TYPE).setTitleText("Good Job!")
+                .setContentText(message).show();
+    }
+
+    public void errorMessage(String message) {
+        new SweetAlertDialog(this,
+                SweetAlertDialog.ERROR_TYPE).setTitleText("Oops...").setContentText(message).show();
+    }
+
+    public void warningMessage(String message) {
+        new SweetAlertDialog(this,
+                SweetAlertDialog.WARNING_TYPE).setTitleText("Notificación del Sistema")
+                .setContentText(message).setConfirmText("Ok").show();
     }
 }

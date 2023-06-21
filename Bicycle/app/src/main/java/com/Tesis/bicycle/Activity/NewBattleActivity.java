@@ -192,7 +192,7 @@ public class NewBattleActivity extends AppCompatActivity {
                 TextView titleTextView = customView.findViewById(R.id.txtValueNameRouteBattle);
                 TextView descriptionTextView = customView.findViewById(R.id.txtValueDistanceRouteBattle);
                 titleTextView.setText(routeDetailsDto.getName());
-                descriptionTextView.setText("0");
+                descriptionTextView.setText(routeDetailsDto.getDistance());
                 containsRoute.addView(customView);
                 btnSelectRoute = findViewById(R.id.btnSelectRoute);
                 containsRoute.removeView(btnSelectRoute);

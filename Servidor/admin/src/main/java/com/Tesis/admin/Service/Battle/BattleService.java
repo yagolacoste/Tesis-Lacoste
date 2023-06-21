@@ -16,6 +16,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,7 +59,7 @@ public class BattleService implements IBattleService{
 
     @Override
     public void addBattle(NewBattleDto battleDto) {
-       Route route=routeRepository.findById(battleDto.getRouteId())
+        Route route=routeRepository.findById(battleDto.getRouteId())
                .orElseThrow(()->new NotFoundException("Route by id not found",ErrorCodes.NOT_FOUND.getCode()));
         Battle battle=new Battle();
         battle.setCompleteDate(battleDto.getCompleteDate());
@@ -84,15 +85,31 @@ public class BattleService implements IBattleService{
 
     @Override
     public List<BattleDto> getBattlesByUser(Long id) {
-       List<BattleDto>result=battleParticipationRepository.findByBattlesByUser(id).stream().map(BattleDto::new).collect(Collectors.toList());
-       if(!result.isEmpty()){
-         for(BattleDto battleDto:result){
-           List<StatisticsDto>ranking=this.battleParticipationRepository.getRanking(battleDto.getIdBattle());
-           battleDto.setRanking(ranking);
-         }
-         return  result;
-       }
-       return new ArrayList<>();
+        List<BattleDto> result = battleParticipationRepository.findByBattlesByUser(id).stream().map(BattleDto::new).collect(Collectors.toList());
+        if (!result.isEmpty()) {
+            for (BattleDto battleDto : result) {
+                List<StatisticsDto> ranking = this.battleParticipationRepository.getRanking(battleDto.getIdBattle());
+                battleDto.setRanking(ranking);
+                battleDto.setStatus(getStatus(battleDto,id));
+            }
+            return result;
+        }
+        return new ArrayList<>();
+    }
+
+    private String getStatus(BattleDto battleDto,Long id){
+        Date now=new Date();
+        int result=now.compareTo(battleDto.getCompleteDate());
+        if(result>0 || battleDto.getRanking().size()==battleDto.getCantParticipant()){
+            return Status.FINISHED.getStatus();
+        }else {
+            BattleParticipationId battleParticipationId=new BattleParticipationId(id,battleDto.getIdBattle());
+            BattleParticipation battleParticipation=battleParticipationRepository.findById(battleParticipationId).get();
+            if(battleParticipation.getStatistics()==null){
+                return  Status.NOT_STARTED.getStatus();
+            }else
+                return Status.PROGRESS.getStatus();
+        }
     }
 
 

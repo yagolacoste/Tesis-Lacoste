@@ -19,4 +19,7 @@ public interface IBattleParticipationRepository extends JpaRepository<BattlePart
 
     @Query("select new com.Tesis.admin.Dto.Statistics.StatisticsDto(s) from BattleParticipation bp inner join Statistics s on bp.statistics.id=s.id where bp.id.battleId=:id order by s.time,s.avgSpeed")//preg esto o comparable
     List<StatisticsDto> getRanking(Long id);
+
+
+
 }

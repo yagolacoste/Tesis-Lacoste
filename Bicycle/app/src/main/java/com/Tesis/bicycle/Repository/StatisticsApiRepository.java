@@ -5,11 +5,11 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.Tesis.bicycle.Dto.ApiRest.AppUserHasRouteApiRest;
-import com.Tesis.bicycle.Dto.ApiRest.AppUserHasRouteDetailsDto;
+import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
+import com.Tesis.bicycle.Dto.ApiRest.StatisticsApiRest;
 import com.Tesis.bicycle.Dto.ApiRest.StatisticsDto;
 import com.Tesis.bicycle.Presenter.ApiRestConnection;
-import com.Tesis.bicycle.Service.ApiRest.AppUserHasRouteApiService;
+import com.Tesis.bicycle.Service.ApiRest.StatisticsApiService;
 
 import java.util.List;
 
@@ -20,11 +20,11 @@ import retrofit2.Response;
 public class StatisticsApiRepository {
 
     private static StatisticsApiRepository repository;
-    private final AppUserHasRouteApiService appUserHasRouteApiRestService;
+    private final StatisticsApiService appUserHasRouteApiRestService;
 
 
     public StatisticsApiRepository(Context context) {
-        this.appUserHasRouteApiRestService = ApiRestConnection.getServiceAppUserHasRoute(context);
+        this.appUserHasRouteApiRestService = ApiRestConnection.getServiceStatistics(context);
     }
 
     public static StatisticsApiRepository getInstance(Context context){
@@ -34,9 +34,9 @@ public class StatisticsApiRepository {
         return repository;
     }
 
-    public LiveData<Void> addStatistics(AppUserHasRouteApiRest appUserHasRouteApiRest){
+    public LiveData<Void> addStatistics(StatisticsApiRest statisticsApiRest){
         final MutableLiveData<Void> mld=new MutableLiveData<>();
-        this.appUserHasRouteApiRestService.AddStatistics(appUserHasRouteApiRest).enqueue(new Callback<Void>() {
+        this.appUserHasRouteApiRestService.AddStatistics(statisticsApiRest).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
 
@@ -50,18 +50,18 @@ public class StatisticsApiRepository {
         return mld;
     }
 
-    public LiveData<AppUserHasRouteDetailsDto> getRouteById(Long id){
-        final MutableLiveData<AppUserHasRouteDetailsDto> mld=new MutableLiveData<>();
-        this.appUserHasRouteApiRestService.getRouteById(id).enqueue(new Callback<AppUserHasRouteDetailsDto>() {
+    public LiveData<List<RouteDetailsDto>> getRouteById(Long id){
+        final MutableLiveData<List<RouteDetailsDto>> mld=new MutableLiveData<>();
+        this.appUserHasRouteApiRestService.getRouteById(id).enqueue(new Callback<List<RouteDetailsDto>>() {
             @Override
-            public void onResponse(Call<AppUserHasRouteDetailsDto> call, Response<AppUserHasRouteDetailsDto> response) {
+            public void onResponse(Call<List<RouteDetailsDto>> call, Response<List<RouteDetailsDto>> response) {
                 if (response.isSuccessful()) {
                     mld.setValue(response.body());
                 }
             }
 
             @Override
-            public void onFailure(Call<AppUserHasRouteDetailsDto> call, Throwable t) {
+            public void onFailure(Call<List<RouteDetailsDto>> call, Throwable t) {
 
             }
         });

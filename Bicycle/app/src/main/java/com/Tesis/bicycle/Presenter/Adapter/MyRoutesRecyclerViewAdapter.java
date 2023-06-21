@@ -15,7 +15,7 @@ import java.util.List;
 
 public class MyRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyRoutesRecyclerViewAdapter.ViewHolder> {
 
-    public  List<RouteDetailsDto> items;
+    private  List<RouteDetailsDto> items;
     private  OnItemClickListener listener;
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -48,9 +48,9 @@ public class MyRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyRoutesRe
         return items.size();
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(RouteDetailsDto ruta);
-    }
+//    public interface OnItemClickListener {
+//        void onItemClick(RouteDetailsDto ruta);
+//    }
 
     public  class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -75,7 +75,7 @@ public class MyRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyRoutesRe
         public void bind(RouteDetailsDto route) {
             txtValueNameRoute.setText(route.getName());
             txtValueDescription.setText(route.getDescription());
-            txtValueDistance.setText(String.valueOf(route.getAvgDistance()));
+            txtValueDistance.setText(String.valueOf(route.getDistance()));
         }
     }
 }

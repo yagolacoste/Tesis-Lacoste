@@ -2,6 +2,7 @@ package com.Tesis.bicycle.Dto.ApiRest;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.osmdroid.util.GeoPoint;
 
@@ -10,31 +11,42 @@ import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
-public class AppUserHasRouteApiRest implements Serializable {
+public class StatisticsApiRest implements Serializable {
 
-
+    @JsonProperty("appUser")
     private Long appUser;
 
+    @JsonProperty("route")
     private String route;
 
+    @JsonProperty("title")
     private String title;
 
+    @JsonProperty("description")
     private String description;
 
+    @JsonProperty("distance")
     private float distance;
 
+    @JsonProperty("avgSpeed")
     private float avgSpeed;
 
     @JsonFormat(timezone = JsonFormat.DEFAULT_TIMEZONE,pattern = "H:mm:ss")
     private LocalTime time;
 
+    @JsonProperty("timeCreated")
     private Date timeCreated;
 
+    @JsonProperty("weather")
     private String weather;
 
+    @JsonProperty("coordinates")
     private List<GeoPoint> coordinates;
 
-    public AppUserHasRouteApiRest() {
+    @JsonProperty("battleId")
+    private Long battleId;
+
+    public StatisticsApiRest() {
     }
 
     public Long getAppUser() {
@@ -115,5 +127,14 @@ public class AppUserHasRouteApiRest implements Serializable {
 
     public void setCoordinates(List<GeoPoint> coordinates) {
         this.coordinates = coordinates;
+    }
+
+
+    public Long getBattleId() {
+        return battleId;
+    }
+
+    public void setBattleId(Long battleId) {
+        this.battleId = battleId;
     }
 }

@@ -1,7 +1,9 @@
 package com.Tesis.admin.Controller.Statistics;
 
 
-import com.Tesis.admin.Dto.Statistics.StatisticsDetailsDto;
+import com.Tesis.admin.Dto.Route.RouteDetailsDto;
+import com.Tesis.admin.Dto.Statistics.RoutesDto;
+
 import com.Tesis.admin.Dto.Statistics.StatisticsDto;
 import com.Tesis.admin.Dto.Statistics.StatisticsRequestDto;
 import com.Tesis.admin.Service.Statistics.IStatisticsService;
@@ -38,7 +40,7 @@ public class StatisticsController implements IStatisticsController{
     }
 
     @Override
-    public StatisticsDetailsDto getRoutesByUser(Long appUser) {
+    public List<RouteDetailsDto>  getRoutesByUser(Long appUser) {
         return StatisticsService.getRoutesByUser(appUser);
     }
 

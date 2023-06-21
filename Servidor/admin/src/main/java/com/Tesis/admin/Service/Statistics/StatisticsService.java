@@ -4,7 +4,6 @@ package com.Tesis.admin.Service.Statistics;
 
 import com.Tesis.admin.Controller.Exception.ErrorCodes;
 import com.Tesis.admin.Controller.Exception.TypeExceptions.NotFoundException;
-import com.Tesis.admin.Dto.Statistics.StatisticsDetailsDto;
 import com.Tesis.admin.Dto.Statistics.StatisticsDto;
 import com.Tesis.admin.Dto.Statistics.StatisticsRequestDto;
 import com.Tesis.admin.Dto.Route.RouteDetailsDto;
@@ -14,6 +13,7 @@ import com.Tesis.admin.Models.Statistics;
 import com.Tesis.admin.Models.Route;
 import com.Tesis.admin.Models.User;
 import com.Tesis.admin.Repository.IStatisticsRepository;
+import com.Tesis.admin.Service.Battle.IBattleService;
 import com.Tesis.admin.Service.Route.IRouteService;
 import com.Tesis.admin.Service.User.IUserService;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -39,6 +39,9 @@ public class StatisticsService implements IStatisticsService {
 
     @Autowired
     private IRouteService routeService;
+
+    @Autowired
+    private IBattleService battleService;
 
 
     @Override
@@ -69,30 +72,28 @@ public class StatisticsService implements IStatisticsService {
         Statistics.setAvgSpeed(statisticsRequestDto.getAvgSpeed());
         Statistics.setTime(statisticsRequestDto.getTime());
         Statistics.setTimeCreated(statisticsRequestDto.getTimeCreated());
-        StatisticsRepository.save(Statistics);
+        String statisticsId=StatisticsRepository.save(Statistics).getId();
+        if(statisticsRequestDto.getBattleId()!=null){
+            battleService.updateBattleParticipation(appUser.getId(),statisticsRequestDto.getBattleId(),statisticsId);
+        }
 
     }
 
     @Override
     public Optional<StatisticsDto> getById(String id) {
-        return Optional.ofNullable(StatisticsRepository.findById(id).map(r->new StatisticsDto(r))
+        return Optional.ofNullable(StatisticsRepository.findById(id).map(StatisticsDto::new)
                 .orElseThrow(() -> new NotFoundException("Not exist user with route", ErrorCodes.NOT_FOUND.getCode())));
     }
 
     @Override
     public List<StatisticsDto> list() {
-        List<StatisticsDto>result= StatisticsRepository.findAll().stream().map(r->new StatisticsDto(r)).collect(Collectors.toList());
+        List<StatisticsDto>result= StatisticsRepository.findAll().stream().map(StatisticsDto::new).collect(Collectors.toList());
         return result;
     }
 
     @Override
-    public StatisticsDetailsDto getRoutesByUser(Long appUser) {
-        List<RouteDetailsDto> result=StatisticsRepository.findByRoute(appUser);
-        UserAppDto user=userService.getByUser(appUser);
-        StatisticsDetailsDto StatisticsDetailsDto= new StatisticsDetailsDto();
-        StatisticsDetailsDto.setUserId(appUser);
-        StatisticsDetailsDto.setRoutes(result);
-        return StatisticsDetailsDto;
+    public List<RouteDetailsDto>  getRoutesByUser(Long appUser) {
+        return StatisticsRepository.findByRoute(appUser);
     }
 
     @Override

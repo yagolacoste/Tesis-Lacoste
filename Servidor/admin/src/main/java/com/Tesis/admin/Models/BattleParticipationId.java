@@ -15,6 +15,14 @@ public class BattleParticipationId implements Serializable {
     @Column(name = "battle_id")
     private Long battleId;
 
+    public BattleParticipationId() {
+    }
+
+    public BattleParticipationId(Long appuserId, Long battleId) {
+        this.appuserId = appuserId;
+        this.battleId = battleId;
+    }
+
     public Long getAppuserId() {
         return appuserId;
     }

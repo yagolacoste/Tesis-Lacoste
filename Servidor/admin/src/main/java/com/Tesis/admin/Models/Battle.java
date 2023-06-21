@@ -28,6 +28,7 @@ public class Battle {
     @JoinColumn(name = "route_id")
     private Route route;
 
+
     public Battle() {
     }
 
@@ -63,4 +64,5 @@ public class Battle {
     public void setRoute(Route route) {
         this.route = route;
     }
+
 }

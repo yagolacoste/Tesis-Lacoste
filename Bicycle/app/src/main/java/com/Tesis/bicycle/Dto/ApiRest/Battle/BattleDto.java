@@ -1,5 +1,6 @@
 package com.Tesis.bicycle.Dto.ApiRest.Battle;
 
+import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Dto.ApiRest.StatisticsDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,11 +17,8 @@ public class BattleDto implements Serializable {
     @JsonProperty("idBattle")
     private Long idBattle;
 
-    @JsonProperty("routeId")
-    private String routeId;
-
-    @JsonProperty("routeName")
-    private String routeName;
+    @JsonProperty("route")
+    private RouteDetailsDto route;
 
     @JsonProperty("completeDate")
     private Date completeDate;
@@ -31,6 +29,9 @@ public class BattleDto implements Serializable {
 
     @JsonProperty("ranking")
     private List<StatisticsDto> ranking;
+
+    @JsonProperty("status")
+    private String status;
 
     public BattleDto() {
     }
@@ -43,22 +44,13 @@ public class BattleDto implements Serializable {
         this.idBattle = idBattle;
     }
 
-    public String getRouteId() {
-        return routeId;
+    public RouteDetailsDto getRoute() {
+        return route;
     }
 
-    public void setRouteId(String routeId) {
-        this.routeId = routeId;
+    public void setRoute(RouteDetailsDto route) {
+        this.route = route;
     }
-
-    public String getRouteName() {
-        return routeName;
-    }
-
-    public void setRouteName(String routeName) {
-        this.routeName = routeName;
-    }
-
 
     public Date getCompleteDate() {
         return completeDate;
@@ -82,5 +74,14 @@ public class BattleDto implements Serializable {
 
     public void setRanking(List<StatisticsDto> ranking) {
         this.ranking = ranking;
+    }
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

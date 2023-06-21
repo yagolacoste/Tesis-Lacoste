@@ -11,12 +11,13 @@ import com.Tesis.bicycle.Activity.ListViewActivity;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Presenter.Adapter.MyRoutesRecyclerViewAdapter;
+import com.Tesis.bicycle.Presenter.Adapter.OnItemClickListener;
 import com.Tesis.bicycle.Presenter.Adapter.RouteRecyclerViewAdapter;
 import com.Tesis.bicycle.ViewModel.StatisticsViewModel;
 
 import java.util.List;
 
-public class RouteListViewActivity extends ListViewActivity implements MyRoutesRecyclerViewAdapter.OnItemClickListener{
+public class RouteListViewActivity extends ListViewActivity implements OnItemClickListener {
 
     List<RouteDetailsDto> routes;
     private RouteRecyclerViewAdapter adaptorRoute;
@@ -46,8 +47,8 @@ public class RouteListViewActivity extends ListViewActivity implements MyRoutesR
         accessTokenRoomViewModel.getFirst().observe(this,response->{
             if(response.getAccessToken()!=null){
                 statisticsViewModel.getRouteById(response.getId()).observe(this, resp->{
-                    if(!resp.getRoutes().isEmpty()){
-                        routes = resp.getRoutes();
+                    if(!resp.isEmpty()){
+                        routes = resp;
                         if(recyclerViewReplay){
                             adaptorRoute = new RouteRecyclerViewAdapter(routes);
                             recyclerView.setAdapter(adaptorRoute);
@@ -57,7 +58,7 @@ public class RouteListViewActivity extends ListViewActivity implements MyRoutesR
                             recyclerView.setAdapter(recyclerRoutesDetails);
                         }
                     }else {
-                        Toast.makeText(this, "Not exist routes for user: " + resp.getUserId(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Not exist routes for user: " + response.getId(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }

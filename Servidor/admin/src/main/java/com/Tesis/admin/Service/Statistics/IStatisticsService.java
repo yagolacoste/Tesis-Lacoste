@@ -1,7 +1,8 @@
 package com.Tesis.admin.Service.Statistics;
 
 
-import com.Tesis.admin.Dto.Statistics.StatisticsDetailsDto;
+import com.Tesis.admin.Dto.Route.RouteDetailsDto;
+import com.Tesis.admin.Dto.Statistics.RoutesDto;
 import com.Tesis.admin.Dto.Statistics.StatisticsDto;
 import com.Tesis.admin.Dto.Statistics.StatisticsRequestDto;
 
@@ -18,7 +19,7 @@ public interface IStatisticsService {
 
     List<StatisticsDto> list();
 
-    StatisticsDetailsDto getRoutesByUser(Long appUser);
+    List<RouteDetailsDto>  getRoutesByUser(Long appUser);
 
     List<StatisticsDto> getStatisticsByRoute(String routeId);
 }

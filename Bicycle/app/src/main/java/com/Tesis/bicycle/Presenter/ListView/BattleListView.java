@@ -5,14 +5,21 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.Tesis.bicycle.Activity.NewBattleActivity;
+import com.Tesis.bicycle.Activity.TrackingActivity;
+import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.Battle.BattleDto;
+import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
+import com.Tesis.bicycle.Model.Tracking;
 import com.Tesis.bicycle.Presenter.Adapter.BattleRecyclerViewAdapter;
+import com.Tesis.bicycle.Presenter.Adapter.MyRoutesRecyclerViewAdapter;
+import com.Tesis.bicycle.Presenter.Adapter.OnItemClickListener;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
 import com.Tesis.bicycle.ViewModel.UserViewModel;
@@ -21,7 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.io.IOException;
 import java.util.List;
 
-public class BattleListView extends AppCompatActivity {
+public class BattleListView extends AppCompatActivity  implements BattleRecyclerViewAdapter.OnItemClickListener {
 
     private BattleRecyclerViewAdapter battleRecyclerViewAdapter;
     private RecyclerView recyclerView;
@@ -50,7 +57,8 @@ public class BattleListView extends AppCompatActivity {
                 try {
                     userViewModel.getBattlesByUser(resp.getId()).observe(this,response->{
                         if(response!=null){
-                            battleRecyclerViewAdapter=new BattleRecyclerViewAdapter(response);
+                            battleRecyclerViewAdapter=new BattleRecyclerViewAdapter(response,resp.getId());
+                            battleRecyclerViewAdapter.setOnItemClickListener(this);
                             recyclerView.setAdapter(battleRecyclerViewAdapter);
                         }
                     });
@@ -59,6 +67,7 @@ public class BattleListView extends AppCompatActivity {
                 }
             }
         });
+
         floatingactionbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,5 +76,17 @@ public class BattleListView extends AppCompatActivity {
             }
         });
 
+
+    }
+
+
+    @Override
+    public void onItemClick(BattleDto battleDto) {
+        Intent resultIntent = new Intent(this, TrackingActivity.class);
+        resultIntent.setAction(Constants.REPLAY_BATTLE);
+        resultIntent.putExtra(Constants.BATTLE_ITEM, battleDto);
+        startActivity(resultIntent);
+//        setResult(Activity.RESULT_OK, resultIntent);
+//        finish();
     }
 }

@@ -17,7 +17,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.Tesis.bicycle.Dto.ApiRest.AppUserHasRouteApiRest;
+import com.Tesis.bicycle.Dto.ApiRest.StatisticsApiRest;
 import com.Tesis.bicycle.Dto.Room.RefreshTokenDto;
 import com.Tesis.bicycle.Presenter.OpenStreetMap;
 import com.Tesis.bicycle.R;
@@ -99,21 +99,22 @@ public class TrackingDetailActivity extends AppCompatActivity {
         btn_save.setOnClickListener(view -> {
             this.accessTokenRoomViewModel.getFirst().observe(this,response->{
                 RefreshTokenDto refreshTokenDto=response;
-                AppUserHasRouteApiRest appUserHasRouteApiRest=new AppUserHasRouteApiRest();
-                appUserHasRouteApiRest.setAppUser(refreshTokenDto.getId());
-                appUserHasRouteApiRest.setDistance(locationBinder.getDistance());
-                appUserHasRouteApiRest.setAvgSpeed(locationBinder.getAvgSpeed());
-                appUserHasRouteApiRest.setTime(locationBinder.getTimeLocalTime());
-                appUserHasRouteApiRest.setTimeCreated(locationBinder.getTimeCreated());
-                appUserHasRouteApiRest.setWeather("");
-                appUserHasRouteApiRest.setDescription(locationBinder.getDescription());
-                appUserHasRouteApiRest.setTitle(locationBinder.getTitle());
+                StatisticsApiRest statisticsApiRest=new StatisticsApiRest();
+                statisticsApiRest.setAppUser(refreshTokenDto.getId());
+                statisticsApiRest.setDistance(locationBinder.getDistance());
+                statisticsApiRest.setAvgSpeed(locationBinder.getAvgSpeed());
+                statisticsApiRest.setTime(locationBinder.getTimeLocalTime());
+                statisticsApiRest.setTimeCreated(locationBinder.getTimeCreated());
+                statisticsApiRest.setWeather("");
+                statisticsApiRest.setDescription(locationBinder.getDescription());
+                statisticsApiRest.setTitle(locationBinder.getTitle());
                 if(!locationBinder.getId().contains("-"))
-                    appUserHasRouteApiRest.setRoute(refreshTokenDto.getId()+"-"+locationBinder.getId());
+                    statisticsApiRest.setRoute(refreshTokenDto.getId()+"-"+locationBinder.getId());
                 else
-                    appUserHasRouteApiRest.setRoute(locationBinder.getId());
-                appUserHasRouteApiRest.setCoordinates(locationBinder.getGeoPoints());
-                statisticsViewModel.addStatistic(appUserHasRouteApiRest).observe(this, resp->{
+                    statisticsApiRest.setRoute(locationBinder.getId());
+                statisticsApiRest.setCoordinates(locationBinder.getGeoPoints());
+                statisticsApiRest.setBattleId(locationBinder.getBattleId());
+                statisticsViewModel.addStatistic(statisticsApiRest).observe(this, resp->{
                 });
             });
             backToMenuActivity();

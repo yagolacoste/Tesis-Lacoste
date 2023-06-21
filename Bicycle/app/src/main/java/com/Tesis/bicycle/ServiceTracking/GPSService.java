@@ -267,6 +267,8 @@ public class GPSService extends Service {
             return tracking.getId();
         }
 
+        public Long getBattleId(){return tracking.getBattle();}
+
     }
 
     @Override

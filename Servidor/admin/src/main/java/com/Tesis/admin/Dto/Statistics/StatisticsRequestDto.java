@@ -16,16 +16,22 @@ import java.util.List;
 
 public class StatisticsRequestDto implements Serializable {
 
+    @JsonProperty("appUser")
     private Long appUser;
 
+    @JsonProperty("route")
     private String route;
 
+    @JsonProperty("title")
     private String title;
 
+    @JsonProperty("description")
     private String description;
 
+    @JsonProperty("distance")
     private float distance;
 
+    @JsonProperty("avgSpeed")
     private float avgSpeed;
 
     @JsonFormat(pattern = "H:mm:ss")
@@ -34,12 +40,16 @@ public class StatisticsRequestDto implements Serializable {
     @JsonFormat(pattern = "dd-MM-yyy")
     private Date timeCreated;
 
+    @JsonProperty("weather")
     private String weather;
 
     @JsonProperty("coordinates")
     @JsonSerialize(using = GeoPointListSerializer.class)
     @JsonDeserialize(using = GeoPointListDeserializer.class)
     private List<GeoPoint> coordinates;
+
+    @JsonProperty("battleId")
+    private Long battleId;
 
 
     public StatisticsRequestDto() {
@@ -132,5 +142,13 @@ public class StatisticsRequestDto implements Serializable {
 
     public void setCoordinates(List<GeoPoint> coordinates) {
         this.coordinates = coordinates;
+    }
+
+    public Long getBattleId() {
+        return battleId;
+    }
+
+    public void setBattleId(Long battleId) {
+        this.battleId = battleId;
     }
 }

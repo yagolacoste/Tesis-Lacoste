@@ -1,5 +1,6 @@
 package com.Tesis.admin.Dto.Battle;
 
+import com.Tesis.admin.Dto.Route.RouteDetailsDto;
 import com.Tesis.admin.Dto.Statistics.StatisticsDto;
 import com.Tesis.admin.Dto.Statistics.StatisticsRequestDto;
 import com.Tesis.admin.Models.Battle;
@@ -20,11 +21,8 @@ public class BattleDto implements Serializable {
     private Long idBattle;
 
 
-    @JsonProperty("routeId")
-    private String routeId;
-
-    @JsonProperty("routeName")
-    private String routeName;
+    @JsonProperty("route")
+    private RouteDetailsDto route;
 
     @JsonProperty("completeDate")
     private Date completeDate;
@@ -35,13 +33,15 @@ public class BattleDto implements Serializable {
     @JsonProperty("ranking")
     List<StatisticsDto> ranking;
 
+    @JsonProperty("status")
+    private String status;
+
     public BattleDto() {
     }
 
     public BattleDto(Battle battle) {
         this.idBattle = battle.getIdBattle();
-        this.routeId = battle.getRoute().getId();
-        this.routeName = battle.getRoute().getName();
+        this.route=new RouteDetailsDto(battle.getRoute());
         this.completeDate = battle.getCompleteDate();
         this.cantParticipant = battle.getCantParticipant();
     }
@@ -55,20 +55,12 @@ public class BattleDto implements Serializable {
         this.idBattle = idBattle;
     }
 
-    public String getRouteId() {
-        return routeId;
+    public RouteDetailsDto getRoute() {
+        return route;
     }
 
-    public void setRouteId(String routeId) {
-        this.routeId = routeId;
-    }
-
-    public String getRouteName() {
-        return routeName;
-    }
-
-    public void setRouteName(String routeName) {
-        this.routeName = routeName;
+    public void setRoute(RouteDetailsDto route) {
+        this.route = route;
     }
 
     public Date getCompleteDate() {
@@ -99,5 +91,13 @@ public class BattleDto implements Serializable {
     public void setRanking(List<StatisticsDto> ranking) {
 
         this.ranking = ranking;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

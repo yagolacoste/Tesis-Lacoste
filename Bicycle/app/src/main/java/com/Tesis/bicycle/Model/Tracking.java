@@ -48,7 +48,8 @@ public class Tracking implements Serializable {
     private transient List<GeoPoint> pointsDraw=new ArrayList<>();
     private boolean repeat=false;
 
-    private Integer user;
+    private Long battle;
+
 
     public Tracking() {
 
@@ -59,6 +60,7 @@ public class Tracking implements Serializable {
         title=tracking.getTitle();
         description=tracking.getDescription();
         pointsDraw=tracking.getPointsDraw();
+        battle=tracking.getBattle();
         repeat=true;
     }
 
@@ -342,6 +344,13 @@ public class Tracking implements Serializable {
         this.pointsDraw = pointsDraw;
     }
 
+    public Long getBattle() {
+        return battle;
+    }
+
+    public void setBattle(Long battle) {
+        this.battle = battle;
+    }
 
     @Override
     public String toString() {

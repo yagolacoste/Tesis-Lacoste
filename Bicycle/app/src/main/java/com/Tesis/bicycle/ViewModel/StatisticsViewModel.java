@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.Tesis.bicycle.Dto.ApiRest.AppUserHasRouteApiRest;
-import com.Tesis.bicycle.Dto.ApiRest.AppUserHasRouteDetailsDto;
+import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
+import com.Tesis.bicycle.Dto.ApiRest.StatisticsApiRest;
 import com.Tesis.bicycle.Dto.ApiRest.StatisticsDto;
 import com.Tesis.bicycle.Repository.StatisticsApiRepository;
 
@@ -23,11 +23,11 @@ public class StatisticsViewModel extends AndroidViewModel {
 
     }
 
-    public LiveData<Void> addStatistic(AppUserHasRouteApiRest appUserHasRouteApiRest){
-        return this.repository.addStatistics(appUserHasRouteApiRest);
+    public LiveData<Void> addStatistic(StatisticsApiRest statisticsApiRest){
+        return this.repository.addStatistics(statisticsApiRest);
     }
 
-    public LiveData<AppUserHasRouteDetailsDto> getRouteById(Long id){
+    public LiveData<List<RouteDetailsDto>> getRouteById(Long id){
         return this.repository.getRouteById(id);
     }
 
