@@ -74,17 +74,17 @@ import java.util.List;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
-public class TrackingActivity extends Activity  {
+public class TrackingActivity extends Activity {
 
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
 
-    private TextView tv_distance,tv_avgSpeed,tv_time;
-    private Button btn_start,btn_turnoff;
+    private TextView tv_distance, tv_avgSpeed, tv_time;
+    private Button btn_start, btn_turnoff;
 
-    GPSService.LocationBinder locationBinder=null;
+    GPSService.LocationBinder locationBinder = null;
     int activityTypeInd;
-    Tracking repeat=null;
-    boolean stopped = false,isRepeat=false;
+    Tracking repeat = null;
+    boolean stopped = false, isRepeat = false;
     //retrofit
     private RouteDetailsDto routeDetailsDto;
 
@@ -98,27 +98,27 @@ public class TrackingActivity extends Activity  {
 
     private Location currentLocation;
 
-    private String action=null;
+    private String action = null;
 
 
     Handler updateTimeHandler = new Handler();
     Handler updateStatsHandler = new Handler();
 
-    Runnable updateTimeThread= new Runnable() {
+    Runnable updateTimeThread = new Runnable() {
         @Override
         public void run() {
-            String timeString=locationBinder.getTimeString();
+            String timeString = locationBinder.getTimeString();
             tv_time.setText(timeString);
             if (!stopped) updateTimeHandler.postDelayed(this, 0);
         }
     };
 
-    Runnable updateStatsThread=new Runnable() {
+    Runnable updateStatsThread = new Runnable() {
         @Override
         public void run() {
             tv_distance.setText(locationBinder.getDistanceString());
             tv_avgSpeed.setText(locationBinder.getAvgSpeedString());
-            if(locationBinder.getLastLocation()!=null)
+            if (locationBinder.getLastLocation() != null)
                 openStreetMap.updatePosition(locationBinder.getLastLocation());
             if (!stopped) updateStatsHandler.postDelayed(this, 1000);
         }
@@ -137,25 +137,25 @@ public class TrackingActivity extends Activity  {
     };
 
 
-    private ServiceConnection lsc=new ServiceConnection() {
+    private ServiceConnection lsc = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
 
-            locationBinder= (GPSService.LocationBinder) iBinder;
-            if(repeat!=null){
+            locationBinder = (GPSService.LocationBinder) iBinder;
+            if (repeat != null) {
                 locationBinder.setTrackingActivity(repeat);
-                repeat=null;
+                repeat = null;
             }
             locationBinder.startTracking();
             locationBinder.setActivityType(activityTypeInd);
-            registerReceiver(locationSettingStateReceiver,new IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION));
+            registerReceiver(locationSettingStateReceiver, new IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION));
             updateTimeHandler.postDelayed(updateTimeThread, 0);
             updateStatsHandler.postDelayed(updateStatsThread, 0);
         }
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
-            locationBinder=null;
+            locationBinder = null;
 
         }
     };
@@ -174,85 +174,96 @@ public class TrackingActivity extends Activity  {
     }
 
 
-    private void init(){
+    private void init() {
 
-        tv_distance=findViewById(R.id.tv_distance);
-        tv_avgSpeed=findViewById(R.id.tv_avgSpeed);
-        tv_time=findViewById(R.id.tv_time);
-        myOpenMapView=(MapView)findViewById(R.id.v_map);
-        btn_start=findViewById(R.id.btn_start);
-        btn_turnoff=findViewById(R.id.btn_turnoff);
-        if(checkPermissions(true)) {
+        tv_distance = findViewById(R.id.tv_distance);
+        tv_avgSpeed = findViewById(R.id.tv_avgSpeed);
+        tv_time = findViewById(R.id.tv_time);
+        myOpenMapView = (MapView) findViewById(R.id.v_map);
+        btn_start = findViewById(R.id.btn_start);
+        btn_turnoff = findViewById(R.id.btn_turnoff);
+        if (checkPermissions(true)) {
             LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 AlertNoGps();
             }
-            openStreetMap=new OpenStreetMap(myOpenMapView);
+            openStreetMap = new OpenStreetMap(myOpenMapView);
             openStreetMap.initLayer(TrackingActivity.this, Constants.LOCATION_INITIAL);
             updateLastLocation();
+            action = getIntent().getAction();
+            if (action != null) {
+                setTracking(action);
+//                    if (currentLocation == null) {
+//                        updateLastLocation();
+//                    }
+//                    if (equalsPosition()) {
+//                        warningMessage("Pro favor esta en el inicio de la carrera");
+//                    }
+                }
 
 
-        //capturo coordenadas cada 5segundos
-        btn_start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(action!=null){
-                    while(!equalsPosition()){
-                        warningMessage("Pro favor esta en el inicio de la carrera");
+            //capturo coordenadas cada 5segundos
+            btn_start.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(action!=null){
+                        if (equalsPosition()) {
+                            warningMessage("Pro favor esta en el inicio de la carrera");
+                        }
+                        else{
+                            stopLocationUpdates();
+                            openStreetMap.removeMarker();
+                            startLocationService();
+                            btn_start.setEnabled(false);
+                        }
+                    }else{
+                        stopLocationUpdates();
+                        openStreetMap.removeMarker();
+                        startLocationService();
+                        btn_start.setEnabled(false);
                     }
                 }
-                    stopLocationUpdates();
-                    openStreetMap.removeMarker();
-                    startLocationService();
-                    btn_start.setEnabled(false);
-            }
 
 
-        });
-        //Boton de fenar trackeo y guarda en la room la infomracion
-        btn_turnoff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                stopLocationService();
-                Intent i = new Intent(TrackingActivity.this, TrackingDetailActivity.class);
-                if (routeDetailsDto != null) {
-                    i.setAction(Constants.REPLAY_MY_ROUTE);
+            });
+            //Boton de fenar trackeo y guarda en la room la infomracion
+            btn_turnoff.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    stopLocationService();
+                    Intent i = new Intent(TrackingActivity.this, TrackingDetailActivity.class);
+                    if (routeDetailsDto != null) {
+                        i.setAction(Constants.REPLAY_MY_ROUTE);
+                    }
+                    startActivity(i);
+                    // btn_turnoff.setEnabled(false);
                 }
-                startActivity(i);
-               // btn_turnoff.setEnabled(false);
-            }
-        });
+            });
 
-        action = getIntent().getAction();
-        if(action!=null){
-            setTracking(action);
-            }
+
         }
     }
 
     private boolean equalsPosition() {
-        while(currentLocation!=null){
-            GeoPoint curtPosition=new GeoPoint(currentLocation.getLatitude(), currentLocation.getLongitude());
-            GeoPoint Compare=repeat.getGeoPoints().get(0);
-            Double distance=curtPosition.distanceToAsDouble(repeat.getGeoPoints().get(0));
-            if(curtPosition.distanceToAsDouble(repeat.getGeoPoints().get(0))>10.0){
+            GeoPoint Compare = repeat.getPointsDraw().get(0);
+            Location location = new Location("");
+            location.setLatitude(Compare.getLatitudeE6() / 1E6);
+            location.setLongitude(Compare.getLongitudeE6() / 1E6);
+            if (currentLocation.distanceTo(location) > 10.0) {
                 return true;
             }
-                return false;
-        }
-        return false;
+            return false;
     }
 
-    private void setTracking(String action){
+    private void setTracking(String action) {
         repeat = new Tracking();
         if (action.equals(Constants.REPLAY_MY_ROUTE)) {
             routeDetailsDto = (RouteDetailsDto) getIntent().getSerializableExtra("Route");
 
             repeat.setBattle(null);
-        }
-        else if(action.equals(Constants.REPLAY_BATTLE)){
-            BattleDto battleDto= (BattleDto) getIntent().getSerializableExtra(Constants.BATTLE_ITEM);
-            routeDetailsDto=battleDto.getRoute();
+        } else if (action.equals(Constants.REPLAY_BATTLE)) {
+            BattleDto battleDto = (BattleDto) getIntent().getSerializableExtra(Constants.BATTLE_ITEM);
+            routeDetailsDto = battleDto.getRoute();
             repeat.setBattle(battleDto.getIdBattle());
         }
         openStreetMap.draw(routeDetailsDto.getCoordinates());
@@ -266,28 +277,28 @@ public class TrackingActivity extends Activity  {
 
     private void updateLastLocation() {
 
-            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(TrackingActivity.this);
-            LocationRequest locationRequest = LocationRequest.create();
-            locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);
-            locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);
-            locationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(TrackingActivity.this);
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);
+        locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);
+        locationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY);
 
-             locationCallback = new LocationCallback() {
-                @Override
-                public void onLocationResult(LocationResult locationResult) {
-                    super.onLocationResult(locationResult);
-                    Location location = locationResult.getLastLocation();
-                    if (location != null) {
-                            openStreetMap.updatePosition(location);
-                            currentLocation = location;
-                            return;
-                    }
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+                Location location = locationResult.getLastLocation();
+                if (location != null) {
+                    openStreetMap.updatePosition(location);
+                    currentLocation = location;
+                    return;
                 }
-            };
-
-            if (!(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
-                fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
             }
+        };
+
+        if (!(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
+        }
     }
 
     // Método para cancelar las actualizaciones de ubicación
@@ -297,7 +308,7 @@ public class TrackingActivity extends Activity  {
 
     //This Alert is not gps service activated
     private void AlertNoGps() {
-        final AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Your device setting will be changed")
                 .setCancelable(false)
                 .setPositiveButton("Turn on", new DialogInterface.OnClickListener() {
@@ -318,14 +329,14 @@ public class TrackingActivity extends Activity  {
 
 
     //Inicia el servicio de localizacion
-    private void startLocationService(){
+    private void startLocationService() {
         Intent intent = new Intent(this, GPSService.class);
         getApplicationContext().bindService(intent, lsc, Context.BIND_ABOVE_CLIENT);
         startService(intent);
     }
 
 
-    private void stopLocationService(){
+    private void stopLocationService() {
         stopped = true;
         locationBinder.stopTracking();
         getApplicationContext().unbindService(lsc);
@@ -335,7 +346,7 @@ public class TrackingActivity extends Activity  {
     //Check permission if enable
     private boolean checkPermissions(boolean request) {
         if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-                &&((ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED))) {
+                && ((ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED))) {
             if (request) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, TrackingActivity.REQUEST_PERMISSIONS_REQUEST_CODE);
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, TrackingActivity.REQUEST_PERMISSIONS_REQUEST_CODE);
@@ -360,7 +371,7 @@ public class TrackingActivity extends Activity  {
     @Override
     public void onResume() {
         super.onResume();
-       // updateLastLocation();
+        // updateLastLocation();
         //this will refresh the osmdroid configuration on resuming.
         //if you make changes to the configuration, use
         //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);

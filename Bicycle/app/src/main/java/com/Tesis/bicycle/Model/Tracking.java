@@ -46,6 +46,8 @@ public class Tracking implements Serializable {
     private long timeInMilliseconds=0;
     private transient List<Location> points=new ArrayList<>();//puntos que captura el gps
     private transient List<GeoPoint> pointsDraw=new ArrayList<>();
+
+    private List<Location> geoReference=new ArrayList<>();
     private boolean repeat=false;
 
     private Long battle;
