@@ -65,10 +65,8 @@ public class RouteService implements IRouteService{
 
     @Override
     public List<Route> list() {
-        List<Route> result=routeRepository.findAll();
-        if(result!=null)
-            return result;
-        return null;
+
+        return routeRepository.findAll();
     }
 
     @Override

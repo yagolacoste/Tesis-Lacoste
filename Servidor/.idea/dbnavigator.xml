@@ -21,12 +21,10 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="1624109a-aab3-414b-9a97-a60f045b263d" object-ref="schemas/bicycle/tables/appuser" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="1624109a-aab3-414b-9a97-a60f045b263d" dataset="bicycle.appuser" active-filter-id="">
+    <filter-actions connection-id="1624109a-aab3-414b-9a97-a60f045b263d" dataset="bicycle.appuser" active-filter-id="EMPTY_FILTER">
       <filter id="cbe0ef09-2f84-4ff6-a225-5869b74f97fe" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
         <condition column="id" operator="=" value="" active="true" />
       </filter>

@@ -27,6 +27,7 @@ import androidx.core.app.NotificationCompat;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Activity.TrackingActivity;
 import com.Tesis.bicycle.Model.Tracking;
+import com.Tesis.bicycle.Presenter.Notifications;
 import com.Tesis.bicycle.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -52,23 +53,31 @@ public class GPSService extends Service {
     private LocationRequest locationRequest;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LocationCallback locationCallback;
-    private  NotificationManager notificationManager;
+
     //Binder
     private final IBinder binder =new LocationBinder();
 
-    private  NotificationChannel notificationChannel;
+
     private Tracking tracking;
+
+    private boolean routeEquals=false;
+
+    private Notifications notification;
+
+    private boolean notificationDisplayed = false;
 
 
     @Override
     public void onCreate() {
+        notification=new Notifications(GPSService.this);
         super.onCreate();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
       //  startForeground(1,addNotification());
-        addNotification();
+        //addNotification();
+        notification.addNotification("Location service","Running");
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -92,8 +101,16 @@ public class GPSService extends Service {
                         return;
                     }
                     if (locationResult != null ) {
-                       for(Location location:locationResult.getLocations())
-                            tracking.addTracking(location);
+                       for(Location location:locationResult.getLocations()){
+                           tracking.addTracking(location);
+                           if(tracking.isRepeat() && tracking.getPoints().size()>3){
+                             routeEquals=tracking.checkRoute();
+                               if(routeEquals && !notificationDisplayed){
+                                   notification.addNotification("Alert","te saliste del camino");
+                                   notificationDisplayed=true;
+                               }
+                           }
+                       }
                     }
                 }
             };
@@ -107,36 +124,7 @@ public class GPSService extends Service {
         }
 
 
-    private void addNotification(){
-        String channelId="Location_notification_channel";
-        notificationManager= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent resultIntent=new Intent();
-        PendingIntent pendingIntent=PendingIntent.getActivity(getApplicationContext(),0,resultIntent,PendingIntent.FLAG_MUTABLE);
-        NotificationCompat.Builder builder= new NotificationCompat.Builder(
-                getApplicationContext(),
-                channelId
-        );
-        builder.setSmallIcon(R.drawable.ic_bicycle);
-        builder.setContentTitle("Location service");
-        builder.setDefaults(NotificationCompat.DEFAULT_ALL);
-        builder.setContentText("Running");
-        builder.setContentIntent(pendingIntent);
-        builder.setAutoCancel(false);
-        builder.setPriority(NotificationCompat.PRIORITY_MAX);
 
-        if(Build.VERSION.SDK_INT>Build.VERSION_CODES.O) {
-            if (notificationManager != null && notificationManager.getNotificationChannel(channelId) == null) {
-                NotificationChannel notificationChannel = new NotificationChannel(
-                        channelId,
-                        "Location Service",
-                        NotificationManager.IMPORTANCE_HIGH
-                );
-                notificationChannel.setDescription("This channel is used by location service");
-                notificationManager.createNotificationChannel(notificationChannel);
-            }
-        }
-            startForeground(Constants.LOCATION_SERVICE_ID, builder.build());
-            }
 
     @Override
     public void onDestroy() {
@@ -157,7 +145,7 @@ public class GPSService extends Service {
     private void stopLocationService(){
         tracking.stopTrackingActivity();
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);
-        notificationManager.cancel(1);
+        notification.cancel(1);
     }
 
 
@@ -268,6 +256,12 @@ public class GPSService extends Service {
         }
 
         public Long getBattleId(){return tracking.getBattle();}
+
+        public boolean checkRoute(){return tracking.checkRoute();}
+
+        public List<Location>getCoordinates(){return tracking.getPoints();}
+
+        public boolean isRepeat(){ return tracking.isRepeat();}
 
     }
 

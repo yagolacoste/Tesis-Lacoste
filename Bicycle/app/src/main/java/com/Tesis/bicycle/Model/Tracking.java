@@ -57,8 +57,6 @@ public class Tracking implements Serializable {
 
     private Long battle;
 
-    private boolean routeEquals;
-
     private double tolerance=0.2;
 
 
@@ -72,11 +70,7 @@ public class Tracking implements Serializable {
         description=tracking.getDescription();
         pointsDraw=tracking.getPointsDraw();
         battle=tracking.getBattle();
-//        for(GeoPoint g:pointsDraw){
-//            geoReference=
-//        }
         repeat=true;
-        routeEquals=true;
     }
 
 
@@ -96,16 +90,9 @@ public class Tracking implements Serializable {
             avgSpeed=totalSpeedForRunningAverage/totalTrkPointsWithSpeedForRunningAverage;
         }
         points.add(currentLocation);
-        if(routeEquals){
-            //creonotificacion
-            routeEquals=checkRoute();
-        }else {
-            //creonotificacion
-            }
-
     }
 
-    private boolean checkRoute(){
+    public boolean checkRoute(){
         boolean sigueCamino = true;
 
         GeometryFactory geometryFactory = new GeometryFactory();
@@ -433,6 +420,8 @@ public class Tracking implements Serializable {
     public void setBattle(Long battle) {
         this.battle = battle;
     }
+
+
 
     @Override
     public String toString() {

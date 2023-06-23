@@ -85,7 +85,7 @@ public class OpenStreetMap {
         RoadManager roadManager=new OSRMRoadManager(myOpenMapView.getContext(), "OBP_Tuto/1.0");
         ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
         Road road=roadManager.getRoad((ArrayList<GeoPoint>) points);
-        Polyline roadOverlay=RoadManager.buildRoadOverlay(road, 0x800000FF, 25.0f);
+        Polyline roadOverlay=RoadManager.buildRoadOverlay(road, 0x800000FF, 25f);
         myOpenMapView.getOverlays().add(roadOverlay);
         Marker endMarker=new Marker(myOpenMapView);
         endMarker.setPosition(points.get(points.size()-1));

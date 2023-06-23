@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.text.InputType;
@@ -25,8 +26,11 @@ import com.Tesis.bicycle.ServiceTracking.GPSService;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
 import com.Tesis.bicycle.ViewModel.StatisticsViewModel;
 
+import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.compass.CompassOverlay;
+
+import java.util.stream.Collectors;
 
 public class TrackingDetailActivity extends AppCompatActivity {
 
@@ -48,7 +52,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
             locationBinder= (GPSService.LocationBinder) iBinder;
             openStreetMap.initLayer(TrackingDetailActivity.this,locationBinder.getGeoPoints().get(0));//Probar el delay sino volver a lo viejo
             updateUI();
-            if(locationBinder.getTitle().equals("")){
+            if(locationBinder.isRepeat()){
                 inputNameAndDescription();
             }
         }
@@ -65,6 +69,12 @@ public class TrackingDetailActivity extends AppCompatActivity {
         tv_time_value.setText(String.valueOf(locationBinder.getTimeString()));
         tv_date_value.setText(String.valueOf(locationBinder.getTimeCreated()));
         openStreetMap.draw(locationBinder.getGeoPoints());
+        if(locationBinder.isRepeat()){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+                openStreetMap.draw(locationBinder.getTrkPoints().stream().map(p->new GeoPoint(p.getLatitude(),p.getLongitude())).collect(Collectors.toList()));
+            }
+        }
 //        this.drawRoute(locationBinder.getGeoPoints());
 //        tv_session_value.setText(String.valueOf(locationBinder.));//agregar el id session
     }
