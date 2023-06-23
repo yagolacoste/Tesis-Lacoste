@@ -105,4 +105,7 @@ dependencies {
     //Sweet Alert
     implementation 'com.github.f0ris.sweetalert:library:1.6.2'
 
+    /////////////////Libreria Douglas-Peucker ///////////////////////////
+    implementation 'org.locationtech.jts:jts-core:1.16.1'
+
 }

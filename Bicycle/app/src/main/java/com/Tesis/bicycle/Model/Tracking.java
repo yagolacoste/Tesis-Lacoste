@@ -10,6 +10,11 @@ import com.Tesis.bicycle.Constants;
 import com.google.gson.annotations.SerializedName;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.simplify.DouglasPeuckerSimplifier;
 import org.osmdroid.util.GeoPoint;
 
 import java.io.IOException;
@@ -52,6 +57,10 @@ public class Tracking implements Serializable {
 
     private Long battle;
 
+    private boolean routeEquals;
+
+    private double tolerance=0.2;
+
 
     public Tracking() {
 
@@ -63,12 +72,16 @@ public class Tracking implements Serializable {
         description=tracking.getDescription();
         pointsDraw=tracking.getPointsDraw();
         battle=tracking.getBattle();
+//        for(GeoPoint g:pointsDraw){
+//            geoReference=
+//        }
         repeat=true;
+        routeEquals=true;
     }
 
 
-    public void addTracking(Location currentLocation) {
 
+    public void addTracking(Location currentLocation) {
         if(points.isEmpty()) {
             avgSpeed=currentLocation.getSpeed();
         }else{
@@ -83,6 +96,73 @@ public class Tracking implements Serializable {
             avgSpeed=totalSpeedForRunningAverage/totalTrkPointsWithSpeedForRunningAverage;
         }
         points.add(currentLocation);
+        if(routeEquals){
+            //creonotificacion
+            routeEquals=checkRoute();
+        }else {
+            //creonotificacion
+            }
+
+    }
+
+    private boolean checkRoute(){
+        boolean sigueCamino = true;
+
+        GeometryFactory geometryFactory = new GeometryFactory();
+        Coordinate[] coordenadas = new Coordinate[points.size()];
+
+        for (int i = 0; i < points.size(); i++) {
+            Location ubicacion = points.get(i);
+            coordenadas[i] = new Coordinate(ubicacion.getLatitude(), ubicacion.getLongitude());
+        }
+
+        LineString trayectoriaOriginal = geometryFactory.createLineString(coordenadas);
+
+        double tolerance = 0.001; // Valor de tolerancia para la simplificación
+
+        DouglasPeuckerSimplifier simplifier = new DouglasPeuckerSimplifier(trayectoriaOriginal);
+        simplifier.setDistanceTolerance(tolerance);
+
+        LineString trayectoriaSimplificada = (LineString) simplifier.getResultGeometry();
+
+        Coordinate[] puntosSimplificados = trayectoriaSimplificada.getCoordinates();
+
+        ArrayList<Coordinate> trayectoriaSimplificadaLista = new ArrayList<>();
+        for (Coordinate punto : puntosSimplificados) {
+            trayectoriaSimplificadaLista.add(new Coordinate(punto.x, punto.y));
+        }
+
+
+        if (trayectoriaSimplificadaLista.size() <= pointsDraw.size() ||trayectoriaSimplificadaLista.size() > pointsDraw.size() ) {
+            for (int i = 0; i < trayectoriaSimplificadaLista.size(); i++) {
+                Coordinate puntoSimplificado = trayectoriaSimplificadaLista.get(i);
+                Coordinate puntoEsperado = new Coordinate(pointsDraw.get(i).getLatitude(),pointsDraw.get(i).getLongitude());
+
+                // Calcular la distancia entre los puntos
+                float distancia = calcularDistanciaEntrePuntos(puntoSimplificado, puntoEsperado);
+
+                // Verificar si la distancia supera un umbral permitido
+                if (distancia > 0.15f) {
+                    sigueCamino = false;
+                    break;
+                }
+            }
+        } else {
+            sigueCamino = false;
+        }
+//
+//        if (sigueCamino) {
+//            // El usuario está siguiendo el camino esperado
+//            // Resto de tu lógica aquí...
+//        } else {
+//            // El usuario se ha desviado del camino esperado
+//            // Mostrar una notificación, enviar una alerta, etc.
+//        }
+        return sigueCamino;
+    }
+
+    private float calcularDistanciaEntrePuntos(Coordinate puntoSimplificado, Coordinate puntoEsperado) {
+        return (float) puntoSimplificado.distance(puntoEsperado);
     }
 
     public Location getLastPoint(){
