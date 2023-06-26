@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -52,7 +53,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
             locationBinder= (GPSService.LocationBinder) iBinder;
             openStreetMap.initLayer(TrackingDetailActivity.this,locationBinder.getGeoPoints().get(0));//Probar el delay sino volver a lo viejo
             updateUI();
-            if(locationBinder.isRepeat()){
+            if(!locationBinder.isRepeat()){
                 inputNameAndDescription();
             }
         }
@@ -71,8 +72,10 @@ public class TrackingDetailActivity extends AppCompatActivity {
         openStreetMap.draw(locationBinder.getGeoPoints());
         if(locationBinder.isRepeat()){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-
+                int color = Color.argb(128, 255, 0, 0);
+                openStreetMap.setColor(color);
                 openStreetMap.draw(locationBinder.getTrkPoints().stream().map(p->new GeoPoint(p.getLatitude(),p.getLongitude())).collect(Collectors.toList()));
+
             }
         }
 //        this.drawRoute(locationBinder.getGeoPoints());

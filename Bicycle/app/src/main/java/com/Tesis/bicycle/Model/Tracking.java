@@ -57,7 +57,6 @@ public class Tracking implements Serializable {
 
     private Long battle;
 
-    private double tolerance=0.2;
 
 
     public Tracking() {
@@ -92,7 +91,7 @@ public class Tracking implements Serializable {
         points.add(currentLocation);
     }
 
-    public boolean checkRoute(){
+    public boolean trackingRoute(){
         boolean sigueCamino = true;
 
         GeometryFactory geometryFactory = new GeometryFactory();
@@ -105,7 +104,7 @@ public class Tracking implements Serializable {
 
         LineString trayectoriaOriginal = geometryFactory.createLineString(coordenadas);
 
-        double tolerance = 0.001; // Valor de tolerancia para la simplificación
+        double tolerance = 0.0001; // Valor de tolerancia para la simplificación
 
         DouglasPeuckerSimplifier simplifier = new DouglasPeuckerSimplifier(trayectoriaOriginal);
         simplifier.setDistanceTolerance(tolerance);
@@ -129,7 +128,7 @@ public class Tracking implements Serializable {
                 float distancia = calcularDistanciaEntrePuntos(puntoSimplificado, puntoEsperado);
 
                 // Verificar si la distancia supera un umbral permitido
-                if (distancia > 0.15f) {
+                if (distancia > 0.20f) {
                     sigueCamino = false;
                     break;
                 }
@@ -137,14 +136,7 @@ public class Tracking implements Serializable {
         } else {
             sigueCamino = false;
         }
-//
-//        if (sigueCamino) {
-//            // El usuario está siguiendo el camino esperado
-//            // Resto de tu lógica aquí...
-//        } else {
-//            // El usuario se ha desviado del camino esperado
-//            // Mostrar una notificación, enviar una alerta, etc.
-//        }
+
         return sigueCamino;
     }
 

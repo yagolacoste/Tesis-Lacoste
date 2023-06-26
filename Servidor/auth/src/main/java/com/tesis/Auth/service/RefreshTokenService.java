@@ -45,7 +45,7 @@ public class RefreshTokenService implements IRefreshTokenService{
         if (token.getExpiryDate().compareTo(Instant.now()) < 0) {
 //            refreshTokenRepository.delete(token);
             RefreshToken refreshToken=createRefreshToken(token.getUser().getId());
-            refreshTokenRepository.delete(token);
+ //           refreshTokenRepository.delete(token);
              return refreshToken;
         }
 

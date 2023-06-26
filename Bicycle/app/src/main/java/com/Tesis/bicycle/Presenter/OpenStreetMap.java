@@ -1,6 +1,8 @@
 package com.Tesis.bicycle.Presenter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.location.Location;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
@@ -29,11 +31,19 @@ public class OpenStreetMap {
     private MapView myOpenMapView;
     private CompassOverlay mCompassOverlay;
     private  Marker startMarker;
-
+    private Polyline roadOverlay;
     private Context context;
+
+    private RoadManager roadManager;
+
+    private int color =Color.argb(128, 0, 0, 255);
+
+
 
     public OpenStreetMap(MapView myOpenMapView) {
         this.myOpenMapView = myOpenMapView;
+        roadManager=new OSRMRoadManager(myOpenMapView.getContext(), "OBP_Tuto/1.0");
+        ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
     }
 
     public void initLayer(Context ctx, GeoPoint location) {
@@ -82,10 +92,11 @@ public class OpenStreetMap {
         Marker startMarker=new Marker(myOpenMapView);
         startMarker.setPosition(points.get(0));
         myOpenMapView.getOverlays().add(startMarker);
-        RoadManager roadManager=new OSRMRoadManager(myOpenMapView.getContext(), "OBP_Tuto/1.0");
-        ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
         Road road=roadManager.getRoad((ArrayList<GeoPoint>) points);
-        Polyline roadOverlay=RoadManager.buildRoadOverlay(road, 0x800000FF, 25f);
+
+
+        roadOverlay=RoadManager.buildRoadOverlay(road, color, 25f);
+//        roadOverlay.setColor(Color.GREEN);
         myOpenMapView.getOverlays().add(roadOverlay);
         Marker endMarker=new Marker(myOpenMapView);
         endMarker.setPosition(points.get(points.size()-1));
@@ -93,5 +104,59 @@ public class OpenStreetMap {
         myOpenMapView.invalidate();
     }
 
+    public Polyline getRoadOverlay() {
+        return roadOverlay;
+    }
 
+    public void setRoadOverlay(Polyline roadOverlay) {
+        this.roadOverlay = roadOverlay;
+    }
+
+    public MapView getMyOpenMapView() {
+        return myOpenMapView;
+    }
+
+    public void setMyOpenMapView(MapView myOpenMapView) {
+        this.myOpenMapView = myOpenMapView;
+    }
+
+    public CompassOverlay getmCompassOverlay() {
+        return mCompassOverlay;
+    }
+
+    public void setmCompassOverlay(CompassOverlay mCompassOverlay) {
+        this.mCompassOverlay = mCompassOverlay;
+    }
+
+    public Marker getStartMarker() {
+        return startMarker;
+    }
+
+    public void setStartMarker(Marker startMarker) {
+        this.startMarker = startMarker;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public RoadManager getRoadManager() {
+        return roadManager;
+    }
+
+    public void setRoadManager(RoadManager roadManager) {
+        this.roadManager = roadManager;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
 }
