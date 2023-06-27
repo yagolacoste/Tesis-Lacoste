@@ -93,10 +93,7 @@ public class OpenStreetMap {
         startMarker.setPosition(points.get(0));
         myOpenMapView.getOverlays().add(startMarker);
         Road road=roadManager.getRoad((ArrayList<GeoPoint>) points);
-
-
         roadOverlay=RoadManager.buildRoadOverlay(road, color, 25f);
-//        roadOverlay.setColor(Color.GREEN);
         myOpenMapView.getOverlays().add(roadOverlay);
         Marker endMarker=new Marker(myOpenMapView);
         endMarker.setPosition(points.get(points.size()-1));

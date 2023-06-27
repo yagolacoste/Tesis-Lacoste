@@ -103,14 +103,14 @@ public class GPSService extends Service {
                     if (locationResult != null ) {
                        for(Location location:locationResult.getLocations()){
                            tracking.addTracking(location);
-                           if(tracking.isRepeat() && tracking.getPoints().size()>3){
-                             routeEquals=tracking.trackingRoute();
-                               if(routeEquals && !notificationDisplayed){
-                                   tracking.setRepeat(false);
+//                           if(tracking.isRepeat() && tracking.getPoints().size()>3){
+                             routeEquals=tracking.trackingRoute(location);
+                               if(!routeEquals && !notificationDisplayed){
+                                   //tracking.setRepeat(false);
                                    notification.addNotification("Alert","te saliste del camino");
                                    notificationDisplayed=true;
                                }
-                           }
+//                           }
                        }
                     }
                 }
@@ -258,7 +258,7 @@ public class GPSService extends Service {
 
         public Long getBattleId(){return tracking.getBattle();}
 
-        public boolean trackingRoute(){return tracking.trackingRoute();}
+        public boolean trackingRoute(Location location){return tracking.trackingRoute(location);}
 
         public List<Location>getCoordinates(){return tracking.getPoints();}
 

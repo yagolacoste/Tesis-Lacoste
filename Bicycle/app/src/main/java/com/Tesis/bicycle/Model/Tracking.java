@@ -70,6 +70,9 @@ public class Tracking implements Serializable {
         pointsDraw=tracking.getPointsDraw();
         battle=tracking.getBattle();
         repeat=true;
+//        for(int i=0; i<pointsDraw.size();i++){
+//            geoReference.add()
+//        }
     }
 
 
@@ -91,54 +94,118 @@ public class Tracking implements Serializable {
         points.add(currentLocation);
     }
 
-    public boolean trackingRoute(){
-        boolean sigueCamino = true;
+    public boolean trackingRoute(Location location){
+        List<Location>points=convertGeoPoint();
 
-        GeometryFactory geometryFactory = new GeometryFactory();
-        Coordinate[] coordenadas = new Coordinate[points.size()];
-
-        for (int i = 0; i < points.size(); i++) {
-            Location ubicacion = points.get(i);
-            coordenadas[i] = new Coordinate(ubicacion.getLatitude(), ubicacion.getLongitude());
-        }
-
-        LineString trayectoriaOriginal = geometryFactory.createLineString(coordenadas);
-
-        double tolerance = 0.0001; // Valor de tolerancia para la simplificación
-
-        DouglasPeuckerSimplifier simplifier = new DouglasPeuckerSimplifier(trayectoriaOriginal);
-        simplifier.setDistanceTolerance(tolerance);
-
-        LineString trayectoriaSimplificada = (LineString) simplifier.getResultGeometry();
-
-        Coordinate[] puntosSimplificados = trayectoriaSimplificada.getCoordinates();
-
-        ArrayList<Coordinate> trayectoriaSimplificadaLista = new ArrayList<>();
-        for (Coordinate punto : puntosSimplificados) {
-            trayectoriaSimplificadaLista.add(new Coordinate(punto.x, punto.y));
-        }
-
-
-        if (trayectoriaSimplificadaLista.size() <= pointsDraw.size() ||trayectoriaSimplificadaLista.size() > pointsDraw.size() ) {
-            for (int i = 0; i < trayectoriaSimplificadaLista.size(); i++) {
-                Coordinate puntoSimplificado = trayectoriaSimplificadaLista.get(i);
-                Coordinate puntoEsperado = new Coordinate(pointsDraw.get(i).getLatitude(),pointsDraw.get(i).getLongitude());
-
-                // Calcular la distancia entre los puntos
-                float distancia = calcularDistanciaEntrePuntos(puntoSimplificado, puntoEsperado);
-
-                // Verificar si la distancia supera un umbral permitido
-                if (distancia > 0.20f) {
-                    sigueCamino = false;
-                    break;
-                }
+        int nearestIndex = findNearestPointIndex(location);
+        if (nearestIndex != -1) {
+            // Verificar si la posición actual se encuentra dentro del umbral de proximidad
+            double distance = calculateDistance(location, points.get(nearestIndex));
+            if (distance <= 0.700) {
+                return true; // El objeto está siguiendo la ruta correctamente
             }
-        } else {
-            sigueCamino = false;
         }
 
-        return sigueCamino;
+        return false;
     }
+
+    private int findNearestPointIndex(Location currentLocation) {
+        double minDistance = Double.MAX_VALUE;
+        int nearestIndex = -1;
+
+        for (int i = 0; i < convertGeoPoint().size(); i++) {
+            double distance = calculateDistance(currentLocation, convertGeoPoint().get(i));
+            if (distance < minDistance) {
+                minDistance = distance;
+                nearestIndex = i;
+            }
+        }
+
+        return nearestIndex;
+    }
+
+    private List<Location> convertGeoPoint() {
+        List<Location> result=new ArrayList<>();
+        for(GeoPoint g:getPointsDraw()){
+            Location location=new Location("");
+            double latitude = g.getLatitudeE6() / 1E6;
+            double longitude = g.getLongitudeE6() / 1E6;
+            location.setLatitude(latitude);
+            location.setLongitude(longitude);
+            result.add(location);
+        }
+        return result;
+    }
+//distancia en metros
+    public double calculateDistance(Location currentLocation,Location point){
+        double lat1 = Math.toRadians(currentLocation.getLatitude());
+        double lon1 = Math.toRadians(currentLocation.getLongitude());
+        double lat2 = Math.toRadians(point.getLatitude());
+        double lon2 = Math.toRadians(point.getLongitude());
+
+        double earthRadius = 6371 * 1000; // Radio de la Tierra en metros
+
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        double distance = earthRadius * c;
+
+        return distance;
+    }
+//    public boolean trackingRoute(){
+////        boolean sigueCamino = true;
+////
+////        GeometryFactory geometryFactory = new GeometryFactory();
+////        Coordinate[] coordenadas = new Coordinate[points.size()];
+////
+////        for (int i = 0; i < points.size(); i++) {
+////            Location ubicacion = points.get(i);
+////            coordenadas[i] = new Coordinate(ubicacion.getLatitude(), ubicacion.getLongitude());
+////        }
+////
+////        LineString trayectoriaOriginal = geometryFactory.createLineString(coordenadas);
+////
+////        double tolerance = 0.0001; // Valor de tolerancia para la simplificación
+////
+////        DouglasPeuckerSimplifier simplifier = new DouglasPeuckerSimplifier(trayectoriaOriginal);
+////        simplifier.setDistanceTolerance(tolerance);
+////
+////        LineString trayectoriaSimplificada = (LineString) simplifier.getResultGeometry();
+////
+////        Coordinate[] puntosSimplificados = trayectoriaSimplificada.getCoordinates();
+////
+////        ArrayList<Coordinate> trayectoriaSimplificadaLista = new ArrayList<>();
+////        for (Coordinate punto : puntosSimplificados) {
+////            trayectoriaSimplificadaLista.add(new Coordinate(punto.x, punto.y));
+////        }
+////
+////
+////        if (trayectoriaSimplificadaLista.size() <= pointsDraw.size() ||trayectoriaSimplificadaLista.size() > pointsDraw.size() ) {
+////            for (int i = 0; i < trayectoriaSimplificadaLista.size(); i++) {
+////                Coordinate puntoSimplificado = trayectoriaSimplificadaLista.get(i);
+////                Coordinate puntoEsperado = new Coordinate(pointsDraw.get(i).getLatitude(),pointsDraw.get(i).getLongitude());
+////
+////                // Calcular la distancia entre los puntos
+////                float distancia = calcularDistanciaEntrePuntos(puntoSimplificado, puntoEsperado);
+////
+////                // Verificar si la distancia supera un umbral permitido
+////                if (distancia > 0.20f) {
+////                    sigueCamino = false;
+////                    break;
+////                }
+////            }
+////        } else {
+////            sigueCamino = false;
+////        }
+////
+////        return sigueCamino;
+//    }
 
     private float calcularDistanciaEntrePuntos(Coordinate puntoSimplificado, Coordinate puntoEsperado) {
         return (float) puntoSimplificado.distance(puntoEsperado);
