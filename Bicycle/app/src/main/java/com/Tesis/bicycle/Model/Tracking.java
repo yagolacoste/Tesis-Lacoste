@@ -57,6 +57,8 @@ public class Tracking implements Serializable {
 
     private Long battle;
 
+    private boolean equalsRoutes=true;
+
 
 
     public Tracking() {
@@ -100,8 +102,9 @@ public class Tracking implements Serializable {
         int nearestIndex = findNearestPointIndex(location);
         if (nearestIndex != -1) {
             // Verificar si la posición actual se encuentra dentro del umbral de proximidad
-            double distance = calculateDistance(location, points.get(nearestIndex));
-            if (distance <= 0.700) {
+            //double distance = calculateDistance(location, points.get(nearestIndex));
+            float distance =location.distanceTo( points.get(nearestIndex));
+            if (distance <= 15.0f) {
                 return true; // El objeto está siguiendo la ruta correctamente
             }
         }
@@ -110,11 +113,12 @@ public class Tracking implements Serializable {
     }
 
     private int findNearestPointIndex(Location currentLocation) {
-        double minDistance = Double.MAX_VALUE;
+        float minDistance = Float.MAX_VALUE;
         int nearestIndex = -1;
 
         for (int i = 0; i < convertGeoPoint().size(); i++) {
-            double distance = calculateDistance(currentLocation, convertGeoPoint().get(i));
+            //double distance = calculateDistance(currentLocation, convertGeoPoint().get(i));
+            float distance=currentLocation.distanceTo(convertGeoPoint().get(i));
             if (distance < minDistance) {
                 minDistance = distance;
                 nearestIndex = i;
@@ -224,9 +228,7 @@ public class Tracking implements Serializable {
     public void startTrackingActivity(){
         timeCreated=new Date(System.currentTimeMillis());
         timeStarted=new Date(System.currentTimeMillis());
-        if(id==null)
-            id= RandomStringUtils.random(Constants.MAX_CARACTER_ID,true,true);
-    }
+        }
 
     public void stopTrackingActivity(){
         timeStopped=new Date(System.currentTimeMillis());
@@ -321,12 +323,12 @@ public class Tracking implements Serializable {
 
     public List<GeoPoint> getGeoPoints(){
         if(!isRepeat()){
-        List<GeoPoint>geoPoints=new ArrayList<>();
-        for (Location l:points){
-            GeoPoint g=new GeoPoint(l.getLatitude(),l.getLongitude());
-            geoPoints.add(g);
-            }
-            return geoPoints;
+            List<GeoPoint>geoPoints=new ArrayList<>();
+            for (Location l:points){
+                GeoPoint g=new GeoPoint(l.getLatitude(),l.getLongitude());
+                geoPoints.add(g);
+                }
+                return geoPoints;
         }
         return pointsDraw;
     }
@@ -481,6 +483,21 @@ public class Tracking implements Serializable {
     }
 
 
+    public List<Location> getGeoReference() {
+        return geoReference;
+    }
+
+    public void setGeoReference(List<Location> geoReference) {
+        this.geoReference = geoReference;
+    }
+
+    public boolean isEqualsRoutes() {
+        return equalsRoutes;
+    }
+
+    public void setEqualsRoutes(boolean equalsRoutes) {
+        this.equalsRoutes = equalsRoutes;
+    }
 
     @Override
     public String toString() {
@@ -504,4 +521,6 @@ public class Tracking implements Serializable {
                 ", repeat=" + repeat +
                 '}';
     }
+
+
 }
