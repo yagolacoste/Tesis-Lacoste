@@ -76,7 +76,6 @@ public class StatisticsService implements IStatisticsService {
         if(statisticsRequestDto.getBattleId()!=null){
             battleService.updateBattleParticipation(appUser.getId(),statisticsRequestDto.getBattleId(),statisticsId);
         }
-
     }
 
     @Override

@@ -51,6 +51,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             locationBinder= (GPSService.LocationBinder) iBinder;
+            openStreetMap.initLayer(TrackingDetailActivity.this,locationBinder.getGeoPoints().get(0));
             filterData();//filtro la data para ver si se hizo un camino o estan correcto los datos
             updateUI();
         }
@@ -69,39 +70,48 @@ public class TrackingDetailActivity extends AppCompatActivity {
 //            locationBinder.setId(RandomStringUtils.random(Constants.MAX_CARACTER_ID,true,true));
 //            inputNameAndDescription();
 //            }
-        if(!locationBinder.isRepeat() || !locationBinder.getEqualsRoutes()){
+        if(checkConditionRoutes()){
             locationBinder.setId(RandomStringUtils.random(Constants.MAX_CARACTER_ID,true,true));
             inputNameAndDescription();
+            locationBinder.setBattle(null);
         }
     }
 
     private void updateUI() {
         openStreetMap.initLayer(TrackingDetailActivity.this,locationBinder.getGeoPoints().get(0));
-        tvTitleTrackingDetail.setText(String.valueOf(locationBinder.getTitle()));
-        tvDescriptionTrackingDetail.setText(String.valueOf(locationBinder.getDescription()));
         tvDistanceTrackingDetail.setText(String.valueOf(locationBinder.getDistanceString()));
         tvSpeedTrackingDetail.setText(String.valueOf(locationBinder.getAvgSpeedString()));
         tvTimeTrackingDetail.setText(String.valueOf(locationBinder.getTimeString()));
         tvDateTrackingDetail.setText(String.valueOf(locationBinder.getTimeCreated()));
         openStreetMap.draw(locationBinder.getGeoPoints());
-         if(locationBinder.isRepeat()){
-            //updateUI();
-//            openStreetMap.draw(locationBinder.getGeoPoints());
+//         if(locationBinder.isRepeat()){
+//            //updateUI();
+////            openStreetMap.draw(locationBinder.getGeoPoints());
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                int color = Color.argb(128, 255, 0, 0);
+//                openStreetMap.setColor(color);
+//                openStreetMap.draw(locationBinder.getTrkPoints().stream().map(p->new GeoPoint(p.getLatitude(),p.getLongitude())).collect(Collectors.toList()));
+//            }
+//        }else if(locationBinder.isRepeat() && !locationBinder.getEqualsRoutes()){
+//            // updateUI();
+////            openStreetMap.draw(locationBinder.getGeoPoints());
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                int color = Color.argb(128, 255, 0, 0);
+//                openStreetMap.setColor(color);
+//                openStreetMap.draw(locationBinder.getTrkPoints().stream().map(p->new GeoPoint(p.getLatitude(),p.getLongitude())).collect(Collectors.toList()));
+//
+//            }
+//        }
+        if(checkConditionRoutes()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 int color = Color.argb(128, 255, 0, 0);
                 openStreetMap.setColor(color);
-                openStreetMap.draw(locationBinder.getTrkPoints().stream().map(p->new GeoPoint(p.getLatitude(),p.getLongitude())).collect(Collectors.toList()));
-            }
-        }else if(locationBinder.isRepeat() && !locationBinder.getEqualsRoutes()){
-
-            // updateUI();
-//            openStreetMap.draw(locationBinder.getGeoPoints());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                int color = Color.argb(128, 255, 0, 0);
-                openStreetMap.setColor(color);
-                openStreetMap.draw(locationBinder.getTrkPoints().stream().map(p->new GeoPoint(p.getLatitude(),p.getLongitude())).collect(Collectors.toList()));
+                openStreetMap.draw(locationBinder.getTrkPoints().stream().map(p -> new GeoPoint(p.getLatitude(), p.getLongitude())).collect(Collectors.toList()));
+                locationBinder.setRepeat(false);
             }
         }
+        tvTitleTrackingDetail.setText(String.valueOf(locationBinder.getTitle()));
+        tvDescriptionTrackingDetail.setText(String.valueOf(locationBinder.getDescription()));
 
     }
         //       openStreetMap.draw(locationBinder.getGeoPoints());
@@ -116,6 +126,10 @@ public class TrackingDetailActivity extends AppCompatActivity {
 //        this.drawRoute(locationBinder.getGeoPoints());
 //        tv_session_value.setText(String.valueOf(locationBinder.));//agregar el id session
 
+    private boolean checkConditionRoutes(){
+        return (!locationBinder.isRepeat() || (locationBinder.isRepeat() && !locationBinder.getEqualsRoutes()));
+    }
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,7 +146,6 @@ public class TrackingDetailActivity extends AppCompatActivity {
 
     private void init(){
         //Inicializo los textview
-
         tvTitleTrackingDetail=findViewById(R.id.tvTitleTrackingDetail);
         tvDescriptionTrackingDetail=findViewById(R.id.tvDescriptionTrackingDetail);
         tvDistanceTrackingDetail=findViewById(R.id.tvDistanceTrackingDetail);
@@ -209,6 +222,8 @@ public class TrackingDetailActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 locationBinder.setTitle(name.getText().toString());
                 locationBinder.setDescription(description.getText().toString());
+                tvTitleTrackingDetail.setText(String.valueOf(locationBinder.getTitle()));
+                tvDescriptionTrackingDetail.setText(String.valueOf(locationBinder.getDescription()));
             }
         });
         myDialog.show();

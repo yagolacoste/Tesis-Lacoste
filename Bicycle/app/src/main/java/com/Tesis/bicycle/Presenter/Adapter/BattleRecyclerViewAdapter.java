@@ -61,16 +61,16 @@ public class BattleRecyclerViewAdapter extends RecyclerView.Adapter<BattleRecycl
         holder.txtValueCantParticipant.setText(String.valueOf(battles.get(position).getCantParticipant()));
         holder.status.setText(battles.get(position).getStatus());
         if(battles.get(position).getStatus().equals(Status.FINISHED.getStatus())){
-            holder.status.setChipBackgroundColor(ColorStateList.valueOf(R.color.red));
+            holder.status.setChipBackgroundColor(ColorStateList.valueOf(Color.RED));
             holder.itemView.setOnClickListener(null);
         }
         else
             if(battles.get(position).getStatus().equals(Status.PROGRESS.getStatus())){
-                holder.status.setChipBackgroundColor(ColorStateList.valueOf(R.color.blueLight));
+                holder.status.setChipBackgroundColor(ColorStateList.valueOf(Color.BLUE));
                 holder.itemView.setOnClickListener(null);
             }
             else {
-                holder.status.setChipBackgroundColor(ColorStateList.valueOf(R.color.grey));
+                holder.status.setChipBackgroundColor(ColorStateList.valueOf(Color.GRAY));
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

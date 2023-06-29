@@ -52,14 +52,13 @@ public class Tracking implements Serializable {
     private transient List<Location> points=new ArrayList<>();//puntos que captura el gps
     private transient List<GeoPoint> pointsDraw=new ArrayList<>();
 
-    private List<Location> geoReference=new ArrayList<>();
     private boolean repeat=false;
 
     private Long battle;
 
     private boolean equalsRoutes=true;
 
-
+    private Location currentLocation;
 
     public Tracking() {
 
@@ -94,6 +93,7 @@ public class Tracking implements Serializable {
             avgSpeed=totalSpeedForRunningAverage/totalTrkPointsWithSpeedForRunningAverage;
         }
         points.add(currentLocation);
+        this.currentLocation=currentLocation;
     }
 
     public boolean trackingRoute(Location location){
@@ -104,7 +104,7 @@ public class Tracking implements Serializable {
             // Verificar si la posición actual se encuentra dentro del umbral de proximidad
             //double distance = calculateDistance(location, points.get(nearestIndex));
             float distance =location.distanceTo( points.get(nearestIndex));
-            if (distance <= 15.0f) {
+            if (distance <= 25.0f) {
                 return true; // El objeto está siguiendo la ruta correctamente
             }
         }
@@ -216,9 +216,9 @@ public class Tracking implements Serializable {
     }
 
     public Location getLastPoint(){
-        if(!points.isEmpty())
-            return points.get(points.size()-1);
-        return null;
+//        if(!points.isEmpty())
+//            return points.get(points.size()-1);
+        return currentLocation;
     }
 
     public boolean isCreated(){
@@ -482,14 +482,6 @@ public class Tracking implements Serializable {
         this.battle = battle;
     }
 
-
-    public List<Location> getGeoReference() {
-        return geoReference;
-    }
-
-    public void setGeoReference(List<Location> geoReference) {
-        this.geoReference = geoReference;
-    }
 
     public boolean isEqualsRoutes() {
         return equalsRoutes;

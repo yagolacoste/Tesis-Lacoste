@@ -57,7 +57,7 @@
         <activity
             android:name=".Activity.ListViewActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            />
         <activity
             android:name=".Activity.TrackingActivity"
             android:exported="true"
@@ -76,32 +76,32 @@
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
             android:name=".Presenter.ListView.BattleListView"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:exported="true"/>
+<!--            android:theme="@style/Theme.AppCompat.NoActionBar"/>-->
         <activity
             android:name=".Presenter.ListView.RouteListViewActivity"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:exported="true"/>
+<!--            android:theme="@style/Theme.AppCompat.NoActionBar"/>-->
         <activity
             android:name=".Presenter.ListView.StatisticsListViewActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+           />
         <activity
             android:name=".Presenter.ListView.UserListViewActivity"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:exported="true"/>
+<!--            android:theme="@style/Theme.AppCompat.NoActionBar"/>-->
         <activity
             android:name=".Activity.AddFriendActivity"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:exported="true"/>
+<!--            android:theme="@style/Theme.AppCompat.NoActionBar"/>-->
         <activity
             android:name=".Activity.NewBattleActivity"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:exported="true"/>
+<!--            android:theme="@style/Theme.AppCompat.NoActionBar"/>-->
         <activity
             android:name=".Presenter.ListView.RankingListViewActivity"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:exported="true"/>
+<!--            android:theme="@style/Theme.AppCompat.NoActionBar"/>-->
     </application>
 
 </manifest>

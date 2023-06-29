@@ -253,7 +253,6 @@ public class TrackingActivity extends Activity {
         repeat = new Tracking();
         if (action.equals(Constants.REPLAY_MY_ROUTE)) {
             routeDetailsDto = (RouteDetailsDto) getIntent().getSerializableExtra("Route");
-
             repeat.setBattle(null);
         } else if (action.equals(Constants.REPLAY_BATTLE)) {
             BattleDto battleDto = (BattleDto) getIntent().getSerializableExtra(Constants.BATTLE_ITEM);
