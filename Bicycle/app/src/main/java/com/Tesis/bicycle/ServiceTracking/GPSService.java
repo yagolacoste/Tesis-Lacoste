@@ -104,9 +104,8 @@ public class GPSService extends Service {
                            tracking.addTracking(location);
 //                           if(tracking.isRepeat() && tracking.getPoints().size()>3){
                             if(tracking.isRepeat()){
-                             tracking.setEqualsRoutes(tracking.trackingRoute(location));
-                               if(!tracking.isEqualsRoutes() && !notificationDisplayed){
-//                                   tracking.setRepeat(false);
+                             tracking.setDeviation(tracking.trackingRoute(location));
+                               if(!tracking.isDeviation() && !notificationDisplayed){
                                    notification.addNotification("Alert","te saliste del camino");
                                    notificationDisplayed=true;
                                }
@@ -263,7 +262,7 @@ public class GPSService extends Service {
         public List<Location>getCoordinates(){return tracking.getPoints();}
 
         public boolean isRepeat(){ return tracking.isRepeat();}
-        public boolean getEqualsRoutes(){ return tracking.isEqualsRoutes();}
+        public boolean isDeviation(){ return tracking.isDeviation();}
         public void setId(String id){tracking.setId(id);}
 
         public void setBattle(Long id){tracking.setBattle(id);}

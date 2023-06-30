@@ -50,13 +50,13 @@ public class Tracking implements Serializable {
     private int totalTrkPointsWithSpeedForRunningAverage = 0;
     private long timeInMilliseconds=0;
     private transient List<Location> points=new ArrayList<>();//puntos que captura el gps
-    private transient List<GeoPoint> pointsDraw=new ArrayList<>();
+    private transient List<GeoPoint> routeReplay=new ArrayList<>();
 
     private boolean repeat=false;
 
     private Long battle;
 
-    private boolean equalsRoutes=true;
+    private boolean deviation=true;
 
     private Location currentLocation;
 
@@ -68,12 +68,9 @@ public class Tracking implements Serializable {
         id=tracking.getId();
         title=tracking.getTitle();
         description=tracking.getDescription();
-        pointsDraw=tracking.getPointsDraw();
+        routeReplay=tracking.getRouteReplay();
         battle=tracking.getBattle();
         repeat=true;
-//        for(int i=0; i<pointsDraw.size();i++){
-//            geoReference.add()
-//        }
     }
 
 
@@ -97,7 +94,7 @@ public class Tracking implements Serializable {
     }
 
     public boolean trackingRoute(Location location){
-        List<Location>points=convertGeoPoint();
+        List<Location>points=convertRouteReplay();
 
         int nearestIndex = findNearestPointIndex(location);
         if (nearestIndex != -1) {
@@ -116,9 +113,9 @@ public class Tracking implements Serializable {
         float minDistance = Float.MAX_VALUE;
         int nearestIndex = -1;
 
-        for (int i = 0; i < convertGeoPoint().size(); i++) {
+        for (int i = 0; i < convertRouteReplay().size(); i++) {
             //double distance = calculateDistance(currentLocation, convertGeoPoint().get(i));
-            float distance=currentLocation.distanceTo(convertGeoPoint().get(i));
+            float distance=currentLocation.distanceTo(convertRouteReplay().get(i));
             if (distance < minDistance) {
                 minDistance = distance;
                 nearestIndex = i;
@@ -128,9 +125,9 @@ public class Tracking implements Serializable {
         return nearestIndex;
     }
 
-    private List<Location> convertGeoPoint() {
+    private List<Location> convertRouteReplay() {
         List<Location> result=new ArrayList<>();
-        for(GeoPoint g:getPointsDraw()){
+        for(GeoPoint g:getRouteReplay()){
             Location location=new Location("");
             double latitude = g.getLatitudeE6() / 1E6;
             double longitude = g.getLongitudeE6() / 1E6;
@@ -140,80 +137,7 @@ public class Tracking implements Serializable {
         }
         return result;
     }
-//distancia en metros
-    public double calculateDistance(Location currentLocation,Location point){
-        double lat1 = Math.toRadians(currentLocation.getLatitude());
-        double lon1 = Math.toRadians(currentLocation.getLongitude());
-        double lat2 = Math.toRadians(point.getLatitude());
-        double lon2 = Math.toRadians(point.getLongitude());
 
-        double earthRadius = 6371 * 1000; // Radio de la Tierra en metros
-
-        double dLat = Math.toRadians(lat2 - lat1);
-        double dLon = Math.toRadians(lon2 - lon1);
-
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
-                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
-                * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-        double distance = earthRadius * c;
-
-        return distance;
-    }
-//    public boolean trackingRoute(){
-////        boolean sigueCamino = true;
-////
-////        GeometryFactory geometryFactory = new GeometryFactory();
-////        Coordinate[] coordenadas = new Coordinate[points.size()];
-////
-////        for (int i = 0; i < points.size(); i++) {
-////            Location ubicacion = points.get(i);
-////            coordenadas[i] = new Coordinate(ubicacion.getLatitude(), ubicacion.getLongitude());
-////        }
-////
-////        LineString trayectoriaOriginal = geometryFactory.createLineString(coordenadas);
-////
-////        double tolerance = 0.0001; // Valor de tolerancia para la simplificación
-////
-////        DouglasPeuckerSimplifier simplifier = new DouglasPeuckerSimplifier(trayectoriaOriginal);
-////        simplifier.setDistanceTolerance(tolerance);
-////
-////        LineString trayectoriaSimplificada = (LineString) simplifier.getResultGeometry();
-////
-////        Coordinate[] puntosSimplificados = trayectoriaSimplificada.getCoordinates();
-////
-////        ArrayList<Coordinate> trayectoriaSimplificadaLista = new ArrayList<>();
-////        for (Coordinate punto : puntosSimplificados) {
-////            trayectoriaSimplificadaLista.add(new Coordinate(punto.x, punto.y));
-////        }
-////
-////
-////        if (trayectoriaSimplificadaLista.size() <= pointsDraw.size() ||trayectoriaSimplificadaLista.size() > pointsDraw.size() ) {
-////            for (int i = 0; i < trayectoriaSimplificadaLista.size(); i++) {
-////                Coordinate puntoSimplificado = trayectoriaSimplificadaLista.get(i);
-////                Coordinate puntoEsperado = new Coordinate(pointsDraw.get(i).getLatitude(),pointsDraw.get(i).getLongitude());
-////
-////                // Calcular la distancia entre los puntos
-////                float distancia = calcularDistanciaEntrePuntos(puntoSimplificado, puntoEsperado);
-////
-////                // Verificar si la distancia supera un umbral permitido
-////                if (distancia > 0.20f) {
-////                    sigueCamino = false;
-////                    break;
-////                }
-////            }
-////        } else {
-////            sigueCamino = false;
-////        }
-////
-////        return sigueCamino;
-//    }
-
-    private float calcularDistanciaEntrePuntos(Coordinate puntoSimplificado, Coordinate puntoEsperado) {
-        return (float) puntoSimplificado.distance(puntoEsperado);
-    }
 
     public Location getLastPoint(){
 //        if(!points.isEmpty())
@@ -330,7 +254,27 @@ public class Tracking implements Serializable {
                 }
                 return geoPoints;
         }
-        return pointsDraw;
+        return routeReplay;
+    }
+
+    public float getDistancesRoutes(){
+        float totalDistance =0;
+        List<Location> route=convertRouteReplay();
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+             totalDistance = (float) route.stream()
+                    .mapToDouble(location -> {
+                        int index = route.indexOf(location);
+                        if (index < route.size() - 1) {
+                            Location next = route.get(index + 1);
+                            return location.distanceTo(next);
+                        }
+                        return 0.0;
+                    })
+                    .sum();
+        }
+        if(isRepeat()){
+            return distance-totalDistance;
+        }else return distance;
     }
 
 
@@ -466,12 +410,12 @@ public class Tracking implements Serializable {
         this.repeat = repeat;
     }
 
-    public List<GeoPoint> getPointsDraw() {
-        return pointsDraw;
+    public List<GeoPoint> getRouteReplay() {
+        return routeReplay;
     }
 
-    public void setPointsDraw(List<GeoPoint> pointsDraw) {
-        this.pointsDraw = pointsDraw;
+    public void setRouteReplay(List<GeoPoint> routeReplay) {
+        this.routeReplay = routeReplay;
     }
 
     public Long getBattle() {
@@ -483,12 +427,12 @@ public class Tracking implements Serializable {
     }
 
 
-    public boolean isEqualsRoutes() {
-        return equalsRoutes;
+    public boolean isDeviation() {
+        return deviation;
     }
 
-    public void setEqualsRoutes(boolean equalsRoutes) {
-        this.equalsRoutes = equalsRoutes;
+    public void setDeviation(boolean deviation) {
+        this.deviation = deviation;
     }
 
     @Override

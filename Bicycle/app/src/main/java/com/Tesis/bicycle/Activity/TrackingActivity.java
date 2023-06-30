@@ -192,7 +192,7 @@ public class TrackingActivity extends Activity {
             updateLastLocation();
             action = getIntent().getAction();
             if (action != null) {
-                setTracking(action);
+                setRouteByAction(action);
                 }
 
 
@@ -249,7 +249,7 @@ public class TrackingActivity extends Activity {
             return false;
     }
 
-    private void setTracking(String action) {
+    private void setRouteByAction(String action) {
         repeat = new Tracking();
         if (action.equals(Constants.REPLAY_MY_ROUTE)) {
             routeDetailsDto = (RouteDetailsDto) getIntent().getSerializableExtra("Route");
