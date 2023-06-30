@@ -269,6 +269,8 @@ public class GPSService extends Service {
 
         public void setRepeat(boolean repeat){tracking.setRepeat(repeat);}
 
+        public float getDistancesRoutes(){return tracking.getDistancesRoutes();}
+
 
 
     }

@@ -63,7 +63,6 @@ public class TrackingDetailActivity extends AppCompatActivity {
     };
 
     private void filterData() {//revisar esto de cuando se hace una ruta pero no termino de hacerla
-        if(locationBinder.isRepeat() )
         if(checkConditionRoutes()){
             locationBinder.setId(RandomStringUtils.random(Constants.MAX_CARACTER_ID,true,true));
             inputNameAndDescription();
@@ -105,10 +104,13 @@ public class TrackingDetailActivity extends AppCompatActivity {
     private boolean checkConditionRoutes(){///revisar esto
         if(!locationBinder.isRepeat()){
             return true;
-        }else if(locationBinder.isRepeat() && !locationBinder.isDeviation()){
-            locationBinder.getDistance();
-        }
-        return (!locationBinder.isRepeat() || (locationBinder.isRepeat() && !locationBinder.isDeviation()));
+        }else if(!locationBinder.isDeviation()){
+            return true;
+        }else if(locationBinder.getDistancesRoutes()>30.0f){
+                return true;
+            }
+        return false;
+       // return (!locationBinder.isRepeat() || (locationBinder.isRepeat() && !locationBinder.isDeviation()));
     }
     
     @Override

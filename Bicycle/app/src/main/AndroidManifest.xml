@@ -25,7 +25,6 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup"
         tools:targetApi="31">
-
         <activity
             android:name=".Activity.LoginActivity"
             android:exported="true"
@@ -56,52 +55,44 @@
         <!-- android:theme="@style/Theme.AppCompat.NoActionBar"/> -->
         <activity
             android:name=".Activity.ListViewActivity"
-            android:exported="true"
-            />
+            android:exported="true" />
         <activity
             android:name=".Activity.TrackingActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".Activity.TrackingDetailActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".Activity.RouteDetailsActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".Activity.RegisterUserActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".Presenter.ListView.BattleListView"
-            android:exported="true"/>
-<!--            android:theme="@style/Theme.AppCompat.NoActionBar"/>-->
+            android:exported="true" /> <!-- android:theme="@style/Theme.AppCompat.NoActionBar"/> -->
         <activity
             android:name=".Presenter.ListView.RouteListViewActivity"
-            android:exported="true"/>
-<!--            android:theme="@style/Theme.AppCompat.NoActionBar"/>-->
+            android:exported="true" /> <!-- android:theme="@style/Theme.AppCompat.NoActionBar"/> -->
         <activity
             android:name=".Presenter.ListView.StatisticsListViewActivity"
-            android:exported="true"
-           />
+            android:exported="true" />
         <activity
             android:name=".Presenter.ListView.UserListViewActivity"
-            android:exported="true"/>
-<!--            android:theme="@style/Theme.AppCompat.NoActionBar"/>-->
+            android:exported="true" /> <!-- android:theme="@style/Theme.AppCompat.NoActionBar"/> -->
         <activity
             android:name=".Activity.AddFriendActivity"
-            android:exported="true"/>
-<!--            android:theme="@style/Theme.AppCompat.NoActionBar"/>-->
+            android:exported="true" /> <!-- android:theme="@style/Theme.AppCompat.NoActionBar"/> -->
         <activity
             android:name=".Activity.NewBattleActivity"
-            android:exported="true"/>
-<!--            android:theme="@style/Theme.AppCompat.NoActionBar"/>-->
+            android:exported="true" /> <!-- android:theme="@style/Theme.AppCompat.NoActionBar"/> -->
         <activity
             android:name=".Presenter.ListView.RankingListViewActivity"
-            android:exported="true"/>
-<!--            android:theme="@style/Theme.AppCompat.NoActionBar"/>-->
+            android:exported="true" />
     </application>
 
 </manifest>

@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Bicycle</string>
     <string name="title_activity_main">Bicycle</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_register">Register</string>
+    <string name="title_compete">Compete</string>
+    <string name="title_profile">Profile</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -34,4 +34,5 @@
     <string name="credencial_register">Credencial Register</string>
     <string name="credentials_register">Credentials Register</string>
     <string name="finished_date">Finish Date</string>
+    <string name="title_activity_inicio_nav">InicioNavActivity</string>
 </resources>

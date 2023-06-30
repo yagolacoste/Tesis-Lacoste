@@ -239,7 +239,7 @@ public class TrackingActivity extends Activity {
     }
 
     private boolean equalsPosition() {
-            GeoPoint Compare = repeat.getPointsDraw().get(0);
+            GeoPoint Compare = repeat.getRouteReplay().get(0);
             Location location = new Location("");
             location.setLatitude(Compare.getLatitudeE6() / 1E6);
             location.setLongitude(Compare.getLongitudeE6() / 1E6);
@@ -264,7 +264,7 @@ public class TrackingActivity extends Activity {
         repeat.setId(routeDetailsDto.getId());
         repeat.setTitle(routeDetailsDto.getName());
         repeat.setDescription(routeDetailsDto.getDescription());
-        repeat.setPointsDraw(routeDetailsDto.getCoordinates());
+        repeat.setRouteReplay(routeDetailsDto.getCoordinates());
 
     }
 
@@ -381,6 +381,7 @@ public class TrackingActivity extends Activity {
         //Configuration.getInstance().save(this, prefs);
         myOpenMapView.onPause();  //needed for compass, my location overlays, v6.0.0 and up
         //unregisterReceiver(myReceiver);
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
         btn_turnoff.setEnabled(false);
     }
 

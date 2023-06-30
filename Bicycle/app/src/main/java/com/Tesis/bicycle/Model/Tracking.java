@@ -273,7 +273,8 @@ public class Tracking implements Serializable {
                     .sum();
         }
         if(isRepeat()){
-            return distance-totalDistance;
+            float result=totalDistance-distance;
+            return result;
         }else return distance;
     }
 
