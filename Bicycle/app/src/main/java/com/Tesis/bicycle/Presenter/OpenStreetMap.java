@@ -90,13 +90,17 @@ public class OpenStreetMap {
 
     public void draw(List<GeoPoint> points){
         Marker startMarker=new Marker(myOpenMapView);
-        startMarker.setPosition(points.get(0));
-        myOpenMapView.getOverlays().add(startMarker);
+//        startMarker.setPosition(points.get(0));
+//        myOpenMapView.getOverlays().add(startMarker);
         Road road=roadManager.getRoad((ArrayList<GeoPoint>) points);
+        startMarker.setPosition(road.getRouteLow().get(0));
+        myOpenMapView.getOverlays().add(startMarker);
         roadOverlay=RoadManager.buildRoadOverlay(road, color, 25f);
         myOpenMapView.getOverlays().add(roadOverlay);
         Marker endMarker=new Marker(myOpenMapView);
-        endMarker.setPosition(points.get(points.size()-1));
+//        endMarker.setPosition(points.get(points.size()-1));
+//        myOpenMapView.getOverlays().add(endMarker);
+        endMarker.setPosition(road.getRouteLow().get(road.getRouteLow().size()-1));
         myOpenMapView.getOverlays().add(endMarker);
         myOpenMapView.invalidate();
     }

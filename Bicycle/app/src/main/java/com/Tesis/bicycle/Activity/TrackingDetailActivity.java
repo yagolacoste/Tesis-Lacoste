@@ -33,6 +33,8 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.compass.CompassOverlay;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 public class TrackingDetailActivity extends AppCompatActivity {
@@ -73,9 +75,12 @@ public class TrackingDetailActivity extends AppCompatActivity {
     private void updateUI() {
         openStreetMap.initLayer(TrackingDetailActivity.this,locationBinder.getGeoPoints().get(0));
         tvDistanceTrackingDetail.setText(String.valueOf(locationBinder.getDistanceString()));
-        tvSpeedTrackingDetail.setText(String.valueOf(locationBinder.getAvgSpeedString()));
+//        tvSpeedTrackingDetail.setText(String.valueOf(locationBinder.getAvgSpeedString()));
+        tvSpeedTrackingDetail.setText(locationBinder.getAvgSpeedCalcualted());
         tvTimeTrackingDetail.setText(String.valueOf(locationBinder.getTimeString()));
-        tvDateTrackingDetail.setText(String.valueOf(locationBinder.getTimeCreated()));
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        tvDateTrackingDetail.setText(formatter.format(locationBinder.getTimeCreated()));
+//        tvDateTrackingDetail.setText(String.valueOf(locationBinder.getTimeCreated()));
         openStreetMap.draw(locationBinder.getGeoPoints());
         if(checkConditionRoutes()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

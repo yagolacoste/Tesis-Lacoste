@@ -39,6 +39,7 @@ public class Tracking implements Serializable {
     private String description="";
     private float distance=0;
     private float avgSpeed=0;
+    private float avgSpeedFromSUVAT = 0;
     private Date timeCreated=null;
     private Date timeStarted=null;
     private Date timeStopped=null;
@@ -83,8 +84,9 @@ public class Tracking implements Serializable {
 //            if(lastPoint.distanceTo(currentLocation)>1.5f)//preguntar por el umbral
                 distance += lastPoint.distanceTo(currentLocation);
             timeElapsedBetweenTrkPoints +=Math.abs(this.getLastPoint().getTime()-currentLocation.getTime());
+            avgSpeedFromSUVAT = ((distance / (float) 1000) / (getCurrentTimeMillis() / (float) 3600000));
         }
-        if(currentLocation.hasSpeed()){
+        if(currentLocation.getSpeed()!=0){
             totalSpeedForRunningAverage+=currentLocation.getSpeed();
             totalTrkPointsWithSpeedForRunningAverage+=1;
             avgSpeed=totalSpeedForRunningAverage/totalTrkPointsWithSpeedForRunningAverage;
@@ -156,6 +158,11 @@ public class Tracking implements Serializable {
 
     public void stopTrackingActivity(){
         timeStopped=new Date(System.currentTimeMillis());
+        timeElapsedBetweenStartStops += timeStopped.getTime() - timeStarted.getTime();
+
+        //Calculate the average speed based on the distance and the time between stopping and starting
+        //the session
+        avgSpeedFromSUVAT = distance / (timeElapsedBetweenStartStops / 1000);
 
     }
 
@@ -171,6 +178,9 @@ public class Tracking implements Serializable {
             return 1;
         }else return 3;
     }
+
+
+
     public LocalTime millsToLocalTime() {
 //        Instant instant = Instant.ofEpochMilli(timeInMilliseconds);
         long timeSwapBuff = 0L;
@@ -239,6 +249,14 @@ public class Tracking implements Serializable {
     }
 
     public String getAvgSpeedString(){return String.format(Locale.UK, "%.2f", avgSpeed);}
+
+    public String getAvgSpeedFromSUVAT() {
+         return String.format(Locale.UK, "%.2f", avgSpeedFromSUVAT);
+    }
+
+    public void setAvgSpeedFromSUVAT(float avgSpeedFromSUVAT) {
+        this.avgSpeedFromSUVAT = avgSpeedFromSUVAT;
+    }
 
     public  List<Location> getPoints() {
         return points;

@@ -5,6 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7729f06-1757-4dfa-ac9d-78d48a9c1c01" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/InicioActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/InicioActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ui/Compete/CompeteFragment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ui/Home/HomeFragment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ui/Home/HomeViewModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ui/MyRoutes/MyRoutesFragment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ui/NewRoute/FreeRouteFragment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ui/Statistics/StatisticFragment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ui/dashboard/DashboardFragment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ui/dashboard/DashboardViewModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ui/notifications/NotificationsFragment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ui/notifications/NotificationsViewModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ApiRestConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ApiRestConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/res/layout/activity_inicio.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/res/layout/app_bar_inicio.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/res/layout/content_inicio.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/res/menu/inicio.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/res/values/themes.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -138,8 +158,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.GatewayApplication" />
-        <item itemvalue="Application.AdminApplication" />
         <item itemvalue="Application.AuthApplication" />
+        <item itemvalue="Application.AdminApplication" />
         <item itemvalue="Application.DiscoveryApplication" />
       </list>
     </recent_temporary>

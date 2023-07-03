@@ -27,4 +27,9 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
+
+    <style name="SlideActivityAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/left_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/left_out</item>
+    </style>
 </resources>

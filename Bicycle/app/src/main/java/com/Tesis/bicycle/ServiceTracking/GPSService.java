@@ -40,6 +40,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import org.jetbrains.annotations.Nullable;
 import org.osmdroid.util.GeoPoint;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -100,7 +101,7 @@ public class GPSService extends Service {
                         return;
                     }
                     if (locationResult != null ) {
-                       for(Location location:locationResult.getLocations()){
+                       for(Location location:locationResult.getLocations()){// tengo que ver esto que onda
                            tracking.addTracking(location);
 //                           if(tracking.isRepeat() && tracking.getPoints().size()>3){
                             if(tracking.isRepeat()){
@@ -270,6 +271,10 @@ public class GPSService extends Service {
         public void setRepeat(boolean repeat){tracking.setRepeat(repeat);}
 
         public float getDistancesRoutes(){return tracking.getDistancesRoutes();}
+
+        public String getAvgSpeedCalcualted(){
+            return tracking.getAvgSpeedFromSUVAT();
+        }
 
 
 
