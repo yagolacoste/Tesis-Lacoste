@@ -35,4 +35,6 @@
     <string name="credentials_register">Credentials Register</string>
     <string name="finished_date">Finish Date</string>
     <string name="title_activity_inicio_nav">InicioNavActivity</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

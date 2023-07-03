@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.Tesis.bicycle.Activity.ui.NavInitActivity;
 import com.Tesis.bicycle.Dto.ApiRest.auth.request.LoginRequest;
 import com.Tesis.bicycle.Dto.ApiRest.auth.response.JwtResponse;
 import com.Tesis.bicycle.Model.Room.RefreshToken;
@@ -39,7 +40,8 @@ public class LoginActivity extends AppCompatActivity {
         accessTokenRoomViewModel.getAccessToken().observe(this,response->{
             if(response!=null){
                 Toast.makeText(this,"Session active",Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this,MenuActivity.class));
+                //startActivity(new Intent(this,MenuActivity.class));
+                startActivity(new Intent(this, NavInitActivity.class));
             }
             else
                 this.init();
@@ -73,7 +75,8 @@ public class LoginActivity extends AppCompatActivity {
                         accessTokenRoomViewModel.addAccessToken(refreshToken);
                         editMail.setText("");
                         editPassword.setText("");
-                        startActivity(new Intent(this,MenuActivity.class));
+                        //startActivity(new Intent(this,MenuActivity.class));
+                        startActivity(new Intent(this,NavInitActivity.class));
                         this.onPause();
                     }else{
                         Toast.makeText(this,"User not exits",Toast.LENGTH_SHORT).show();

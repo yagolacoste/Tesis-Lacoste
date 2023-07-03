@@ -2,19 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/bottom_inicio"
+        android:id="@+id/bottom_home"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="Initio"/>
+        android:title="Home"/>
 
     <item
-        android:id="@+id/bottom_compete"
-        android:icon="@drawable/ic_compete"
-        android:title="Compete"/>
+        android:id="@+id/bottom_my_maps"
+        android:icon="@drawable/ic_way"
+        android:title="My Maps"/>
 
+
+
+<!--    item que sea el boton de grabado-->
     <item
         android:id="@+id/bottom_register"
-        android:icon="@drawable/ic_route"
-        android:title="Register"/>
+        android:title=""
+        android:enabled="false"/>
+
+    <item
+        android:id="@+id/bottom_community"
+        android:icon="@drawable/ic_group"
+        android:title="Community"/>
 
     <item
         android:id="@+id/bottom_profile"
