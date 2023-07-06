@@ -34,12 +34,15 @@ public class StatisticsApiRepository {
         return repository;
     }
 
-    public LiveData<Void> addStatistics(StatisticsApiRest statisticsApiRest){
-        final MutableLiveData<Void> mld=new MutableLiveData<>();
+    public LiveData<Boolean> addStatistics(StatisticsApiRest statisticsApiRest){
+        final MutableLiveData<Boolean> mld=new MutableLiveData<>();
         this.appUserHasRouteApiRestService.AddStatistics(statisticsApiRest).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-
+                if(response.isSuccessful())
+                    mld.setValue(true);
+                else
+                    mld.setValue(false);
             }
 
             @Override

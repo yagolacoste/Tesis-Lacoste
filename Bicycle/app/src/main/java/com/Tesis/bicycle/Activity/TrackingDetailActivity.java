@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.StatisticsApiRest;
 import com.Tesis.bicycle.Dto.Room.RefreshTokenDto;
+import com.Tesis.bicycle.Presenter.Notifications;
 import com.Tesis.bicycle.Presenter.OpenStreetMap;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ServiceTracking.GPSService;
@@ -46,6 +47,10 @@ public class TrackingDetailActivity extends AppCompatActivity {
     private AccessTokenRoomViewModel accessTokenRoomViewModel;
     private StatisticsViewModel statisticsViewModel;
     private OpenStreetMap openStreetMap;
+
+    private Notifications notifications;
+
+    private String message;
 
 
 
@@ -84,9 +89,14 @@ public class TrackingDetailActivity extends AppCompatActivity {
         openStreetMap.draw(locationBinder.getGeoPoints());
         if(checkConditionRoutes()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                int color = Color.argb(128, 255, 0, 0);
-                openStreetMap.setColor(color);
-                openStreetMap.draw(locationBinder.getTrkPoints().stream().map(p -> new GeoPoint(p.getLatitude(), p.getLongitude())).collect(Collectors.toList()));
+                if(locationBinder.isRepeat()){
+                    int color = Color.argb(128, 255, 0, 0);
+                    openStreetMap.setColor(color);
+                    openStreetMap.draw(locationBinder.getTrkPoints().stream().map(p -> new GeoPoint(p.getLatitude(), p.getLongitude())).collect(Collectors.toList()));
+                    notifications.warningMessage("You didn't complete the route or divert but you have new statistics ;) ");
+                }else{
+                    openStreetMap.draw(locationBinder.getGeoPoints().stream().map(p -> new GeoPoint(p.getLatitude(), p.getLongitude())).collect(Collectors.toList()));
+                }
                 locationBinder.setRepeat(false);
             }
         }
@@ -94,17 +104,6 @@ public class TrackingDetailActivity extends AppCompatActivity {
         tvDescriptionTrackingDetail.setText(String.valueOf(locationBinder.getDescription()));
 
     }
-        //       openStreetMap.draw(locationBinder.getGeoPoints());
-//        if(locationBinder.isRepeat()){
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                int color = Color.argb(128, 255, 0, 0);
-//                openStreetMap.setColor(color);
-//                openStreetMap.draw(locationBinder.getTrkPoints().stream().map(p->new GeoPoint(p.getLatitude(),p.getLongitude())).collect(Collectors.toList()));
-//
-//            }
-//        }
-//        this.drawRoute(locationBinder.getGeoPoints());
-//        tv_session_value.setText(String.valueOf(locationBinder.));//agregar el id session
 
     private boolean checkConditionRoutes(){///revisar esto
         if(!locationBinder.isRepeat()){
@@ -144,11 +143,12 @@ public class TrackingDetailActivity extends AppCompatActivity {
         btnSave=findViewById(R.id.btnSave);
         btnDiscard=findViewById(R.id.btnDiscard);
         openStreetMap=new OpenStreetMap(myOpenMapView);
+        notifications=new Notifications(TrackingDetailActivity.this);
         Intent intent = new Intent(this, GPSService.class);
         getApplicationContext().bindService(intent, lsc, Context.BIND_ABOVE_CLIENT);
         btnSave.setOnClickListener(view -> {
             storeData();
-            backToMenuActivity();
+
         });
 
         btnDiscard.setOnClickListener(new View.OnClickListener() {
@@ -178,6 +178,12 @@ public class TrackingDetailActivity extends AppCompatActivity {
             statisticsApiRest.setCoordinates(locationBinder.getGeoPoints());
             statisticsApiRest.setBattleId(locationBinder.getBattleId());
             statisticsViewModel.addStatistic(statisticsApiRest).observe(this, resp->{
+                if(resp) {
+                    if (statisticsApiRest.getBattleId() != null) {
+                        notifications.successMessage("You completed the battle wait the result");
+                    }else  notifications.successMessage("You save new route ! ");
+                    backToMenuActivity();
+                }
             });
         });
     }

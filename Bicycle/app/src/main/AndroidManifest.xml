@@ -47,16 +47,17 @@
         <service
             android:name=".ServiceTracking.GPSService"
             android:enabled="true"
-            android:exported="true" /> <!-- <activity -->
-        <!-- android:name=".Activity.MenuActivity" -->
-        <!-- android:exported="true" -->
-        <!-- android:theme="@style/Theme.AppCompat.NoActionBar" /> -->
-        <activity
-            android:name=".Activity.ui.NavInitActivity"
-            android:exported="true" /> <!-- <activity -->
-        <!-- android:name=".Activity.InicioActivity" -->
-        <!-- android:exported="true" -->
-        <!-- android:theme="@style/Theme.AppCompat.NoActionBar"/> -->
+            android:exported="true" />
+         <activity
+         android:name=".Activity.MenuActivity"
+         android:exported="true"
+         android:theme="@style/Theme.AppCompat.NoActionBar" />
+<!--        <activity-->
+<!--            android:name=".Activity.ui.NavInitActivity"-->
+<!--            android:exported="true" /> &lt;!&ndash; <activity &ndash;&gt;-->
+<!--        &lt;!&ndash; android:name=".Activity.InicioActivity" &ndash;&gt;-->
+<!--        &lt;!&ndash; android:exported="true" &ndash;&gt;-->
+<!--        &lt;!&ndash; android:theme="@style/Theme.AppCompat.NoActionBar"/> &ndash;&gt;-->
         <activity
             android:name=".Activity.ListViewActivity"
             android:exported="true" />

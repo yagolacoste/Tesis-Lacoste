@@ -40,8 +40,8 @@ public class LoginActivity extends AppCompatActivity {
         accessTokenRoomViewModel.getAccessToken().observe(this,response->{
             if(response!=null){
                 Toast.makeText(this,"Session active",Toast.LENGTH_SHORT).show();
-                //startActivity(new Intent(this,MenuActivity.class));
-                startActivity(new Intent(this, NavInitActivity.class));
+                startActivity(new Intent(this,MenuActivity.class));
+//                startActivity(new Intent(this, NavInitActivity.class));
             }
             else
                 this.init();
@@ -75,8 +75,8 @@ public class LoginActivity extends AppCompatActivity {
                         accessTokenRoomViewModel.addAccessToken(refreshToken);
                         editMail.setText("");
                         editPassword.setText("");
-                        //startActivity(new Intent(this,MenuActivity.class));
-                        startActivity(new Intent(this,NavInitActivity.class));
+                        startActivity(new Intent(this,MenuActivity.class));
+//                        startActivity(new Intent(this,NavInitActivity.class));
                         this.onPause();
                     }else{
                         Toast.makeText(this,"User not exits",Toast.LENGTH_SHORT).show();

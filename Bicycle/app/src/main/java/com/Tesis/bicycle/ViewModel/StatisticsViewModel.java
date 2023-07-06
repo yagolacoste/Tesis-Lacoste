@@ -23,7 +23,7 @@ public class StatisticsViewModel extends AndroidViewModel {
 
     }
 
-    public LiveData<Void> addStatistic(StatisticsApiRest statisticsApiRest){
+    public LiveData<Boolean> addStatistic(StatisticsApiRest statisticsApiRest){
         return this.repository.addStatistics(statisticsApiRest);
     }
 

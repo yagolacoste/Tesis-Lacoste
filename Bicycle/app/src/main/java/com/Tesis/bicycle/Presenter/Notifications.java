@@ -12,11 +12,11 @@ import androidx.core.app.NotificationCompat;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.R;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class Notifications {
 
     private NotificationManager notificationManager;
-
-    private NotificationChannel notificationChannel;
 
     private Context context;
     private static final int NOTIFICATION_ID = 1;
@@ -62,5 +62,22 @@ public class Notifications {
 
     public void cancel(int i) {
         notificationManager.cancel(i);
+    }
+
+    public void successMessage(String message) {
+        new SweetAlertDialog(context,
+                SweetAlertDialog.SUCCESS_TYPE).setTitleText("Good Job!")
+                .setContentText(message).setContentText("Ok").show();
+    }
+
+    public void errorMessage(String message) {
+        new SweetAlertDialog(context,
+                SweetAlertDialog.ERROR_TYPE).setTitleText("Oops...").setContentText(message).show();
+    }
+
+    public void warningMessage(String message) {
+        new SweetAlertDialog(context,
+                SweetAlertDialog.WARNING_TYPE).setTitleText("Notificación del Sistema")
+                .setContentText(message).setConfirmText("Ok").show();
     }
 }
