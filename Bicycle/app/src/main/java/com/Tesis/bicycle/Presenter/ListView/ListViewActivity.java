@@ -1,5 +1,6 @@
-package com.Tesis.bicycle.Activity;
+package com.Tesis.bicycle.Presenter.ListView;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,24 +11,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
 
-public class ListViewActivity extends AppCompatActivity {
+public abstract class ListViewActivity extends AppCompatActivity {
 
     protected RecyclerView recyclerView;
 
     protected AccessTokenRoomViewModel accessTokenRoomViewModel;
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
 
         //lv_saveLocations=findViewById(R.id.lv_showLocations);
-        recyclerView= (RecyclerView) findViewById(R.id.lv_showLocations);
+        recyclerView= (RecyclerView) findViewById(R.id.rcvList);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         accessTokenRoomViewModel=new ViewModelProvider(this).get(AccessTokenRoomViewModel.class);
 
     }
+
+    public abstract void getListView();
 
 }

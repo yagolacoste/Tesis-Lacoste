@@ -59,7 +59,7 @@
 <!--        &lt;!&ndash; android:exported="true" &ndash;&gt;-->
 <!--        &lt;!&ndash; android:theme="@style/Theme.AppCompat.NoActionBar"/> &ndash;&gt;-->
         <activity
-            android:name=".Activity.ListViewActivity"
+            android:name=".Presenter.ListView.ListViewActivity"
             android:exported="true" />
         <activity
             android:name=".Activity.TrackingActivity"

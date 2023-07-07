@@ -156,7 +156,7 @@ public class Tracking implements Serializable {
         timeStarted=new Date(System.currentTimeMillis());
         }
 
-    public void stopTrackingActivity(){
+    public void stopTrackingActivity(){//probar con el celu
         timeStopped=new Date(System.currentTimeMillis());
         timeElapsedBetweenStartStops += timeStopped.getTime() - timeStarted.getTime();
 
@@ -170,8 +170,8 @@ public class Tracking implements Serializable {
     }
 
     public long getCurrentTimeMillis(){
-//        return timeElapsedBetweenStartStops+(System.currentTimeMillis()-timeStarted.getTime());
-        return timeElapsedBetweenStartStops;
+       return timeElapsedBetweenStartStops+(System.currentTimeMillis()-timeStarted.getTime());
+       // return timeElapsedBetweenStartStops;
     }
 
     //return activity recognicion with determinate avgspeed
