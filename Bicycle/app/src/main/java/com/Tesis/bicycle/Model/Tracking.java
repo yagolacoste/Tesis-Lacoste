@@ -162,12 +162,16 @@ public class Tracking implements Serializable {
 
         //Calculate the average speed based on the distance and the time between stopping and starting
         //the session
-        avgSpeedFromSUVAT = distance / (timeElapsedBetweenStartStops / 1000);
+        avgSpeedFromSUVAT = distance / (timeElapsedBetweenStartStops / 1000);//m/s
+        avgSpeedFromSUVAT=(avgSpeedFromSUVAT*3600)/1000;
+//        avgSpeedFromSUVAT = ((distance / (float) 1000) / (getCurrentTimeMillis() / (float) 3600000));
+
 
     }
 
     public long getCurrentTimeMillis(){
-        return timeElapsedBetweenStartStops+(System.currentTimeMillis()-timeStarted.getTime());
+//        return timeElapsedBetweenStartStops+(System.currentTimeMillis()-timeStarted.getTime());
+        return timeElapsedBetweenStartStops;
     }
 
     //return activity recognicion with determinate avgspeed

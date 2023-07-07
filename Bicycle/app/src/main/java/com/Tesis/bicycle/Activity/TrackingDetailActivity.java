@@ -93,7 +93,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
                     int color = Color.argb(128, 255, 0, 0);
                     openStreetMap.setColor(color);
                     openStreetMap.draw(locationBinder.getTrkPoints().stream().map(p -> new GeoPoint(p.getLatitude(), p.getLongitude())).collect(Collectors.toList()));
-                    notifications.warningMessage("You didn't complete the route or divert but you have new statistics ;) ");
+                    notifications.addNotification("Oops...","You didn't complete the route or divert but you have new statistics ;) ");
                 }else{
                     openStreetMap.draw(locationBinder.getGeoPoints().stream().map(p -> new GeoPoint(p.getLatitude(), p.getLongitude())).collect(Collectors.toList()));
                 }
@@ -180,8 +180,11 @@ public class TrackingDetailActivity extends AppCompatActivity {
             statisticsViewModel.addStatistic(statisticsApiRest).observe(this, resp->{
                 if(resp) {
                     if (statisticsApiRest.getBattleId() != null) {
-                        notifications.successMessage("You completed the battle wait the result");
-                    }else  notifications.successMessage("You save new route ! ");
+                        notifications.addNotification("Good Job!","You completed the battle wait the result");
+                    }else if(locationBinder.isRepeat()){
+                        notifications.addNotification("Good Job!","You completed the route");
+                    } else
+                        notifications.addNotification("Congratulation!","You save new route ! ");
                     backToMenuActivity();
                 }
             });
