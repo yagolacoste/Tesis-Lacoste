@@ -10,12 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public abstract class ListViewActivity extends AppCompatActivity {
+public  abstract class ListViewActivity extends AppCompatActivity {
 
     protected RecyclerView recyclerView;
 
     protected AccessTokenRoomViewModel accessTokenRoomViewModel;
+
+    protected FloatingActionButton floatingactionbutton;
 
 
     @SuppressLint("MissingInflatedId")
@@ -25,13 +28,13 @@ public abstract class ListViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_view);
 
         //lv_saveLocations=findViewById(R.id.lv_showLocations);
-        recyclerView= (RecyclerView) findViewById(R.id.rcvList);
+        recyclerView= (RecyclerView) findViewById(R.id.rcvScrollView);
+        floatingactionbutton=findViewById(R.id.btnAdd);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         accessTokenRoomViewModel=new ViewModelProvider(this).get(AccessTokenRoomViewModel.class);
-
     }
 
-    public abstract void getListView();
+   public abstract void getListView();
 
 }

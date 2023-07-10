@@ -39,6 +39,8 @@ public class Constants {
    public static final String USER_ITEM="User_item";
    public static final String USER_SELECT="User_item";
 
+   public static final String ACTION_VIEW_FRIENDS="view_my_friends";
+
 
    //////////////////Constants defined for battle///////////////////
    public final static String BATTLE_ITEM="Battle";

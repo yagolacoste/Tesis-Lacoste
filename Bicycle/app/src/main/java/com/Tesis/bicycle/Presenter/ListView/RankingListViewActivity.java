@@ -1,6 +1,7 @@
 package com.Tesis.bicycle.Presenter.ListView;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.Battle.BattleDto;
@@ -15,17 +16,22 @@ public class RankingListViewActivity extends ListViewActivity {
 
     private RankingAdapter rankingAdapter;
 
+    private BattleDto battleDto;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BattleDto battleDto= (BattleDto) getIntent().getSerializableExtra(Constants.BATTLE_ITEM);
-        getRanking(battleDto);
+        battleDto= (BattleDto) getIntent().getSerializableExtra(Constants.BATTLE_ITEM);
+        floatingactionbutton.setVisibility(View.INVISIBLE);
+        getListView();
     }
 
-    private void getRanking(BattleDto battleDto) {
+    @Override
+    public void getListView() {
         ranking=battleDto.getRanking();
         rankingAdapter=new RankingAdapter(ranking);
         recyclerView.setAdapter(rankingAdapter);
     }
+
 }

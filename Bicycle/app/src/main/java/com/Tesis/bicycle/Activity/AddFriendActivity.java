@@ -3,6 +3,7 @@ package com.Tesis.bicycle.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,7 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.Tesis.bicycle.Presenter.ListView.UserListViewActivity;
 import com.Tesis.bicycle.R;
+import com.Tesis.bicycle.ServiceTracking.GPSService;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
 import com.Tesis.bicycle.ViewModel.AuthViewModel;
 import com.Tesis.bicycle.ViewModel.UserViewModel;
@@ -75,8 +78,9 @@ public class AddFriendActivity extends AppCompatActivity {
                         userViewModel.saveFriend(email, id).observe(this, response -> {
                             if (response) {
                                 successMessage("Estupendo! " + "Su información ha sido guardada con éxito en el sistema.");
+                                backToMenuActivity();
                             } else {
-                                warningMessage("Se ha producido un error : ");
+                                warningMessage("No existe el usuer");
                             }
                         });
                     }
@@ -86,6 +90,12 @@ public class AddFriendActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    private void backToMenuActivity() {
+        Intent i=new Intent(AddFriendActivity.this, UserListViewActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
     }
 
     public void successMessage(String message) {

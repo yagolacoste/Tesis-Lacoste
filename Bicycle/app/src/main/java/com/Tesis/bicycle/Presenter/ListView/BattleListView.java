@@ -28,30 +28,29 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.io.IOException;
 import java.util.List;
 
-public class BattleListView extends AppCompatActivity  implements BattleRecyclerViewAdapter.OnItemClickListener {
+public class BattleListView extends ListViewActivity  implements BattleRecyclerViewAdapter.OnItemClickListener {
 
     private BattleRecyclerViewAdapter battleRecyclerViewAdapter;
-    private RecyclerView recyclerView;
     private UserViewModel userViewModel;
-    private AccessTokenRoomViewModel accessTokenRoomViewModel;
 
-    private FloatingActionButton floatingactionbutton;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_battle);
         init();
+        getListView();
+        floatingactionbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(view.getContext(), NewBattleActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
-    private void init(){
-        recyclerView= (RecyclerView) findViewById(R.id.rcvList);
-        floatingactionbutton=findViewById(R.id.btnAdd);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        userViewModel=new ViewModelProvider(this).get(UserViewModel.class);
-        accessTokenRoomViewModel=new ViewModelProvider(this).get(AccessTokenRoomViewModel.class);
+    @Override
+    public void getListView() {
         accessTokenRoomViewModel.getFirst().observe(this,resp->{
             if(resp.getId()!=null){
                 try {
@@ -67,16 +66,11 @@ public class BattleListView extends AppCompatActivity  implements BattleRecycler
                 }
             }
         });
+    }
 
-        floatingactionbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i=new Intent(view.getContext(), NewBattleActivity.class);
-                startActivity(i);
-            }
-        });
-
-
+    private void init(){
+        userViewModel=new ViewModelProvider(this).get(UserViewModel.class);
+        floatingactionbutton.setActivated(true);
     }
 
 
@@ -86,7 +80,5 @@ public class BattleListView extends AppCompatActivity  implements BattleRecycler
         resultIntent.setAction(Constants.REPLAY_BATTLE);
         resultIntent.putExtra(Constants.BATTLE_ITEM, battleDto);
         startActivity(resultIntent);
-//        setResult(Activity.RESULT_OK, resultIntent);
-//        finish();
     }
 }

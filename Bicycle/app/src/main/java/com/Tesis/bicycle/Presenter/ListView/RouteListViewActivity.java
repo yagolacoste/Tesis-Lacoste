@@ -3,6 +3,7 @@ package com.Tesis.bicycle.Presenter.ListView;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -32,17 +33,19 @@ public class RouteListViewActivity extends ListViewActivity implements OnItemCli
         super.onCreate(savedInstanceState);
         statisticsViewModel =new ViewModelProvider(this).get(StatisticsViewModel.class);
         String action=getIntent().getAction();
+        floatingactionbutton.setVisibility(View.INVISIBLE);
         if(action!=null&& action.equals(Constants.ACTION_REPLAY_MY_ROUTES)) {
             recyclerViewReplay=true;
-            getRoutesByUser();
+            getListView();
         }
             else  if(action!=null && action.equals(Constants.ACTION_VIEW_MY_ROUTES)){
                 recyclerViewReplay=false;
-                getRoutesByUser();
+            getListView();
             }
     }
 
-    public void getRoutesByUser() {
+    @Override
+    public void getListView() {
         accessTokenRoomViewModel.getFirst().observe(this,response->{
             if(response.getAccessToken()!=null){
                 statisticsViewModel.getRouteById(response.getId()).observe(this, resp->{
@@ -62,8 +65,8 @@ public class RouteListViewActivity extends ListViewActivity implements OnItemCli
                 });
             }
         });
-
     }
+
 
     @Override
     public void onItemClick(RouteDetailsDto ruta) {

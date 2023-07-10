@@ -62,14 +62,15 @@ public class UserService implements IUserService{
 
     @Override
     public List<UserAppDto> list() {
-        List<UserAppDto> result=userRepository.findAll().stream().map(u->new UserAppDto(u)).collect(Collectors.toList());
-        return result;
+
+        return userRepository.findAll().stream().map(UserAppDto::new).collect(Collectors.toList());
     }
 
     @Override
     public List<UserAppDto> getFriends(Long id) {
         User user= userRepository.findById(id)
                 .orElseThrow(()->new NotFoundException("User by id not found", ErrorCodes.NOT_FOUND.getCode()));
+
         return user.getFriends().stream().map(UserAppDto::new).collect(Collectors.toList());
     }
 
@@ -83,7 +84,9 @@ public class UserService implements IUserService{
             .orElseThrow(()->new NotFoundException("User by id not found", ErrorCodes.NOT_FOUND.getCode()));
         if(friend!=null){
                 user.getFriends().add(friend);
+                friend.getFriends().add(user);
                 userRepository.save(user);
+                userRepository.save(friend);
             }
     }
 

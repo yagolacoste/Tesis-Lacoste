@@ -3,10 +3,12 @@ package com.Tesis.bicycle.Presenter.ListView;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import com.Tesis.bicycle.Activity.AddFriendActivity;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.UserAppDto;
 import com.Tesis.bicycle.Presenter.Adapter.UserRecyclerViewAdapter;
@@ -22,21 +24,43 @@ public class UserListViewActivity extends ListViewActivity implements UserRecycl
 
     private UserRecyclerViewAdapter adapter;
 
+    private String action;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         user=new ViewModelProvider(this).get(UserViewModel.class);
-        getUsers();
+        action=getIntent().getAction();
+        floatingactionbutton.setVisibility(View.INVISIBLE);
+        floatingactionbutton.setActivated(false);
+        if(action!=null && action.equals(Constants.ACTION_VIEW_FRIENDS)){
+            floatingactionbutton.setVisibility(View.VISIBLE);
+            floatingactionbutton.setActivated(true);
+        }
+        getListView();
+
+        floatingactionbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(UserListViewActivity.this, AddFriendActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
-    private void getUsers() {
+    @Override
+    public void getListView() {
         accessTokenRoomViewModel.getFirst().observe(this,response->{
             if(response.getAccessToken()!=null){
                 user.getFriends(response.getId()).observe(this,resp->{
                     if(!resp.isEmpty()){
                         friends = resp;
                         adapter=new UserRecyclerViewAdapter(friends);
-                        adapter.setOnItemClickListener(this);
+                        if(action==null){
+                            adapter.setOnItemClickListener(this);
+                        }
                         recyclerView.setAdapter(adapter);
                     }
                     else
@@ -45,6 +69,7 @@ public class UserListViewActivity extends ListViewActivity implements UserRecycl
             }
         });
     }
+
 
     @Override
     public void onItemClick(UserAppDto user) {

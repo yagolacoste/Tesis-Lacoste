@@ -11,6 +11,7 @@ import android.widget.Button;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Presenter.ListView.BattleListView;
 import com.Tesis.bicycle.Presenter.ListView.RouteListViewActivity;
+import com.Tesis.bicycle.Presenter.ListView.UserListViewActivity;
 import com.Tesis.bicycle.R;
 
 
@@ -60,8 +61,8 @@ public class MenuActivity extends AppCompatActivity {
         btnFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(MenuActivity.this, AddFriendActivity.class);
-//                i.setAction(Constants.ACTION_REPLAY_MY_ROUTES);
+                Intent i=new Intent(MenuActivity.this, UserListViewActivity.class);
+                i.setAction(Constants.ACTION_VIEW_FRIENDS);
                 startActivity(i);
             }
         });

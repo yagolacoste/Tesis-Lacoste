@@ -1,6 +1,7 @@
 package com.Tesis.bicycle.Presenter.ListView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -17,17 +18,20 @@ public class StatisticsListViewActivity extends ListViewActivity {
     private StatisticRecyclerViewAdapter adaptorStatistics;
     private StatisticsViewModel statisticsViewModel;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         statisticsViewModel =new ViewModelProvider(this).get(StatisticsViewModel.class);
-        String id=getIntent().getStringExtra(Constants.ROUTE_ID);
-        getStatisticByRoute(id);
+        floatingactionbutton.setVisibility(View.INVISIBLE);
+        getListView();
 
     }
 
-    public void getStatisticByRoute(String routeId){//se va a cambiar cuando haya varios usuarios
+    @Override
+    public void getListView() {
+        String routeId=getIntent().getStringExtra(Constants.ROUTE_ID);
         accessTokenRoomViewModel.getFirst().observe(this,response->{
             if(response.getAccessToken()!=null){
                 statisticsViewModel.getStatisticByRoute(routeId).observe(this, resp->{
@@ -42,4 +46,6 @@ public class StatisticsListViewActivity extends ListViewActivity {
             }
         });
     }
+
+
 }

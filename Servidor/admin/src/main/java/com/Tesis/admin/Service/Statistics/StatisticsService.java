@@ -86,8 +86,8 @@ public class StatisticsService implements IStatisticsService {
 
     @Override
     public List<StatisticsDto> list() {
-        List<StatisticsDto>result= StatisticsRepository.findAll().stream().map(StatisticsDto::new).collect(Collectors.toList());
-        return result;
+
+      return StatisticsRepository.findAll().stream().map(StatisticsDto::new).collect(Collectors.toList());
     }
 
     @Override
