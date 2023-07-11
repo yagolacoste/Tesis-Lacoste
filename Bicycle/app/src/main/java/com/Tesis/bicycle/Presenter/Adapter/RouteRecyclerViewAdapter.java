@@ -15,7 +15,10 @@ import com.Tesis.bicycle.Activity.TrackingActivity;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Presenter.ListView.StatisticsListViewActivity;
+import com.Tesis.bicycle.Presenter.OpenStreetMap;
 import com.Tesis.bicycle.R;
+
+import org.osmdroid.views.MapView;
 
 import java.util.List;
 
@@ -34,7 +37,7 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.card_list_view,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.card_my_route_list_view,parent,false);
         ViewHolder viewHolder=new ViewHolder(view);
         return viewHolder;
     }
@@ -54,17 +57,23 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView name;
-        private Button run,details,statistics;
+        private TextView txtValueDistance,txtValueTime;
+
+        private MapView mapView;
+
+        private OpenStreetMap mapValueView;
+
+        private Button runButton,statsButton;
         private RouteDetailsDto route;
         private View rootView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            name=itemView.findViewById(R.id.tv_img);
-            run=itemView.findViewById(R.id.btn_run);
-            statistics=itemView.findViewById(R.id.btn_statistics);
-            details=itemView.findViewById(R.id.btn_details);
+            txtValueDistance=itemView.findViewById(R.id.txtValueDistance);
+            txtValueTime=itemView.findViewById(R.id.txtValueTime);
+            mapView=itemView.findViewById(R.id.mapValueView);
+            runButton=itemView.findViewById(R.id.runButton);
+            statsButton=itemView.findViewById(R.id.statsButton);
 
             rootView=itemView;
 
@@ -88,15 +97,7 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
                     rootView.getContext().startActivity(intent);
                 }
             });
-
-            details.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent=new Intent(rootView.getContext(), RouteDetailsActivity.class);
-                    intent.putExtra(Constants.ROUTE,route);
-                    rootView.getContext().startActivity(intent);
-                }
-            });
+            
 
         }
     }
