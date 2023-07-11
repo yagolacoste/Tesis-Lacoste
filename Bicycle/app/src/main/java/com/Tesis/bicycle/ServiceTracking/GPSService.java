@@ -2,48 +2,32 @@ package com.Tesis.bicycle.ServiceTracking;
 
 
 import android.Manifest;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Binder;
 import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
 
 import com.Tesis.bicycle.Constants;
-import com.Tesis.bicycle.Activity.TrackingActivity;
 import com.Tesis.bicycle.Model.Tracking;
 import com.Tesis.bicycle.Presenter.Notifications;
-import com.Tesis.bicycle.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.jetbrains.annotations.Nullable;
 import org.osmdroid.util.GeoPoint;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -210,8 +194,8 @@ public class GPSService extends Service {
         }
 
         //Get the duration of the tracked session
-        public long getDuration() {
-            return tracking.getCurrentTimeMillis();
+        public String getDuration() {
+            return tracking.getDuration();
         }
 
         //Get the duration as a string ready for printing

@@ -41,6 +41,7 @@ import com.Tesis.bicycle.Dto.ApiRest.Battle.BattleDto;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Model.Tracking;
 
+import com.Tesis.bicycle.Presenter.Notifications;
 import com.Tesis.bicycle.Presenter.OpenStreetMap;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ServiceTracking.GPSService;
@@ -99,6 +100,8 @@ public class TrackingActivity extends Activity {
     private Location currentLocation;
 
     private String action = null;
+
+    private Notifications notifications;
 
 
     Handler updateTimeHandler = new Handler();
@@ -183,6 +186,7 @@ public class TrackingActivity extends Activity {
         myOpenMapView = (MapView) findViewById(R.id.v_map);
         btn_start = findViewById(R.id.btn_start);
         btn_turnoff = findViewById(R.id.btn_turnoff);
+        notifications=new Notifications(this);
         if (checkPermissions(true)) {
             LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -203,7 +207,7 @@ public class TrackingActivity extends Activity {
                 public void onClick(View view) {
                     if(action!=null){
                         if (equalsPosition()) {
-                            warningMessage("Pro favor esta en el inicio de la carrera");
+                            notifications.warningMessage("Pro favor esta en el inicio de la carrera");
                         }
                         else{
                             stopLocationUpdates();
@@ -357,7 +361,7 @@ public class TrackingActivity extends Activity {
 
         if (code == REQUEST_PERMISSIONS_REQUEST_CODE) {
             if (this.checkPermissions(false)) {
-                updateLastLocation();
+                init();
             }
         }
     }
@@ -382,24 +386,9 @@ public class TrackingActivity extends Activity {
         //Configuration.getInstance().save(this, prefs);
         myOpenMapView.onPause();  //needed for compass, my location overlays, v6.0.0 and up
         //unregisterReceiver(myReceiver);
-        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+        if(locationCallback!=null)
+            fusedLocationProviderClient.removeLocationUpdates(locationCallback);
         btn_turnoff.setEnabled(false);
     }
 
-    public void successMessage(String message) {
-        new SweetAlertDialog(this,
-                SweetAlertDialog.SUCCESS_TYPE).setTitleText("Good Job!")
-                .setContentText(message).show();
-    }
-
-    public void errorMessage(String message) {
-        new SweetAlertDialog(this,
-                SweetAlertDialog.ERROR_TYPE).setTitleText("Oops...").setContentText(message).show();
-    }
-
-    public void warningMessage(String message) {
-        new SweetAlertDialog(this,
-                SweetAlertDialog.WARNING_TYPE).setTitleText("Notificación del Sistema")
-                .setContentText(message).setConfirmText("Ok").show();
-    }
 }

@@ -130,7 +130,7 @@ public class BattleService implements IBattleService{
       battleParticipationId.setBattleId(battleId);
       BattleParticipation battleParticipation=battleParticipationRepository.findById(battleParticipationId)
           .orElseThrow(()->new NotFoundException("Battle by id not found",ErrorCodes.NOT_FOUND.getCode()));
-      Statistics statistics=StatisticsRepository.getById(statisticsId);
+      Statistics statistics= StatisticsRepository.getReferenceById(statisticsId);
     battleParticipation.setStatistics(statistics);
     battleParticipationRepository.saveAndFlush(battleParticipation);
   }

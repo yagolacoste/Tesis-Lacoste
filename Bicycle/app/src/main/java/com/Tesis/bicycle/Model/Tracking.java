@@ -158,7 +158,7 @@ public class Tracking implements Serializable {
 
     public void stopTrackingActivity(){//probar con el celu
         timeStopped=new Date(System.currentTimeMillis());
-        timeElapsedBetweenStartStops += timeStopped.getTime() - timeStarted.getTime();
+        timeElapsedBetweenStartStops = timeStopped.getTime() - timeStarted.getTime();
 
         //Calculate the average speed based on the distance and the time between stopping and starting
         //the session
@@ -166,12 +166,15 @@ public class Tracking implements Serializable {
         avgSpeedFromSUVAT=(avgSpeedFromSUVAT*3600)/1000;
 //        avgSpeedFromSUVAT = ((distance / (float) 1000) / (getCurrentTimeMillis() / (float) 3600000));
 
-
     }
 
+    public String getDuration() {
+        return timeToString(timeElapsedBetweenStartStops);
+    }
+
+
     public long getCurrentTimeMillis(){
-       return timeElapsedBetweenStartStops+(System.currentTimeMillis()-timeStarted.getTime());
-       // return timeElapsedBetweenStartStops;
+       return (System.currentTimeMillis()-timeStarted.getTime());
     }
 
     //return activity recognicion with determinate avgspeed
@@ -186,26 +189,25 @@ public class Tracking implements Serializable {
 
 
     public LocalTime millsToLocalTime() {
-//        Instant instant = Instant.ofEpochMilli(timeInMilliseconds);
         long timeSwapBuff = 0L;
-        long updateTime = timeSwapBuff + timeInMilliseconds;
+        long updateTime = timeSwapBuff + timeElapsedBetweenStartStops;
         int secs = (int) (updateTime / 1000);
         int mins = secs / 60;
         secs %= 60;
-        int hrs = mins / 60;
+        int hrs = mins / 60;  // Cálculo corregido
         mins %= 60;
-        int milliseconds = (int) timeInMilliseconds % 1000;
+        int milliseconds = (int) timeElapsedBetweenStartStops % 1000;
         int centisecs = milliseconds / 10;
-        LocalTime date = null;
+        LocalTime time = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            date = LocalTime.of(hrs, mins, secs);
+            time = LocalTime.of(hrs, mins, secs);
         }
-        return date;
+        return time;
     }
 
     public String getTimeString(){
-        timeInMilliseconds=getCurrentTimeMillis();
-        return timeToString(timeInMilliseconds);
+        timeElapsedBetweenStartStops=getCurrentTimeMillis();
+        return timeToString(timeElapsedBetweenStartStops);
     }
 
     public static String timeToString(long timeInMilliseconds) {

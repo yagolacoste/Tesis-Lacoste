@@ -33,7 +33,7 @@ public class RouteService implements IRouteService{
     public Route getById(String id) {
 
 
-        if(!routeRepository.findById(id).isEmpty()){
+        if(routeRepository.findById(id).isPresent()){
             return routeRepository.findById(id).get();
         }
         return null;
