@@ -1,6 +1,7 @@
 package com.Tesis.bicycle.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -23,7 +24,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class AddFriendActivity extends AppCompatActivity {
+public class AddFriendActivity extends FragmentActivity {
 
     private EditText edtEmail;
     private Button btnAddUser;

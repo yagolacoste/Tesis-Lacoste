@@ -10,7 +10,9 @@ import com.Tesis.bicycle.Activity.AddFriendActivity;
 import com.Tesis.bicycle.Activity.CommunityActivity;
 import com.Tesis.bicycle.Activity.NewBattleActivity;
 import com.Tesis.bicycle.Activity.TrackingActivity;
+import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Presenter.ListView.RouteListViewActivity;
+import com.Tesis.bicycle.Presenter.ListView.UserListViewActivity;
 import com.Tesis.bicycle.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -38,7 +40,8 @@ public class NavInitActivity extends AppCompatActivity {
                     overridePendingTransition(R.anim.left_in,R.anim.left_out);
                     return true;
                 case R.id.bottom_community:
-                    startActivity(new Intent(NavInitActivity.this, CommunityActivity.class));
+                    startActivity(new Intent(NavInitActivity.this, UserListViewActivity.class).setAction(Constants.ACTION_VIEW_FRIENDS));
+//                    i.setAction(Constants.ACTION_VIEW_FRIENDS);
                     overridePendingTransition(R.anim.left_in,R.anim.left_out);
                     return true;
 //                case R.id.bottom_profile:

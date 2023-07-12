@@ -13,6 +13,7 @@ import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.UserAppDto;
 import com.Tesis.bicycle.Presenter.Adapter.UserRecyclerViewAdapter;
 import com.Tesis.bicycle.ViewModel.UserViewModel;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
 
@@ -48,6 +49,23 @@ public class UserListViewActivity extends ListViewActivity implements UserRecycl
                 startActivity(intent);
             }
         });
+
+//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//
+//            }
+//        });
     }
 
     @Override

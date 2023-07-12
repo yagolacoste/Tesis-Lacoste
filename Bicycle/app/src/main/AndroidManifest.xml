@@ -54,7 +54,8 @@
          android:theme="@style/Theme.AppCompat.NoActionBar" />
 <!--        <activity-->
 <!--            android:name=".Activity.ui.NavInitActivity"-->
-<!--            android:exported="true" /> &lt;!&ndash; <activity &ndash;&gt;-->
+<!--            android:exported="true" />-->
+            <!-- <activity -->
 <!--        &lt;!&ndash; android:name=".Activity.InicioActivity" &ndash;&gt;-->
 <!--        &lt;!&ndash; android:exported="true" &ndash;&gt;-->
 <!--        &lt;!&ndash; android:theme="@style/Theme.AppCompat.NoActionBar"/> &ndash;&gt;-->

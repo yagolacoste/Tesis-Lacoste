@@ -44,9 +44,12 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.name.setText(items.get(position).getName());
+        holder.txtValueTitle.setText(items.get(position).getName());
+        holder.txtValueDistance.setText(items.get(position).getDistance());
+        holder.txtValueTime.setText(String.valueOf(items.get(position).getTime()));
+        holder.mapValueView.initLayer(holder.rootView.getContext(),items.get(position).getCoordinates().get(0));
+        holder.mapValueView.draw((items.get(position).getCoordinates()));
         holder.route=items.get(position);
-
     }
 
     @Override
@@ -57,7 +60,7 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView txtValueDistance,txtValueTime;
+        private TextView txtValueTitle,txtValueDistance,txtValueTime;
 
         private MapView mapView;
 
@@ -69,15 +72,17 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            txtValueTitle=itemView.findViewById(R.id.txtValueTitle);
             txtValueDistance=itemView.findViewById(R.id.txtValueDistance);
             txtValueTime=itemView.findViewById(R.id.txtValueTime);
             mapView=itemView.findViewById(R.id.mapValueView);
             runButton=itemView.findViewById(R.id.runButton);
             statsButton=itemView.findViewById(R.id.statsButton);
-
+            mapValueView=new OpenStreetMap(mapView);
             rootView=itemView;
 
-            run.setOnClickListener(new View.OnClickListener() {
+
+            runButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // se va a la activity
@@ -88,7 +93,7 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
                 }
             });
 
-            statistics.setOnClickListener(new View.OnClickListener() {
+            statsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent=new Intent(rootView.getContext(), StatisticsListViewActivity.class);

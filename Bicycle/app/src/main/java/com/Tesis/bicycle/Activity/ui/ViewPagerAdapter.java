@@ -14,38 +14,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
+    private final List<Class<?>> activityClasses = new ArrayList<>();
+    private final List<String> activityTitles = new ArrayList<>();
+    private final Context context;
 
-    private final List<Class<?>> fragmentClasses = new ArrayList<>();
-    private final List<String> fragmentTitles = new ArrayList<>();
-
-    private Context context;
-
-    public ViewPagerAdapter(FragmentManager fragmentManager,Context context) {
+    public ViewPagerAdapter(FragmentManager fragmentManager, Context context) {
         super(fragmentManager);
-        this.context=context;
+        this.context = context;
+    }
+
+    public void addActivity(Class<?> activityClass, String title) {
+        activityClasses.add(activityClass);
+        activityTitles.add(title);
     }
 
 
-    public void addFragment(Class<?> fragmentClass, String title) {
-        fragmentClasses.add(fragmentClass);
-        fragmentTitles.add(title);
-    }
-
-    @NonNull
-    @Override
-    public Fragment getItem(int position) {
-        Class<?> fragmentClass = fragmentClasses.get(position);
-        return ActivityFragment.newInstance(fragmentClass);
-    }
 
     @Override
     public int getCount() {
-        return fragmentClasses.size();
+        return activityClasses.size();
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return fragmentTitles.get(position);
+        return activityTitles.get(position);
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+        Class<?> activityClass = activityClasses.get(position);
+        try {
+            return (Fragment) activityClass.newInstance();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
