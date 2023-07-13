@@ -24,8 +24,6 @@ public  abstract class ListViewActivity extends AppCompatActivity {
 //    protected TabLayout tabLayout;
 
 
-
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

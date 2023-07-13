@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools" >
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -21,17 +21,17 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Bicycle.NoActionBar"
+        android:theme="@style/Theme.Bicycle"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup"
-        tools:targetApi="31">
+        tools:targetApi="31" >
         <activity
             android:name=".Activity.CommunityActivity"
             android:exported="true" />
         <activity
             android:name=".Activity.LoginActivity"
             android:exported="true"
-            android:label="@string/title_activity_main">
+            android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,17 +48,22 @@
             android:name=".ServiceTracking.GPSService"
             android:enabled="true"
             android:exported="true" />
-         <activity
-         android:name=".Activity.MenuActivity"
-         android:exported="true"
-         android:theme="@style/Theme.AppCompat.NoActionBar" />
+
 <!--        <activity-->
-<!--            android:name=".Activity.ui.NavInitActivity"-->
-<!--            android:exported="true" />-->
-            <!-- <activity -->
-<!--        &lt;!&ndash; android:name=".Activity.InicioActivity" &ndash;&gt;-->
-<!--        &lt;!&ndash; android:exported="true" &ndash;&gt;-->
-<!--        &lt;!&ndash; android:theme="@style/Theme.AppCompat.NoActionBar"/> &ndash;&gt;-->
+<!--            android:name=".Activity.MenuActivity"-->
+<!--            android:exported="true"-->
+<!--            android:theme="@style/Theme.AppCompat.NoActionBar" />-->
+         <activity
+         android:name=".Activity.ui.NavInitActivity"
+         android:exported="true" />
+        <activity android:name="com.Tesis.bicycle.Activity.ui.ListViewFragment"
+            android:exported="true"
+            tools:ignore="Instantiatable" />
+
+        <!-- <activity -->
+        <!-- &lt;!&ndash; android:name=".Activity.InicioActivity" &ndash;&gt; -->
+        <!-- &lt;!&ndash; android:exported="true" &ndash;&gt; -->
+        <!-- &lt;!&ndash; android:theme="@style/Theme.AppCompat.NoActionBar"/> &ndash;&gt; -->
         <activity
             android:name=".Presenter.ListView.ListViewActivity"
             android:exported="true" />

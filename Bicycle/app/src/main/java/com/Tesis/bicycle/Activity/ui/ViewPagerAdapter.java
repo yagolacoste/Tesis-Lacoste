@@ -1,56 +1,29 @@
 package com.Tesis.bicycle.Activity.ui;
 
-import android.content.Context;
-import android.content.Intent;
-import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
+public class ViewPagerAdapter extends FragmentStateAdapter {
 
-public class ViewPagerAdapter extends FragmentPagerAdapter {
-    private final List<Class<?>> activityClasses = new ArrayList<>();
-    private final List<String> activityTitles = new ArrayList<>();
-    private final Context context;
-
-    public ViewPagerAdapter(FragmentManager fragmentManager, Context context) {
-        super(fragmentManager);
-        this.context = context;
+    public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+        super(fragmentActivity);
     }
 
-    public void addActivity(Class<?> activityClass, String title) {
-        activityClasses.add(activityClass);
-        activityTitles.add(title);
-    }
-
-
-
+    @NonNull
     @Override
-    public int getCount() {
-        return activityClasses.size();
-    }
-
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return activityTitles.get(position);
-    }
-
-    @Override
-    public Fragment getItem(int position) {
-        Class<?> activityClass = activityClasses.get(position);
-        try {
-            return (Fragment) activityClass.newInstance();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
+    public Fragment createFragment(int position) {
+        switch (position){
+            case 0:
+                return new ListViewFragment();
+            default:
+                return new ListViewFragment();
         }
-        return null;
+    }
+
+    @Override
+    public int getItemCount() {
+        return 2;
     }
 }
