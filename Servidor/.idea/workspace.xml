@@ -5,20 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7729f06-1757-4dfa-ac9d-78d48a9c1c01" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/AddFriendActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/AddFriendActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/CommunityActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/CommunityActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/LoginActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ui/ActivityFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ui/ActivityFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/CommunityActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/CommunityFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ui/ListViewFragment.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ui/NavInitActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ui/NavInitActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ui/ViewPagerAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ui/ViewPagerAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Dto/ApiRest/RouteDetailsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Dto/ApiRest/RouteDetailsDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Adapter/RouteRecyclerViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Adapter/RouteRecyclerViewAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ListView/ListViewActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ListView/ListViewActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ListView/UserListViewActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ListView/UserListViewActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ui/ViewPagerAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ApiRestConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ApiRestConnection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/res/layout/activity_community.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/res/layout/activity_community.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/res/layout/activity_list_view.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/res/layout/activity_list_view.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/res/layout/card_my_route_list_view.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/res/layout/card_my_route_list_view.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -152,8 +144,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.GatewayApplication" />
-        <item itemvalue="Application.AuthApplication" />
         <item itemvalue="Application.AdminApplication" />
+        <item itemvalue="Application.AuthApplication" />
         <item itemvalue="Application.DiscoveryApplication" />
       </list>
     </recent_temporary>

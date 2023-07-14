@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+
+import com.Tesis.bicycle.Activity.CommunityFragment;
 import com.Tesis.bicycle.Activity.TrackingActivity;
 import com.Tesis.bicycle.Presenter.ListView.RouteListViewActivity;
 import com.Tesis.bicycle.R;
@@ -34,12 +36,13 @@ public class NavInitActivity extends AppCompatActivity {
                     return true;
                     //continue with UI
                 case R.id.bottom_my_maps:
-                    startActivity(new Intent(NavInitActivity.this, RouteListViewActivity.class));
+                   // startActivity(new Intent(NavInitActivity.this, RouteListViewActivity.class));
+                   // replaceFragment(new RouteListViewFragment());
                     overridePendingTransition(R.anim.left_in,R.anim.left_out);
                     return true;
                 case R.id.bottom_community:
-//                    startActivity(new Intent(NavInitActivity.this, UserListViewActivity.class).setAction(Constants.ACTION_VIEW_FRIENDS));
-                    replaceFragment(new ListViewFragment());
+                    //startActivity(new Intent(NavInitActivity.this, CommunityActivity.class));
+                    replaceFragment(new CommunityFragment());
 //                    i.setAction(Constants.ACTION_VIEW_FRIENDS);
                     overridePendingTransition(R.anim.left_in,R.anim.left_out);
                     return true;
