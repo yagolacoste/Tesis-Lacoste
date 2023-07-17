@@ -19,40 +19,51 @@ import java.util.List;
 import java.util.Map;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
+    enum Tab {
+        CHALLENGE(0,R.string.tab_challenge),
+        FRIENDS(1,R.string.tab_friends),
+        SCORE(2,R.string.tab_score);
+        final int position;
+        final int title;
 
-    private List<Fragment> fragments=new ArrayList<>();
+        Tab(int position,@StringRes int title) {
+            this.position = position;
+            this.title=title;
+        }
 
-    public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
-        super(fragmentActivity);
+        private static final Map<Integer,Tab> map;
+        static {
+            map = new HashMap<>();
+            for (Tab t : Tab.values()) {
+                map.put(t.position, t);
+            }
+        }
+
+        static Tab byPosition(int position) {
+            return map.get(position);
+        }
     }
 
-
-
-    public void addActivity(Fragment fragment) {
-        fragments.add(fragment);
+    public ViewPagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
+        super(fragmentManager, lifecycle);
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        switch (position){
-            case 0:{
-                return fragments.get(position);
-            }
-            default: return new RecyclerViewFragment();
-        }
+        if (position == Tab.CHALLENGE.position)
+            return BattleFragment.newInstance(Tab.CHALLENGE.title);
+        else if (position == Tab.FRIENDS.position)
+            return BattleFragment.newInstance(Tab.FRIENDS.title);
+//        else if (position == Tab.SCORE.position)
+//            return TabNameFragment.newInstance(Tab.MUSIC.title);
+//        else
+            throw new IllegalArgumentException("unknown position " + position);
     }
 
     @Override
     public int getItemCount() {
-        return 2;
+        return Tab.values().length;
     }
 
-    public List<Fragment> getFragments() {
-        return fragments;
-    }
-
-    public void setFragments(List<Fragment> fragments) {
-        this.fragments = fragments;
-    }
 }

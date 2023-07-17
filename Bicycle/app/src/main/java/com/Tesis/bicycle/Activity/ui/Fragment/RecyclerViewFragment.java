@@ -31,8 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewFragment extends Fragment {
-    private static final String ARG_TAB_NAME = "ARG_TAB_NAME";
-
     Context context;
     protected RecyclerView recyclerView;
 
@@ -48,15 +46,6 @@ public class RecyclerViewFragment extends Fragment {
     private String name;
 
 
-
-    public static RecyclerViewFragment newInstance(String tabName,Context context) {
-        RecyclerViewFragment frg = new RecyclerViewFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_TAB_NAME, tabName);
-        frg.setArguments(args);
-
-        return frg;
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

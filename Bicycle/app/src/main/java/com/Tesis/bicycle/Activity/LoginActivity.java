@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         accessTokenRoomViewModel.getAccessToken().observe(this,response->{
             if(response!=null){
                 Toast.makeText(this,"Session active",Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(this,MenuActivity.class));
+                //startActivity(new Intent(this,MenuActivity.class));
                startActivity(new Intent(this, NavInitActivity.class));
             }
             else

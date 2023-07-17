@@ -10,22 +10,28 @@ import android.os.Bundle;
 import android.view.View;
 
 
-import com.Tesis.bicycle.Activity.CommunityFragment;
+import com.Tesis.bicycle.Activity.ui.Fragment.CommunityFragment;
 import com.Tesis.bicycle.Activity.TrackingActivity;
-import com.Tesis.bicycle.Presenter.ListView.RouteListViewActivity;
+import com.Tesis.bicycle.Activity.ui.Fragment.MyMapsFragment;
 import com.Tesis.bicycle.R;
+import com.Tesis.bicycle.databinding.ActivityNavInitBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class NavInitActivity extends AppCompatActivity {
 
     private FloatingActionButton floatingActionButton;
+    private ActivityNavInitBinding binding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nav_init);
+        binding=ActivityNavInitBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        binding.bottomNavigationView.setBackground(null);
+
         floatingActionButton=findViewById(R.id.floatingBottomInit);
 
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottomNavigationView);
@@ -37,11 +43,14 @@ public class NavInitActivity extends AppCompatActivity {
                     //continue with UI
                 case R.id.bottom_my_maps:
                    // startActivity(new Intent(NavInitActivity.this, RouteListViewActivity.class));
-                   // replaceFragment(new RouteListViewFragment());
+                    replaceFragment(new MyMapsFragment());
                     overridePendingTransition(R.anim.left_in,R.anim.left_out);
                     return true;
+
                 case R.id.bottom_community:
                     //startActivity(new Intent(NavInitActivity.this, CommunityActivity.class));
+                    Fragment fragment=new CommunityFragment();
+
                     replaceFragment(new CommunityFragment());
 //                    i.setAction(Constants.ACTION_VIEW_FRIENDS);
                     overridePendingTransition(R.anim.left_in,R.anim.left_out);

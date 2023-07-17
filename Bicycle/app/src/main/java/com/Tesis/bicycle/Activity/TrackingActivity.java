@@ -375,6 +375,7 @@ public class TrackingActivity extends Activity {
         //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
 //        ope.onResume(); //needed for compass, my location overlays, v6.0.0 and up
+        btn_turnoff.setEnabled(true);
     }
 
     @Override
@@ -388,7 +389,7 @@ public class TrackingActivity extends Activity {
         //unregisterReceiver(myReceiver);
         if(locationCallback!=null)
             fusedLocationProviderClient.removeLocationUpdates(locationCallback);
-        btn_turnoff.setEnabled(false);
+        btn_turnoff.setEnabled(true);
     }
 
 }

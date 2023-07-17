@@ -1,4 +1,4 @@
-package com.Tesis.bicycle.Activity;
+package com.Tesis.bicycle.Activity.ui.Fragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,12 +17,15 @@ import com.Tesis.bicycle.Activity.ui.Fragment.RecyclerViewFragment;
 import com.Tesis.bicycle.Activity.ui.Fragment.ViewPagerAdapter;
 import com.Tesis.bicycle.R;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CommunityFragment extends Fragment {
 
     private ViewPager2 viewPager2;
     private TabLayout tabLayout;
-
 
 
     @SuppressLint("MissingInflatedId")
@@ -35,38 +38,27 @@ public class CommunityFragment extends Fragment {
         tabLayout = view.findViewById(R.id.tabLayout);
 
         FragmentActivity fragmentActivity = requireActivity();
-        ViewPagerAdapter adapter = new ViewPagerAdapter(fragmentActivity);
-        adapter.addActivity(RecyclerViewFragment.newInstance("Statistics", requireContext()));
+        ViewPagerAdapter adapter = new ViewPagerAdapter(fragmentActivity.getSupportFragmentManager(), getLifecycle());
 
         // Configurar el adaptador en el ViewPager
         viewPager2.setAdapter(adapter);
 
+        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2,
+                (tab, position) -> {
+                    tab.setText(ViewPagerAdapter.Tab.byPosition(position).title);
+                });
 
-        tabLayout.getTabAt(0).setText(adapter.getFragments().get(0).getClass().getSimpleName());
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager2.setCurrentItem(tab.getPosition());
-
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
-
+        tabLayoutMediator.attach();
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                tabLayout.getTabAt(position).select();
             }
         });
 
         return view;
     }
+
+
+
 }

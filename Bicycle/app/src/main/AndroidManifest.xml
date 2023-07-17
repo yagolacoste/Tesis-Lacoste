@@ -26,7 +26,7 @@
         tools:replace="android:allowBackup"
         tools:targetApi="31" >
         <activity
-            android:name=".Activity.CommunityActivity"
+            android:name=".Activity.ui.Fragment.CommunityFragment"
             android:exported="true" />
         <activity
             android:name=".Activity.LoginActivity"
@@ -56,14 +56,7 @@
          <activity
          android:name=".Activity.ui.NavInitActivity"
          android:exported="true" />
-        <activity android:name="com.Tesis.bicycle.Activity.ui.ListViewFragment"
-            android:exported="true"
-            tools:ignore="Instantiatable" />
 
-        <!-- <activity -->
-        <!-- &lt;!&ndash; android:name=".Activity.InicioActivity" &ndash;&gt; -->
-        <!-- &lt;!&ndash; android:exported="true" &ndash;&gt; -->
-        <!-- &lt;!&ndash; android:theme="@style/Theme.AppCompat.NoActionBar"/> &ndash;&gt; -->
         <activity
             android:name=".Presenter.ListView.ListViewActivity"
             android:exported="true" />
@@ -73,10 +66,6 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".Activity.TrackingDetailActivity"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity
-            android:name=".Activity.RouteDetailsActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity

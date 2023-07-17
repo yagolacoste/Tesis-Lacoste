@@ -1,6 +1,7 @@
 package com.Tesis.bicycle.Presenter.Adapter;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,13 +9,16 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.Tesis.bicycle.Activity.RouteDetailsActivity;
 import com.Tesis.bicycle.Activity.TrackingActivity;
+import com.Tesis.bicycle.Activity.ui.Fragment.StatisticsFragment;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
-import com.Tesis.bicycle.Presenter.ListView.StatisticsListViewActivity;
 import com.Tesis.bicycle.Presenter.OpenStreetMap;
 import com.Tesis.bicycle.R;
 
@@ -26,10 +30,10 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
 
     public List<RouteDetailsDto> items;
 
+
     public RouteRecyclerViewAdapter(List<RouteDetailsDto> items) {
         this.items = items;
     }
-
 
 
 
@@ -66,7 +70,7 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
 
         private OpenStreetMap mapValueView;
 
-        private Button runButton,statsButton;
+        private Button runButton,statisButton;
         private RouteDetailsDto route;
         private View rootView;
 
@@ -77,7 +81,7 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
             txtValueTime=itemView.findViewById(R.id.txtValueTime);
             mapView=itemView.findViewById(R.id.mapValueView);
             runButton=itemView.findViewById(R.id.runButton);
-            statsButton=itemView.findViewById(R.id.statsButton);
+            statisButton=itemView.findViewById(R.id.statButton);
             mapValueView=new OpenStreetMap(mapView);
             rootView=itemView;
 
@@ -93,19 +97,34 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
                 }
             });
 
-            statsButton.setOnClickListener(new View.OnClickListener() {
+            statisButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent=new Intent(rootView.getContext(), StatisticsListViewActivity.class);
-                    intent.setAction(Constants.VIEW_STATISTICS);
-                    intent.putExtra(Constants.ROUTE_ID,route.getId());
-                    rootView.getContext().startActivity(intent);
+//                    Intent intent=new Intent(rootView.getContext(), StatisticsListViewActivity.class);
+//                    intent.setAction(Constants.VIEW_STATISTICS);
+//                    intent.putExtra(Constants.ROUTE_ID,route.getId());
+//                    rootView.getContext().startActivity(intent);
+                    Bundle args = new Bundle();
+                    args.putString(Constants.ROUTE_ID, route.getId());
+                    StatisticsFragment statisticsFragment=new StatisticsFragment();
+                    statisticsFragment.setArguments(args);
+                    replaceFragment(statisticsFragment);
+
+                }
+                private void replaceFragment(Fragment fragment){
+                    FragmentManager fragmentManager=((AppCompatActivity) rootView.getContext()).getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frame_layout,fragment);
+                    fragmentTransaction.commit();
                 }
             });
             
 
         }
+
     }
+
+   
 
 
 }

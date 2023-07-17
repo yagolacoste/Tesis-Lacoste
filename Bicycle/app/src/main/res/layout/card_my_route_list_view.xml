@@ -141,7 +141,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/statsButton"
+                        android:id="@+id/statButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
