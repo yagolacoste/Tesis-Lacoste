@@ -2,6 +2,7 @@ package com.Tesis.admin.Service.Battle;
 
 import com.Tesis.admin.Dto.Battle.BattleDto;
 import com.Tesis.admin.Dto.Battle.NewBattleDto;
+import com.Tesis.admin.Dto.Battle.ScoreDto;
 
 import java.util.List;
 
@@ -18,4 +19,7 @@ public interface IBattleService {
     BattleDto getRanking(Long id);
 
     void updateBattleParticipation(Long appUserId, Long battleId, String statisticsId);
+
+
+    ScoreDto getScore(Long playerOne, Long playerTwo);
 }

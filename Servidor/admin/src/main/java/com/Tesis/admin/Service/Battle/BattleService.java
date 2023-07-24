@@ -3,25 +3,24 @@ package com.Tesis.admin.Service.Battle;
 import com.Tesis.admin.Controller.Exception.TypeExceptions.NotFoundException;
 import com.Tesis.admin.Dto.Battle.BattleDto;
 import com.Tesis.admin.Dto.Battle.NewBattleDto;
+import com.Tesis.admin.Dto.Battle.ScoreDto;
 import com.Tesis.admin.Dto.Statistics.StatisticsDto;
-import com.Tesis.admin.Dto.Statistics.StatisticsRequestDto;
 import com.Tesis.admin.Exception.ErrorCodes;
 import com.Tesis.admin.Models.*;
 import com.Tesis.admin.Repository.*;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class BattleService implements IBattleService{
+
+    private static final long DEFAULT=0;
 
     @Autowired
     private IBattleRepository battleRepository;
@@ -41,11 +40,7 @@ public class BattleService implements IBattleService{
 
     @Override
     public List<BattleDto> getBattles() {
-        List<BattleDto>result= battleRepository.findAll().stream().map(BattleDto::new).collect(Collectors.toList());
-        if(!result.isEmpty()){
-            return result;
-        }
-        return result;
+        return battleRepository.findAll().stream().map(BattleDto::new).collect(Collectors.toList());
     }
 
     @Override
@@ -65,6 +60,7 @@ public class BattleService implements IBattleService{
         battle.setCompleteDate(battleDto.getCompleteDate());
         battle.setCantParticipant(battleDto.getCantParticipant());
         battle.setRoute(route);
+        battle.setWinner(DEFAULT);
         battle=battleRepository.save(battle);
         List<BattleParticipation> battleParticipations=new ArrayList<>();
         for(Long idUser:battleDto.getUsers()){
@@ -88,6 +84,7 @@ public class BattleService implements IBattleService{
         List<BattleDto> result = battleParticipationRepository.findByBattlesByUser(id).stream().map(BattleDto::new).collect(Collectors.toList());
         if (!result.isEmpty()) {
             for (BattleDto battleDto : result) {
+                this.updateWinner(battleDto.getIdBattle());
                 List<StatisticsDto> ranking = this.battleParticipationRepository.getRanking(battleDto.getIdBattle());
                 battleDto.setRanking(ranking);
                 battleDto.setStatus(getStatus(battleDto,id));
@@ -114,9 +111,9 @@ public class BattleService implements IBattleService{
 
 
 
-  @Override public BattleDto getRanking(Long id) {
-      BattleDto battleDto=this.getById(id);
-      List<StatisticsDto> ranking=this.battleParticipationRepository.getRanking(id);
+  @Override public BattleDto getRanking(Long battleId) {
+      BattleDto battleDto=this.getById(battleId);
+      List<StatisticsDto> ranking=this.battleParticipationRepository.getRanking(battleId);
       battleDto.setRanking(ranking);
       return battleDto;
   }
@@ -133,5 +130,24 @@ public class BattleService implements IBattleService{
       Statistics statistics= StatisticsRepository.getReferenceById(statisticsId);
     battleParticipation.setStatistics(statistics);
     battleParticipationRepository.saveAndFlush(battleParticipation);
+    this.updateWinner(battleId);//se actualiza y agrego ganador
+  }
+
+    @Override
+    public ScoreDto getScore(Long playerOne, Long playerTwo) {
+        return battleRepository.getScore(playerOne,playerTwo);
+    }
+
+
+    private void updateWinner(Long battleId){
+        Optional<StatisticsDto> statisticsDto =this.getRanking(battleId).getRanking().stream().findFirst();
+        if(statisticsDto.isPresent()){
+            Long winner=statisticsDto.get().getAppUser();
+            Optional<Battle> battle=this.battleRepository.findById(battleId);
+            if(battle.isPresent()){
+                battle.get().setWinner(winner);
+                battleRepository.save(battle.get());
+            }
+        }
   }
 }

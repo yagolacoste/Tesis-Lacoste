@@ -1,5 +1,6 @@
 package com.Tesis.admin.Models;
 
+import com.Tesis.admin.Dto.AppUser.UserAppDto;
 import org.hibernate.annotations.ManyToAny;
 
 import javax.persistence.*;
@@ -48,7 +49,7 @@ public class User implements Serializable {
     @JoinColumn(name = "stored_document_id")
     private StoredDocument storedDocument;
 
-    @ManyToMany( cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "friends",joinColumns = @JoinColumn(name = "appuser_id"),
     inverseJoinColumns = @JoinColumn(name = "appuser_id_friends"))
     private Set<User> friends;
@@ -57,6 +58,7 @@ public class User implements Serializable {
     public User() {
 
     }
+
 
     public Long getId() {
         return id;

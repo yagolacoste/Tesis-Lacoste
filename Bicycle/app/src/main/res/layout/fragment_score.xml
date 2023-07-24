@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.AddFriendActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtEmailFriendScore"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Insert friend's email"
+            app:startIconDrawable="@drawable/ic_person">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtEmailFriendScore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/san_francisco"
+                android:textSize="15sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSearchFriend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/san_francisco"
+        android:text="Search Friend"
+        android:textColor="@color/white"
+        app:startIconDrawable="@drawable/ic_person"/>
+
+
+        <LinearLayout
+            android:id="@+id/scoreLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -128,4 +128,6 @@ public class AddFriendActivity extends FragmentActivity {
                 SweetAlertDialog.WARNING_TYPE).setTitleText("Notificación del Sistema")
                 .setContentText(message).setConfirmText("Ok").show();
     }
+
+
 }

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,8 @@ public abstract class BaseListViewFragment extends Fragment {
 
     protected Context context;
 
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -40,16 +43,25 @@ public abstract class BaseListViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_base_list_view, container, false);
-        // Inflate the layout for this fragment
-        //lv_saveLocations=findViewById(R.id.lv_showLocations);
         recyclerView= (RecyclerView) view.findViewById(R.id.rcvScrollViewFr);
         floatingactionbutton=view.findViewById(R.id.btnAddFr);
-//        tabLayout = findViewById(R.id.tabLayout);
+        swipeRefreshLayout=view.findViewById(R.id.swipeRefreshLayout);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         accessTokenRoomViewModel=new ViewModelProvider(this).get(AccessTokenRoomViewModel.class);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Esto se ejecuta cada vez que se realiza el gesto
+                getListView();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
         return view;
     }
+
+
 
     public abstract void getListView();
 

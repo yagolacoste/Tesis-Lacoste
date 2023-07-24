@@ -2,6 +2,7 @@ package com.Tesis.admin.Service.User;
 
 import com.Tesis.admin.Dto.AppUser.UserAppDto;
 import com.Tesis.admin.Dto.Battle.BattleDto;
+import com.Tesis.admin.Dto.Battle.ScoreDto;
 import com.Tesis.admin.Models.User;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface IUserService {
     void saveFriend(String email,Long id);
 
     List<BattleDto> getBattlesByUser(Long id);
+
+    ScoreDto getScore(Long id, String email);
 }

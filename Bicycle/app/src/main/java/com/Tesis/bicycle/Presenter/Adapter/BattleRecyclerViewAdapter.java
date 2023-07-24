@@ -1,27 +1,27 @@
 package com.Tesis.bicycle.Presenter.Adapter;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.Tesis.bicycle.Activity.ui.Fragment.RankingFragment;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.Battle.BattleDto;
-import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
-import com.Tesis.bicycle.Dto.ApiRest.StatisticsDto;
 import com.Tesis.bicycle.Model.Status;
-import com.Tesis.bicycle.Presenter.ListView.RankingListViewActivity;
 import com.Tesis.bicycle.R;
-import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
 import com.google.android.material.chip.Chip;
 
 import java.util.List;
@@ -122,9 +122,20 @@ public class BattleRecyclerViewAdapter extends RecyclerView.Adapter<BattleRecycl
             btn_Information.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(rootView.getContext(), RankingListViewActivity.class);
-                    intent.putExtra(Constants.BATTLE_ITEM, battleDto);
-                    rootView.getContext().startActivity(intent);
+//                    Intent intent = new Intent(rootView.getContext(), RankingListViewActivity.class);
+//                    intent.putExtra(Constants.BATTLE_ITEM, battleDto);
+//                    rootView.getContext().startActivity(intent);
+                    Bundle args = new Bundle();
+                    args.putSerializable(Constants.BATTLE_ITEM, battleDto);
+                    RankingFragment rankingFragment=new RankingFragment();
+                    rankingFragment.setArguments(args);
+                    replaceFragment(rankingFragment);
+                }
+                private void replaceFragment(Fragment fragment){
+                    FragmentManager fragmentManager=((AppCompatActivity) rootView.getContext()).getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frame_layout,fragment);
+                    fragmentTransaction.commit();
                 }
             });
 

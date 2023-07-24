@@ -4,6 +4,7 @@ package com.Tesis.admin.Controller.User;
 
 import com.Tesis.admin.Dto.AppUser.UserAppDto;
 import com.Tesis.admin.Dto.Battle.BattleDto;
+import com.Tesis.admin.Dto.Battle.ScoreDto;
 import com.Tesis.admin.Models.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -47,5 +48,8 @@ public interface IUserController {
     @GetMapping(path = {"{id}/battles"},produces = MediaType.APPLICATION_JSON_VALUE)
     List<BattleDto> getBattleByUser(@PathVariable Long id);
 
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(path = {"{id}/score"},produces = MediaType.APPLICATION_JSON_VALUE)
+    ScoreDto getScore(@PathVariable Long id, @RequestParam (value = "email") String email);
 
 }

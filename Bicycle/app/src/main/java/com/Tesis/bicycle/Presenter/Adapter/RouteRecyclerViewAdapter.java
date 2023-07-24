@@ -100,10 +100,6 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
             statisButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    Intent intent=new Intent(rootView.getContext(), StatisticsListViewActivity.class);
-//                    intent.setAction(Constants.VIEW_STATISTICS);
-//                    intent.putExtra(Constants.ROUTE_ID,route.getId());
-//                    rootView.getContext().startActivity(intent);
                     Bundle args = new Bundle();
                     args.putString(Constants.ROUTE_ID, route.getId());
                     StatisticsFragment statisticsFragment=new StatisticsFragment();

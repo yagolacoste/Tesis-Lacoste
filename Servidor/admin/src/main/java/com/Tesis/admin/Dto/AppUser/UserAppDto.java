@@ -39,6 +39,9 @@ public class UserAppDto implements Serializable {
     @JsonProperty("height")
     private Integer height;
 
+    @JsonProperty("photo")
+    private Long photo;
+
     public UserAppDto() {
     }
 
@@ -126,5 +129,13 @@ public class UserAppDto implements Serializable {
 
     public void setHeight(Integer height) {
         this.height = height;
+    }
+
+    public Long getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Long photo) {
+        this.photo = photo;
     }
 }

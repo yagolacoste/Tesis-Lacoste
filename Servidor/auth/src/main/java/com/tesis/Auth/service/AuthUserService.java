@@ -52,8 +52,6 @@ public class AuthUserService implements IAuthUserService{
     @Autowired IStoredDocumentRepository storedDocumentRepository;
 
 
-
-
     @Override
     public RefreshTokenDto validate(String token) {
         boolean condicion=jwtUtils.validateJwtToken(token);

@@ -36,8 +36,8 @@ public class Constants {
    public static final String ROUTE_SELECT="route_select";
 
    /////////////////////Constants defined for User/////////////////////////
-   public static final String USER_ITEM="User_item";
-   public static final String USER_SELECT="User_item";
+   public static final String USER_ITEM="user_item";
+   public static final String USER_SELECT="user_select";
 
    public static final String ACTION_VIEW_FRIENDS="view_my_friends";
 

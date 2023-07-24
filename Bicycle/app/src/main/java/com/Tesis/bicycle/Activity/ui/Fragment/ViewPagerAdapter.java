@@ -1,21 +1,15 @@
 package com.Tesis.bicycle.Activity.ui.Fragment;
 
-import android.content.Context;
-
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.Tesis.bicycle.R;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
@@ -52,12 +46,12 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         if (position == Tab.CHALLENGE.position)
-            return BattleFragment.newInstance(Tab.CHALLENGE.title);
+            return BattleListFragment.newInstance(Tab.CHALLENGE.title);
         else if (position == Tab.FRIENDS.position)
-            return BattleFragment.newInstance(Tab.FRIENDS.title);
-//        else if (position == Tab.SCORE.position)
-//            return TabNameFragment.newInstance(Tab.MUSIC.title);
-//        else
+            return FriendsFragment.newInstance(Tab.FRIENDS.title);
+        else if (position == Tab.SCORE.position)
+            return ScoreFragment.newInstance(Tab.FRIENDS.title);
+        else
             throw new IllegalArgumentException("unknown position " + position);
     }
 

@@ -2,6 +2,9 @@ package com.Tesis.bicycle.Activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
@@ -17,17 +20,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.Tesis.bicycle.Activity.ui.Fragment.BattleListFragment;
+import com.Tesis.bicycle.Activity.ui.Fragment.CommunityFragment;
+import com.Tesis.bicycle.Activity.ui.Fragment.ViewPagerAdapter;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.Battle.NewBattleDto;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Dto.ApiRest.UserAppDto;
-import com.Tesis.bicycle.Presenter.ListView.BattleListView;
 import com.Tesis.bicycle.Presenter.ListView.RouteListViewActivity;
 import com.Tesis.bicycle.Presenter.ListView.UserListViewActivity;
 import com.Tesis.bicycle.R;
-import com.Tesis.bicycle.ServiceTracking.GPSService;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
 import com.Tesis.bicycle.ViewModel.BattleViewModel;
+import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -78,7 +83,6 @@ public class NewBattleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i=new Intent(view.getContext(), RouteListViewActivity.class);
-                i.setAction(Constants.ACTION_VIEW_MY_ROUTES);
                 startActivityForResult(i,Constants.REQUEST_CODE);
             }
         });
@@ -159,9 +163,7 @@ public class NewBattleActivity extends AppCompatActivity {
     }
 
     private void BackToList() {
-        Intent i=new Intent(NewBattleActivity.this, BattleListView.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
+        this.finish();
     }
 
 

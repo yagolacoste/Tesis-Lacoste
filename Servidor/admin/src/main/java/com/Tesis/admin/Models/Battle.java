@@ -28,6 +28,8 @@ public class Battle {
     @JoinColumn(name = "route_id")
     private Route route;
 
+    private Long winner;
+
 
     public Battle() {
     }
@@ -65,4 +67,11 @@ public class Battle {
         this.route = route;
     }
 
+    public Long getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Long winner) {
+        this.winner = winner;
+    }
 }

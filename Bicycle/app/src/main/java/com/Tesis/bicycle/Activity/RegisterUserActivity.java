@@ -48,7 +48,7 @@ public class RegisterUserActivity extends AppCompatActivity {
     private Button btnUploadImage, btnStoredData;
     private CircleImageView imageUser;
     private EditText edtNameUser, edtLastName, edtAge, edtHeight, edtTelephone,
-            edtDirection, edtPasswordUser, edtEmailUser, edtWeight;
+             edtPasswordUser, edtEmailUser, edtWeight;
     private TextInputLayout txtInputNameUser, txtInputLastName, txtInputAge,
             txtInputTypeHeight,
              txtInputTelephone, txtInputEmailUser, txtInputPasswordUser,txtInputTypeWeight;

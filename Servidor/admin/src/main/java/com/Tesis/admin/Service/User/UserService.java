@@ -4,8 +4,11 @@ package com.Tesis.admin.Service.User;
 import com.Tesis.admin.Controller.Exception.TypeExceptions.NotFoundException;
 import com.Tesis.admin.Dto.AppUser.UserAppDto;
 import com.Tesis.admin.Dto.Battle.BattleDto;
+import com.Tesis.admin.Dto.Battle.ScoreDto;
 import com.Tesis.admin.Exception.ErrorCodes;
+import com.Tesis.admin.Models.StoredDocument;
 import com.Tesis.admin.Models.User;
+import com.Tesis.admin.Repository.IStoredDocumentRepository;
 import com.Tesis.admin.Repository.IUserRepository;
 import com.Tesis.admin.Service.Battle.IBattleService;
 import org.slf4j.Logger;
@@ -29,12 +32,14 @@ public class UserService implements IUserService{
     @Autowired
     private IBattleService battleService;
 
+    @Autowired
+    private IStoredDocumentRepository iStoredDocumentRepository;
+
 
     @Override
     public UserAppDto getByUser(Long id) {
-        UserAppDto user= userRepository.findById(id).map(u->new UserAppDto(u))
+        return userRepository.findById(id).map(UserAppDto::new)
                 .orElseThrow(()->new NotFoundException("User by id not found", ErrorCodes.NOT_FOUND.getCode()));
-       return user;
     }
 
     @Override
@@ -57,7 +62,35 @@ public class UserService implements IUserService{
 
     @Override
     public void update(UserAppDto userAppDto, Long id) {
+        User user=userRepository.findById(id)
+                .orElseThrow(()->new NotFoundException("User by id not found", ErrorCodes.NOT_FOUND.getCode()));
+        if(userAppDto.getFirstName()!=null){
+            user.setFirstName(userAppDto.getFirstName());
+        }
+        if(userAppDto.getLastName()!=null){
+            user.setLastName(userAppDto.getLastName());
+        }
+        if(userAppDto.getAge()!=0){
+            user.setAge(userAppDto.getAge());
+        }
+        if(userAppDto.getPhone()!=null){
+            user.setPhone(userAppDto.getPhone());
+        }
+        if(userAppDto.getEmail()!=null){
+            user.setEmail(userAppDto.getEmail());
+        }
+        if(userAppDto.getWeight()!=null){
+            user.setWeight(userAppDto.getWeight());
+        }
+        if(userAppDto.getHeight()!=0){
+            user.setHeight(userAppDto.getHeight());
+        }
+        if(userAppDto.getPhoto()!=null){
+            StoredDocument storedDocument=iStoredDocumentRepository.findById(userAppDto.getPhoto()).get();
+            user.setStoredDocument(storedDocument);
+        }
 
+        userRepository.saveAndFlush(user);
     }
 
     @Override
@@ -70,7 +103,6 @@ public class UserService implements IUserService{
     public List<UserAppDto> getFriends(Long id) {
         User user= userRepository.findById(id)
                 .orElseThrow(()->new NotFoundException("User by id not found", ErrorCodes.NOT_FOUND.getCode()));
-
         return user.getFriends().stream().map(UserAppDto::new).collect(Collectors.toList());
     }
 
@@ -100,5 +132,21 @@ public class UserService implements IUserService{
             return result;
         }
         return result;
+    }
+
+    @Override
+    public ScoreDto getScore(Long id, String email) {
+        ScoreDto scoreDto=new ScoreDto();
+        User playerOne= userRepository.findById(id).get();
+        scoreDto.setNamePlayerOneComplete(playerOne.getFirstName()+" "+playerOne.getLastName());
+        User playerTwo=this.userRepository.findByEmail(email);
+        if(playerTwo!=null){
+            if(playerOne.getFriends().contains(playerTwo)){
+                scoreDto=battleService.getScore(id,playerTwo.getId());
+                return scoreDto;
+            }
+            else throw new NotFoundException(playerOne.getFirstName() +"isn't friend ", ErrorCodes.NOT_FOUND.getCode());
+        }
+        else throw new NotFoundException("User not found", ErrorCodes.NOT_FOUND.getCode());
     }
 }

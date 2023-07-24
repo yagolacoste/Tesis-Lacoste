@@ -10,9 +10,10 @@ import android.os.Bundle;
 import android.view.View;
 
 
-import com.Tesis.bicycle.Activity.ui.Fragment.CommunityFragment;
 import com.Tesis.bicycle.Activity.TrackingActivity;
+import com.Tesis.bicycle.Activity.ui.Fragment.CommunityFragment;
 import com.Tesis.bicycle.Activity.ui.Fragment.MyMapsFragment;
+import com.Tesis.bicycle.Activity.ui.Fragment.ProfileFragment;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.databinding.ActivityNavInitBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -46,20 +47,21 @@ public class NavInitActivity extends AppCompatActivity {
                     replaceFragment(new MyMapsFragment());
                     overridePendingTransition(R.anim.left_in,R.anim.left_out);
                     return true;
-
                 case R.id.bottom_community:
                     //startActivity(new Intent(NavInitActivity.this, CommunityActivity.class));
-                    Fragment fragment=new CommunityFragment();
 
                     replaceFragment(new CommunityFragment());
 //                    i.setAction(Constants.ACTION_VIEW_FRIENDS);
                     overridePendingTransition(R.anim.left_in,R.anim.left_out);
                     return true;
-//                case R.id.bottom_profile:
-//                    startActivity(new Intent(NavInitActivity.this, AddFriendActivity.class));
-//                    overridePendingTransition(R.anim.left_in,R.anim.left_out);
-//                    finish();
-//                    return true;
+
+                case R.id.bottom_profile:
+                    //startActivity(new Intent(NavInitActivity.this, CommunityActivity.class));
+
+                    replaceFragment(new ProfileFragment());
+//                    i.setAction(Constants.ACTION_VIEW_FRIENDS);
+                    overridePendingTransition(R.anim.left_in,R.anim.left_out);
+                    return true;
             }
             return false;
         });

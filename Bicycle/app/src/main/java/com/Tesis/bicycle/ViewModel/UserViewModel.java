@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.Tesis.bicycle.Dto.ApiRest.Battle.BattleDto;
+import com.Tesis.bicycle.Dto.ApiRest.Battle.ScoreDto;
 import com.Tesis.bicycle.Dto.ApiRest.UserAppDto;
 import com.Tesis.bicycle.Repository.UserApiRestRepository;
 
@@ -36,5 +37,13 @@ public class UserViewModel extends AndroidViewModel {
 
     public LiveData<Boolean> saveFriend(String email,Long id){
         return repository.addFriend(email,id);
+    }
+
+    public LiveData<ScoreDto> getScore(Long id,String email){
+        return repository.getScore(id,email);
+    }
+
+    public LiveData<Boolean> update(UserAppDto appUserDto,Long id){
+        return repository.update(appUserDto,id);
     }
 }

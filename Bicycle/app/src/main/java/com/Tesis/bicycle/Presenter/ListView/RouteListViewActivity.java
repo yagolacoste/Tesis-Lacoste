@@ -33,15 +33,8 @@ public class RouteListViewActivity extends ListViewActivity implements OnItemCli
         super.onCreate(savedInstanceState);
         statisticsViewModel =new ViewModelProvider(this).get(StatisticsViewModel.class);
         String action=getIntent().getAction();
-        floatingactionbutton.setVisibility(View.INVISIBLE);
-        if(action!=null&& action.equals(Constants.ACTION_REPLAY_MY_ROUTES)) {
-            recyclerViewReplay=true;
-            getListView();
-        }
-            else  if(action!=null && action.equals(Constants.ACTION_VIEW_MY_ROUTES)){
-                recyclerViewReplay=false;
-            getListView();
-            }
+        getListView();
+
     }
 
     @Override
@@ -50,15 +43,10 @@ public class RouteListViewActivity extends ListViewActivity implements OnItemCli
             if(response.getAccessToken()!=null){
                 statisticsViewModel.getRouteById(response.getId()).observe(this, resp->{
                     if(!resp.isEmpty()){
-                        routes = resp;
-                        if(recyclerViewReplay){
-                            adaptorRoute = new RouteRecyclerViewAdapter(routes);
-                            recyclerView.setAdapter(adaptorRoute);
-                        } else{
+                            routes = resp;
                             recyclerRoutesDetails = new MyRoutesRecyclerViewAdapter(routes);
                             recyclerRoutesDetails.setOnItemClickListener(this);
                             recyclerView.setAdapter(recyclerRoutesDetails);
-                        }
                     }else {
                         Toast.makeText(this, "Not exist routes for user: " + response.getId(), Toast.LENGTH_SHORT).show();
                     }

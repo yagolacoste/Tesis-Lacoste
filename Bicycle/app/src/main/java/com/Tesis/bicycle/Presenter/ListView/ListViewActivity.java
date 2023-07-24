@@ -19,21 +19,12 @@ public  abstract class ListViewActivity extends AppCompatActivity {
 
     protected AccessTokenRoomViewModel accessTokenRoomViewModel;
 
-    protected FloatingActionButton floatingactionbutton;
-
-//    protected TabLayout tabLayout;
-
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
-
-        //lv_saveLocations=findViewById(R.id.lv_showLocations);
         recyclerView= (RecyclerView) findViewById(R.id.rcvScrollView);
-        floatingactionbutton=findViewById(R.id.btnAdd);
-//        tabLayout = findViewById(R.id.tabLayout);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         accessTokenRoomViewModel=new ViewModelProvider(this).get(AccessTokenRoomViewModel.class);

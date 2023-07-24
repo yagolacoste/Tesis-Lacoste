@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -63,6 +64,9 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHold
             txtSpeedValue=itemView.findViewById(R.id.txtSpeedValue);
             linearLayout=itemView.findViewById(R.id.lycardview);
             expandible_layout=itemView.findViewById(R.id.expandible_layout);
+
+
+
             linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -73,4 +77,5 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHold
             });
         }
     }
+
 }

@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.Tesis.bicycle.Activity.ui.NavInitActivity;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.StatisticsApiRest;
 import com.Tesis.bicycle.Dto.Room.RefreshTokenDto;
@@ -191,7 +192,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
 
 
     private void backToMenuActivity() {
-        Intent i=new Intent(TrackingDetailActivity.this, MenuActivity.class);
+        Intent i=new Intent(TrackingDetailActivity.this, NavInitActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         stopService(new Intent(this,GPSService.class));///Esto puedo ver si ponerlo antes
         startActivity(i);

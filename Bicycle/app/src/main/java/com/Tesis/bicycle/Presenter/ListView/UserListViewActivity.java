@@ -34,38 +34,7 @@ public class UserListViewActivity extends ListViewActivity implements UserRecycl
         super.onCreate(savedInstanceState);
         user=new ViewModelProvider(this).get(UserViewModel.class);
         action=getIntent().getAction();
-        floatingactionbutton.setVisibility(View.INVISIBLE);
-        floatingactionbutton.setActivated(false);
-        if(action!=null && action.equals(Constants.ACTION_VIEW_FRIENDS)){
-            floatingactionbutton.setVisibility(View.VISIBLE);
-            floatingactionbutton.setActivated(true);
-        }
         getListView();
-
-        floatingactionbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(UserListViewActivity.this, AddFriendActivity.class);
-                startActivity(intent);
-            }
-        });
-
-//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//
-//            }
-//        });
     }
 
     @Override
@@ -76,9 +45,7 @@ public class UserListViewActivity extends ListViewActivity implements UserRecycl
                     if(!resp.isEmpty()){
                         friends = resp;
                         adapter=new UserRecyclerViewAdapter(friends);
-                        if(action==null){
-                            adapter.setOnItemClickListener(this);
-                        }
+                        adapter.setOnItemClickListener(this);
                         recyclerView.setAdapter(adapter);
                     }
                     else

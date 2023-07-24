@@ -4,6 +4,7 @@ package com.Tesis.admin.Controller.User;
 
 import com.Tesis.admin.Dto.AppUser.UserAppDto;
 import com.Tesis.admin.Dto.Battle.BattleDto;
+import com.Tesis.admin.Dto.Battle.ScoreDto;
 import com.Tesis.admin.Models.User;
 import com.Tesis.admin.Service.Battle.IBattleService;
 import com.Tesis.admin.Service.User.IUserService;
@@ -58,5 +59,10 @@ public class UserController implements IUserController {
     @Override
     public List<BattleDto> getBattleByUser(Long id) {
         return userService.getBattlesByUser(id);
+    }
+
+    @Override
+    public ScoreDto getScore(Long id, String email) {
+        return userService.getScore(id,email);
     }
 }
