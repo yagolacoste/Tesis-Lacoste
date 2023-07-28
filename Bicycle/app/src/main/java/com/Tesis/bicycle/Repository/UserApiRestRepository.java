@@ -130,7 +130,7 @@ public class UserApiRestRepository {
 
     public LiveData<Boolean> update(UserAppDto appUserDto, Long id) {
         final MutableLiveData<Boolean> mld = new MutableLiveData<>();
-        userApiService.updateUser(appUserDto,id).enqueue(new Callback<Void>() {
+        userApiService.update(id,appUserDto).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()){

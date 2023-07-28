@@ -32,7 +32,7 @@ public interface UserApiService {
     @GET("{id}/score")
     Call<ScoreDto> getScore(@Path("id")Long id, @Query("email")String email);
 
-    @PUT("/update")
-    Call<Void> updateUser(@Body UserAppDto userAppDto, @Path (value = "id") Long id);
+    @PUT("update")
+    Call<Void> update(@Query (value = "id") Long id,@Body UserAppDto userAppDto);
 
 }

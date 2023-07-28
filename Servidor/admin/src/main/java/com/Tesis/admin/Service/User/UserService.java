@@ -82,7 +82,7 @@ public class UserService implements IUserService{
         if(userAppDto.getWeight()!=null){
             user.setWeight(userAppDto.getWeight());
         }
-        if(userAppDto.getHeight()!=0){
+        if(userAppDto.getHeight()!=null){
             user.setHeight(userAppDto.getHeight());
         }
         if(userAppDto.getPhoto()!=null){

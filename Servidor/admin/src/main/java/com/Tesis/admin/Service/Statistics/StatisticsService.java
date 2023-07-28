@@ -99,4 +99,9 @@ public class StatisticsService implements IStatisticsService {
     public List<StatisticsDto> getStatisticsByRoute(String routeId) {
         return StatisticsRepository.findAllStatisticsByRoute(routeId);
     }
+
+    @Override
+    public StatisticsDto getAchievements(Long appUser) {
+        return null;//Definir el dto y el sql que traiga los datos
+    }
 }

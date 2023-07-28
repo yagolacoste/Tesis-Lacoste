@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.ui.Fragment.AchievementsFragment">
+
+
+    <TextView
+        android:id="@+id/ac_info_no_records"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/no_records"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ProgressBar
+        android:id="@+id/ac_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/progress_bar"/>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ac_content">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ac_guideline_h"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.37" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ac_guideline_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <TextView
+            android:id="@+id/ac_textView_compete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/red_circle"
+            android:gravity="center"
+            android:maxLines="2"
+            android:paddingTop="38dp"
+            android:text="@string/st_winner"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            app:autoSizeMaxTextSize="16sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toTopOf="@+id/ac_guideline_h"
+            app:layout_constraintEnd_toStartOf="@+id/ac_guideline_v"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/ac_textView_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/orange_circle"
+            android:gravity="center"
+            android:maxLines="2"
+            android:paddingTop="38dp"
+            android:text="@string/st_speed"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            app:autoSizeMaxTextSize="16sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toTopOf="@+id/ac_guideline_h"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/ac_guideline_v"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/ac_textView_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/blue_circle"
+            android:gravity="center"
+            android:maxLines="2"
+            android:paddingTop="38dp"
+            android:text="@string/st_distance"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            app:autoSizeMaxTextSize="16sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ac_guideline_v"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ac_guideline_h"
+            app:layout_constraintVertical_bias="0.2" />
+
+        <TextView
+            android:id="@+id/ac_textView_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/green_circle"
+            android:gravity="center"
+            android:maxLines="2"
+            android:paddingTop="38dp"
+            android:text="@string/st_time"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            app:autoSizeMaxTextSize="16sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/ac_guideline_v"
+            app:layout_constraintTop_toTopOf="@+id/ac_guideline_h"
+            app:layout_constraintVertical_bias="0.2" />
+
+
+
+        <ImageView
+            android:id="@+id/ac_ic_footprints"
+            android:layout_width="80dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_competing"
+            app:layout_constraintBottom_toBottomOf="@+id/ac_textView_compete"
+            app:layout_constraintEnd_toEndOf="@+id/ac_textView_compete"
+            app:layout_constraintStart_toStartOf="@+id/ac_textView_compete"
+            app:layout_constraintTop_toTopOf="@+id/ac_textView_compete"
+            app:layout_constraintVertical_bias="0.10"
+            android:contentDescription="@string/todo" />
+
+        <ImageView
+            android:id="@+id/ac_ic_flame"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_speedometer"
+            app:layout_constraintBottom_toBottomOf="@+id/ac_textView_speed"
+            app:layout_constraintEnd_toEndOf="@+id/ac_textView_speed"
+            app:layout_constraintStart_toStartOf="@+id/ac_textView_speed"
+            app:layout_constraintTop_toTopOf="@+id/ac_textView_speed"
+            app:layout_constraintVertical_bias="0.100000024"
+            android:contentDescription="@string/todo" />
+
+        <ImageView
+            android:id="@+id/ac_ic_distance_bicycle"
+            android:layout_width="90dp"
+            android:layout_height="60dp"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/ic_wheel"
+            app:layout_constraintBottom_toBottomOf="@+id/ac_textView_distance"
+            app:layout_constraintEnd_toEndOf="@+id/ac_textView_distance"
+            app:layout_constraintStart_toStartOf="@+id/ac_textView_distance"
+            app:layout_constraintTop_toTopOf="@+id/ac_textView_distance"
+            app:layout_constraintVertical_bias="0.100000024" />
+
+        <ImageView
+            android:id="@+id/ac_ic_chronometer"
+            android:layout_width="70dp"
+            android:layout_height="60dp"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/ic_cronometre"
+            app:layout_constraintBottom_toBottomOf="@+id/ac_textView_time"
+            app:layout_constraintEnd_toEndOf="@+id/ac_textView_time"
+            app:layout_constraintStart_toStartOf="@+id/ac_textView_time"
+            app:layout_constraintTop_toTopOf="@+id/ac_textView_time"
+            app:layout_constraintVertical_bias="0.100000024" />
+
+        <TextView
+            android:id="@+id/ac_label_metroStops"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:maxLines="2"
+            android:text="@string/st_compete_winner_info"
+            android:textAlignment="center"
+            android:textColor="@android:color/primary_text_light"
+            app:autoSizeMaxTextSize="16sp"
+            app:autoSizeMinTextSize="14sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintEnd_toStartOf="@+id/ac_guideline_v"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ac_textView_compete" />
+
+        <TextView
+            android:id="@+id/ac_label_speed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:maxLines="2"
+            android:text="@string/st_speed_inf"
+            android:textAlignment="center"
+            android:textColor="@android:color/primary_text_light"
+            app:autoSizeMaxTextSize="16sp"
+            app:autoSizeMinTextSize="14sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/ac_guideline_v"
+            app:layout_constraintTop_toBottomOf="@+id/ac_textView_speed" />
+
+        <TextView
+            android:id="@+id/ac_label_distance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:maxLines="2"
+            android:text="@string/st_distance_inf"
+            android:textAlignment="center"
+            android:textColor="@android:color/primary_text_light"
+            app:autoSizeMaxTextSize="16sp"
+            app:autoSizeMinTextSize="14sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintEnd_toStartOf="@+id/ac_guideline_v"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ac_textView_distance" />
+
+        <TextView
+            android:id="@+id/ac_label_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:maxLines="2"
+            android:text="@string/st_time_inf"
+            android:textAlignment="center"
+            android:textColor="@android:color/primary_text_light"
+            app:autoSizeMaxTextSize="16sp"
+            app:autoSizeMinTextSize="14sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/ac_guideline_v"
+            app:layout_constraintTop_toBottomOf="@+id/ac_textView_time" />
+
+        <TextView
+            android:id="@+id/record_speed_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/date"
+            app:autoSizeMaxTextSize="16sp"
+            app:autoSizeMinTextSize="14sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toTopOf="@+id/ac_guideline_h"
+            app:layout_constraintEnd_toEndOf="@+id/ac_label_speed"
+            app:layout_constraintStart_toStartOf="@+id/ac_label_speed"
+            app:layout_constraintTop_toBottomOf="@+id/ac_label_speed" />
+
+        <TextView
+            android:id="@+id/record_distance_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/date"
+            app:autoSizeMaxTextSize="16sp"
+            app:autoSizeMinTextSize="14sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintEnd_toEndOf="@+id/ac_label_distance"
+            app:layout_constraintStart_toStartOf="@+id/ac_label_distance"
+            app:layout_constraintTop_toBottomOf="@+id/ac_label_distance" />
+
+        <TextView
+            android:id="@+id/record_time_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="@string/date"
+            app:autoSizeMaxTextSize="16sp"
+            app:autoSizeMinTextSize="14sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintEnd_toEndOf="@+id/ac_label_time"
+            app:layout_constraintStart_toStartOf="@+id/ac_label_time"
+            app:layout_constraintTop_toBottomOf="@+id/ac_label_time" />
+
+<!--        <TextView-->
+<!--            android:id="@+id/record_stops_date"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:layout_marginBottom="8dp"-->
+<!--            android:text="@string/date"-->
+<!--            app:autoSizeMaxTextSize="16sp"-->
+<!--            app:autoSizeMinTextSize="14sp"-->
+<!--            app:autoSizeStepGranularity="1sp"-->
+<!--            app:autoSizeTextType="uniform"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/ac_guideline_h"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/ac_label_metroStops"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/ac_label_metroStops"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/ac_label_metroStops" />-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

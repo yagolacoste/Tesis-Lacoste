@@ -21,7 +21,7 @@ public class Constants {
    public static final String ACTION_REPLAY_MY_ROUTES="replay_my_routes";
    public static final String VIEW_STATISTICS="view_statistics";
 
-   public static GeoPoint LOCATION_INITIAL=new GeoPoint(-37.32345,-59.12558);
+    public static GeoPoint LOCATION_INITIAL=new GeoPoint(-37.32345,-59.12558);
 
 
 

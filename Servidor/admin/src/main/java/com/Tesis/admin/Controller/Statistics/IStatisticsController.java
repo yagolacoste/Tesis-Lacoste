@@ -41,6 +41,10 @@ public interface IStatisticsController {
     @GetMapping(value = "/getstatisticsbyroute",produces = MediaType.APPLICATION_JSON_VALUE)
     List<StatisticsDto> getStatisticsByRoute(@RequestParam("route") String routeId);
 
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "/achievements",produces = MediaType.APPLICATION_JSON_VALUE)
+    StatisticsDto getAchievements(@RequestParam("id")  Long appUser);
+
 
 
 }

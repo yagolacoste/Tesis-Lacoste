@@ -46,4 +46,15 @@
     <string name="tab_profile">PROFILE</string>
     <string name="tab_achievements">ACHIEVEMENTS</string>
     <string name="tab_classification">CLASSIFICATION</string>
+    <string name="no_records">Todavía no hay récords almacenados.</string>
+    <string name="st_winner">winner</string>
+    <string name="st_speed">%,d km/h</string>
+    <string name="st_distance">%.2f km</string>
+    <string name="st_time">%s</string>
+    <string name="todo">TODO</string>
+    <string name="st_compete_winner_info">Total de batallas ganadas</string>
+    <string name="date">dd/mm/aaaa</string>
+    <string name="st_speed_inf">Speed MAX</string>
+    <string name="st_distance_inf">Maxima distancia recorrida</string>
+    <string name="st_time_inf">Mejor tiempo hecho</string>
 </resources>

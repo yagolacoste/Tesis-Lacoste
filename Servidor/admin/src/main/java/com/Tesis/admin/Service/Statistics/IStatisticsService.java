@@ -22,4 +22,6 @@ public interface IStatisticsService {
     List<RouteDetailsDto>  getRoutesByUser(Long appUser);
 
     List<StatisticsDto> getStatisticsByRoute(String routeId);
+
+    StatisticsDto getAchievements(Long appUser);
 }

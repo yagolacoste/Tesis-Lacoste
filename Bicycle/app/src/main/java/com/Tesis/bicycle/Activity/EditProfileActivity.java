@@ -5,6 +5,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
@@ -20,6 +23,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.Tesis.bicycle.Activity.ui.Fragment.ProfileFragment;
+import com.Tesis.bicycle.Activity.ui.Fragment.UserFragment;
+import com.Tesis.bicycle.Activity.ui.NavInitActivity;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.UserAppDto;
 import com.Tesis.bicycle.Dto.ApiRest.auth.request.SignupRequest;
@@ -151,7 +157,10 @@ public class EditProfileActivity extends AppCompatActivity {
                     this.userViewModel.update(user, id).observe(this, resp -> {
                         if (resp) {
                             successMessage("Estupendo! " + "Su información ha sido guardada con éxito en el sistema.");
+                            //replaceFragment(new ProfileFragment());
+                            setResult(RESULT_OK);
                             this.finish();
+
                         } else {
                             warningMessage("Se ha producido un error : ");
                         }
@@ -162,6 +171,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 this.userViewModel.update(user, id).observe(this, resp -> {
                     if (resp) {
                         successMessage("Estupendo! " + "Su información ha sido guardada con éxito en el sistema.");
+                        setResult(RESULT_OK);
                         this.finish();
                     } else {
                         warningMessage("Se ha producido un error : ");
@@ -173,6 +183,12 @@ public class EditProfileActivity extends AppCompatActivity {
         }
     }
 
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager=getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout,fragment);
+        fragmentTransaction.commitNow();
+    }
     private void uploadImage() {
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         i.setType("image/");
@@ -206,9 +222,16 @@ public class EditProfileActivity extends AppCompatActivity {
 
 
     public void successMessage(String message) {
-        new SweetAlertDialog(this,
-                SweetAlertDialog.SUCCESS_TYPE).setTitleText("Good Job!")
-                .setContentText(message).show();
+        new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText("Good Job!")
+                .setContentText(message)
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        finish();
+                    }
+                })
+                .show();
     }
 
     public void errorMessage(String message) {

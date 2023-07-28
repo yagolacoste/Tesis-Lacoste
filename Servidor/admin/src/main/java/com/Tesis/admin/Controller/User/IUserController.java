@@ -52,4 +52,5 @@ public interface IUserController {
     @GetMapping(path = {"{id}/score"},produces = MediaType.APPLICATION_JSON_VALUE)
     ScoreDto getScore(@PathVariable Long id, @RequestParam (value = "email") String email);
 
+
 }

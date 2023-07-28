@@ -1,11 +1,15 @@
 package com.Tesis.bicycle.Activity.ui.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
@@ -22,13 +26,15 @@ public class ProfileFragment extends Fragment {
     private TabLayout tabLayout;
 
 
+
+
     @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         viewPagerProfile = view.findViewById(R.id.viewPagerProfile);
         tabLayout = view.findViewById(R.id.tabLayout);
@@ -54,4 +60,8 @@ public class ProfileFragment extends Fragment {
 
         return view;
     }
+
+
+
+
 }

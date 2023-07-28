@@ -48,4 +48,9 @@ public class StatisticsController implements IStatisticsController{
     public List<StatisticsDto> getStatisticsByRoute(String routeId) {
         return StatisticsService.getStatisticsByRoute(routeId);
     }
+
+    @Override
+    public StatisticsDto getAchievements(Long appUser) {
+        return StatisticsService.getAchievements(appUser);
+    }
 }

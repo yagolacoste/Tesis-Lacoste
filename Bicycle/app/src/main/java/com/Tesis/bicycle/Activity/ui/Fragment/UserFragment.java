@@ -1,8 +1,13 @@
 package com.Tesis.bicycle.Activity.ui.Fragment;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -33,7 +38,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Use the {@link UserFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UserFragment extends Fragment {
+public class UserFragment extends Fragment{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -48,10 +53,13 @@ public class UserFragment extends Fragment {
     private AccessTokenRoomViewModel accessTokenRoomViewModel;
 
     private StoredDocumentViewModel storedDocumentViewModel;
+    private static final int EDIT_PROFILE_REQUEST_CODE = 1001;
 
     public UserFragment() {
         // Required empty public constructor
     }
+
+
 
     public static UserFragment newInstance(@StringRes int tabName) {
         UserFragment frg = new UserFragment();
@@ -96,7 +104,7 @@ public class UserFragment extends Fragment {
                     if(resp!=null){
                         Intent i=new Intent(getContext(), EditProfileActivity.class);
                         i.putExtra(Constants.USER_ITEM,resp.getId());
-                       startActivity(i);
+                        startActivityForResult(i, EDIT_PROFILE_REQUEST_CODE);
                     }
                 });
             }
@@ -126,6 +134,17 @@ public class UserFragment extends Fragment {
                 });
             }
         });
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == EDIT_PROFILE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                // Aquí se ejecuta cuando EditProfileActivity ha terminado exitosamente
+                // Actualizar la vista del fragmento según sea necesario
+                loadData();
+            }
+        }
     }
 
 

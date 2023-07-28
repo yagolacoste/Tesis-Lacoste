@@ -56,6 +56,7 @@ public class UserAppDto implements Serializable {
         this.weight=user.getWeight();
         this.height=user.getHeight();
         this.fileName=user.getStoredDocument().getFileName()+user.getStoredDocument().getExtension();
+        this.photo=user.getStoredDocument().getId();
     }
 
     public Long getId() {
