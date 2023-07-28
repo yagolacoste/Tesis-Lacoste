@@ -2,6 +2,7 @@ package com.Tesis.admin.Controller.Statistics;
 
 
 import com.Tesis.admin.Dto.Route.RouteDetailsDto;
+import com.Tesis.admin.Dto.Statistics.AchievementsDto;
 import com.Tesis.admin.Dto.Statistics.RoutesDto;
 import com.Tesis.admin.Dto.Statistics.StatisticsDto;
 import com.Tesis.admin.Dto.Statistics.StatisticsRequestDto;
@@ -43,7 +44,7 @@ public interface IStatisticsController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/achievements",produces = MediaType.APPLICATION_JSON_VALUE)
-    StatisticsDto getAchievements(@RequestParam("id")  Long appUser);
+    AchievementsDto getAchievements(@RequestParam("id")  Long appUser);
 
 
 

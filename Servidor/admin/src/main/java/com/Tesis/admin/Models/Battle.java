@@ -28,6 +28,7 @@ public class Battle {
     @JoinColumn(name = "route_id")
     private Route route;
 
+    @Column(name="winner")
     private Long winner;
 
 

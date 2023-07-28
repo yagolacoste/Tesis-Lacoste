@@ -4,6 +4,7 @@ package com.Tesis.admin.Service.Statistics;
 
 import com.Tesis.admin.Controller.Exception.ErrorCodes;
 import com.Tesis.admin.Controller.Exception.TypeExceptions.NotFoundException;
+import com.Tesis.admin.Dto.Statistics.AchievementsDto;
 import com.Tesis.admin.Dto.Statistics.StatisticsDto;
 import com.Tesis.admin.Dto.Statistics.StatisticsRequestDto;
 import com.Tesis.admin.Dto.Route.RouteDetailsDto;
@@ -32,7 +33,7 @@ public class StatisticsService implements IStatisticsService {
     private static final Logger LOG = LoggerFactory.getLogger(StatisticsService.class);
 
     @Autowired
-    private IStatisticsRepository StatisticsRepository;
+    private IStatisticsRepository statisticsRepository;
 
     @Autowired
     private IUserService userService;
@@ -72,7 +73,7 @@ public class StatisticsService implements IStatisticsService {
         Statistics.setAvgSpeed(statisticsRequestDto.getAvgSpeed());
         Statistics.setTime(statisticsRequestDto.getTime());
         Statistics.setTimeCreated(statisticsRequestDto.getTimeCreated());
-        String statisticsId=StatisticsRepository.save(Statistics).getId();
+        String statisticsId=statisticsRepository.save(Statistics).getId();
         if(statisticsRequestDto.getBattleId()!=null){
             battleService.updateBattleParticipation(appUser.getId(),statisticsRequestDto.getBattleId(),statisticsId);
         }
@@ -80,28 +81,33 @@ public class StatisticsService implements IStatisticsService {
 
     @Override
     public Optional<StatisticsDto> getById(String id) {
-        return Optional.ofNullable(StatisticsRepository.findById(id).map(StatisticsDto::new)
+        return Optional.ofNullable(statisticsRepository.findById(id).map(StatisticsDto::new)
                 .orElseThrow(() -> new NotFoundException("Not exist user with route", ErrorCodes.NOT_FOUND.getCode())));
     }
 
     @Override
     public List<StatisticsDto> list() {
 
-      return StatisticsRepository.findAll().stream().map(StatisticsDto::new).collect(Collectors.toList());
+      return statisticsRepository.findAll().stream().map(StatisticsDto::new).collect(Collectors.toList());
     }
 
     @Override
     public List<RouteDetailsDto>  getRoutesByUser(Long appUser) {
-        return StatisticsRepository.findByRoute(appUser);
+        return statisticsRepository.findByRoute(appUser);
     }
 
     @Override
     public List<StatisticsDto> getStatisticsByRoute(String routeId) {
-        return StatisticsRepository.findAllStatisticsByRoute(routeId);
+        return statisticsRepository.findAllStatisticsByRoute(routeId);
     }
 
     @Override
-    public StatisticsDto getAchievements(Long appUser) {
-        return null;//Definir el dto y el sql que traiga los datos
+    public AchievementsDto getAchievements(Long appUser) {
+        AchievementsDto achievementsDto=statisticsRepository.g
+        int cantBattleWinner= battleService.cantBattleByUser(appUser);
+       
+        achievementsDto.setBattleWinner(cantBattleWinner);
+        
+        return achievementsDto;
     }
 }

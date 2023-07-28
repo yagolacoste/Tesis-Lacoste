@@ -139,6 +139,14 @@ public class BattleService implements IBattleService{
     }
 
 
+
+    @Override public int cantBattleByUser(Long appUser) {
+
+        return (int)this.getBattlesByUser(appUser).stream().filter(b->b.getWinner().equals(appUser)).count();
+    }
+
+
+
     private void updateWinner(Long battleId){
         Optional<StatisticsDto> statisticsDto =this.getRanking(battleId).getRanking().stream().findFirst();
         if(statisticsDto.isPresent()){

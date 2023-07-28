@@ -22,4 +22,6 @@ public interface IBattleService {
 
 
     ScoreDto getScore(Long playerOne, Long playerTwo);
+
+    public int cantBattleByUser(Long appUser);
 }

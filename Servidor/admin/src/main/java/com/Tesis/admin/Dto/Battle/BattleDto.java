@@ -36,6 +36,9 @@ public class BattleDto implements Serializable {
     @JsonProperty("status")
     private String status;
 
+    @JsonProperty("winner")
+    private Long winner;
+
     public BattleDto() {
     }
 
@@ -44,6 +47,7 @@ public class BattleDto implements Serializable {
         this.route=new RouteDetailsDto(battle.getRoute());
         this.completeDate = battle.getCompleteDate();
         this.cantParticipant = battle.getCantParticipant();
+        this.winner=battle.getWinner();
     }
 
 
@@ -99,5 +103,19 @@ public class BattleDto implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+
+
+    public Long getWinner() {
+
+        return winner;
+    }
+
+
+
+    public void setWinner(Long winner) {
+
+        this.winner = winner;
     }
 }

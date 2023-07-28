@@ -2,6 +2,7 @@ package com.Tesis.admin.Service.Statistics;
 
 
 import com.Tesis.admin.Dto.Route.RouteDetailsDto;
+import com.Tesis.admin.Dto.Statistics.AchievementsDto;
 import com.Tesis.admin.Dto.Statistics.RoutesDto;
 import com.Tesis.admin.Dto.Statistics.StatisticsDto;
 import com.Tesis.admin.Dto.Statistics.StatisticsRequestDto;
@@ -23,5 +24,5 @@ public interface IStatisticsService {
 
     List<StatisticsDto> getStatisticsByRoute(String routeId);
 
-    StatisticsDto getAchievements(Long appUser);
+    AchievementsDto getAchievements(Long appUser);
 }

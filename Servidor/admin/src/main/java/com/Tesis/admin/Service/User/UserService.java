@@ -47,17 +47,10 @@ public class UserService implements IUserService{
         User user = new User();
         user.setFirstName(userAppDto.getFirstName());
         user.setLastName(userAppDto.getLastName());
-
         user.setAge(userAppDto.getAge());
-
         user.setPhone(userAppDto.getPhone());
         user.setEmail(userAppDto.getEmail());
-       // List<User> repeat=this.list();
-//        if(!repeat.contains(user))
-            userRepository.save(user);
-//        else
-//            throw new NotFoundException("User is Exist", ErrorCodes.NOT_FOUND.getCode());
-
+        userRepository.save(user);
     }
 
     @Override

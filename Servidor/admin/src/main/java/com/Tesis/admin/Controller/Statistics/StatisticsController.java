@@ -2,6 +2,7 @@ package com.Tesis.admin.Controller.Statistics;
 
 
 import com.Tesis.admin.Dto.Route.RouteDetailsDto;
+import com.Tesis.admin.Dto.Statistics.AchievementsDto;
 import com.Tesis.admin.Dto.Statistics.RoutesDto;
 
 import com.Tesis.admin.Dto.Statistics.StatisticsDto;
@@ -50,7 +51,7 @@ public class StatisticsController implements IStatisticsController{
     }
 
     @Override
-    public StatisticsDto getAchievements(Long appUser) {
+    public AchievementsDto getAchievements(Long appUser) {
         return StatisticsService.getAchievements(appUser);
     }
 }
