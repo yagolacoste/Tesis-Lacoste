@@ -18,4 +18,7 @@ public interface IStatisticsRepository extends JpaRepository<Statistics, String>
 
     @Query("SELECT new com.Tesis.admin.Dto.Statistics.StatisticsDto(ar) FROM Statistics ar where ar.route.id = :routeId order by ar.time, ar.avgSpeed desc")
     List<StatisticsDto> findAllStatisticsByRoute(String routeId);
+
+    @Query("SELECT s FROM Statistics s where s.appUser.id =:appUser")
+    List<Statistics> findAllByUser(Long appUser);
 }

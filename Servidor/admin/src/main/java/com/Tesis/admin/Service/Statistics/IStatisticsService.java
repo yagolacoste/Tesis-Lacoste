@@ -8,6 +8,7 @@ import com.Tesis.admin.Dto.Statistics.StatisticsDto;
 import com.Tesis.admin.Dto.Statistics.StatisticsRequestDto;
 
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,5 +25,5 @@ public interface IStatisticsService {
 
     List<StatisticsDto> getStatisticsByRoute(String routeId);
 
-    AchievementsDto getAchievements(Long appUser);
+    AchievementsDto getAchievements(Long appUser) throws ParseException;
 }

@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.Tesis.bicycle.Dto.ApiRest.StatisticsDto;
+import com.Tesis.bicycle.Dto.ApiRest.Statistics.StatisticsDto;
 import com.Tesis.bicycle.R;
 
 

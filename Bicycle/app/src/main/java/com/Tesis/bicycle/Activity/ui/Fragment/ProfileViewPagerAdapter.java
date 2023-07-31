@@ -47,10 +47,10 @@ public class ProfileViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         if (position == ProfileTab.PROFILE.position)
             return UserFragment.newInstance(ProfileTab.PROFILE.title);
-//        else if (position == ProfileViewPagerAdapter.ProfileTab.ACHIEVEMENTS.position)
-//            return UserProfileFragment.newInstance(ProfileViewPagerAdapter.ProfileTab.ACHIEVEMENTS.title);
-//        else if (position == ProfileViewPagerAdapter.ProfileTab.CLASSIFICATION.position)
-//            return ScoreFragment.newInstance(ProfileViewPagerAdapter.ProfileTab.CLASSIFICATION.title);
+        else if (position == ProfileTab.ACHIEVEMENTS.position)
+            return AchievementsFragment.newInstance(ProfileTab.ACHIEVEMENTS.title);
+        else if (position == ProfileViewPagerAdapter.ProfileTab.CLASSIFICATION.position)
+            return ScoreFragment.newInstance(ProfileViewPagerAdapter.ProfileTab.CLASSIFICATION.title);
         else
             throw new IllegalArgumentException("unknown position " + position);
     }

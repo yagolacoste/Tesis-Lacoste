@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +45,7 @@ public interface IStatisticsController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/achievements",produces = MediaType.APPLICATION_JSON_VALUE)
-    AchievementsDto getAchievements(@RequestParam("id")  Long appUser);
+    AchievementsDto getAchievements(@RequestParam("id")  Long appUser) throws ParseException;
 
 
 

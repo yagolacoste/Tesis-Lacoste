@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +52,7 @@ public class StatisticsController implements IStatisticsController{
     }
 
     @Override
-    public AchievementsDto getAchievements(Long appUser) {
+    public AchievementsDto getAchievements(Long appUser) throws ParseException {
         return StatisticsService.getAchievements(appUser);
     }
 }

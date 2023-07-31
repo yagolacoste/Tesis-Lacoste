@@ -1,14 +1,10 @@
 package com.Tesis.bicycle.Dto.ApiRest.Battle;
 
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
-import com.Tesis.bicycle.Dto.ApiRest.StatisticsDto;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.Tesis.bicycle.Dto.ApiRest.Statistics.StatisticsDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

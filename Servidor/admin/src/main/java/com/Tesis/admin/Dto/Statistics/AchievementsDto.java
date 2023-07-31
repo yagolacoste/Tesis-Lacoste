@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 
 
@@ -24,11 +25,11 @@ public class AchievementsDto implements Serializable {
   @JsonProperty("distanceMax")
   private float distanceMax;
 
-  @JsonProperty("timeMaxDate")
-  private Date timeMaxDate;
+  @JsonProperty("timeMinDate")
+  private Date timeMinDate;
 
-  @JsonProperty("timeMax")
-  private LocalDateTime timeMax;
+  @JsonProperty("timeMin")
+  private LocalTime timeMin;
 
 
 
@@ -108,29 +109,20 @@ public class AchievementsDto implements Serializable {
 
 
 
-  public Date getTimeMaxDate() {
 
-    return timeMaxDate;
+  public Date getTimeMinDate() {
+    return timeMinDate;
   }
 
-
-
-  public void setTimeMaxDate(Date timeMaxDate) {
-
-    this.timeMaxDate = timeMaxDate;
+  public void setTimeMinDate(Date timeMinDate) {
+    this.timeMinDate = timeMinDate;
   }
 
-
-
-  public LocalDateTime getTimeMax() {
-
-    return timeMax;
+  public LocalTime getTimeMin() {
+    return timeMin;
   }
 
-
-
-  public void setTimeMax(LocalDateTime timeMax) {
-
-    this.timeMax = timeMax;
+  public void setTimeMin(LocalTime timeMin) {
+    this.timeMin = timeMin;
   }
 }

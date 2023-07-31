@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import com.Tesis.bicycle.Activity.ui.NavInitActivity;
 import com.Tesis.bicycle.Constants;
-import com.Tesis.bicycle.Dto.ApiRest.StatisticsApiRest;
+import com.Tesis.bicycle.Dto.ApiRest.Statistics.StatisticsApiRest;
 import com.Tesis.bicycle.Dto.Room.RefreshTokenDto;
 import com.Tesis.bicycle.Presenter.Notifications;
 import com.Tesis.bicycle.Presenter.OpenStreetMap;
@@ -33,10 +33,8 @@ import com.Tesis.bicycle.ViewModel.StatisticsViewModel;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.compass.CompassOverlay;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.stream.Collectors;
 
 public class TrackingDetailActivity extends AppCompatActivity {

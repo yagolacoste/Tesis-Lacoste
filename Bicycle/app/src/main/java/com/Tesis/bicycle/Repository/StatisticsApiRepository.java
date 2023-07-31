@@ -6,8 +6,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
-import com.Tesis.bicycle.Dto.ApiRest.StatisticsApiRest;
-import com.Tesis.bicycle.Dto.ApiRest.StatisticsDto;
+import com.Tesis.bicycle.Dto.ApiRest.Statistics.AchievementsDto;
+import com.Tesis.bicycle.Dto.ApiRest.Statistics.StatisticsApiRest;
+import com.Tesis.bicycle.Dto.ApiRest.Statistics.StatisticsDto;
 import com.Tesis.bicycle.Presenter.ApiRestConnection;
 import com.Tesis.bicycle.Service.ApiRest.StatisticsApiService;
 
@@ -20,11 +21,11 @@ import retrofit2.Response;
 public class StatisticsApiRepository {
 
     private static StatisticsApiRepository repository;
-    private final StatisticsApiService appUserHasRouteApiRestService;
+    private final StatisticsApiService statisticsApiService;
 
 
     public StatisticsApiRepository(Context context) {
-        this.appUserHasRouteApiRestService = ApiRestConnection.getServiceStatistics(context);
+        this.statisticsApiService = ApiRestConnection.getServiceStatistics(context);
     }
 
     public static StatisticsApiRepository getInstance(Context context){
@@ -36,7 +37,7 @@ public class StatisticsApiRepository {
 
     public LiveData<Boolean> addStatistics(StatisticsApiRest statisticsApiRest){
         final MutableLiveData<Boolean> mld=new MutableLiveData<>();
-        this.appUserHasRouteApiRestService.AddStatistics(statisticsApiRest).enqueue(new Callback<Void>() {
+        this.statisticsApiService.AddStatistics(statisticsApiRest).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful())
@@ -55,7 +56,7 @@ public class StatisticsApiRepository {
 
     public LiveData<List<RouteDetailsDto>> getRouteById(Long id){
         final MutableLiveData<List<RouteDetailsDto>> mld=new MutableLiveData<>();
-        this.appUserHasRouteApiRestService.getRouteById(id).enqueue(new Callback<List<RouteDetailsDto>>() {
+        this.statisticsApiService.getRouteById(id).enqueue(new Callback<List<RouteDetailsDto>>() {
             @Override
             public void onResponse(Call<List<RouteDetailsDto>> call, Response<List<RouteDetailsDto>> response) {
                 if (response.isSuccessful()) {
@@ -73,7 +74,7 @@ public class StatisticsApiRepository {
 
     public LiveData<List<StatisticsDto>> getStatisticsByRoute(String routeId){
         final MutableLiveData<List<StatisticsDto>> mld=new MutableLiveData<>();
-        appUserHasRouteApiRestService.getStatisticsByRoute(routeId).enqueue(new Callback<List<StatisticsDto>>() {
+        statisticsApiService.getStatisticsByRoute(routeId).enqueue(new Callback<List<StatisticsDto>>() {
             @Override
             public void onResponse(Call<List<StatisticsDto>> call, Response<List<StatisticsDto>> response) {
                 if(response.isSuccessful()){
@@ -83,6 +84,22 @@ public class StatisticsApiRepository {
 
             @Override
             public void onFailure(Call<List<StatisticsDto>> call, Throwable t) {
+
+            }
+        });
+        return mld;
+    }
+
+    public LiveData<AchievementsDto> getAchievements(Long appUser){
+        final MutableLiveData<AchievementsDto> mld=new MutableLiveData<>();
+        statisticsApiService.getAchievements(appUser).enqueue(new Callback<AchievementsDto>() {
+            @Override
+            public void onResponse(Call<AchievementsDto> call, Response<AchievementsDto> response) {
+                mld.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<AchievementsDto> call, Throwable t) {
 
             }
         });

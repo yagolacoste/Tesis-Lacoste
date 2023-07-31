@@ -1,4 +1,4 @@
-package com.Tesis.bicycle.Dto.ApiRest;
+package com.Tesis.bicycle.Dto.ApiRest.Statistics;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;

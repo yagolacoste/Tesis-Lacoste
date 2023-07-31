@@ -23,6 +23,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -102,12 +106,22 @@ public class StatisticsService implements IStatisticsService {
     }
 
     @Override
-    public AchievementsDto getAchievements(Long appUser) {
-        AchievementsDto achievementsDto=statisticsRepository.g
+    public AchievementsDto getAchievements(Long appUser) throws ParseException {
+        AchievementsDto achievementsDto=new AchievementsDto();
         int cantBattleWinner= battleService.cantBattleByUser(appUser);
-       
         achievementsDto.setBattleWinner(cantBattleWinner);
-        
+        Statistics statistics= statisticsRepository.findAllByUser(appUser).stream().max(Comparator.comparingDouble(Statistics::getAvgSpeed)).get();
+        achievementsDto.setSpeedMax(statistics.getAvgSpeed());
+        achievementsDto.setSpeedMaxDate(statistics.getTimeCreated());
+        statistics=statisticsRepository.findAllByUser(appUser).stream().max(Comparator.comparingDouble(Statistics::getDistance)).get();
+        achievementsDto.setDistanceMax(statistics.getDistance());
+        achievementsDto.setDistanceMaxDate(statistics.getTimeCreated());
+        statistics=statisticsRepository.findAllByUser(appUser)
+                .stream().min(Comparator.comparing(Statistics::getTime))
+                        .get();
+        achievementsDto.setTimeMin(statistics.getTime());
+        achievementsDto.setTimeMinDate(statistics.getTimeCreated());
         return achievementsDto;
     }
+
 }

@@ -7,13 +7,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.Tesis.bicycle.Dto.ApiRest.StatisticsDto;
+import com.Tesis.bicycle.Dto.ApiRest.Statistics.StatisticsDto;
 import com.Tesis.bicycle.R;
-import com.fasterxml.jackson.core.Version;
 
 import java.util.List;
 
