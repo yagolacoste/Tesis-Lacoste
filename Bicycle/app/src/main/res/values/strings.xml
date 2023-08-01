@@ -57,4 +57,9 @@
     <string name="st_speed_inf">Speed MAX</string>
     <string name="st_distance_inf">Maxima distancia recorrida</string>
     <string name="st_time_inf">Mejor tiempo hecho</string>
+    <string name="cl_user_name">Nombre Apellido</string>
+    <string name="cl_speed">%d,Km/h</string>
+    <string name="cl_battles_winner">cantWinner</string>
+    <string name="cl_time">%s</string>
+    <string name="cl_distance">%.2f km</string>
 </resources>

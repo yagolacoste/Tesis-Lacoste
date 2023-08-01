@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="108dp"
+    android:background="@color/white">
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.30" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.64" />
+
+    <ImageView
+        android:id="@+id/cl_imageView_user_picture"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/tortuge" />
+
+    <TextView
+        android:id="@+id/cl_textView_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/cl_user_name"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/cl_imageView_icon_flame"
+        android:layout_width="28dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/cl_imageView_icon_chronometer"
+        app:layout_constraintTop_toBottomOf="@+id/cl_textView_name"
+        app:srcCompat="@drawable/ic_speedometer" />
+
+    <TextView
+        android:id="@+id/cl_textView_speed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="4dp"
+        android:maxLines="2"
+        android:text="@string/cl_speed"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorText"
+        android:textSize="16sp"
+        app:autoSizeMaxTextSize="16sp"
+        app:autoSizeMinTextSize="12sp"
+        app:autoSizeStepGranularity="1sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toBottomOf="@+id/cl_imageView_icon_flame"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cl_imageView_icon_flame"
+        app:layout_constraintTop_toTopOf="@+id/cl_imageView_icon_flame" />
+
+    <TextView
+        android:id="@+id/cl_textView_battle_winner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="2dp"
+        android:maxLines="2"
+        android:text="@string/cl_battles_winner"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorText"
+        android:textSize="16sp"
+        app:autoSizeMaxTextSize="16sp"
+        app:autoSizeMinTextSize="12sp"
+        app:autoSizeStepGranularity="1sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toBottomOf="@id/cl_imageView_icon_skipped_metro_stops"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@id/cl_imageView_icon_skipped_metro_stops"
+        app:layout_constraintTop_toTopOf="@id/cl_imageView_icon_skipped_metro_stops" />
+
+    <TextView
+        android:id="@+id/cl_textView_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="4dp"
+        android:maxLines="2"
+        android:text="@string/cl_time"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorText"
+        android:textSize="16sp"
+        app:autoSizeMaxTextSize="16sp"
+        app:autoSizeMinTextSize="12sp"
+        app:autoSizeStepGranularity="1sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toBottomOf="@+id/cl_imageView_icon_chronometer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cl_imageView_icon_chronometer"
+        app:layout_constraintTop_toTopOf="@id/cl_imageView_icon_chronometer" />
+
+    <TextView
+        android:id="@+id/cl_textView_distance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="2dp"
+        android:maxLines="2"
+        android:text="@string/cl_distance"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorText"
+        android:textSize="16sp"
+        app:autoSizeMaxTextSize="16sp"
+        app:autoSizeMinTextSize="12sp"
+        app:autoSizeStepGranularity="1sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toBottomOf="@+id/cl_imageView_icon_distance"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toEndOf="@id/cl_imageView_icon_distance"
+        app:layout_constraintTop_toTopOf="@id/cl_imageView_icon_distance" />
+
+    <ImageView
+        android:id="@+id/cl_imageView_icon_chronometer"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cl_textView_distance"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:srcCompat="@drawable/ic_cronometre" />
+
+    <ImageView
+        android:id="@+id/cl_imageView_icon_skipped_metro_stops"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@id/cl_imageView_icon_distance"
+        app:layout_constraintTop_toBottomOf="@+id/cl_textView_name"
+        app:srcCompat="@drawable/ic_competing" />
+
+    <ImageView
+        android:id="@+id/cl_imageView_icon_distance"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline1"
+        app:srcCompat="@drawable/ic_wheel" />
+</androidx.constraintlayout.widget.ConstraintLayout>

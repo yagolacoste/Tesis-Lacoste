@@ -50,7 +50,7 @@ public class ProfileViewPagerAdapter extends FragmentStateAdapter {
         else if (position == ProfileTab.ACHIEVEMENTS.position)
             return AchievementsFragment.newInstance(ProfileTab.ACHIEVEMENTS.title);
         else if (position == ProfileViewPagerAdapter.ProfileTab.CLASSIFICATION.position)
-            return ScoreFragment.newInstance(ProfileViewPagerAdapter.ProfileTab.CLASSIFICATION.title);
+            return ClassificationFragment.newInstance(ProfileViewPagerAdapter.ProfileTab.CLASSIFICATION.title);
         else
             throw new IllegalArgumentException("unknown position " + position);
     }

@@ -32,12 +32,15 @@ public class AchievementsDto implements Serializable {
   private LocalTime timeMin;
 
 
-
   public AchievementsDto() {
-
+    this.battleWinner = 0;
+    this.speedMaxDate = new Date();
+    this.speedMax = 0;
+    this.distanceMaxDate = new Date();
+    this.distanceMax = 0;
+    this.timeMinDate = new Date();
+    this.timeMin = LocalTime.of(0,0,0);
   }
-
-
 
   public int getBattleWinner() {
 

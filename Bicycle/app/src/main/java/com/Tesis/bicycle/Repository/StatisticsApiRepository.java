@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Dto.ApiRest.Statistics.AchievementsDto;
+import com.Tesis.bicycle.Dto.ApiRest.Statistics.ClassificationDto;
 import com.Tesis.bicycle.Dto.ApiRest.Statistics.StatisticsApiRest;
 import com.Tesis.bicycle.Dto.ApiRest.Statistics.StatisticsDto;
 import com.Tesis.bicycle.Presenter.ApiRestConnection;
@@ -90,9 +91,9 @@ public class StatisticsApiRepository {
         return mld;
     }
 
-    public LiveData<AchievementsDto> getAchievements(Long appUser){
+    public LiveData<AchievementsDto> getAchievementsByUser(Long appUser){
         final MutableLiveData<AchievementsDto> mld=new MutableLiveData<>();
-        statisticsApiService.getAchievements(appUser).enqueue(new Callback<AchievementsDto>() {
+        statisticsApiService.getAchievementsByUser(appUser).enqueue(new Callback<AchievementsDto>() {
             @Override
             public void onResponse(Call<AchievementsDto> call, Response<AchievementsDto> response) {
                 mld.setValue(response.body());
@@ -100,6 +101,22 @@ public class StatisticsApiRepository {
 
             @Override
             public void onFailure(Call<AchievementsDto> call, Throwable t) {
+
+            }
+        });
+        return mld;
+    }
+
+    public LiveData<List<ClassificationDto>> getAchievements(){
+        final MutableLiveData<List<ClassificationDto>> mld=new MutableLiveData<>();
+        statisticsApiService.getAchievements().enqueue(new Callback<List<ClassificationDto>>() {
+            @Override
+            public void onResponse(Call<List<ClassificationDto>> call, Response<List<ClassificationDto>> response) {
+                mld.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<ClassificationDto>> call, Throwable t) {
 
             }
         });

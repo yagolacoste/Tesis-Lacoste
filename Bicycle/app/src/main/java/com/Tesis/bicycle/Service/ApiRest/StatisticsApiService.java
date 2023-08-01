@@ -2,6 +2,7 @@ package com.Tesis.bicycle.Service.ApiRest;
 
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Dto.ApiRest.Statistics.AchievementsDto;
+import com.Tesis.bicycle.Dto.ApiRest.Statistics.ClassificationDto;
 import com.Tesis.bicycle.Dto.ApiRest.Statistics.StatisticsApiRest;
 import com.Tesis.bicycle.Dto.ApiRest.Statistics.StatisticsDto;
 
@@ -24,8 +25,11 @@ public interface StatisticsApiService {
     @GET("getstatisticsbyroute")
     Call<List<StatisticsDto>> getStatisticsByRoute(@Query("route") String route);
 
+    @GET("achievementbyuser")
+    Call<AchievementsDto> getAchievementsByUser(@Query("user") Long appUser);
+
     @GET("achievements")
-    Call<AchievementsDto> getAchievements(@Query("id") Long appUser);
+    Call<List<ClassificationDto>> getAchievements();
 
 
 }

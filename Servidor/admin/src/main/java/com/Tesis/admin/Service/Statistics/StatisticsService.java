@@ -4,7 +4,9 @@ package com.Tesis.admin.Service.Statistics;
 
 import com.Tesis.admin.Controller.Exception.ErrorCodes;
 import com.Tesis.admin.Controller.Exception.TypeExceptions.NotFoundException;
+import com.Tesis.admin.Dto.AppUser.ProfileUserDto;
 import com.Tesis.admin.Dto.Statistics.AchievementsDto;
+import com.Tesis.admin.Dto.Statistics.ClassificationDto;
 import com.Tesis.admin.Dto.Statistics.StatisticsDto;
 import com.Tesis.admin.Dto.Statistics.StatisticsRequestDto;
 import com.Tesis.admin.Dto.Route.RouteDetailsDto;
@@ -21,14 +23,12 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -106,22 +106,42 @@ public class StatisticsService implements IStatisticsService {
     }
 
     @Override
-    public AchievementsDto getAchievements(Long appUser) throws ParseException {
+    public AchievementsDto getAchievementsByUser(Long appUser) throws ParseException {
         AchievementsDto achievementsDto=new AchievementsDto();
-        int cantBattleWinner= battleService.cantBattleByUser(appUser);
-        achievementsDto.setBattleWinner(cantBattleWinner);
-        Statistics statistics= statisticsRepository.findAllByUser(appUser).stream().max(Comparator.comparingDouble(Statistics::getAvgSpeed)).get();
-        achievementsDto.setSpeedMax(statistics.getAvgSpeed());
-        achievementsDto.setSpeedMaxDate(statistics.getTimeCreated());
-        statistics=statisticsRepository.findAllByUser(appUser).stream().max(Comparator.comparingDouble(Statistics::getDistance)).get();
-        achievementsDto.setDistanceMax(statistics.getDistance());
-        achievementsDto.setDistanceMaxDate(statistics.getTimeCreated());
-        statistics=statisticsRepository.findAllByUser(appUser)
-                .stream().min(Comparator.comparing(Statistics::getTime))
-                        .get();
-        achievementsDto.setTimeMin(statistics.getTime());
-        achievementsDto.setTimeMinDate(statistics.getTimeCreated());
+        if(!statisticsRepository.findAllStatisticsByUser(appUser).isEmpty()) {
+            int cantBattleWinner= battleService.cantBattleByUser(appUser);
+            achievementsDto.setBattleWinner(cantBattleWinner);
+            Statistics statistics = statisticsRepository.findAllStatisticsByUser(appUser).stream().max(Comparator.comparingDouble(Statistics::getAvgSpeed)).get();
+            achievementsDto.setSpeedMax(statistics.getAvgSpeed());
+            achievementsDto.setSpeedMaxDate(statistics.getTimeCreated());
+            statistics = statisticsRepository.findAllStatisticsByUser(appUser).stream().max(Comparator.comparingDouble(Statistics::getDistance)).get();
+            achievementsDto.setDistanceMax(statistics.getDistance());
+            achievementsDto.setDistanceMaxDate(statistics.getTimeCreated());
+            statistics = statisticsRepository.findAllStatisticsByUser(appUser)
+                    .stream().min(Comparator.comparing(Statistics::getTime))
+                    .get();
+            achievementsDto.setTimeMin(statistics.getTime());
+            achievementsDto.setTimeMinDate(statistics.getTimeCreated());
+        }
         return achievementsDto;
+    }
+
+    @Override
+    public List<ClassificationDto> getAchievements() {
+        List<ClassificationDto>classifications=new ArrayList<>();
+        List<UserAppDto> users=userService.list();
+        users.forEach(u->{
+            try {
+            ClassificationDto classificationDto=new ClassificationDto();
+            classificationDto.setProfileUserDto(new ProfileUserDto(u));
+            classificationDto.setAchievementsDto(this.getAchievementsByUser(u.getId()));
+            classifications.add(classificationDto);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+
+        });
+        return classifications;
     }
 
 }

@@ -67,7 +67,7 @@ public class AchievementsFragment extends Fragment {
     private void loadDta() {
         accessTokenRoomViewModel.getFirst().observe(getViewLifecycleOwner(),resp->{
             if(resp.getId()!=null){
-                statisticsViewModel.getAchievements(resp.getId()).observe(getViewLifecycleOwner(),response->{
+                statisticsViewModel.getAchievementsByUser(resp.getId()).observe(getViewLifecycleOwner(),response->{
                     if(response!=null){
                         acTextViewCompete.setText(String.valueOf(response.getBattleWinner()));
                         acTextViewSpeed.setText(String.valueOf(response.getSpeedMax()));

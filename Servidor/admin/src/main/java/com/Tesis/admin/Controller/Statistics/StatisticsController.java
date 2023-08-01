@@ -2,11 +2,8 @@ package com.Tesis.admin.Controller.Statistics;
 
 
 import com.Tesis.admin.Dto.Route.RouteDetailsDto;
-import com.Tesis.admin.Dto.Statistics.AchievementsDto;
-import com.Tesis.admin.Dto.Statistics.RoutesDto;
+import com.Tesis.admin.Dto.Statistics.*;
 
-import com.Tesis.admin.Dto.Statistics.StatisticsDto;
-import com.Tesis.admin.Dto.Statistics.StatisticsRequestDto;
 import com.Tesis.admin.Service.Statistics.IStatisticsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,36 +20,41 @@ public class StatisticsController implements IStatisticsController{
 
 
     @Autowired
-    private IStatisticsService StatisticsService;
+    private IStatisticsService statisticsService;
 
 
     @Override
     public void addAppUserRoute(StatisticsRequestDto statisticsRequestDto) {
-        StatisticsService.add(statisticsRequestDto);
+        statisticsService.add(statisticsRequestDto);
     }
 
     @Override
     public Optional<StatisticsDto> getById(String id) {
-        return StatisticsService.getById(id);
+        return statisticsService.getById(id);
     }
 
     @Override
     public List<StatisticsDto> getStatistics() {
-        return StatisticsService.list();
+        return statisticsService.list();
     }
 
     @Override
     public List<RouteDetailsDto>  getRoutesByUser(Long appUser) {
-        return StatisticsService.getRoutesByUser(appUser);
+        return statisticsService.getRoutesByUser(appUser);
     }
 
     @Override
     public List<StatisticsDto> getStatisticsByRoute(String routeId) {
-        return StatisticsService.getStatisticsByRoute(routeId);
+        return statisticsService.getStatisticsByRoute(routeId);
     }
 
     @Override
-    public AchievementsDto getAchievements(Long appUser) throws ParseException {
-        return StatisticsService.getAchievements(appUser);
+    public AchievementsDto getAchievementsByUser(Long appUser) throws ParseException {
+        return statisticsService.getAchievementsByUser(appUser);
+    }
+
+    @Override
+    public List<ClassificationDto> getAchievements() {
+        return statisticsService.getAchievements();
     }
 }

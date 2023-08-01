@@ -20,5 +20,5 @@ public interface IStatisticsRepository extends JpaRepository<Statistics, String>
     List<StatisticsDto> findAllStatisticsByRoute(String routeId);
 
     @Query("SELECT s FROM Statistics s where s.appUser.id =:appUser")
-    List<Statistics> findAllByUser(Long appUser);
+    List<Statistics> findAllStatisticsByUser(Long appUser);
 }

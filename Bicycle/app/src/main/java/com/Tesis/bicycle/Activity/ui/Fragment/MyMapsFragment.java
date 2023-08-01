@@ -32,7 +32,6 @@ public class MyMapsFragment extends BaseListViewFragment {
 
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view= super.onCreateView(inflater, container, savedInstanceState);

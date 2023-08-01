@@ -2,10 +2,7 @@ package com.Tesis.admin.Controller.Statistics;
 
 
 import com.Tesis.admin.Dto.Route.RouteDetailsDto;
-import com.Tesis.admin.Dto.Statistics.AchievementsDto;
-import com.Tesis.admin.Dto.Statistics.RoutesDto;
-import com.Tesis.admin.Dto.Statistics.StatisticsDto;
-import com.Tesis.admin.Dto.Statistics.StatisticsRequestDto;
+import com.Tesis.admin.Dto.Statistics.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.http.HttpStatus;
@@ -44,9 +41,11 @@ public interface IStatisticsController {
     List<StatisticsDto> getStatisticsByRoute(@RequestParam("route") String routeId);
 
     @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "/achievementbyuser",produces = MediaType.APPLICATION_JSON_VALUE)
+    AchievementsDto getAchievementsByUser(@RequestParam("user")  Long appUser) throws ParseException;
+
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/achievements",produces = MediaType.APPLICATION_JSON_VALUE)
-    AchievementsDto getAchievements(@RequestParam("id")  Long appUser) throws ParseException;
-
-
+    List<ClassificationDto> getAchievements();
 
 }

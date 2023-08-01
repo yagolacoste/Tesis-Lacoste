@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Dto.ApiRest.Statistics.AchievementsDto;
+import com.Tesis.bicycle.Dto.ApiRest.Statistics.ClassificationDto;
 import com.Tesis.bicycle.Dto.ApiRest.Statistics.StatisticsApiRest;
 import com.Tesis.bicycle.Dto.ApiRest.Statistics.StatisticsDto;
 import com.Tesis.bicycle.Repository.StatisticsApiRepository;
@@ -36,7 +37,11 @@ public class StatisticsViewModel extends AndroidViewModel {
         return this.repository.getStatisticsByRoute(routeId);
     }
 
-    public LiveData<AchievementsDto> getAchievements(Long appUser){
-        return this.repository.getAchievements(appUser);
+    public LiveData<AchievementsDto> getAchievementsByUser(Long appUser){
+        return this.repository.getAchievementsByUser(appUser);
+    }
+
+    public LiveData<List<ClassificationDto>> getAchievements(){
+        return this.repository.getAchievements();
     }
 }
