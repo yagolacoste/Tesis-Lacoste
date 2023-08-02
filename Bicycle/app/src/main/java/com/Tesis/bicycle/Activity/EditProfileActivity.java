@@ -183,12 +183,6 @@ public class EditProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout,fragment);
-        fragmentTransaction.commitNow();
-    }
     private void uploadImage() {
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         i.setType("image/");
@@ -234,10 +228,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 .show();
     }
 
-    public void errorMessage(String message) {
-        new SweetAlertDialog(this,
-                SweetAlertDialog.ERROR_TYPE).setTitleText("Oops...").setContentText(message).show();
-    }
 
     public void warningMessage(String message) {
         new SweetAlertDialog(this,

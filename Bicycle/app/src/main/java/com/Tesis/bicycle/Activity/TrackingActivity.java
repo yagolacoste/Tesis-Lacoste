@@ -22,6 +22,7 @@ import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -36,11 +37,13 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 
+import com.Tesis.bicycle.Activity.ui.NavInitActivity;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.Battle.BattleDto;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Model.Tracking;
 
+import com.Tesis.bicycle.Presenter.ListView.UserListViewActivity;
 import com.Tesis.bicycle.Presenter.Notifications;
 import com.Tesis.bicycle.Presenter.OpenStreetMap;
 import com.Tesis.bicycle.R;
@@ -102,6 +105,8 @@ public class TrackingActivity extends Activity {
     private String action = null;
 
     private Notifications notifications;
+
+    private boolean locationUpdatesActive = false;
 
 
     Handler updateTimeHandler = new Handler();
@@ -205,6 +210,7 @@ public class TrackingActivity extends Activity {
             btn_start.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    locationUpdatesActive=false;
                     if(action!=null){
                         if (equalsPosition()) {
                             notifications.warningMessage("Pro favor esta en el inicio de la carrera");
@@ -274,7 +280,7 @@ public class TrackingActivity extends Activity {
     }
 
     private void updateLastLocation() {
-
+        locationUpdatesActive=true;
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(TrackingActivity.this);
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);
@@ -285,12 +291,16 @@ public class TrackingActivity extends Activity {
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 super.onLocationResult(locationResult);
-                Location location = locationResult.getLastLocation();
-                if (location != null) {
-                    openStreetMap.updatePosition(location);
-                    currentLocation = location;
+                if (locationResult == null) {
                     return;
                 }
+                for(Location location:locationResult.getLocations()){
+                    if (locationUpdatesActive && location != null) {
+                        openStreetMap.updatePosition(location);
+                        currentLocation = location;
+                        return;
+                        }
+                    }
             }
         };
 
@@ -375,6 +385,7 @@ public class TrackingActivity extends Activity {
         //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
 //        ope.onResume(); //needed for compass, my location overlays, v6.0.0 and up
+        updateLastLocation();
         btn_turnoff.setEnabled(true);
     }
 
@@ -385,11 +396,28 @@ public class TrackingActivity extends Activity {
         //if you make changes to the configuration, use
         //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //Configuration.getInstance().save(this, prefs);
-        myOpenMapView.onPause();  //needed for compass, my location overlays, v6.0.0 and up
+//        myOpenMapView.onPause();  //needed for compass, my location overlays, v6.0.0 and up
         //unregisterReceiver(myReceiver);
-        if(locationCallback!=null)
+        if(locationCallback!=null) {
             fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+            locationCallback=null;
+        }
         btn_turnoff.setEnabled(true);
+    }
+
+    @Override
+    public void onBackPressed() {
+        locationUpdatesActive=false;
+        backToMenuActivity();
+        finish();
+        super.onBackPressed();
+    }
+
+    private void backToMenuActivity() {
+        Intent i=new Intent(this, NavInitActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+//        this.finish();
     }
 
 }

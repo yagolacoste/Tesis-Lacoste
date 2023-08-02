@@ -260,6 +260,7 @@ public class Tracking implements Serializable {
          return String.format(Locale.UK, "%.2f", avgSpeedFromSUVAT);
     }
 
+
     public void setAvgSpeedFromSUVAT(float avgSpeedFromSUVAT) {
         this.avgSpeedFromSUVAT = avgSpeedFromSUVAT;
     }
@@ -340,7 +341,7 @@ public class Tracking implements Serializable {
     }
 
     public float getAvgSpeed() {
-        return avgSpeed;
+        return avgSpeedFromSUVAT;
     }
 
     public void setAvgSpeed(float avgSpeed) {
