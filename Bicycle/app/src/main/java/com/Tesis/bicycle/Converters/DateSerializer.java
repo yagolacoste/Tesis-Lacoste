@@ -18,7 +18,7 @@ import java.util.Date;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class DateSerializer implements JsonSerializer<Date> {
-    private static final DateFormat formatter = new SimpleDateFormat("dd-MM-yyy");
+    private static final DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     @Override
     public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
         return new JsonPrimitive(formatter.format(src));

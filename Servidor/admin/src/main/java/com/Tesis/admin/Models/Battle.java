@@ -2,6 +2,8 @@ package com.Tesis.admin.Models;
 
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
@@ -19,6 +21,7 @@ public class Battle {
     private Long idBattle;
 
     @Column(name="complete_date")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")
     private Date completeDate;
 
     @Column(name="cant_participants")

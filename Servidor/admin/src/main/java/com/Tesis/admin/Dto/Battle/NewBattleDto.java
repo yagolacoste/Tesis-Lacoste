@@ -16,7 +16,7 @@ public class NewBattleDto implements Serializable {
     private String routeId;
 
     @JsonProperty("completeDate")
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd",timezone = "America/Buenos_Aires")
     private Date completeDate;
 
     @JsonProperty("cantParticipant")

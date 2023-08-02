@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 public class UserAppDto implements Serializable {
 
@@ -120,5 +121,18 @@ public class UserAppDto implements Serializable {
 
     public void setPhoto(Long photo) {
         this.photo = photo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserAppDto that = (UserAppDto) o;
+        return  Objects.equals(id, that.id) ;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, age, phone, email, fileName, weight, height, photo);
     }
 }
