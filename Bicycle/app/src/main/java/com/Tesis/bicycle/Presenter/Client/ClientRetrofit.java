@@ -90,7 +90,7 @@ public class ClientRetrofit {
             gsonBuilder.registerTypeAdapter(LocalTime.class, new LocalTimeSerializer());
             gsonBuilder.registerTypeAdapter(LocalTime.class, new LocalTimeDeserializer());
             gsonBuilder.registerTypeAdapter(Date.class, new DateSerializer());
-            gsonBuilder.registerTypeAdapter(Date.class, new DateDeserializer());
+            //gsonBuilder.registerTypeAdapter(Date.class, new DateDeserializer());
             Type listType = new TypeToken<List<GeoPoint>>() {}.getType();
             gsonBuilder.registerTypeAdapter(listType,new ListOfGeoPointDeserializer());
             gsonBuilder.registerTypeAdapter(listType,new ListOfGeoPointSerializer());

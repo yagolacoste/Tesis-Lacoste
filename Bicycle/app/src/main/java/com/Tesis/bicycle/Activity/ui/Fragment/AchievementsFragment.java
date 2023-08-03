@@ -70,12 +70,12 @@ public class AchievementsFragment extends Fragment {
                 statisticsViewModel.getAchievementsByUser(resp.getId()).observe(getViewLifecycleOwner(),response->{
                     if(response!=null){
                         acTextViewCompete.setText(String.valueOf(response.getBattleWinner()));
-                        acTextViewSpeed.setText(String.valueOf(response.getSpeedMax()));
-                        recordSpeedDate.setText(response.getSpeedMaxDate().toString());
-                        acTextViewDistance.setText(String.valueOf(response.getDistanceMax()));
-                        recordDistanceDate.setText(response.getDistanceMaxDate().toString());
+                        acTextViewSpeed.setText(response.getSpeedMax()+"km/h");
+                        recordSpeedDate.setText(response.getSpeedMaxDate());
+                        acTextViewDistance.setText(response.getDistanceMax()+"m");
+                        recordDistanceDate.setText(response.getDistanceMaxDate());
                         acTextViewTime.setText(response.getTimeMin().toString());
-                        recordTimeDate.setText(response.getTimeMinDate().toString());
+                        recordTimeDate.setText(response.getTimeMinDate());
                     }
                 });
             }

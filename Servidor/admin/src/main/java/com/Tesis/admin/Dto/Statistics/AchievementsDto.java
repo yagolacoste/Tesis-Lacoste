@@ -1,5 +1,6 @@
 package com.Tesis.admin.Dto.Statistics;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
@@ -14,18 +15,21 @@ public class AchievementsDto implements Serializable {
   private int battleWinner;
 
   @JsonProperty("speedMaxDate")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd",timezone = "America/Buenos_Aires")
   private Date speedMaxDate;
 
   @JsonProperty("speedMax")
   private float speedMax;
 
   @JsonProperty("distanceMaxDate")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd",timezone = "America/Buenos_Aires")
   private Date distanceMaxDate;
 
   @JsonProperty("distanceMax")
   private float distanceMax;
 
   @JsonProperty("timeMinDate")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd",timezone = "America/Buenos_Aires")
   private Date timeMinDate;
 
   @JsonProperty("timeMin")

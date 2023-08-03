@@ -11,6 +11,9 @@ import com.Tesis.admin.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -95,9 +98,10 @@ public class BattleService implements IBattleService{
     }
 
     private String getStatus(BattleDto battleDto,Long id){
-        Date now=new Date();
-        int result=now.compareTo(battleDto.getCompleteDate());
-        if(result>0 || battleDto.getRanking().size()==battleDto.getCantParticipant()){
+        LocalDateTime completeDateTime = battleDto.getCompleteDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        LocalDate today = LocalDate.now();
+        LocalDate battleDate = completeDateTime.toLocalDate();
+        if(today.isAfter(battleDate) || battleDto.getRanking().size()==battleDto.getCantParticipant()){
             return Status.FINISHED.getStatus();
         }else {
             BattleParticipationId battleParticipationId=new BattleParticipationId(id,battleDto.getIdBattle());

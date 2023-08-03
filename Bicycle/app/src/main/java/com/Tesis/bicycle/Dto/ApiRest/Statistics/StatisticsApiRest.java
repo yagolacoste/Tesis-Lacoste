@@ -35,6 +35,7 @@ public class StatisticsApiRest implements Serializable {
     private LocalTime time;
 
     @JsonProperty("timeCreated")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd",timezone = "America/Buenos_Aires")
     private Date timeCreated;
 
     @JsonProperty("weather")

@@ -85,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
             }else
                 Toast.makeText(this,"Please insert email and password",Toast.LENGTH_SHORT).show();
         }catch (Exception e){
+                Toast.makeText(this,"User not exits",Toast.LENGTH_SHORT).show();
             }
         });
         txtNewUser.setOnClickListener(view -> {

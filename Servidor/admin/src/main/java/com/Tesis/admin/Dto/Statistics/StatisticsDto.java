@@ -37,6 +37,7 @@ public class StatisticsDto implements Serializable  {
     private float distance;
 
     @JsonProperty("timeCreated")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd",timezone = "America/Buenos_Aires")
     private Date timeCreated;
 
     public StatisticsDto() {

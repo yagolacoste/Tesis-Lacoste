@@ -1,9 +1,10 @@
 package com.Tesis.bicycle.Dto.ApiRest.Statistics;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -14,18 +15,21 @@ public class AchievementsDto implements Serializable {
     private int battleWinner;
 
     @JsonProperty("speedMaxDate")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd",timezone = "America/Buenos_Aires")
     private Date speedMaxDate;
 
     @JsonProperty("speedMax")
     private float speedMax;
 
     @JsonProperty("distanceMaxDate")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd",timezone = "America/Buenos_Aires")
     private Date distanceMaxDate;
 
     @JsonProperty("distanceMax")
     private float distanceMax;
 
     @JsonProperty("timeMinDate")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd",timezone = "America/Buenos_Aires")
     private Date timeMinDate;
 
     @JsonProperty("timeMin")
@@ -53,9 +57,11 @@ public class AchievementsDto implements Serializable {
 
 
 
-    public Date getSpeedMaxDate() {
+    public String getSpeedMaxDate() {
 
-        return speedMaxDate;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        return sdf.format(speedMaxDate);
     }
 
 
@@ -81,9 +87,11 @@ public class AchievementsDto implements Serializable {
 
 
 
-    public Date getDistanceMaxDate() {
+    public String getDistanceMaxDate() {
 
-        return distanceMaxDate;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        return sdf.format(distanceMaxDate);
     }
 
 
@@ -108,10 +116,10 @@ public class AchievementsDto implements Serializable {
     }
 
 
+    public String getTimeMinDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-
-    public Date getTimeMinDate() {
-        return timeMinDate;
+        return sdf.format(timeMinDate);
     }
 
     public void setTimeMinDate(Date timeMinDate) {
@@ -125,5 +133,7 @@ public class AchievementsDto implements Serializable {
     public void setTimeMin(LocalTime timeMin) {
         this.timeMin = timeMin;
     }
+
+
 }
 

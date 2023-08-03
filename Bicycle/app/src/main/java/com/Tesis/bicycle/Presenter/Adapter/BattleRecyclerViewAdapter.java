@@ -57,7 +57,7 @@ public class BattleRecyclerViewAdapter extends RecyclerView.Adapter<BattleRecycl
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.txtValueNameRoute.setText(String.valueOf(battles.get(position).getRoute().getName()));
-        holder.txtValueCompleteDate.setText(String.valueOf(battles.get(position).getCompleteDate()));
+        holder.txtValueCompleteDate.setText(String.valueOf(battles.get(position).getCompleteDateToString()));
         holder.txtValueCantParticipant.setText(String.valueOf(battles.get(position).getCantParticipant()));
         holder.status.setText(battles.get(position).getStatus());
         if(battles.get(position).getStatus().equals(Status.FINISHED.getStatus())){

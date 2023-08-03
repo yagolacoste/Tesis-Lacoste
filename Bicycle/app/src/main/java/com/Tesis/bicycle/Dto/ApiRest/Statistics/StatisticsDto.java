@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.Locale;
@@ -37,6 +37,7 @@ public class StatisticsDto implements Serializable {
     private float distance;
 
     @JsonProperty("timeCreated")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd",timezone = "America/Buenos_Aires")
     private Date timeCreated;
 
     private boolean expandable=false;
@@ -100,8 +101,11 @@ public class StatisticsDto implements Serializable {
         this.distance = distance;
     }
 
-    public Date getTimeCreated() {
-        return timeCreated;
+    public String getTimeCreated() {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        return sdf.format(timeCreated);
     }
 
     public void setTimeCreated(Date timeCreated) {
