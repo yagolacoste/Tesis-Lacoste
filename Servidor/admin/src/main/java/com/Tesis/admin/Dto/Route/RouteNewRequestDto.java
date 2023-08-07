@@ -21,7 +21,9 @@ public class RouteNewRequestDto implements Serializable {
 
     private float distance;
 
-    private LocalTime avgTime;//Preguntar si saco el promedio de alguna fomra?
+    private LocalTime avgTime;
+
+    private Long photo;
 
     public String getId() {
         return id;
@@ -47,14 +49,6 @@ public class RouteNewRequestDto implements Serializable {
         this.name = name;
     }
 
-//    public String getCoordinates() {
-//        return coordinates;
-//    }
-//
-//    public void setCoordinates(String coordinates) {
-//        this.coordinates = coordinates;
-//    }
-
 
     public List<GeoPoint> getCoordinates() {
         return coordinates;
@@ -78,5 +72,13 @@ public class RouteNewRequestDto implements Serializable {
 
     public void setAvgTime(LocalTime avgTime) {
         this.avgTime = avgTime;
+    }
+
+    public Long getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Long photo) {
+        this.photo = photo;
     }
 }

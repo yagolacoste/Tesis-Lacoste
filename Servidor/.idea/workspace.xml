@@ -5,11 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7729f06-1757-4dfa-ac9d-78d48a9c1c01" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Bicycle/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/TrackingDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/TrackingDetailActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/OpenStreetMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/OpenStreetMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Battle/BattleDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Battle/BattleDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Statistics/AchievementsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Statistics/AchievementsDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Controller/Route/IRouteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Controller/Route/IRouteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Route/RouteNewRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Route/RouteNewRequestDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Statistics/StatisticsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Statistics/StatisticsDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Battle/BattleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Battle/BattleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Statistics/StatisticsRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Statistics/StatisticsRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Models/Route.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Models/Route.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Route/RouteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Route/RouteService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,13 +52,10 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="useMavenConfig" value="true" />
-      </MavenGeneralSettings>
-    </option>
-  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2Ns7lcqJI7viSAgxvKhs2pEPjbm" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -169,5 +174,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Route/RouteService.java</url>
+          <line>49</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

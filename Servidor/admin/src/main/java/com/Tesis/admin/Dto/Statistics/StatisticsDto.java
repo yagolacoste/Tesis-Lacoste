@@ -5,11 +5,13 @@ package com.Tesis.admin.Dto.Statistics;
 import com.Tesis.admin.Models.Statistics;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 
 import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.Date;
 
+@Getter
 public class StatisticsDto implements Serializable  {
 
     @JsonProperty("id")
@@ -55,77 +57,37 @@ public class StatisticsDto implements Serializable  {
         this.timeCreated=r.getTimeCreated();
     }
 
-    public String getId() {
-        return id;
-    }
-
     public void setId(String id) {
         this.id = id;
-    }
-
-    public Long getAppUser() {
-        return appUser;
     }
 
     public void setAppUser(Long appUser) {
         this.appUser = appUser;
     }
 
-    public String getRoute() {
-        return route;
-    }
-
     public void setRoute(String route) {
         this.route = route;
-    }
-
-    public String getWeather() {
-        return weather;
     }
 
     public void setWeather(String weather) {
         this.weather = weather;
     }
 
-    public float getAvgSpeed() {
-        return avgSpeed;
-    }
-
     public void setAvgSpeed(float avgSpeed) {
         this.avgSpeed = avgSpeed;
-    }
-
-    public LocalTime getTime() {
-        return time;
     }
 
     public void setTime(LocalTime time) {
         this.time = time;
     }
 
-    public float getDistance() {
-        return distance;
-    }
-
     public void setDistance(float distance) {
         this.distance = distance;
-    }
-
-    public Date getTimeCreated() {
-        return timeCreated;
     }
 
     public void setTimeCreated(Date timeCreated) {
         this.timeCreated = timeCreated;
     }
-
-
-
-    public String getNameComplete() {
-
-        return nameComplete;
-    }
-
 
 
     public void setNameComplete(String nameComplete) {

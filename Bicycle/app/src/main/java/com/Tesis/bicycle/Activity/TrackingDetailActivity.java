@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,13 +30,21 @@ import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ServiceTracking.GPSService;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
 import com.Tesis.bicycle.ViewModel.StatisticsViewModel;
+import com.Tesis.bicycle.ViewModel.StoredDocumentViewModel;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class TrackingDetailActivity extends AppCompatActivity {
 
@@ -45,6 +54,8 @@ public class TrackingDetailActivity extends AppCompatActivity {
     private GPSService.LocationBinder locationBinder=null;
     private AccessTokenRoomViewModel accessTokenRoomViewModel;
     private StatisticsViewModel statisticsViewModel;
+
+    private StoredDocumentViewModel storedDocumentViewModel;
     private OpenStreetMap openStreetMap;
 
     private Notifications notifications;
@@ -126,6 +137,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
         final ViewModelProvider vmp = new ViewModelProvider(this);
         this.accessTokenRoomViewModel=vmp.get(AccessTokenRoomViewModel.class);
         this.statisticsViewModel =vmp.get(StatisticsViewModel.class);
+        this.storedDocumentViewModel=vmp.get(StoredDocumentViewModel.class);
     }
 
     private void init(){
@@ -168,12 +180,16 @@ public class TrackingDetailActivity extends AppCompatActivity {
             statisticsApiRest.setWeather("");
             statisticsApiRest.setDescription(locationBinder.getDescription());
             statisticsApiRest.setTitle(locationBinder.getTitle());
-            if(!locationBinder.getId().contains("-"))
+            if(!locationBinder.getId().contains("-")){
                 statisticsApiRest.setRoute(refreshTokenDto.getId()+"-"+locationBinder.getId());
+                Long imageId=saveImage();
+                statisticsApiRest.setPhoto(imageId);
+            }
             else
                 statisticsApiRest.setRoute(locationBinder.getId());
             statisticsApiRest.setCoordinates(locationBinder.getGeoPoints());
             statisticsApiRest.setBattleId(locationBinder.getBattleId());
+//            saveImage();
             statisticsViewModel.addStatistic(statisticsApiRest).observe(this, resp->{
                 if(resp) {
                     if (statisticsApiRest.getBattleId() != null) {
@@ -186,6 +202,26 @@ public class TrackingDetailActivity extends AppCompatActivity {
                 }
             });
         });
+    }
+
+    private Long saveImage() {
+        AtomicReference<Long> imageId= new AtomicReference<>(0L);
+        String filename = "route_"+locationBinder.getId()+".jpeg";
+        Bitmap image=openStreetMap.captureMapAndCrop(locationBinder.getGeoPoints().get(0).getLatitude(),
+                locationBinder.getGeoPoints().get(0).getLongitude(),locationBinder.getGeoPoints().get(locationBinder.getGeoPoints().size()-1).getLatitude(),
+                locationBinder.getGeoPoints().get(locationBinder.getGeoPoints().size()-1).getLongitude());
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] byteArray = baos.toByteArray();
+        File f=new File(filename);
+        RequestBody rb = RequestBody.create(byteArray, MediaType.parse("multipart/form-data")), somedata;
+
+        MultipartBody.Part part = MultipartBody.Part.createFormData("file", f.getName(), rb);
+        somedata = RequestBody.create(filename, MediaType.parse("text/plain"));
+        this.storedDocumentViewModel.save(part, somedata).observe(this,response-> {
+            imageId.set(response);
+        });
+        return imageId.get();
     }
 
 

@@ -1,13 +1,23 @@
 package com.Tesis.bicycle.Presenter;
 
+
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.location.Location;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.Tesis.bicycle.R;
+
+
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.routing.OSRMRoadManager;
@@ -23,6 +33,9 @@ import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,20 +103,66 @@ public class OpenStreetMap {
 
     public void draw(List<GeoPoint> points){
         Marker startMarker=new Marker(myOpenMapView);
-//        startMarker.setPosition(points.get(0));
-//        myOpenMapView.getOverlays().add(startMarker);
         Road road=roadManager.getRoad((ArrayList<GeoPoint>) points);
         startMarker.setPosition(road.getRouteLow().get(0));
         myOpenMapView.getOverlays().add(startMarker);
         roadOverlay=RoadManager.buildRoadOverlay(road, color, 25f);
         myOpenMapView.getOverlays().add(roadOverlay);
         Marker endMarker=new Marker(myOpenMapView);
-//        endMarker.setPosition(points.get(points.size()-1));
-//        myOpenMapView.getOverlays().add(endMarker);
         endMarker.setPosition(road.getRouteLow().get(road.getRouteLow().size()-1));
         myOpenMapView.getOverlays().add(endMarker);
         myOpenMapView.invalidate();
     }
+
+    public Bitmap captureMapAndCrop(double upperLeftLat, double upperLeftLon,
+                                   double lowerRightLat, double lowerRightLon) {
+        // Capturar la vista del mapa en un Canvas
+        int width = myOpenMapView.getWidth();
+        int height = myOpenMapView.getHeight();
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        myOpenMapView.draw(canvas);
+
+        // Calcular las coordenadas del recorte en píxeles
+        double left = (upperLeftLon - myOpenMapView.getBoundingBox().getLonWest()) * width / myOpenMapView.getBoundingBox().getLongitudeSpan();
+        double top = (upperLeftLat - myOpenMapView.getBoundingBox().getLatNorth()) * height / myOpenMapView.getBoundingBox().getLatitudeSpan();
+        double right = (lowerRightLon - myOpenMapView.getBoundingBox().getLonWest()) * width / myOpenMapView.getBoundingBox().getLongitudeSpan();
+        double bottom = (lowerRightLat - myOpenMapView.getBoundingBox().getLatNorth()) * height / myOpenMapView.getBoundingBox().getLatitudeSpan();
+
+        // Recortar la porción deseada del mapa
+        int x = (int) Math.round(left);
+        int y = (int) Math.round(top);
+        int w = (int) Math.round(right - left);
+        int h = (int) Math.round(bottom - top);
+        Bitmap croppedMap = Bitmap.createBitmap(bitmap, 0, 0, myOpenMapView.getWidth(),myOpenMapView.getHeight());
+
+        // Mostrar el mapa recortado en un ImageView
+        //saveCroppedMapAsPNG(croppedMap);
+
+        return croppedMap;
+    }
+
+//    private void saveCroppedMapAsPNG(Bitmap croppedMap) {
+//        String filename = "mapa_recortado.png";
+//        File directory = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "MyApp");
+//        if (!directory.exists()) {
+//            directory.mkdirs();
+//        }
+//        File file = new File(directory, filename);
+//
+//        try {
+//            FileOutputStream out = new FileOutputStream(file);
+//            croppedMap.compress(Bitmap.CompressFormat.PNG, 100, out);
+//            out.flush();
+//            out.close();
+//            Toast.makeText(context, "Imagen guardada correctamente", Toast.LENGTH_SHORT).show();
+//        } catch (IOException e) {
+//            Toast.makeText(context, "Error al guardar la imagen: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+//            e.printStackTrace();
+//        }
+//    }
+
+
 
     public Polyline getRoadOverlay() {
         return roadOverlay;

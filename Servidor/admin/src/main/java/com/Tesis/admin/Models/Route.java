@@ -4,6 +4,7 @@ package com.Tesis.admin.Models;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonRawValue;
 
+import lombok.Getter;
 import org.json.JSONObject;
 
 import javax.persistence.*;
@@ -39,9 +40,9 @@ public class Route implements Serializable {
     @OneToMany(mappedBy = "route")
     private List<Battle> battles;
 
-    public String getId() {
-        return id;
-    }
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "image_id", referencedColumnName = "id")
+    private StoredDocument image;
 
     public void setId(String id) {
         this.id = id;
@@ -106,5 +107,17 @@ public class Route implements Serializable {
     public void setAvgProm(LocalTime avgProm) {
 
         this.avgProm = avgProm;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public StoredDocument getImage() {
+        return image;
+    }
+
+    public void setImage(StoredDocument image) {
+        this.image = image;
     }
 }

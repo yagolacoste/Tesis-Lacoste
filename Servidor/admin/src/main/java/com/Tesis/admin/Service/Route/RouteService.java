@@ -6,6 +6,7 @@ import com.Tesis.admin.Dto.Route.GeoPoint;
 import com.Tesis.admin.Dto.Route.RouteNewRequestDto;
 import com.Tesis.admin.Exception.ErrorCodes;
 import com.Tesis.admin.Models.Route;
+import com.Tesis.admin.Models.StoredDocument;
 import com.Tesis.admin.Repository.IRouteRepository;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -31,8 +32,6 @@ public class RouteService implements IRouteService{
 
     @Override
     public Route getById(String id) {
-
-
         if(routeRepository.findById(id).isPresent()){
             return routeRepository.findById(id).get();
         }
@@ -47,16 +46,10 @@ public class RouteService implements IRouteService{
         routeReal.setName(route.getName());
         routeReal.setDistance(route.getDistance());
         routeReal.setAvgProm(route.getAvgTime());
-       // List<GeoPoint>points=route.getCoordinates().stream(r->new GeoPoint(r)).collect(Collectors.toList());
-       List<GeoPoint> geoPoints= route.getCoordinates();
-
-//            for (GeoPoint geoPoint : geoPoints) {
-////                coordinates.add(new JsonPrimitive(geoPoint.getLatitude()));
-////                coordinates.add(new JsonPrimitive(geoPoint.getLongitude()));
-//                jsonArray.add(geoPoint);
-//
-//        }
-
+        StoredDocument image=new StoredDocument();
+        image.setId(route.getPhoto());
+        routeReal.setImage(image);
+        List<GeoPoint> geoPoints= route.getCoordinates();
         Gson gson=new Gson();
         String json=gson.toJson(geoPoints);
         routeReal.setCoordinates(json);

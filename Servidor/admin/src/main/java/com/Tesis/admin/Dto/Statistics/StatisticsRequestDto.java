@@ -51,6 +51,9 @@ public class StatisticsRequestDto implements Serializable {
     @JsonProperty("battleId")
     private Long battleId;
 
+    @JsonProperty("photo")
+    private Long photo;
+
 
     public StatisticsRequestDto() {
     }
@@ -150,5 +153,13 @@ public class StatisticsRequestDto implements Serializable {
 
     public void setBattleId(Long battleId) {
         this.battleId = battleId;
+    }
+
+    public Long getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Long photo) {
+        this.photo = photo;
     }
 }

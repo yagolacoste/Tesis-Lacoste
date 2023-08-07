@@ -47,6 +47,9 @@ public class StatisticsApiRest implements Serializable {
     @JsonProperty("battleId")
     private Long battleId;
 
+    @JsonProperty("photo")
+    private Long photo;
+
     public StatisticsApiRest() {
     }
 
@@ -138,4 +141,13 @@ public class StatisticsApiRest implements Serializable {
     public void setBattleId(Long battleId) {
         this.battleId = battleId;
     }
+
+    public Long getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Long photo) {
+        this.photo = photo;
+    }
 }
+
