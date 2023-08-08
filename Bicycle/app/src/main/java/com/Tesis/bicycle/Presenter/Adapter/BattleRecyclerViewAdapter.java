@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -108,6 +109,8 @@ public class BattleRecyclerViewAdapter extends RecyclerView.Adapter<BattleRecycl
 
         private BattleDto battleDto;
 
+        private ImageView imgBattle;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -116,6 +119,7 @@ public class BattleRecyclerViewAdapter extends RecyclerView.Adapter<BattleRecycl
             txtValueCantParticipant = itemView.findViewById(R.id.txtValueCantParticipant);
             btn_Information = itemView.findViewById(R.id.btn_Information);
             status = (Chip) itemView.findViewById(R.id.chipStatus);
+            imgBattle=itemView.findViewById(R.id.imgBattle);
 
             rootView = itemView;
 

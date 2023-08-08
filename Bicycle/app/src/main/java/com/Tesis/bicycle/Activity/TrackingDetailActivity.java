@@ -155,11 +155,11 @@ public class TrackingDetailActivity extends AppCompatActivity {
         notifications=new Notifications(TrackingDetailActivity.this);
         Intent intent = new Intent(this, GPSService.class);
         getApplicationContext().bindService(intent, lsc, Context.BIND_ABOVE_CLIENT);
+
         btnSave.setOnClickListener(view -> {
             storeData();
 
         });
-
         btnDiscard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -180,16 +180,30 @@ public class TrackingDetailActivity extends AppCompatActivity {
             statisticsApiRest.setWeather("");
             statisticsApiRest.setDescription(locationBinder.getDescription());
             statisticsApiRest.setTitle(locationBinder.getTitle());
+            statisticsApiRest.setCoordinates(locationBinder.getGeoPoints());
+            statisticsApiRest.setBattleId(locationBinder.getBattleId());
             if(!locationBinder.getId().contains("-")){
                 statisticsApiRest.setRoute(refreshTokenDto.getId()+"-"+locationBinder.getId());
-                Long imageId=saveImage();
-                statisticsApiRest.setPhoto(imageId);
+                saveData(statisticsApiRest);
             }
             else
                 statisticsApiRest.setRoute(locationBinder.getId());
-            statisticsApiRest.setCoordinates(locationBinder.getGeoPoints());
-            statisticsApiRest.setBattleId(locationBinder.getBattleId());
-//            saveImage();
+        });
+    }
+
+    private void saveData(StatisticsApiRest statisticsApiRest) {
+        String filename = "route_"+locationBinder.getId()+".jpeg";
+        Bitmap image=openStreetMap.captureMapAndCrop();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] byteArray = baos.toByteArray();
+        File f=new File(filename);
+        RequestBody rb = RequestBody.create(byteArray, MediaType.parse("multipart/form-data")), somedata;
+
+        MultipartBody.Part part = MultipartBody.Part.createFormData("file", f.getName(), rb);
+        somedata = RequestBody.create(filename, MediaType.parse("text/plain"));
+        this.storedDocumentViewModel.save(part, somedata).observe(this, photo -> {
+            statisticsApiRest.setImage(photo);
             statisticsViewModel.addStatistic(statisticsApiRest).observe(this, resp->{
                 if(resp) {
                     if (statisticsApiRest.getBattleId() != null) {
@@ -202,26 +216,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
                 }
             });
         });
-    }
 
-    private Long saveImage() {
-        AtomicReference<Long> imageId= new AtomicReference<>(0L);
-        String filename = "route_"+locationBinder.getId()+".jpeg";
-        Bitmap image=openStreetMap.captureMapAndCrop(locationBinder.getGeoPoints().get(0).getLatitude(),
-                locationBinder.getGeoPoints().get(0).getLongitude(),locationBinder.getGeoPoints().get(locationBinder.getGeoPoints().size()-1).getLatitude(),
-                locationBinder.getGeoPoints().get(locationBinder.getGeoPoints().size()-1).getLongitude());
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] byteArray = baos.toByteArray();
-        File f=new File(filename);
-        RequestBody rb = RequestBody.create(byteArray, MediaType.parse("multipart/form-data")), somedata;
-
-        MultipartBody.Part part = MultipartBody.Part.createFormData("file", f.getName(), rb);
-        somedata = RequestBody.create(filename, MediaType.parse("text/plain"));
-        this.storedDocumentViewModel.save(part, somedata).observe(this,response-> {
-            imageId.set(response);
-        });
-        return imageId.get();
     }
 
 

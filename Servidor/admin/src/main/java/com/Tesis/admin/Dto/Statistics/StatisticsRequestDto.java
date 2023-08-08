@@ -37,7 +37,7 @@ public class StatisticsRequestDto implements Serializable {
     @JsonFormat(pattern = "H:mm:ss")
     private LocalTime time;
 
-    @JsonFormat(pattern = "dd-MM-yyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd",timezone = "America/Buenos_Aires")
     private Date timeCreated;
 
     @JsonProperty("weather")
@@ -51,8 +51,8 @@ public class StatisticsRequestDto implements Serializable {
     @JsonProperty("battleId")
     private Long battleId;
 
-    @JsonProperty("photo")
-    private Long photo;
+    @JsonProperty("image")
+    private Long image;
 
 
     public StatisticsRequestDto() {
@@ -155,11 +155,17 @@ public class StatisticsRequestDto implements Serializable {
         this.battleId = battleId;
     }
 
-    public Long getPhoto() {
-        return photo;
+
+
+    public Long getImage() {
+
+        return image;
     }
 
-    public void setPhoto(Long photo) {
-        this.photo = photo;
+
+
+    public void setImage(Long image) {
+
+        this.image = image;
     }
 }

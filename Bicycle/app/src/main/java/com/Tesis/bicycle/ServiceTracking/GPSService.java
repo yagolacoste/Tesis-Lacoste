@@ -260,8 +260,13 @@ public class GPSService extends Service {
             return tracking.getAvgSpeedFromSUVAT();
         }
 
+        public Long getImage(){
+            return tracking.getImage();
+        }
 
-
+        public void setImage(Long imageId){
+            tracking.setImage(imageId);
+        }
 
 
     }

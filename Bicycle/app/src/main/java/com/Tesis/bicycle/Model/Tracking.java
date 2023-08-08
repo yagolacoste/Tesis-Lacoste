@@ -61,6 +61,8 @@ public class Tracking implements Serializable {
 
     private Location currentLocation;
 
+    private Long image;
+
     public Tracking() {
 
     }
@@ -459,6 +461,22 @@ public class Tracking implements Serializable {
 
     public void setDeviation(boolean deviation) {
         this.deviation = deviation;
+    }
+
+    public Location getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public void setCurrentLocation(Location currentLocation) {
+        this.currentLocation = currentLocation;
+    }
+
+    public Long getImage() {
+        return image;
+    }
+
+    public void setImage(Long image) {
+        this.image = image;
     }
 
     @Override

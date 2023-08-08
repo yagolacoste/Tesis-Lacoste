@@ -20,7 +20,7 @@
             android:layout_margin="10dp">
 
             <ImageView
-                android:id="@+id/imgProduct"
+                android:id="@+id/imgBattle"
                 android:layout_width="177dp"
                 android:layout_height="191dp"
                 android:layout_alignParentStart="true"
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="10dp"
-                android:layout_toEndOf="@id/imgProduct"
+                android:layout_toEndOf="@id/imgBattle"
                 android:orientation="vertical">
 
 

@@ -96,4 +96,65 @@ public class StatisticsDto implements Serializable  {
     }
 
 
+
+    public String getId() {
+
+        return id;
+    }
+
+
+
+    public Long getAppUser() {
+
+        return appUser;
+    }
+
+
+
+    public String getNameComplete() {
+
+        return nameComplete;
+    }
+
+
+
+    public String getRoute() {
+
+        return route;
+    }
+
+
+
+    public String getWeather() {
+
+        return weather;
+    }
+
+
+
+    public float getAvgSpeed() {
+
+        return avgSpeed;
+    }
+
+
+
+    public LocalTime getTime() {
+
+        return time;
+    }
+
+
+
+    public float getDistance() {
+
+        return distance;
+    }
+
+
+
+    public Date getTimeCreated() {
+
+        return timeCreated;
+    }
 }

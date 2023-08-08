@@ -55,13 +55,7 @@ public class StatisticsService implements IStatisticsService {
         //Guarda nueva ruta
         Route r=routeService.getById(statisticsRequestDto.getRoute());
         if(r==null){
-            RouteNewRequestDto routeNewRequestDto = new RouteNewRequestDto();
-            routeNewRequestDto.setId(statisticsRequestDto.getRoute());
-            routeNewRequestDto.setName(statisticsRequestDto.getTitle());
-            routeNewRequestDto.setDescription(statisticsRequestDto.getDescription());
-            routeNewRequestDto.setCoordinates(statisticsRequestDto.getCoordinates());
-            routeNewRequestDto.setDistance(statisticsRequestDto.getDistance());
-            routeNewRequestDto.setAvgTime(statisticsRequestDto.getTime());
+            RouteNewRequestDto routeNewRequestDto = getRouteNewRequestDto(statisticsRequestDto);
             routeService.add(routeNewRequestDto);
         }
         //Guarda nuevas estadisticas
@@ -82,6 +76,24 @@ public class StatisticsService implements IStatisticsService {
             battleService.updateBattleParticipation(appUser.getId(),statisticsRequestDto.getBattleId(),statisticsId);
         }
     }
+
+
+
+    private static RouteNewRequestDto getRouteNewRequestDto(
+        StatisticsRequestDto statisticsRequestDto) {
+
+        RouteNewRequestDto routeNewRequestDto = new RouteNewRequestDto();
+        routeNewRequestDto.setId(statisticsRequestDto.getRoute());
+        routeNewRequestDto.setName(statisticsRequestDto.getTitle());
+        routeNewRequestDto.setDescription(statisticsRequestDto.getDescription());
+        routeNewRequestDto.setCoordinates(statisticsRequestDto.getCoordinates());
+        routeNewRequestDto.setDistance(statisticsRequestDto.getDistance());
+        routeNewRequestDto.setAvgTime(statisticsRequestDto.getTime());
+        routeNewRequestDto.setPhoto(statisticsRequestDto.getImage());
+        return routeNewRequestDto;
+    }
+
+
 
     @Override
     public Optional<StatisticsDto> getById(String id) {

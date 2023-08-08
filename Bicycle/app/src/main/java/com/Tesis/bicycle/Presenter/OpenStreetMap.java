@@ -114,8 +114,7 @@ public class OpenStreetMap {
         myOpenMapView.invalidate();
     }
 
-    public Bitmap captureMapAndCrop(double upperLeftLat, double upperLeftLon,
-                                   double lowerRightLat, double lowerRightLon) {
+    public Bitmap captureMapAndCrop() {
         // Capturar la vista del mapa en un Canvas
         int width = myOpenMapView.getWidth();
         int height = myOpenMapView.getHeight();
@@ -123,17 +122,17 @@ public class OpenStreetMap {
         Canvas canvas = new Canvas(bitmap);
         myOpenMapView.draw(canvas);
 
-        // Calcular las coordenadas del recorte en píxeles
-        double left = (upperLeftLon - myOpenMapView.getBoundingBox().getLonWest()) * width / myOpenMapView.getBoundingBox().getLongitudeSpan();
-        double top = (upperLeftLat - myOpenMapView.getBoundingBox().getLatNorth()) * height / myOpenMapView.getBoundingBox().getLatitudeSpan();
-        double right = (lowerRightLon - myOpenMapView.getBoundingBox().getLonWest()) * width / myOpenMapView.getBoundingBox().getLongitudeSpan();
-        double bottom = (lowerRightLat - myOpenMapView.getBoundingBox().getLatNorth()) * height / myOpenMapView.getBoundingBox().getLatitudeSpan();
+//        // Calcular las coordenadas del recorte en píxeles
+//        double left = (upperLeftLon - myOpenMapView.getBoundingBox().getLonWest()) * width / myOpenMapView.getBoundingBox().getLongitudeSpan();
+//        double top = (upperLeftLat - myOpenMapView.getBoundingBox().getLatNorth()) * height / myOpenMapView.getBoundingBox().getLatitudeSpan();
+//        double right = (lowerRightLon - myOpenMapView.getBoundingBox().getLonWest()) * width / myOpenMapView.getBoundingBox().getLongitudeSpan();
+//        double bottom = (lowerRightLat - myOpenMapView.getBoundingBox().getLatNorth()) * height / myOpenMapView.getBoundingBox().getLatitudeSpan();
 
-        // Recortar la porción deseada del mapa
-        int x = (int) Math.round(left);
-        int y = (int) Math.round(top);
-        int w = (int) Math.round(right - left);
-        int h = (int) Math.round(bottom - top);
+//        // Recortar la porción deseada del mapa
+//        int x = (int) Math.round(left);
+//        int y = (int) Math.round(top);
+//        int w = (int) Math.round(right - left);
+//        int h = (int) Math.round(bottom - top);
         Bitmap croppedMap = Bitmap.createBitmap(bitmap, 0, 0, myOpenMapView.getWidth(),myOpenMapView.getHeight());
 
         // Mostrar el mapa recortado en un ImageView
