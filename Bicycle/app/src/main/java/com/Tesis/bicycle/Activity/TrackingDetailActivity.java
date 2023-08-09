@@ -195,12 +195,12 @@ public class TrackingDetailActivity extends AppCompatActivity {
         String filename = "route_"+locationBinder.getId()+".jpeg";
         Bitmap image=openStreetMap.captureMapAndCrop();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        image.compress(Bitmap.CompressFormat.JPEG, 80, baos);
         byte[] byteArray = baos.toByteArray();
         File f=new File(filename);
         RequestBody rb = RequestBody.create(byteArray, MediaType.parse("multipart/form-data")), somedata;
 
-        MultipartBody.Part part = MultipartBody.Part.createFormData("file", f.getName(), rb);
+        MultipartBody.Part part = MultipartBody.Part.createFormData("file", filename, rb);
         somedata = RequestBody.create(filename, MediaType.parse("text/plain"));
         this.storedDocumentViewModel.save(part, somedata).observe(this, photo -> {
             statisticsApiRest.setImage(photo);

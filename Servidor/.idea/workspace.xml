@@ -5,65 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7729f06-1757-4dfa-ac9d-78d48a9c1c01" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Dto/ApiRest/RouteDetailsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Dto/ApiRest/RouteDetailsDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Adapter/RouteRecyclerViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Adapter/RouteRecyclerViewAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ApiRestConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ApiRestConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/res/layout/card_my_route_list_view.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/res/layout/card_my_route_list_view.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Route/RouteDetailsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Route/RouteDetailsDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/04910b87-eb2c-4830-8150-b9358211e555.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/0a5b9f63-de00-4e9b-ba56-d220a015e37b.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/0bec0b61-8023-4f5d-8429-de7e817df563.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/147f2f65-28c3-4d24-ace6-f3f3f53fae6b.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/15e3dbd6-0527-4062-bca0-741871919875.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/2c320559-2bb5-422c-b9d9-ab2749df4755.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/38f398a2-f513-47d1-8499-d8142b78c10e.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/3d7e012f-8713-4157-9b73-ffa60eb5e82d.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/464fbc4f-e9a8-47f3-a1dd-afe0cfd0ed11.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/4e7f7355-fadd-4b35-96ca-165aa0c44f96.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/4f697ab7-6972-4511-83a7-503ce8ab1e49.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/5867cb12-279b-4b4d-a780-cc086d73d914.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/6a9e8159-7188-4736-a453-81f79d2e2261.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/7197e354-56aa-46f6-884b-cd7f1720a301.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/7bad0e64-5d7c-4273-a976-17536368a57f.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/7e5ecebd-5756-4a8f-9613-3a314e8167eb.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/89ce19c2-da0b-47b4-8cec-62300e4161ec.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/98a163cb-aadd-4904-80ca-19c3905305d0.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/b00afac5-64b2-4127-808f-8279c0b18196.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/d148d70f-0c05-474e-bb61-3e88ca30eb45.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/db33a5df-fe42-4f17-8c67-4f4ec38a6b70.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/dd4a888e-4f35-4974-a6e7-f9b96c0f27cf.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/ddb9b770-0837-4188-b1b0-b528baf95658.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/e0eacec0-bb90-4000-a833-c6ae0be57ab4.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/e7eb5b7e-dc46-4c68-a049-4b271bfaf0c3.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/ed021c76-47f4-4693-a031-8001a44f5277.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/f12abc47-f0ed-4e3c-aa28-f0e1223451a7.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/f72f2f61-f503-443e-813e-70bb9e4729f1.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/fb5876e1-1958-4c67-a09d-637d421133c4.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/ff398d63-0077-471e-8afd-aeb10148ea24.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/00a3f89c-55c7-49d3-aa81-257806dafe9f.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/2e5771fe-d31d-48c5-8548-2b2691d3fd50.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/304ce42f-5a4a-42b3-8afe-7eb5f14b37fd.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/35522700-1f11-4255-922e-8ab96d9c536e.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/4d16dd77-1a9f-413a-85af-9e56c3f9d133.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/54b2b5ba-fe0b-4b74-8b10-57839f4d3c2b.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/77ba0b82-aae4-4bf1-8c01-86aba74f6bcd.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/b229a934-1f57-4e88-8f77-b01fd3123801.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/b344dbd2-5896-4c26-b2e8-7cd883cd0017.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/b5e4e08c-7704-4b18-aef9-1ab575ca1916.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/c11f3e32-436c-4a47-876a-84d48ad07553.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPG/fd9eb017-2298-47cc-b5aa-6bb17202923f.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/PNG/199fab0e-82cc-4639-905d-af7551c91c33.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/PNG/24d45606-3e03-49a0-88ad-6bfb509cb0ec.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/PNG/2b973ad0-e539-421d-9031-415f48c7c9b2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/PNG/4ba63db5-7884-45fa-a5fc-3ac5d2a996fe.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/PNG/52b6993b-b16a-450e-bde1-d703a108bffe.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/PNG/7213cd9a-bf40-4d31-8fe8-fdd9c4f1cff1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/PNG/82763dbc-d255-4532-a0dd-45e0b2c5fda7.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/PNG/904bfa47-d34c-417c-a4a0-dfe5818fde60.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/PNG/aa9cb74c-2868-4bb4-8a58-902200d2e7c9.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/PNG/f14be290-1f95-4f06-ae1a-1e8a287117f6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/PNG/fee4fe0e-f884-43c9-92d8-5db5d5487e20.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +75,7 @@
       <recent name="C:\Users\yago_\OneDrive\Escritorio\Tesis\Tesis-Lacoste\Servidor\admin\src\main\java\com\Tesis\admin" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.AdminApplication">
+  <component name="RunManager" selected="Application.GatewayApplication">
     <configuration name="AdminApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.Tesis.admin.AdminApplication" />
       <module name="admin" />
@@ -193,9 +136,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.AdminApplication" />
         <item itemvalue="Application.GatewayApplication" />
         <item itemvalue="Application.AuthApplication" />
+        <item itemvalue="Application.AdminApplication" />
         <item itemvalue="Application.DiscoveryApplication" />
       </list>
     </recent_temporary>
@@ -221,5 +164,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/StoredDocument/FileStorageService.java</url>
+          <line>49</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
