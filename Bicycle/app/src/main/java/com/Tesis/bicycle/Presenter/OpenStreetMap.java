@@ -25,6 +25,7 @@ import org.osmdroid.bonuspack.routing.Road;
 import org.osmdroid.bonuspack.routing.RoadManager;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
@@ -122,44 +123,11 @@ public class OpenStreetMap {
         Canvas canvas = new Canvas(bitmap);
         myOpenMapView.draw(canvas);
 
-//        // Calcular las coordenadas del recorte en píxeles
-//        double left = (upperLeftLon - myOpenMapView.getBoundingBox().getLonWest()) * width / myOpenMapView.getBoundingBox().getLongitudeSpan();
-//        double top = (upperLeftLat - myOpenMapView.getBoundingBox().getLatNorth()) * height / myOpenMapView.getBoundingBox().getLatitudeSpan();
-//        double right = (lowerRightLon - myOpenMapView.getBoundingBox().getLonWest()) * width / myOpenMapView.getBoundingBox().getLongitudeSpan();
-//        double bottom = (lowerRightLat - myOpenMapView.getBoundingBox().getLatNorth()) * height / myOpenMapView.getBoundingBox().getLatitudeSpan();
-
-//        // Recortar la porción deseada del mapa
-//        int x = (int) Math.round(left);
-//        int y = (int) Math.round(top);
-//        int w = (int) Math.round(right - left);
-//        int h = (int) Math.round(bottom - top);
-        Bitmap croppedMap = Bitmap.createBitmap(bitmap, 0, 0, myOpenMapView.getWidth(),myOpenMapView.getHeight());
-
-        // Mostrar el mapa recortado en un ImageView
-        //saveCroppedMapAsPNG(croppedMap);
+        Bitmap croppedMap = Bitmap.createBitmap(bitmap, 0, 0, width, height);
 
         return croppedMap;
     }
 
-//    private void saveCroppedMapAsPNG(Bitmap croppedMap) {
-//        String filename = "mapa_recortado.png";
-//        File directory = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "MyApp");
-//        if (!directory.exists()) {
-//            directory.mkdirs();
-//        }
-//        File file = new File(directory, filename);
-//
-//        try {
-//            FileOutputStream out = new FileOutputStream(file);
-//            croppedMap.compress(Bitmap.CompressFormat.PNG, 100, out);
-//            out.flush();
-//            out.close();
-//            Toast.makeText(context, "Imagen guardada correctamente", Toast.LENGTH_SHORT).show();
-//        } catch (IOException e) {
-//            Toast.makeText(context, "Error al guardar la imagen: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//            e.printStackTrace();
-//        }
-//    }
 
 
 

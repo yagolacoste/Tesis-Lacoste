@@ -33,6 +33,9 @@ public class RouteDetailsDto implements Serializable {
     @JsonProperty("avgTime")
     private LocalTime time;
 
+    @JsonProperty("fileName")
+    private String fileName;
+
 
     public RouteDetailsDto() {
     }
@@ -106,7 +109,11 @@ public class RouteDetailsDto implements Serializable {
         return String.format(Locale.UK, format, km, metres);
     }
 
+    public String getFileName() {
+        return fileName;
+    }
 
-
-
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 }

@@ -33,15 +33,8 @@ public class RouteDetailsDto implements Serializable {
     @JsonProperty("time")
     private LocalTime avgTime;
 
-//    public RouteDetailsDto(String id, String description, String name, String coordinates) {
-//        this.id = id;
-//        this.description = description;
-//        this.name = name;
-//        Gson gson = new Gson();
-//        Type listType = new TypeToken<List<GeoPoint>>() {}.getType();
-//        this.coordinates = gson.fromJson(coordinates, listType);
-//
-//    }
+    @JsonProperty("fileName")
+    private String fileName;
 
     public RouteDetailsDto(Route r) {
         this.id = r.getId();
@@ -52,6 +45,7 @@ public class RouteDetailsDto implements Serializable {
         Gson gson = new Gson();
         Type listType = new TypeToken<List<GeoPoint>>() {}.getType();
         this.coordinates = gson.fromJson(r.getCoordinates(), listType);
+        this.fileName=r.getImage().getCompleteFileName();
 
     }
 
@@ -114,5 +108,13 @@ public class RouteDetailsDto implements Serializable {
     public void setAvgTime(LocalTime avgTime) {
 
         this.avgTime = avgTime;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

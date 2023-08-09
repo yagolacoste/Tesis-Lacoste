@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,8 +20,12 @@ import com.Tesis.bicycle.Activity.TrackingActivity;
 import com.Tesis.bicycle.Activity.ui.Fragment.StatisticsFragment;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
+import com.Tesis.bicycle.Presenter.ApiRestConnection;
+import com.Tesis.bicycle.Presenter.Client.ClientRetrofit;
 import com.Tesis.bicycle.Presenter.OpenStreetMap;
 import com.Tesis.bicycle.R;
+import com.squareup.picasso.OkHttp3Downloader;
+import com.squareup.picasso.Picasso;
 
 import org.osmdroid.views.MapView;
 
@@ -51,8 +56,15 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
         holder.txtValueTitle.setText(items.get(position).getName());
         holder.txtValueDistance.setText(items.get(position).getDistance());
         holder.txtValueTime.setText(String.valueOf(items.get(position).getTime()));
-        holder.mapValueView.initLayer(holder.rootView.getContext(),items.get(position).getCoordinates().get(0));
-        holder.mapValueView.draw((items.get(position).getCoordinates()));
+//        holder.mapValueView.initLayer(holder.rootView.getContext(),items.get(position).getCoordinates().get(0));
+//        holder.mapValueView.draw((items.get(position).getCoordinates()));
+        String url = ApiRestConnection.URL_STORED_DOCUMENT + "download?fileName=" + items.get(position).getFileName();
+        final Picasso picasso = new Picasso.Builder(holder.itemView.getContext())
+                .downloader(new OkHttp3Downloader(ClientRetrofit.getHttp()))
+                .build();
+        picasso.load(url)
+                .error(R.drawable.image_not_found)
+                .into(holder.mapImage);
         holder.route=items.get(position);
     }
 
@@ -66,9 +78,10 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView txtValueTitle,txtValueDistance,txtValueTime;
 
-        private MapView mapView;
+//        private MapView mapView;
 
-        private OpenStreetMap mapValueView;
+//        private OpenStreetMap mapValueView;
+        private ImageView mapImage;
 
         private Button runButton,statisButton;
         private RouteDetailsDto route;
@@ -79,10 +92,9 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
             txtValueTitle=itemView.findViewById(R.id.txtValueTitle);
             txtValueDistance=itemView.findViewById(R.id.txtValueDistance);
             txtValueTime=itemView.findViewById(R.id.txtValueTime);
-            mapView=itemView.findViewById(R.id.mapValueView);
+            mapImage=itemView.findViewById(R.id.mapValueView);
             runButton=itemView.findViewById(R.id.runButton);
             statisButton=itemView.findViewById(R.id.statButton);
-            mapValueView=new OpenStreetMap(mapView);
             rootView=itemView;
 
 

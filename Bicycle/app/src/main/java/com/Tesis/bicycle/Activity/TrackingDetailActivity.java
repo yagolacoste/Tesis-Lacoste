@@ -122,7 +122,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
                 return true;
             }
         return false;
-       // return (!locationBinder.isRepeat() || (locationBinder.isRepeat() && !locationBinder.isDeviation()));
+
     }
     
     @Override
