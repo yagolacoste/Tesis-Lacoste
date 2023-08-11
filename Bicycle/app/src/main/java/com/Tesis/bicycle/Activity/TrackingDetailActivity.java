@@ -224,19 +224,6 @@ public class TrackingDetailActivity extends AppCompatActivity {
                     if(resp!=null)
                     backToMenuActivity();
                 });
-//                ApiRestConnection.getServiceRoute(this).addImage(statisticsApiRest.getRoute(),photo).enqueue(new Callback<Void>() {
-//                    @Override
-//                    public void onResponse(Call<Void> call, Response<Void> response) {
-//                       if( response.isSuccessful()){
-//
-//                       }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<Void> call, Throwable t) {
-//
-//                    }
-//                });
             }
         });
     }

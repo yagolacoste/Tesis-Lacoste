@@ -48,9 +48,7 @@ public class MyRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyRoutesRe
         return items.size();
     }
 
-//    public interface OnItemClickListener {
-//        void onItemClick(RouteDetailsDto ruta);
-//    }
+
 
     public  class ViewHolder extends RecyclerView.ViewHolder{
 

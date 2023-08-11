@@ -1,6 +1,7 @@
 package com.Tesis.bicycle.Activity.ui.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,10 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
+import com.Tesis.bicycle.Activity.MapActivityActivity;
+import com.Tesis.bicycle.Activity.TrackingActivity;
 import com.Tesis.bicycle.Activity.ui.NavInitActivity;
+import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Presenter.Adapter.MyRoutesRecyclerViewAdapter;
 import com.Tesis.bicycle.Presenter.Adapter.OnItemClickListener;
@@ -21,7 +25,7 @@ import com.Tesis.bicycle.ViewModel.StatisticsViewModel;
 
 import java.util.List;
 
-public class MyMapsFragment extends BaseListViewFragment {
+public class MyMapsFragment extends BaseListViewFragment implements OnItemClickListener{
 
     List<RouteDetailsDto> routes;
 
@@ -58,4 +62,10 @@ public class MyMapsFragment extends BaseListViewFragment {
         });
     }
 
+    @Override
+    public void onItemClick(RouteDetailsDto ruta) {
+        Intent resultIntent = new Intent(context, MapActivityActivity.class);
+        resultIntent.putExtra(Constants.ROUTE, ruta);
+        startActivity(resultIntent);
+    }
 }

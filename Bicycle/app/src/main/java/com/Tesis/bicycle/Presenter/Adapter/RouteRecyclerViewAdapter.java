@@ -33,12 +33,15 @@ import java.util.List;
 
 public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecyclerViewAdapter.ViewHolder> {
 
-    public List<RouteDetailsDto> items;
+    public  List<RouteDetailsDto> items;
+
+    private  OnItemClickListener listener;
 
 
     public RouteRecyclerViewAdapter(List<RouteDetailsDto> items) {
         this.items = items;
     }
+
 
 
 
@@ -73,14 +76,26 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
         return items.size();
     }
 
+    public List<RouteDetailsDto> getItems() {
+        return items;
+    }
+
+    public void setItems(List<RouteDetailsDto> items) {
+        this.items = items;
+    }
+
+    public OnItemClickListener getListener() {
+        return listener;
+    }
+
+    public void setListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public  class ViewHolder extends RecyclerView.ViewHolder{
         private TextView txtValueTitle,txtValueDistance,txtValueTime;
 
-//        private MapView mapView;
-
-//        private OpenStreetMap mapValueView;
         private ImageView mapImage;
 
         private Button runButton,statisButton;
@@ -96,7 +111,6 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
             runButton=itemView.findViewById(R.id.runButton);
             statisButton=itemView.findViewById(R.id.statButton);
             rootView=itemView;
-
 
             runButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -126,13 +140,16 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
                     fragmentTransaction.commit();
                 }
             });
-            
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onItemClick(items.get(position));
+                    }
+                };
+            });
         }
-
     }
-
-   
-
-
 }

@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Environment;
 import android.os.StrictMode;
@@ -14,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.Tesis.bicycle.R;
 
@@ -104,12 +107,15 @@ public class OpenStreetMap {
 
     public void draw(List<GeoPoint> points){
         Marker startMarker=new Marker(myOpenMapView);
+        //Drawable dr = ResourcesCompat.getDrawable(getContext().getResources(), R.drawable.ic_location, null);
+        startMarker.setIcon(getContext().getResources().getDrawable(R.drawable.ic_location));
         Road road=roadManager.getRoad((ArrayList<GeoPoint>) points);
         startMarker.setPosition(road.getRouteLow().get(0));
         myOpenMapView.getOverlays().add(startMarker);
         roadOverlay=RoadManager.buildRoadOverlay(road, color, 25f);
         myOpenMapView.getOverlays().add(roadOverlay);
         Marker endMarker=new Marker(myOpenMapView);
+        endMarker.setIcon(getContext().getResources().getDrawable(R.drawable.ic_finish_flag));
         endMarker.setPosition(road.getRouteLow().get(road.getRouteLow().size()-1));
         myOpenMapView.getOverlays().add(endMarker);
         myOpenMapView.invalidate();
