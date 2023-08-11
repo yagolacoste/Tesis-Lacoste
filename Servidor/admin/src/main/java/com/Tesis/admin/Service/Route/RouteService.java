@@ -8,6 +8,7 @@ import com.Tesis.admin.Exception.ErrorCodes;
 import com.Tesis.admin.Models.Route;
 import com.Tesis.admin.Models.StoredDocument;
 import com.Tesis.admin.Repository.IRouteRepository;
+import com.Tesis.admin.Repository.IStoredDocumentRepository;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonPrimitive;
@@ -29,6 +30,9 @@ public class RouteService implements IRouteService{
 
     @Autowired
     private IRouteRepository routeRepository;
+
+    @Autowired
+    private IStoredDocumentRepository storedDocumentRepository;
 
     @Override
     public Route getById(String id) {
@@ -65,6 +69,14 @@ public class RouteService implements IRouteService{
     @Override
     public boolean existsById(String id) {
         return routeRepository.existsById(id);
+    }
+
+    @Override
+    public void addImage(String id, Long photo) {
+        StoredDocument storedDocument=storedDocumentRepository.findById(photo).get();
+        Route route=routeRepository.findById(id).get();
+        route.setImage(storedDocument);
+        routeRepository.saveAndFlush(route);
     }
 
 

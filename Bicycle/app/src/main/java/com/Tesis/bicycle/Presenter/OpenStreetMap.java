@@ -123,7 +123,7 @@ public class OpenStreetMap {
         Canvas canvas = new Canvas(bitmap);
         myOpenMapView.draw(canvas);
 
-        Bitmap croppedMap = Bitmap.createBitmap(bitmap, 0, 0, 800, 600);
+        Bitmap croppedMap = Bitmap.createBitmap(bitmap, 0, 0, 1200, 600);
 
         return croppedMap;
     }

@@ -33,8 +33,10 @@ public class StoredDocumentApiRepository {
         this.storedDocumentApiService.save(part,requestBody).enqueue(new Callback<Long>() {
             @Override
             public void onResponse(Call<Long> call, Response<Long> response) {
-                mld.setValue(response.body());
-                System.out.println("foto agregada correctamente");
+                if(response.isSuccessful()){
+                    mld.setValue(response.body());
+                    System.out.println("foto agregada correctamente");
+                }
             }
 
             @Override

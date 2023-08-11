@@ -26,4 +26,9 @@ public interface IRouteController {
 
     @GetMapping("/list")
     List<Route> getRoutes();
+
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping(path = {"{id}/addImage"})
+    void addImage(@PathVariable("id") String id,@RequestParam (value = "photo")Long photo);
+
 }

@@ -24,6 +24,7 @@ import com.Tesis.bicycle.Activity.ui.NavInitActivity;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.Statistics.StatisticsApiRest;
 import com.Tesis.bicycle.Dto.Room.RefreshTokenDto;
+import com.Tesis.bicycle.Presenter.ApiRestConnection;
 import com.Tesis.bicycle.Presenter.Notifications;
 import com.Tesis.bicycle.Presenter.OpenStreetMap;
 import com.Tesis.bicycle.R;
@@ -37,14 +38,15 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TrackingDetailActivity extends AppCompatActivity {
 
@@ -169,9 +171,9 @@ public class TrackingDetailActivity extends AppCompatActivity {
     }
 
     private void storeData() {
-        this.accessTokenRoomViewModel.getFirst().observe(this,response->{
-            RefreshTokenDto refreshTokenDto=response;
-            StatisticsApiRest statisticsApiRest=new StatisticsApiRest();
+        this.accessTokenRoomViewModel.getFirst().observe(this,response-> {
+            RefreshTokenDto refreshTokenDto = response;
+            StatisticsApiRest statisticsApiRest = new StatisticsApiRest();
             statisticsApiRest.setAppUser(refreshTokenDto.getId());
             statisticsApiRest.setDistance(locationBinder.getDistance());
             statisticsApiRest.setAvgSpeed(locationBinder.getAvgSpeed());
@@ -182,41 +184,54 @@ public class TrackingDetailActivity extends AppCompatActivity {
             statisticsApiRest.setTitle(locationBinder.getTitle());
             statisticsApiRest.setCoordinates(locationBinder.getGeoPoints());
             statisticsApiRest.setBattleId(locationBinder.getBattleId());
-            if(!locationBinder.getId().contains("-")){
-                statisticsApiRest.setRoute(refreshTokenDto.getId()+"-"+locationBinder.getId());
+            statisticsApiRest.setImage(1L);
+                if (!locationBinder.getId().contains("-")) {
+                statisticsApiRest.setRoute(refreshTokenDto.getId() + "-" + locationBinder.getId());
                 saveData(statisticsApiRest);
-            }
-            else
+            } else
                 statisticsApiRest.setRoute(locationBinder.getId());
-        });
-    }
-
-    private void saveData(StatisticsApiRest statisticsApiRest) {
-        String filename = "route_"+locationBinder.getId()+".jpeg";
-        Bitmap image=openStreetMap.captureMapAndCrop();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 80, baos);
-        byte[] byteArray = baos.toByteArray();
-        File f=new File(filename);
-        RequestBody rb = RequestBody.create(byteArray, MediaType.parse("multipart/form-data")), somedata;
-
-        MultipartBody.Part part = MultipartBody.Part.createFormData("file", filename, rb);
-        somedata = RequestBody.create(filename, MediaType.parse("text/plain"));
-        this.storedDocumentViewModel.save(part, somedata).observe(this, photo -> {
-            statisticsApiRest.setImage(photo);
-            statisticsViewModel.addStatistic(statisticsApiRest).observe(this, resp->{
-                if(resp) {
+            statisticsViewModel.addStatistic(statisticsApiRest).observe(this, resp -> {
+                if (resp) {
                     if (statisticsApiRest.getBattleId() != null) {
-                        notifications.addNotification("Good Job!","You completed the battle wait the result");
-                    }else if(locationBinder.isRepeat()){
-                        notifications.addNotification("Good Job!","You completed the route");
+                        notifications.addNotification("Good Job!", "You completed the battle wait the result");
+                    } else if (locationBinder.isRepeat()) {
+                        notifications.addNotification("Good Job!", "You completed the route");
                     } else
-                        notifications.addNotification("Congratulation!","You save new route ! ");
-                    backToMenuActivity();
+                        notifications.addNotification("Congratulation!", "You save new route ! ");
+                    //backToMenuActivity();
                 }
             });
         });
+    
+    }
 
+    private void saveData(StatisticsApiRest statisticsApiRest) {
+        String filename = "route_"+locationBinder.getId();
+        Bitmap image=openStreetMap.captureMapAndCrop();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] byteArray = baos.toByteArray();
+        RequestBody rb = RequestBody.create(byteArray, MediaType.parse("multipart/form-data")), somedata;
+
+        MultipartBody.Part part = MultipartBody.Part.createFormData("file", filename+".jpeg", rb);
+        somedata = RequestBody.create(filename, MediaType.parse("text/plain"));
+        this.storedDocumentViewModel.save(part, somedata).observe(this, photo -> {
+            if(photo!=null){
+                ApiRestConnection.getServiceRoute(this).addImage(statisticsApiRest.getRoute(),photo).enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                       if( response.isSuccessful()){
+                           backToMenuActivity();
+                       }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
     }
 
 

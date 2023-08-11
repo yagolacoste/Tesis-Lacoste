@@ -35,6 +35,7 @@ public class StoredDocumentService implements IStoredDocumentService {
         String fileName = (repo.findById(obj.getId())).orElse(new StoredDocument()).getFileName();
 
         String originalFilename = obj.getFile().getOriginalFilename();
+        assert originalFilename != null;
         String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
 
         fileName = storageService.storeFile(obj.getFile(), fileName);

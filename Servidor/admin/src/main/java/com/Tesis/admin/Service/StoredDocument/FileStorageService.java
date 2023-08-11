@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -28,10 +29,10 @@ public class FileStorageService implements IFileStorageService{
 
     @Override
     public String storeFile(MultipartFile file, String fileName) {
-        String originalName = StringUtils.cleanPath(file.getOriginalFilename());
+        String originalName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         String extension = originalName.substring(originalName.lastIndexOf("."));
 
-        if (fileName==null||fileName.equals("")){
+        if (fileName==null|| fileName.isEmpty()){
             fileName = UUID.randomUUID().toString();
         }
 

@@ -48,4 +48,5 @@ public interface IStatisticsController {
     @GetMapping(value = "/achievements",produces = MediaType.APPLICATION_JSON_VALUE)
     List<ClassificationDto> getAchievements();
 
+
 }

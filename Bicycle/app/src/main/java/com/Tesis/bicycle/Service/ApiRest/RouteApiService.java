@@ -8,6 +8,8 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface RouteApiService {
 
@@ -16,6 +18,9 @@ public interface RouteApiService {
 
     @POST("add")
     Call<Void> addRoute(@Body RouteApiRestDto routeApiRestDto);
+
+    @POST("{id}/addImage")
+    Call<Void> addImage( @Path("id") String id,@Query("photo") Long photo);
 
 
 }
