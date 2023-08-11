@@ -5,34 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7729f06-1757-4dfa-ac9d-78d48a9c1c01" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/TrackingDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/TrackingDetailActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ApiRestConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ApiRestConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/LocationRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/StoredDocumentApiRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/StoredDocumentApiRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Service/ApiRest/RouteApiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Service/ApiRest/RouteApiService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Controller/Route/IRouteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Controller/Route/IRouteController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Controller/Route/RouteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Controller/Route/RouteController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Controller/Statistics/IStatisticsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Controller/Statistics/IStatisticsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Route/IRouteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Route/IRouteService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Route/RouteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Route/RouteService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/StoredDocument/FileStorageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/StoredDocument/FileStorageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/StoredDocument/StoredDocumentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/StoredDocument/StoredDocumentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/0a5bc167-494a-4e4e-8b89-00354224eaba.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/0cfd9846-5c32-4677-8568-586fc8061421.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/14d32a91-a9f3-4fba-815e-b854254571f7.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/1cff918f-5e93-45ff-badb-d063ac57aa92.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/32fd31cb-f0fe-4687-81e3-ca24f970e6f0.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/4ce15315-4bfb-4bc0-8a29-8b5ab757c96b.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/6489103c-8339-4f2c-a270-83e5de5c9622.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/69bc946a-2ee0-4efa-bbf2-de42f67a3740.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/6eb77877-2719-494b-83b8-9af8dbc92fb7.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/7147f47e-4a36-453a-8d3a-c952cc6a0475.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/8c00b5da-3b75-4b85-a2f1-7988a8917ebb.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/8f77a1a5-7337-4274-ad7d-e34a8d7308ad.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/9abf3a29-1e10-467d-a235-b0a773d9588c.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/c1d90974-00c3-4cfb-9988-26c6cf11aa61.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/JPEG/c8c499f7-acfa-4e40-bb22-ed711bfeaf4d.jpeg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

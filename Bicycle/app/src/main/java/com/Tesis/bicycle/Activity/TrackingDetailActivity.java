@@ -30,6 +30,7 @@ import com.Tesis.bicycle.Presenter.OpenStreetMap;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ServiceTracking.GPSService;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
+import com.Tesis.bicycle.ViewModel.RouteViewModel;
 import com.Tesis.bicycle.ViewModel.StatisticsViewModel;
 import com.Tesis.bicycle.ViewModel.StoredDocumentViewModel;
 
@@ -58,11 +59,12 @@ public class TrackingDetailActivity extends AppCompatActivity {
     private StatisticsViewModel statisticsViewModel;
 
     private StoredDocumentViewModel storedDocumentViewModel;
+    private RouteViewModel routeViewModel;
+
     private OpenStreetMap openStreetMap;
 
     private Notifications notifications;
 
-    private String message;
 
 
 
@@ -140,6 +142,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
         this.accessTokenRoomViewModel=vmp.get(AccessTokenRoomViewModel.class);
         this.statisticsViewModel =vmp.get(StatisticsViewModel.class);
         this.storedDocumentViewModel=vmp.get(StoredDocumentViewModel.class);
+        this.routeViewModel=vmp.get(RouteViewModel.class);
     }
 
     private void init(){
@@ -217,19 +220,23 @@ public class TrackingDetailActivity extends AppCompatActivity {
         somedata = RequestBody.create(filename, MediaType.parse("text/plain"));
         this.storedDocumentViewModel.save(part, somedata).observe(this, photo -> {
             if(photo!=null){
-                ApiRestConnection.getServiceRoute(this).addImage(statisticsApiRest.getRoute(),photo).enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                       if( response.isSuccessful()){
-                           backToMenuActivity();
-                       }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-
-                    }
+                routeViewModel.addImage(statisticsApiRest.getRoute(),photo).observe(this,resp->{
+                    if(resp!=null)
+                    backToMenuActivity();
                 });
+//                ApiRestConnection.getServiceRoute(this).addImage(statisticsApiRest.getRoute(),photo).enqueue(new Callback<Void>() {
+//                    @Override
+//                    public void onResponse(Call<Void> call, Response<Void> response) {
+//                       if( response.isSuccessful()){
+//
+//                       }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<Void> call, Throwable t) {
+//
+//                    }
+//                });
             }
         });
     }

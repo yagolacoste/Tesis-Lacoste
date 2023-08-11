@@ -26,7 +26,9 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Activity.MapActivityActivity"
+            android:exported="false" />
         <activity
             android:name=".Activity.LoginActivity"
             android:exported="true"
@@ -66,8 +68,7 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".Activity.RegisterUserActivity"
-            android:exported="true"/>
-<!--            android:theme="@style/Theme.AppCompat.NoActionBar" /> &lt;!&ndash; android:theme="@style/Theme.AppCompat.NoActionBar"/> &ndash;&gt;-->
+            android:exported="true" /> <!-- android:theme="@style/Theme.AppCompat.NoActionBar" /> &lt;!&ndash; android:theme="@style/Theme.AppCompat.NoActionBar"/> &ndash;&gt; -->
         <activity
             android:name=".Presenter.ListView.RouteListViewActivity"
             android:exported="true" /> <!-- android:theme="@style/Theme.AppCompat.NoActionBar"/> -->
