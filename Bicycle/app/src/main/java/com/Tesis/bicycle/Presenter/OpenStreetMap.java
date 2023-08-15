@@ -108,15 +108,18 @@ public class OpenStreetMap {
     public void draw(List<GeoPoint> points){
         Marker startMarker=new Marker(myOpenMapView);
         //Drawable dr = ResourcesCompat.getDrawable(getContext().getResources(), R.drawable.ic_location, null);
-        startMarker.setIcon(getContext().getResources().getDrawable(R.drawable.ic_location));
+        startMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_location));
+        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         Road road=roadManager.getRoad((ArrayList<GeoPoint>) points);
         startMarker.setPosition(road.getRouteLow().get(0));
         myOpenMapView.getOverlays().add(startMarker);
         roadOverlay=RoadManager.buildRoadOverlay(road, color, 25f);
         myOpenMapView.getOverlays().add(roadOverlay);
         Marker endMarker=new Marker(myOpenMapView);
-        endMarker.setIcon(getContext().getResources().getDrawable(R.drawable.ic_finish_flag));
+        endMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_finish_flag));
+        endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         endMarker.setPosition(road.getRouteLow().get(road.getRouteLow().size()-1));
+
         myOpenMapView.getOverlays().add(endMarker);
         myOpenMapView.invalidate();
     }
@@ -129,7 +132,7 @@ public class OpenStreetMap {
         Canvas canvas = new Canvas(bitmap);
         myOpenMapView.draw(canvas);
 
-        Bitmap croppedMap = Bitmap.createBitmap(bitmap, 0, 0, 1200, 600);
+        Bitmap croppedMap = Bitmap.createBitmap(bitmap, 0, 0, width, height);
 
         return croppedMap;
     }

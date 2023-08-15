@@ -15,6 +15,7 @@ import com.Tesis.admin.Dto.AppUser.UserAppDto;
 import com.Tesis.admin.Models.Statistics;
 import com.Tesis.admin.Models.Route;
 import com.Tesis.admin.Models.User;
+import com.Tesis.admin.Repository.IRouteRepository;
 import com.Tesis.admin.Repository.IStatisticsRepository;
 import com.Tesis.admin.Service.Battle.IBattleService;
 import com.Tesis.admin.Service.Route.IRouteService;
@@ -28,6 +29,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -48,6 +50,11 @@ public class StatisticsService implements IStatisticsService {
     @Autowired
     private IBattleService battleService;
 
+    @Autowired
+    private IRouteRepository routeRepository;
+
+
+
 
     @Override
     public void add(StatisticsRequestDto statisticsRequestDto) {
@@ -65,7 +72,7 @@ public class StatisticsService implements IStatisticsService {
         u.setId(appUser.getId());
         Statistics Statistics=new Statistics();
         Statistics.setId(RandomStringUtils.random(10,true,true));
-        Statistics.setAppUser(u);///Transformar user
+        Statistics.setAppUser(u);
         Statistics.setRoute(route);
         Statistics.setDistance(statisticsRequestDto.getDistance());
         Statistics.setAvgSpeed(statisticsRequestDto.getAvgSpeed());
@@ -75,6 +82,19 @@ public class StatisticsService implements IStatisticsService {
         if(statisticsRequestDto.getBattleId()!=null){
             battleService.updateBattleParticipation(appUser.getId(),statisticsRequestDto.getBattleId(),statisticsId);
         }
+        List<StatisticsDto> statisticsDtos=this.getStatisticsByRoute(route.getId());
+        long totalSeconds = statisticsDtos.stream()
+                .mapToLong(dto -> {
+                    LocalTime time = dto.getTime();
+                    return time.toSecondOfDay(); // Convertir LocalTime a segundos del día
+                })
+                .sum();
+
+        long averageSeconds = totalSeconds / statisticsDtos.size();
+
+        LocalTime averageLocalTime = LocalTime.ofSecondOfDay(averageSeconds);
+        route.setAvgProm(averageLocalTime);
+        routeRepository.saveAndFlush(route);
     }
 
 
@@ -89,7 +109,6 @@ public class StatisticsService implements IStatisticsService {
         routeNewRequestDto.setCoordinates(statisticsRequestDto.getCoordinates());
         routeNewRequestDto.setDistance(statisticsRequestDto.getDistance());
         routeNewRequestDto.setAvgTime(statisticsRequestDto.getTime());
-        routeNewRequestDto.setPhoto(statisticsRequestDto.getImage());
         return routeNewRequestDto;
     }
 

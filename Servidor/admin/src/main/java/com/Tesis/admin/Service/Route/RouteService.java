@@ -50,9 +50,6 @@ public class RouteService implements IRouteService{
         routeReal.setName(route.getName());
         routeReal.setDistance(route.getDistance());
         routeReal.setAvgProm(route.getAvgTime());
-        StoredDocument image=new StoredDocument();
-        image.setId(route.getPhoto());
-        routeReal.setImage(image);
         List<GeoPoint> geoPoints= route.getCoordinates();
         Gson gson=new Gson();
         String json=gson.toJson(geoPoints);
@@ -69,14 +66,6 @@ public class RouteService implements IRouteService{
     @Override
     public boolean existsById(String id) {
         return routeRepository.existsById(id);
-    }
-
-    @Override
-    public void addImage(String id, Long photo) {
-        StoredDocument storedDocument=storedDocumentRepository.findById(photo).get();
-        Route route=routeRepository.findById(id).get();
-        route.setImage(storedDocument);
-        routeRepository.saveAndFlush(route);
     }
 
 

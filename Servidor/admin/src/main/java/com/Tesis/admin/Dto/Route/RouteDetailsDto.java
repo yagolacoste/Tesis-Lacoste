@@ -45,8 +45,6 @@ public class RouteDetailsDto implements Serializable {
         Gson gson = new Gson();
         Type listType = new TypeToken<List<GeoPoint>>() {}.getType();
         this.coordinates = gson.fromJson(r.getCoordinates(), listType);
-        this.fileName=r.getImage().getCompleteFileName();
-
     }
 
 

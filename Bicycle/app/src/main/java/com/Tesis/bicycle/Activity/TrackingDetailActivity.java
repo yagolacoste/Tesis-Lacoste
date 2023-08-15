@@ -3,6 +3,7 @@ package com.Tesis.bicycle.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -173,6 +174,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private void storeData() {
         this.accessTokenRoomViewModel.getFirst().observe(this,response-> {
             RefreshTokenDto refreshTokenDto = response;
@@ -190,7 +192,6 @@ public class TrackingDetailActivity extends AppCompatActivity {
             statisticsApiRest.setImage(1L);
                 if (!locationBinder.getId().contains("-")) {
                 statisticsApiRest.setRoute(refreshTokenDto.getId() + "-" + locationBinder.getId());
-                saveData(statisticsApiRest);
             } else
                 statisticsApiRest.setRoute(locationBinder.getId());
             statisticsViewModel.addStatistic(statisticsApiRest).observe(this, resp -> {
@@ -201,32 +202,14 @@ public class TrackingDetailActivity extends AppCompatActivity {
                         notifications.addNotification("Good Job!", "You completed the route");
                     } else
                         notifications.addNotification("Congratulation!", "You save new route ! ");
-                    //backToMenuActivity();
+                    backToMenuActivity();
                 }
             });
         });
     
     }
 
-    private void saveData(StatisticsApiRest statisticsApiRest) {
-        String filename = "route_"+locationBinder.getId();
-        Bitmap image=openStreetMap.captureMapAndCrop();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] byteArray = baos.toByteArray();
-        RequestBody rb = RequestBody.create(byteArray, MediaType.parse("multipart/form-data")), somedata;
 
-        MultipartBody.Part part = MultipartBody.Part.createFormData("file", filename+".jpeg", rb);
-        somedata = RequestBody.create(filename, MediaType.parse("text/plain"));
-        this.storedDocumentViewModel.save(part, somedata).observe(this, photo -> {
-            if(photo!=null){
-                routeViewModel.addImage(statisticsApiRest.getRoute(),photo).observe(this,resp->{
-                    if(resp!=null)
-                    backToMenuActivity();
-                });
-            }
-        });
-    }
 
 
     private void backToMenuActivity() {

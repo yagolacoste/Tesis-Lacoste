@@ -26,9 +26,7 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup"
         tools:targetApi="31">
-        <activity
-            android:name=".Activity.MapActivityActivity"
-            android:exported="false" />
+
         <activity
             android:name=".Activity.LoginActivity"
             android:exported="true"
@@ -86,6 +84,9 @@
             android:exported="true" />
         <activity
             android:name=".Activity.ui.Fragment.CommunityFragment"
+            android:exported="true" />
+        <activity
+            android:name=".Activity.MapActivityActivity"
             android:exported="true" />
     </application>
 

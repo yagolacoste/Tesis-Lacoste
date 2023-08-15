@@ -32,19 +32,4 @@ public class RouteApiRepository {
         return repository;
     }
 
-    public LiveData<Void> addImage( String id,Long photo){
-        final MutableLiveData<Void> mld=new MutableLiveData<>();
-        routeApiService.addImage(id,photo).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                mld.setValue(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-
-            }
-        });
-        return mld;
-    }
 }

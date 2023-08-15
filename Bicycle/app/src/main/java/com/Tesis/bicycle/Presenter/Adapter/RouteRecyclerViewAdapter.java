@@ -59,15 +59,8 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
         holder.txtValueTitle.setText(items.get(position).getName());
         holder.txtValueDistance.setText(items.get(position).getDistance());
         holder.txtValueTime.setText(String.valueOf(items.get(position).getTime()));
-//        holder.mapValueView.initLayer(holder.rootView.getContext(),items.get(position).getCoordinates().get(0));
-//        holder.mapValueView.draw((items.get(position).getCoordinates()));
-        String url = ApiRestConnection.URL_STORED_DOCUMENT + "download?fileName=" + items.get(position).getFileName();
-        final Picasso picasso = new Picasso.Builder(holder.itemView.getContext())
-                .downloader(new OkHttp3Downloader(ClientRetrofit.getHttp()))
-                .build();
-        picasso.load(url)
-                .error(R.drawable.image_not_found)
-                .into(holder.mapImage);
+        holder.openStreetMap.initLayer(holder.rootView.getContext(),items.get(position).getCoordinates().get(0));
+        holder.openStreetMap.draw((items.get(position).getCoordinates()));
         holder.route=items.get(position);
     }
 
@@ -96,7 +89,8 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
     public  class ViewHolder extends RecyclerView.ViewHolder{
         private TextView txtValueTitle,txtValueDistance,txtValueTime;
 
-        private ImageView mapImage;
+        private MapView mapImage;
+        private OpenStreetMap openStreetMap;
 
         private Button runButton,statisButton;
         private RouteDetailsDto route;
@@ -111,7 +105,7 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
             runButton=itemView.findViewById(R.id.runButton);
             statisButton=itemView.findViewById(R.id.statButton);
             rootView=itemView;
-
+            openStreetMap=new OpenStreetMap(mapImage);
             runButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

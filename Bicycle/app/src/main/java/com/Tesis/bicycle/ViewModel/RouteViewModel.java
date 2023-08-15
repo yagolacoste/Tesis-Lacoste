@@ -18,7 +18,5 @@ public class RouteViewModel extends AndroidViewModel {
         repository=RouteApiRepository.getInstance(application.getApplicationContext());
     }
 
-    public LiveData<Void> addImage(String id,Long photo){
-        return repository.addImage(id,photo);
-    }
+
 }

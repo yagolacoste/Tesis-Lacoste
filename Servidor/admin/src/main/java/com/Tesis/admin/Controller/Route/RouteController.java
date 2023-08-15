@@ -33,8 +33,5 @@ public class RouteController implements IRouteController{
         return routeService.list();
     }
 
-    @Override
-    public void addImage(String Id, Long photo) {
-        routeService.addImage(Id,photo);
-    }
+
 }

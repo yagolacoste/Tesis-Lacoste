@@ -15,5 +15,5 @@ public interface IRouteService {
 
     boolean existsById(String id);
 
-    void addImage(String id, Long photo);
+
 }

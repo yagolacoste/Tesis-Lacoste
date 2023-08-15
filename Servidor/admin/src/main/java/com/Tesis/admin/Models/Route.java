@@ -40,9 +40,6 @@ public class Route implements Serializable {
     @OneToMany(mappedBy = "route")
     private List<Battle> battles;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "image_id", referencedColumnName = "id")
-    private StoredDocument image;
 
     public void setId(String id) {
         this.id = id;
@@ -113,11 +110,4 @@ public class Route implements Serializable {
         return id;
     }
 
-    public StoredDocument getImage() {
-        return image;
-    }
-
-    public void setImage(StoredDocument image) {
-        this.image = image;
-    }
 }

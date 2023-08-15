@@ -4,7 +4,63 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7729f06-1757-4dfa-ac9d-78d48a9c1c01" name="Changes" comment="" />
+    <list default="true" id="f7729f06-1757-4dfa-ac9d-78d48a9c1c01" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/MapActivityActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/MapActivityActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/TrackingDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/TrackingDetailActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ui/Fragment/MyMapsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/ui/Fragment/MyMapsFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Adapter/RouteRecyclerViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/Adapter/RouteRecyclerViewAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ApiRestConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ApiRestConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/OpenStreetMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/OpenStreetMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/RouteApiRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Repository/RouteApiRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Service/ApiRest/RouteApiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Service/ApiRest/RouteApiService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/ViewModel/RouteViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/ViewModel/RouteViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/res/drawable/ic_finish_flag.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/res/drawable/ic_finish_flag.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/res/layout/card_my_route_list_view.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/res/layout/card_my_route_list_view.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Controller/Route/IRouteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Controller/Route/IRouteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Controller/Route/RouteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Controller/Route/RouteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Route/RouteDetailsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Route/RouteDetailsDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Route/RouteNewRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Dto/Route/RouteNewRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Models/Route.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Models/Route.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Route/IRouteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Route/IRouteService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Route/RouteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Route/RouteService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Statistics/StatisticsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Statistics/StatisticsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/0686c7ac-2974-4770-af76-684b384280eb.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/12d7a5e5-2dd9-432a-87ae-57f267f8d583.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/18b022e9-6112-4f88-85b4-c7cc2569e7b3.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/1ac16c79-e471-4238-a554-83dc817cb0ce.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/1ccb37b5-ac5e-4e38-904a-e217df807444.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/292459f0-481c-4e5e-b831-bb6a10ea3283.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/2d1d79d4-e98c-4379-bfe0-48d0951f365f.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/2f1764f6-c8bf-4e7b-aa90-c865537962ba.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/33f84142-af67-486e-b380-f631bdefb919.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/4c71baf9-c145-4c0f-a574-88d6712544bf.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/5274c13f-fb0f-4d8c-9e5a-dd6aec57a53c.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/5ecb895f-17f8-4948-8df1-39db2b85956b.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/63e49a84-3b17-4f41-bc75-363ad12d51b4.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/711571be-8fc6-45d7-a98b-2c95e7db3e94.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/75f1a842-cb6b-4779-8303-64c445ed14be.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/7a355e34-30a9-4d06-9400-8e4b87634d10.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/80decba8-e5f1-4245-83d6-ceb95648df32.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/89dcf92d-9ce9-4413-bf39-0e2cdb590edc.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/8cb1426a-d2e9-4560-85af-f174d0a35fb2.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/956ebfff-470a-4830-8f36-49408e22c84d.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/9c92d61d-84b2-472f-af39-cef17426c57f.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/aca7b956-b8a8-4f18-a590-34037376d752.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/adbe2aee-4633-4075-95a5-c84d46d6480e.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/b0b81e1f-dd8d-43a6-a562-bb5beeff8d87.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/d5886d95-45ee-4edf-870a-78fd76f5ec0b.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/d77df165-8118-41c0-b817-95dcbc98e436.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/d9e3209c-31e4-4354-b1fa-aabb31dc7b07.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/dd8d128e-4e2a-44e8-a1f5-b23e5624e0aa.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/def021a8-ace3-4800-880d-0dddcbe8bcb3.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/e11d564d-627f-40c1-886d-37683717aa77.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/e6451c13-e61d-4bc4-b721-0b5e7bb63d8e.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/efb6a393-a056-43c5-9311-ab8de1c370e2.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/JPEG/fbbdf2d5-1e6a-4d95-b08c-adbcb81dda90.jpeg" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,9 +76,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="FxmlFile" />
-        <option value="Interface" />
         <option value="Enum" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -133,8 +189,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.AdminApplication" />
         <item itemvalue="Application.GatewayApplication" />
+        <item itemvalue="Application.AdminApplication" />
         <item itemvalue="Application.AuthApplication" />
         <item itemvalue="Application.DiscoveryApplication" />
       </list>

@@ -55,6 +55,8 @@ public class User implements Serializable {
     private Set<User> friends;
 
 
+
+
     public User() {
 
     }
@@ -151,7 +153,6 @@ public class User implements Serializable {
     public void setHeight(Integer height) {
         this.height = height;
     }
-
 
 
 }

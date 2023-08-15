@@ -104,13 +104,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-<!--                <org.osmdroid.views.MapView-->
-<!--                    android:id="@+id/mapValueView"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="200dp"-->
-<!--                    android:layout_marginTop="16dp" />-->
-                <androidx.appcompat.widget.AppCompatImageView
+                <org.osmdroid.views.MapView
                     android:id="@+id/mapValueView"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"

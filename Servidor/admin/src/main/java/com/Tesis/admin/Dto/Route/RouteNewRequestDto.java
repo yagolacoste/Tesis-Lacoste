@@ -23,7 +23,6 @@ public class RouteNewRequestDto implements Serializable {
 
     private LocalTime avgTime;
 
-    private Long photo;
 
     public String getId() {
         return id;
@@ -74,11 +73,4 @@ public class RouteNewRequestDto implements Serializable {
         this.avgTime = avgTime;
     }
 
-    public Long getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(Long photo) {
-        this.photo = photo;
-    }
 }

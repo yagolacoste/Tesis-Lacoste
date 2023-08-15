@@ -24,6 +24,9 @@ public class MapActivityActivity extends AppCompatActivity {
         mapView=findViewById(R.id.mapView);
         openStreetMap=new OpenStreetMap(mapView);
         RouteDetailsDto routeDetailsDto= (RouteDetailsDto) getIntent().getSerializableExtra(Constants.ROUTE);
-        openStreetMap.draw(routeDetailsDto.getCoordinates());
+        openStreetMap.initLayer(this,routeDetailsDto.getCoordinates().get(0));
+        openStreetMap.draw((routeDetailsDto.getCoordinates()));
     }
+
+
 }

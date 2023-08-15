@@ -19,8 +19,7 @@ public interface RouteApiService {
     @POST("add")
     Call<Void> addRoute(@Body RouteApiRestDto routeApiRestDto);
 
-    @POST("{id}/addImage")
-    Call<Void> addImage( @Path("id") String id,@Query("photo") Long photo);
+
 
 
 }
