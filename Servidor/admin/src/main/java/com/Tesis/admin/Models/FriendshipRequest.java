@@ -3,10 +3,10 @@ package com.Tesis.admin.Models;
 import javax.persistence.*;
 
 @Entity
-@Table(name="Request")
-public class Request {
+@Table(name="FriendshipRequest")
+public class FriendshipRequest {
     @EmbeddedId
-    private RequestId id;
+    private FriendshipRequestId id;
 
     @ManyToOne
     @MapsId("userOriginId")
@@ -18,16 +18,18 @@ public class Request {
     @JoinColumn(name = "user_dest")
     private User userDest;
 
-    private Integer state;
 
-    public Request() {
+    private String status;
+
+
+    public FriendshipRequest() {
     }
 
-    public RequestId getId() {
+    public FriendshipRequestId getId() {
         return id;
     }
 
-    public void setId(RequestId id) {
+    public void setId(FriendshipRequestId id) {
         this.id = id;
     }
 
@@ -47,11 +49,17 @@ public class Request {
         this.userDest = userDest;
     }
 
-    public Integer getState() {
-        return state;
+
+
+    public String getStatus() {
+
+        return status;
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+
+
+    public void setStatus(String status) {
+
+        this.status = status;
     }
 }

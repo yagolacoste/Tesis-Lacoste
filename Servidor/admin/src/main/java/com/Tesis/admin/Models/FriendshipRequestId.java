@@ -1,10 +1,12 @@
 package com.Tesis.admin.Models;
 
+import com.Tesis.admin.Dto.Request.FriendshipRequestDto;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 @Embeddable
-public class RequestId implements Serializable {
+public class FriendshipRequestId implements Serializable {
 
     @Column(name="user_origin")
     private Long userOriginId;
@@ -12,7 +14,9 @@ public class RequestId implements Serializable {
     @Column(name="user_dest")
     private Long userDestId;
 
-    public RequestId() {
+    public FriendshipRequestId(FriendshipRequestDto friendshipRequestDto) {
+        this.userOriginId= friendshipRequestDto.getUserOrigin();
+        this.userDestId= friendshipRequestDto.getUserDest();
     }
 
     public Long getUserOriginId() {

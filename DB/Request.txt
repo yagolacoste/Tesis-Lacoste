@@ -1,10 +1,10 @@
--- -----------------------------------------------------
+- -----------------------------------------------------
 -- Table `bicycle`.`Request`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bicycle`.`Request` (
+CREATE TABLE IF NOT EXISTS `bicycle`.`FriendshipRequest` (
   `user_origin` INT NOT NULL,
   `user_dest` INT NOT NULL,
-  `state` INT NOT NULL,
+  `state` varchar(20) NOT NULL,
   PRIMARY KEY (`user_origin`, `user_dest`),
   INDEX `fk_appuser_has_appuser_appuser4_idx` (`user_dest` ASC) VISIBLE,
   INDEX `fk_appuser_has_appuser_appuser3_idx` (`user_origin` ASC) VISIBLE,
