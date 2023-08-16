@@ -28,5 +28,5 @@ eureka:
 Bicycle:
   app:
     jwtSecret: SecretKey
-    jwtExpirationMs: 1800000
+    jwtExpirationMs: 18000000
     jwtRefreshExpirationMs: 86400000
