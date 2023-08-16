@@ -24,6 +24,6 @@ public interface IFriendshipRequestController {
   @PutMapping(path = {"/rejected"},consumes = MediaType.APPLICATION_JSON_VALUE)
   void rejectedRequest(@RequestBody FriendshipRequestDto requestDto);
 
-  @GetMapping(path = {"/accepted"},produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(path = {"/request"},produces = MediaType.APPLICATION_JSON_VALUE)
   List<FriendshipRequestDetailsDto> acceptedRequest();
 }

@@ -19,6 +19,11 @@ public class FriendshipRequestId implements Serializable {
         this.userDestId= friendshipRequestDto.getUserDest();
     }
 
+    public FriendshipRequestId(Long userOriginId, Long userDestId) {
+        this.userOriginId = userOriginId;
+        this.userDestId = userDestId;
+    }
+
     public Long getUserOriginId() {
         return userOriginId;
     }

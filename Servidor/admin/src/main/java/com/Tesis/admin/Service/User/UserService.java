@@ -116,6 +116,23 @@ public class UserService implements IUserService{
     }
 
     @Override
+    public void addFriend(Long userOrigin, Long userDest) {
+        if (!userRepository.existsById(userOrigin)) {
+            throw new NotFoundException(ErrorCodes.ACCESS_DENIED.getCode(), "Email not Exists");
+        }else
+        if (!userRepository.existsById(userDest)) {
+            throw new NotFoundException(ErrorCodes.ACCESS_DENIED.getCode(), "Email not Exists");
+        }
+        User userOrig=userRepository.findById(userOrigin).get();
+        User friend=userRepository.findById(userOrigin).get();
+        userOrig.getFriends().add(friend);
+        friend.getFriends().add(userOrig);
+        userRepository.save(userOrig);
+        userRepository.save(friend);
+
+    }
+
+    @Override
     public List<BattleDto> getBattlesByUser(Long id) {
         List<BattleDto> result=new ArrayList<>();
         User user= userRepository.findById(id)
@@ -142,4 +159,6 @@ public class UserService implements IUserService{
         }
         else throw new NotFoundException("User not found", ErrorCodes.NOT_FOUND.getCode());
     }
+
+
 }

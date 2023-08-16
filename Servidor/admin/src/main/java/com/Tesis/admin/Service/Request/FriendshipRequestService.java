@@ -4,12 +4,13 @@ package com.Tesis.admin.Service.Request;
 import com.Tesis.admin.Dto.Request.FriendshipRequestDto;
 import com.Tesis.admin.Exception.ErrorCodes;
 import com.Tesis.admin.Exception.NotFoundException;
-import com.Tesis.admin.Models.FriendshipRequestStatus;
 import com.Tesis.admin.Models.FriendshipRequest;
 import com.Tesis.admin.Models.FriendshipRequestId;
+import com.Tesis.admin.Models.FriendshipRequestStatus;
 import com.Tesis.admin.Models.User;
 import com.Tesis.admin.Repository.IFriendshipRequestRepository;
 import com.Tesis.admin.Repository.IUserRepository;
+import com.Tesis.admin.Service.User.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +24,12 @@ public class FriendshipRequestService implements IFriendshipRequestService {
   @Autowired
   private IUserRepository userRepository;
 
+  @Autowired
+  private IUserService userService;
+
   @Override public void sendRequest(FriendshipRequestDto friendshipRequestDto) {
-//controlar que pasa si no existen user pero siempre va a ver porque primero lo busco y deberia aparecer
-    if(requestRepository.findById(new FriendshipRequestId(friendshipRequestDto)).isEmpty()){
+    if(requestRepository.findById(new FriendshipRequestId(friendshipRequestDto.getUserOrigin(), friendshipRequestDto.getUserDest())).isEmpty() ||
+            requestRepository.findById(new FriendshipRequestId(friendshipRequestDto.getUserDest(), friendshipRequestDto.getUserOrigin())).isEmpty()){
       FriendshipRequest friendshipRequest =new FriendshipRequest();
       FriendshipRequestId friendshipRequestId =new FriendshipRequestId(friendshipRequestDto);
       User userOrigin=userRepository.findById(friendshipRequestDto.getUserOrigin()).get();
@@ -35,7 +39,7 @@ public class FriendshipRequestService implements IFriendshipRequestService {
       friendshipRequest.setUserDest(userDest);
       friendshipRequest.setStatus(FriendshipRequestStatus.PENDING.getValue());
       requestRepository.save(friendshipRequest);
-    }else throw new NotFoundException("Existe la solicitud", ErrorCodes.NOT_FOUND.getCode());
+    }else throw new NotFoundException("Exist solicited", ErrorCodes.NOT_FOUND.getCode());
   }
 
 
@@ -44,6 +48,7 @@ public class FriendshipRequestService implements IFriendshipRequestService {
       FriendshipRequest friendshipRequest=requestRepository.findById(new FriendshipRequestId(friendshipRequestDto)).get();
       if(friendshipRequest.getStatus().equals(FriendshipRequestStatus.PENDING.getValue())){
         friendshipRequest.setStatus(FriendshipRequestStatus.ACCEPTED.getValue());
+        userService.addFriend(friendshipRequestDto.getUserOrigin(), friendshipRequestDto.getUserDest());
         requestRepository.save(friendshipRequest);
       }
   }

@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.Tesis.bicycle.Activity.TrackingActivity;
 import com.Tesis.bicycle.Activity.ui.Fragment.CommunityFragment;
+import com.Tesis.bicycle.Activity.ui.Fragment.FriendshipRequestFragment;
 import com.Tesis.bicycle.Activity.ui.Fragment.MyMapsFragment;
 import com.Tesis.bicycle.Activity.ui.Fragment.ProfileFragment;
 import com.Tesis.bicycle.R;
@@ -36,10 +37,12 @@ public class NavInitActivity extends AppCompatActivity {
         floatingActionButton=findViewById(R.id.floatingBottomInit);
 
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setSelectedItemId(R.id.bottom_home);
+        bottomNavigationView.setSelectedItemId(R.id.bottom_notification);
         bottomNavigationView.setOnItemSelectedListener(item ->{
             switch (item.getItemId()){
-                case R.id.bottom_home:
+                case R.id.bottom_notification:
+                    replaceFragment(new FriendshipRequestFragment());
+                    overridePendingTransition(R.anim.left_in,R.anim.left_out);
                     return true;
                     //continue with UI
                 case R.id.bottom_my_maps:

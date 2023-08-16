@@ -19,7 +19,7 @@ public class FriendshipRequest {
     private User userDest;
 
 
-    private String status;
+    private Integer status;
 
 
     public FriendshipRequest() {
@@ -49,17 +49,11 @@ public class FriendshipRequest {
         this.userDest = userDest;
     }
 
-
-
-    public String getStatus() {
-
+    public Integer getStatus() {
         return status;
     }
 
-
-
-    public void setStatus(String status) {
-
+    public void setStatus(Integer status) {
         this.status = status;
     }
 }

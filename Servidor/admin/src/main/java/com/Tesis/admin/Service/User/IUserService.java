@@ -23,4 +23,6 @@ public interface IUserService {
     List<BattleDto> getBattlesByUser(Long id);
 
     ScoreDto getScore(Long id, String email);
+
+    void addFriend(Long userOrigin,Long userDest);
 }
