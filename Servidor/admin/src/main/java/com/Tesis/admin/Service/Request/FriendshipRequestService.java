@@ -2,6 +2,7 @@ package com.Tesis.admin.Service.Request;
 
 
 import com.Tesis.admin.Dto.Request.FriendshipRequestDto;
+import com.Tesis.admin.Dto.Request.RequestDto;
 import com.Tesis.admin.Exception.ErrorCodes;
 import com.Tesis.admin.Exception.NotFoundException;
 import com.Tesis.admin.Models.FriendshipRequest;
@@ -13,6 +14,9 @@ import com.Tesis.admin.Repository.IUserRepository;
 import com.Tesis.admin.Service.User.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -61,5 +65,14 @@ public class FriendshipRequestService implements IFriendshipRequestService {
       friendshipRequest.setStatus(FriendshipRequestStatus.REJECTED.getValue());
       requestRepository.save(friendshipRequest);
     }
+  }
+
+  @Override
+  public List<RequestDto> request(Long userOrigin) {
+    List<RequestDto>requestDtoList=new ArrayList<>();
+    requestDtoList.addAll(requestRepository.sentRequest(userOrigin,FriendshipRequestStatus.PENDING.getValue()));
+    requestDtoList.addAll(requestRepository.sentRequest(userOrigin,FriendshipRequestStatus.REJECTED.getValue()));
+    requestDtoList.addAll(requestRepository.receivedRequest(userOrigin,FriendshipRequestStatus.PENDING.getValue()));
+    return requestDtoList;
   }
 }

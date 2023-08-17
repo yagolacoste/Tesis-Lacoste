@@ -6,6 +6,7 @@ import com.Tesis.bicycle.Presenter.Client.ClientRetrofit;
 
 import com.Tesis.bicycle.Service.ApiRest.AuthApiService;
 import com.Tesis.bicycle.Service.ApiRest.BattleApiService;
+import com.Tesis.bicycle.Service.ApiRest.FriendshipRequestApiService;
 import com.Tesis.bicycle.Service.ApiRest.RouteApiService;
 import com.Tesis.bicycle.Service.ApiRest.StatisticsApiService;
 import com.Tesis.bicycle.Service.ApiRest.StoredDocumentApiService;
@@ -22,8 +23,9 @@ public class ApiRestConnection {
     public static final String URL_STORED_DOCUMENT= ApiRestConnection.URL+"storeddocuments/";
     public static final String URL_AUTH= ApiRestConnection.URL+"auth/";
     public static final String URL_USERS= ApiRestConnection.URL+"users/";
-
     public static final String URL_BATTLES= ApiRestConnection.URL+"battles/";
+
+    public static final String URL_FRIENDSHIP= ApiRestConnection.URL+"friendshiprequest/";
 
     public static RouteApiService getServiceRoute(Context context){
         return ClientRetrofit.getClientWithInterceptor(URL_ROUTES,context).create(RouteApiService.class);
@@ -47,6 +49,10 @@ public class ApiRestConnection {
 
     public static UserApiService getUserService(Context context){
         return ClientRetrofit.getClientWithInterceptor(URL_USERS,context).create(UserApiService.class);
+    }
+
+    public static FriendshipRequestApiService getFriendshipRequestService(Context context){
+        return ClientRetrofit.getClientWithInterceptor(URL_FRIENDSHIP,context).create(FriendshipRequestApiService.class);
     }
 
 

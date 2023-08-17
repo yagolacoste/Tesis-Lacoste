@@ -19,6 +19,7 @@ public class FriendshipRequest {
     private User userDest;
 
 
+    @Column(name = "status")
     private Integer status;
 
 

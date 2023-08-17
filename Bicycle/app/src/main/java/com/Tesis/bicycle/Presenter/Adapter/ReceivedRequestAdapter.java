@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.Tesis.bicycle.Dto.ApiRest.FriendshipRequest.FriendshipRequestDto;
-import com.Tesis.bicycle.Dto.ApiRest.Statistics.StatisticsDto;
 import com.Tesis.bicycle.Presenter.ApiRestConnection;
 import com.Tesis.bicycle.Presenter.Client.ClientRetrofit;
 import com.Tesis.bicycle.R;
@@ -21,11 +20,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHolder> {
+public class ReceivedRequestAdapter extends RecyclerView.Adapter<ReceivedRequestAdapter.ViewHolder> {
 
     private List<FriendshipRequestDto> friendshipRequest;
 
-    public RequestAdapter(List<FriendshipRequestDto> friendshipRequest) {
+    public ReceivedRequestAdapter(List<FriendshipRequestDto> friendshipRequest) {
         friendshipRequest = friendshipRequest;
     }
 
@@ -33,7 +32,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_friendship_request,parent,false);
-        RequestAdapter.ViewHolder viewHolder=new RequestAdapter.ViewHolder(view);
+        ReceivedRequestAdapter.ViewHolder viewHolder=new ReceivedRequestAdapter.ViewHolder(view);
         return viewHolder;
     }
 
