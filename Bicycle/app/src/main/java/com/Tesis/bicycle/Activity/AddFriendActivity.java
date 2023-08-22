@@ -97,7 +97,7 @@ public class AddFriendActivity extends FragmentActivity {
                     users=resp;
                     users=users.stream().filter(user->!user.getUserDest().equals(response.getId())).collect(Collectors.toList());
                     usersFilter=resp;
-                    adapter=new UserSearchAdapter(this,users);
+                    adapter=new UserSearchAdapter(this,users,response.getId());
                     rvUsers.setAdapter(adapter);
                 });
             }

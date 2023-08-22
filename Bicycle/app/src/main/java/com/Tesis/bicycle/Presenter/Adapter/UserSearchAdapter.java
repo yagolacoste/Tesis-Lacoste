@@ -5,28 +5,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Filter;
-import android.widget.Filterable;
+
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.view.menu.MenuView;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.Tesis.bicycle.Activity.ui.Fragment.BattleListFragment;
-import com.Tesis.bicycle.Activity.ui.Fragment.FriendsFragment;
-import com.Tesis.bicycle.Activity.ui.Fragment.ScoreFragment;
-import com.Tesis.bicycle.Activity.ui.Fragment.ViewPagerAdapter;
+
+import com.Tesis.bicycle.Dto.ApiRest.Request.FriendshipRequestDto;
 import com.Tesis.bicycle.Dto.ApiRest.Request.RequestDto;
 import com.Tesis.bicycle.Model.FriendshipRequestStatus;
 import com.Tesis.bicycle.Presenter.ApiRestConnection;
 import com.Tesis.bicycle.Presenter.Client.ClientRetrofit;
 import com.Tesis.bicycle.R;
+
+import com.Tesis.bicycle.ViewModel.FriendshipRequestViewModel;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.ViewHolder> {
@@ -34,9 +34,12 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
     private List<RequestDto> users;
     private Context context;
 
-    public UserSearchAdapter(Context context,List<RequestDto> filteredUserList) {
+    private Long userOrigin;
+
+    public UserSearchAdapter(Context context,List<RequestDto> filteredUserList,Long userOrigin) {
         this.users = filteredUserList;
         this.context = context;
+        this.userOrigin=userOrigin;
     }
 
     public List<RequestDto> getUsers() {
@@ -58,8 +61,8 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        RequestDto friendshipRequestDto=users.get(position);
-        holder.nameUserSearch.setText(String.valueOf(friendshipRequestDto.getNameComplete()));
+        RequestDto requestDto=users.get(position);
+        holder.nameUserSearch.setText(String.valueOf(requestDto.getNameComplete()));
         holder.stateUserSearch.setText(checkStatus(users.get(position)));
         String url = ApiRestConnection.URL_STORED_DOCUMENT + "download?fileName=" + users.get(position).getFileName();
         final Picasso picasso = new Picasso.Builder(holder.itemView.getContext())
@@ -68,10 +71,24 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
         picasso.load(url)
                 .error(R.drawable.image_not_found)
                 .into(holder.profilePhotoSearchUser);
-        if(friendshipRequestDto.getStatus() == FriendshipRequestStatus.PENDING.getValue()){
+        if(requestDto.getStatus() == FriendshipRequestStatus.PENDING.getValue()){
             holder.btnSendRequest.setActivated(false);
             holder.btnSendRequest.setVisibility(View.INVISIBLE);
         }
+        holder.btnSendRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FriendshipRequestDto friendshipRequestDto=new FriendshipRequestDto();
+                friendshipRequestDto.setUserOrigin(userOrigin);
+                friendshipRequestDto.setUserDest(requestDto.getUserDest());
+                FriendshipRequestViewModel friendshipRequestViewModel=new ViewModelProvider(context).get(FriendshipRequestViewModel.class);
+                friendshipRequestViewModel.sendRequest(friendshipRequestDto).observe(context,resp->{
+                    if(resp){
+                        Toast.makeText(context,"Se envio solicitud correcto",Toast.LENGTH_LONG).show();
+                    }else  Toast.makeText(context,"error de solicitud",Toast.LENGTH_LONG).show();
+                });
+            }
+        });
 
 
     }
@@ -111,12 +128,6 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
             stateUserSearch=itemView.findViewById(R.id.stateUserSearch);
             btnSendRequest=itemView.findViewById(R.id.btnSendRequest);
             rootView=itemView;
-            btnSendRequest.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
         }
     }
 }

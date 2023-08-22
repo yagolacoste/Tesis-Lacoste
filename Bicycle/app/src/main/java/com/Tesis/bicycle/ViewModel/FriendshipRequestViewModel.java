@@ -6,7 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.Tesis.bicycle.Dto.ApiRest.FriendshipRequest.FriendshipRequestDto;
+
+import com.Tesis.bicycle.Dto.ApiRest.Request.FriendshipRequestDto;
 import com.Tesis.bicycle.Dto.ApiRest.Request.RequestDto;
 import com.Tesis.bicycle.Repository.FriendshipRequestRepository;
 

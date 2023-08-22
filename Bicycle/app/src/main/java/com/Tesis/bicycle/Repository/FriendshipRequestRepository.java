@@ -5,10 +5,10 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.Tesis.bicycle.Dto.ApiRest.FriendshipRequest.FriendshipRequestDto;
+
+import com.Tesis.bicycle.Dto.ApiRest.Request.FriendshipRequestDto;
 import com.Tesis.bicycle.Dto.ApiRest.Request.RequestDto;
 import com.Tesis.bicycle.Presenter.ApiRestConnection;
-import com.Tesis.bicycle.Service.ApiRest.BattleApiService;
 import com.Tesis.bicycle.Service.ApiRest.FriendshipRequestApiService;
 
 import java.util.List;

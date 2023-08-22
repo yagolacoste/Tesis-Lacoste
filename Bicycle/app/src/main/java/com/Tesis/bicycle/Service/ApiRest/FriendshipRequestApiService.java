@@ -1,6 +1,6 @@
 package com.Tesis.bicycle.Service.ApiRest;
 
-import com.Tesis.bicycle.Dto.ApiRest.FriendshipRequest.FriendshipRequestDto;
+import com.Tesis.bicycle.Dto.ApiRest.Request.FriendshipRequestDto;
 import com.Tesis.bicycle.Dto.ApiRest.Request.RequestDto;
 
 import java.util.List;
