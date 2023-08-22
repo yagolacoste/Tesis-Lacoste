@@ -11,7 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -36,10 +38,22 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
 
     private Long userOrigin;
 
-    public UserSearchAdapter(Context context,List<RequestDto> filteredUserList,Long userOrigin) {
+    private FriendshipRequestViewModel friendshipRequestViewModel;
+
+    private ViewModelStoreOwner viewModelStoreOwner;
+
+    private OnRequestSentListener onRequestSentListener;
+
+    public void setOnRequestSentListener(OnRequestSentListener listener) {
+        onRequestSentListener = listener;
+    }
+
+    public UserSearchAdapter(Context context, List<RequestDto> filteredUserList, Long userOrigin, ViewModelStoreOwner viewModelStoreOwner) {
         this.users = filteredUserList;
         this.context = context;
         this.userOrigin=userOrigin;
+        this.viewModelStoreOwner=viewModelStoreOwner;
+        this.friendshipRequestViewModel=new ViewModelProvider(viewModelStoreOwner).get(FriendshipRequestViewModel.class);
     }
 
     public List<RequestDto> getUsers() {
@@ -81,9 +95,13 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
                 FriendshipRequestDto friendshipRequestDto=new FriendshipRequestDto();
                 friendshipRequestDto.setUserOrigin(userOrigin);
                 friendshipRequestDto.setUserDest(requestDto.getUserDest());
-                FriendshipRequestViewModel friendshipRequestViewModel=new ViewModelProvider(context).get(FriendshipRequestViewModel.class);
-                friendshipRequestViewModel.sendRequest(friendshipRequestDto).observe(context,resp->{
+                friendshipRequestViewModel.sendRequest(friendshipRequestDto).observe((LifecycleOwner) viewModelStoreOwner, resp->{
                     if(resp){
+                        if (onRequestSentListener != null) {
+                            onRequestSentListener.onRequestSent(true);
+                        }
+//                        holder.btnSendRequest.setActivated(false);
+//                        holder.btnSendRequest.setVisibility(View.INVISIBLE);
                         Toast.makeText(context,"Se envio solicitud correcto",Toast.LENGTH_LONG).show();
                     }else  Toast.makeText(context,"error de solicitud",Toast.LENGTH_LONG).show();
                 });

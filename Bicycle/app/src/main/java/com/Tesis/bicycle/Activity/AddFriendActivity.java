@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 
 import com.Tesis.bicycle.Dto.ApiRest.Request.RequestDto;
 import com.Tesis.bicycle.Model.FriendshipRequestStatus;
+import com.Tesis.bicycle.Presenter.Adapter.OnRequestSentListener;
 import com.Tesis.bicycle.Presenter.Adapter.UserSearchAdapter;
 import com.Tesis.bicycle.Presenter.ListView.UserListViewActivity;
 import com.Tesis.bicycle.R;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class AddFriendActivity extends FragmentActivity {
+public class AddFriendActivity extends FragmentActivity  implements OnRequestSentListener {
 
     private EditText editTextNameUser;
 
@@ -97,73 +98,20 @@ public class AddFriendActivity extends FragmentActivity {
                     users=resp;
                     users=users.stream().filter(user->!user.getUserDest().equals(response.getId())).collect(Collectors.toList());
                     usersFilter=resp;
-                    adapter=new UserSearchAdapter(this,users,response.getId());
+                    adapter=new UserSearchAdapter(this,users,response.getId(),this);
+                    adapter.setOnRequestSentListener(this);
                     rvUsers.setAdapter(adapter);
                 });
             }
         });
     }
 
-
-    private void storedData() {
-        if (validate()) {
-            try {
-                String email = editTextNameUser.getText().toString();
-                accessTokenRoomViewModel.getFirst().observe(AddFriendActivity.this, resp -> {
-                    if (resp != null) {
-                        Long id = resp.getId();
-                        userViewModel.saveFriend(email, id).observe(this, response -> {
-                            if (response) {
-                                successMessage("Estupendo! " + "Su información ha sido guardada con éxito en el sistema.");
-                                backToMenuActivity();
-                            } else {
-                                warningMessage("No existe el usuer");
-                            }
-                        });
-                    }
-                });
-            } catch (Exception e) {
-                warningMessage("Se ha producido un error : " + e.getMessage());
-            }
-
+    @Override
+    public void onRequestSent(boolean success) {
+        if (success) {
+            loadData();
+            adapter.notifyDataSetChanged();
         }
     }
-
-    private void backToMenuActivity() {
-        Intent i=new Intent(AddFriendActivity.this, UserListViewActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
     }
-
-    public void successMessage(String message) {
-        new SweetAlertDialog(this,
-                SweetAlertDialog.SUCCESS_TYPE).setTitleText("Good Job!")
-                .setContentText(message).show();
-    }
-
-    public void errorMessage(String message) {
-        new SweetAlertDialog(this,
-                SweetAlertDialog.ERROR_TYPE).setTitleText("Oops...").setContentText(message).show();
-    }
-
-    private boolean validate() {
-        boolean retorno = true;
-        String email;
-        email = editTextNameUser.getText().toString();
-        if (email.isEmpty()) {
-            txtViewNameUser.setError("Enter your Name");
-            retorno = false;
-        } else {
-            txtViewNameUser.setErrorEnabled(false);
-        }
-        return retorno;
-    }
-
-    public void warningMessage(String message) {
-        new SweetAlertDialog(this,
-                SweetAlertDialog.WARNING_TYPE).setTitleText("Notificación del Sistema")
-                .setContentText(message).setConfirmText("Ok").show();
-    }
-
-
 }
