@@ -1,14 +1,13 @@
-package com.Tesis.admin.Models;
+package com.Tesis.bicycle.Model;
 
-import lombok.Getter;
 
-@Getter
+
 public enum FriendshipRequestStatus {
 
     PENDING(0, "PENDING"),
     ACCEPTED(1, "ACCEPTED"),
     REJECTED(2, "REJECTED"),
-    NOTFRIENDS(3, "NOTFRIEND");
+    NOTFRIENDS(3, "NOT FRIENDS");
 
     private Integer value;
     private String title;
@@ -40,3 +39,4 @@ public enum FriendshipRequestStatus {
         return title;
     }
 }
+

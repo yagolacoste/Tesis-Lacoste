@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.Tesis.bicycle.Dto.ApiRest.FriendshipRequest.FriendshipRequestDto;
+import com.Tesis.bicycle.Dto.ApiRest.Request.RequestDto;
 import com.Tesis.bicycle.Presenter.ApiRestConnection;
 import com.Tesis.bicycle.Presenter.Client.ClientRetrofit;
 import com.Tesis.bicycle.R;
@@ -22,10 +23,10 @@ import java.util.List;
 
 public class ReceivedRequestAdapter extends RecyclerView.Adapter<ReceivedRequestAdapter.ViewHolder> {
 
-    private List<FriendshipRequestDto> friendshipRequest;
+    private List<RequestDto> friendshipRequest;
 
-    public ReceivedRequestAdapter(List<FriendshipRequestDto> friendshipRequest) {
-        friendshipRequest = friendshipRequest;
+    public ReceivedRequestAdapter(List<RequestDto> friendshipRequest) {
+        this.friendshipRequest = friendshipRequest;
     }
 
     @NonNull
@@ -38,7 +39,7 @@ public class ReceivedRequestAdapter extends RecyclerView.Adapter<ReceivedRequest
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        FriendshipRequestDto friendshipRequestDto=friendshipRequest.get(position);
+        RequestDto friendshipRequestDto=friendshipRequest.get(position);
         holder.nameRequest.setText(String.valueOf(friendshipRequestDto.getNameComplete()));
         String url = ApiRestConnection.URL_STORED_DOCUMENT + "download?fileName=" + friendshipRequest.get(position).getFileName();
         final Picasso picasso = new Picasso.Builder(holder.itemView.getContext())
@@ -59,6 +60,8 @@ public class ReceivedRequestAdapter extends RecyclerView.Adapter<ReceivedRequest
         private TextView nameRequest;
         private Button rejectedRequest,acceptedRequest;
 
+        private View rootView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -66,6 +69,18 @@ public class ReceivedRequestAdapter extends RecyclerView.Adapter<ReceivedRequest
             nameRequest=itemView.findViewById(R.id.nameRequest);
             rejectedRequest=itemView.findViewById(R.id.rejectedRequest);
             acceptedRequest=itemView.findViewById(R.id.acceptedRequest);
+            acceptedRequest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+            rejectedRequest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
 
         }
 

@@ -38,12 +38,10 @@ public class FriendshipRequestFragment extends BaseListViewFragment{
     public void getListView() {
         accessTokenRoomViewModel.getFirst().observe(getViewLifecycleOwner(),response->{
             if(response.getAccessToken()!=null){
-                friendshipRequestViewModel.(response.getId()).observe(getViewLifecycleOwner(), resp->{
+                friendshipRequestViewModel.request(response.getId()).observe(getViewLifecycleOwner(), resp->{
                     if(!resp.isEmpty()){
-                        routes = resp;
-                        adaptorRoute = new RouteRecyclerViewAdapter(routes);
-                        adaptorRoute.setListener(this);
-                        recyclerView.setAdapter(adaptorRoute);
+                        adapter = new ReceivedRequestAdapter(resp);
+                        recyclerView.setAdapter(adapter);
                     }else {
                         Toast.makeText(context, "Not exist routes for user: " + response.getId(), Toast.LENGTH_SHORT).show();
                     }

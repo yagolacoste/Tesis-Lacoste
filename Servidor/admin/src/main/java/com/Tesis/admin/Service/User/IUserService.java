@@ -3,7 +3,7 @@ package com.Tesis.admin.Service.User;
 import com.Tesis.admin.Dto.AppUser.UserAppDto;
 import com.Tesis.admin.Dto.Battle.BattleDto;
 import com.Tesis.admin.Dto.Battle.ScoreDto;
-import com.Tesis.admin.Models.User;
+import com.Tesis.admin.Dto.Request.RequestDto;
 
 import java.util.List;
 
@@ -25,4 +25,6 @@ public interface IUserService {
     ScoreDto getScore(Long id, String email);
 
     void addFriend(Long userOrigin,Long userDest);
+
+    List<RequestDto> search(Long id, Integer status);
 }

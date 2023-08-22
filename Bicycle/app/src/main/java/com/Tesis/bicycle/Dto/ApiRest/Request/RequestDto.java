@@ -1,13 +1,10 @@
-package com.Tesis.admin.Dto.Request;
+package com.Tesis.bicycle.Dto.ApiRest.Request;
 
-import com.Tesis.admin.Models.FriendshipRequest;
-import com.Tesis.admin.Models.User;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.ConstructorResult;
 import java.io.Serializable;
 import java.util.List;
-
 
 public class RequestDto implements Serializable {
 
@@ -27,26 +24,6 @@ public class RequestDto implements Serializable {
     }
 
 
-    public RequestDto(String nameComplete, Long userDest, Integer status, String fileName) {
-        this.nameComplete = nameComplete;
-        this.userDest = userDest;
-        this.status = status;
-        this.fileName = fileName;
-    }
-
-    public RequestDto(UserSearch u) {
-        this.nameComplete = u.getNameComplete();
-        this.userDest = u.getUserDest();
-        this.status = u.getStatus();
-        this.fileName = u.getFileName();
-    }
-
-//    public RequestDto(User user,Long status) {
-//        this.nameComplete = user.getFirstName()+" "+user.getLastName();
-//        this.userDest = user.getId();
-//        this.status = status;
-//        this.fileName = user.getStoredDocument().getCompleteFileName();
-//    }
 
     public String getNameComplete() {
         return nameComplete;

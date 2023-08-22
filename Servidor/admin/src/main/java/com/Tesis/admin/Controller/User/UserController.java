@@ -5,8 +5,7 @@ package com.Tesis.admin.Controller.User;
 import com.Tesis.admin.Dto.AppUser.UserAppDto;
 import com.Tesis.admin.Dto.Battle.BattleDto;
 import com.Tesis.admin.Dto.Battle.ScoreDto;
-import com.Tesis.admin.Models.User;
-import com.Tesis.admin.Service.Battle.IBattleService;
+import com.Tesis.admin.Dto.Request.RequestDto;
 import com.Tesis.admin.Service.User.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,9 +41,10 @@ public class UserController implements IUserController {
     }
 
     @Override
-    public List<UserAppDto> getUsers() {
-        return userService.list();
+    public List<RequestDto> search(Long id, Integer status) {
+        return userService.search(id,status);
     }
+
 
     @Override
     public List<UserAppDto> getFriends(Long id) {

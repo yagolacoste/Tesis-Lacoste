@@ -2,6 +2,7 @@ package com.Tesis.bicycle.Service.ApiRest;
 
 import com.Tesis.bicycle.Dto.ApiRest.Battle.BattleDto;
 import com.Tesis.bicycle.Dto.ApiRest.Battle.ScoreDto;
+import com.Tesis.bicycle.Dto.ApiRest.Request.RequestDto;
 import com.Tesis.bicycle.Dto.ApiRest.UserAppDto;
 
 import java.util.List;
@@ -34,5 +35,8 @@ public interface UserApiService {
 
     @PUT("update")
     Call<Void> update(@Query (value = "id") Long id,@Body UserAppDto userAppDto);
+
+    @GET("search")
+    Call<List<RequestDto>> searchUsers(@Query (value = "id") Long id,@Query (value = "status") Integer status);
 
 }

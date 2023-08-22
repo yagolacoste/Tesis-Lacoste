@@ -5,7 +5,7 @@ package com.Tesis.admin.Controller.User;
 import com.Tesis.admin.Dto.AppUser.UserAppDto;
 import com.Tesis.admin.Dto.Battle.BattleDto;
 import com.Tesis.admin.Dto.Battle.ScoreDto;
-import com.Tesis.admin.Models.User;
+import com.Tesis.admin.Dto.Request.RequestDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +31,8 @@ public interface IUserController {
     void updateUser(@RequestBody UserAppDto userAppDto,@RequestParam (value = "id") Long id);
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(path = {"/list"},produces = MediaType.APPLICATION_JSON_VALUE)
-    List<UserAppDto> getUsers();
+    @GetMapping(path = {"/search"},produces = MediaType.APPLICATION_JSON_VALUE)
+    List<RequestDto> search(@RequestParam (value = "id") Long id, @RequestParam (value = "status") Integer status);
 
 
     @ResponseStatus(HttpStatus.OK)

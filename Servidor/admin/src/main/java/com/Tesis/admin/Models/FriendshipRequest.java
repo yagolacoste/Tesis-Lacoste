@@ -3,7 +3,7 @@ package com.Tesis.admin.Models;
 import javax.persistence.*;
 
 @Entity
-@Table(name="FriendshipRequest")
+@Table(name="friendshiprequest")
 public class FriendshipRequest {
     @EmbeddedId
     private FriendshipRequestId id;

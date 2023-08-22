@@ -1,38 +1,45 @@
 package com.Tesis.bicycle.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
+import com.Tesis.bicycle.Dto.ApiRest.Request.RequestDto;
+import com.Tesis.bicycle.Model.FriendshipRequestStatus;
+import com.Tesis.bicycle.Presenter.Adapter.UserSearchAdapter;
 import com.Tesis.bicycle.Presenter.ListView.UserListViewActivity;
 import com.Tesis.bicycle.R;
-import com.Tesis.bicycle.ServiceTracking.GPSService;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
-import com.Tesis.bicycle.ViewModel.AuthViewModel;
 import com.Tesis.bicycle.ViewModel.UserViewModel;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class AddFriendActivity extends FragmentActivity {
 
-    private EditText edtEmail;
-    private Button btnAddUser;
+    private EditText editTextNameUser;
 
-    private TextInputLayout txtEmailFriend;
-
+    private List<RequestDto> users;
+    private List<RequestDto>usersFilter;
+    private RecyclerView rvUsers;
+    private UserSearchAdapter adapter;
+    private TextInputLayout txtViewNameUser;
     private AccessTokenRoomViewModel accessTokenRoomViewModel;
     private UserViewModel userViewModel;
+
+    private LinearLayout layoutVacio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +51,13 @@ public class AddFriendActivity extends FragmentActivity {
     private void Init() {
         accessTokenRoomViewModel = new ViewModelProvider(this).get(AccessTokenRoomViewModel.class);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        edtEmail = findViewById(R.id.edtEmailFriend);
-        btnAddUser = findViewById(R.id.btnSaveFriend);
-        txtEmailFriend = findViewById(R.id.txtEmailFriend);
-        edtEmail.addTextChangedListener(new TextWatcher() {
+        editTextNameUser = findViewById(R.id.editTextNameUser);
+        rvUsers=findViewById(R.id.rvUsers);
+        txtViewNameUser = findViewById(R.id.txtViewNameUser);
+
+        LinearLayoutManager lm = new LinearLayoutManager(this);
+        rvUsers.setLayoutManager(lm);
+        editTextNameUser.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -55,7 +65,7 @@ public class AddFriendActivity extends FragmentActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                txtEmailFriend.setErrorEnabled(false);
+                search(""+s);
             }
 
             @Override
@@ -63,16 +73,42 @@ public class AddFriendActivity extends FragmentActivity {
 
             }
         });
+        loadData();
 
-        btnAddUser.setOnClickListener(v -> {
-            storedData();
+    }
+
+
+    private void search(String s) {
+        users.clear();
+        for(RequestDto user:usersFilter){
+            if(user.getNameComplete().toLowerCase().contains(s.toLowerCase())){
+                users.add(user);
+            }
+        }
+        adapter.setUsers(users);
+        rvUsers.setAdapter(adapter);
+
+    }
+
+    private void loadData() {
+        accessTokenRoomViewModel.getFirst().observe(this,response->{
+            if(response.getAccessToken()!=null){
+                userViewModel.searchUsers(response.getId(), FriendshipRequestStatus.PENDING.getValue()).observe(this, resp->{
+                    users=resp;
+                    users=users.stream().filter(user->!user.getUserDest().equals(response.getId())).collect(Collectors.toList());
+                    usersFilter=resp;
+                    adapter=new UserSearchAdapter(this,users);
+                    rvUsers.setAdapter(adapter);
+                });
+            }
         });
     }
+
 
     private void storedData() {
         if (validate()) {
             try {
-                String email = edtEmail.getText().toString();
+                String email = editTextNameUser.getText().toString();
                 accessTokenRoomViewModel.getFirst().observe(AddFriendActivity.this, resp -> {
                     if (resp != null) {
                         Long id = resp.getId();
@@ -113,12 +149,12 @@ public class AddFriendActivity extends FragmentActivity {
     private boolean validate() {
         boolean retorno = true;
         String email;
-        email = edtEmail.getText().toString();
+        email = editTextNameUser.getText().toString();
         if (email.isEmpty()) {
-            txtEmailFriend.setError("enter your email");
+            txtViewNameUser.setError("Enter your Name");
             retorno = false;
         } else {
-            txtEmailFriend.setErrorEnabled(false);
+            txtViewNameUser.setErrorEnabled(false);
         }
         return retorno;
     }

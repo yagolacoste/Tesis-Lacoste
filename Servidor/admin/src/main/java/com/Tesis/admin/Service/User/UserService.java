@@ -5,6 +5,7 @@ import com.Tesis.admin.Controller.Exception.TypeExceptions.NotFoundException;
 import com.Tesis.admin.Dto.AppUser.UserAppDto;
 import com.Tesis.admin.Dto.Battle.BattleDto;
 import com.Tesis.admin.Dto.Battle.ScoreDto;
+import com.Tesis.admin.Dto.Request.RequestDto;
 import com.Tesis.admin.Exception.ErrorCodes;
 import com.Tesis.admin.Models.StoredDocument;
 import com.Tesis.admin.Models.User;
@@ -130,6 +131,25 @@ public class UserService implements IUserService{
         userRepository.save(userOrig);
         userRepository.save(friend);
 
+    }
+
+    @Override
+    public List<RequestDto> search(Long id, Integer status) {
+//        List<Object[]> results = userRepository.getAllNotFriendsAndPending(id, status);
+//        List<RequestDto> requestDtos = new ArrayList<>();
+//
+//        for (Object[] row : results) {
+//            String nameComplete = row[0] + " " + row[1];
+//            Long userDest = ((Long) row[2]);
+//            Integer statusValue = (Integer) row[3];
+//            String fileName = row[4] + "." + row[5];
+//
+//            RequestDto requestDto = new RequestDto(nameComplete, userDest, statusValue, fileName);
+//            requestDtos.add(requestDto);
+//        }
+//
+//        return requestDtos;
+        return userRepository.getAllNotFriendsAndPending(id, status).stream().map(u->new RequestDto(u)).collect(Collectors.toList());
     }
 
     @Override

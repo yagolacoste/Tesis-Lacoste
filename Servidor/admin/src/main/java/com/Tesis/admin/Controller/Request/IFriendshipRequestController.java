@@ -25,5 +25,5 @@ public interface IFriendshipRequestController {
   void rejectedRequest(@RequestBody FriendshipRequestDto requestDto);
 
   @GetMapping(path = {""},produces = MediaType.APPLICATION_JSON_VALUE)
-  List<RequestDto> request(@PathVariable("userOrigin") Long userOrigin);
+  List<RequestDto> request(@RequestParam("userOrigin") Long userOrigin);
 }

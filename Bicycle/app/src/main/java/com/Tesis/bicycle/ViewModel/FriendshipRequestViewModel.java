@@ -7,7 +7,10 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.Tesis.bicycle.Dto.ApiRest.FriendshipRequest.FriendshipRequestDto;
+import com.Tesis.bicycle.Dto.ApiRest.Request.RequestDto;
 import com.Tesis.bicycle.Repository.FriendshipRequestRepository;
+
+import java.util.List;
 
 public class FriendshipRequestViewModel extends AndroidViewModel {
 
@@ -28,5 +31,9 @@ public class FriendshipRequestViewModel extends AndroidViewModel {
 
     public LiveData<Boolean> rejectedRequest(FriendshipRequestDto friendshipRequestDto){
         return repository.rejectedRequest(friendshipRequestDto);
+    }
+
+    public LiveData<List<RequestDto>> request(Long userOrigin){
+        return repository.request(userOrigin);
     }
 }

@@ -12,9 +12,9 @@ import java.util.List;
 @Repository
 public interface IFriendshipRequestRepository extends JpaRepository<FriendshipRequest, FriendshipRequestId> {
 
-    @Query("SELECT new com.Tesis.admin.Dto.Request.RequestDto(fr.userDest,fr.status) from FriendshipRequest fr where fr.id.userOriginId=:userOrigin and fr.status=:status")
-    List<RequestDto> sentRequest(Long userOrigin,int status);
+    @Query("SELECT new com.Tesis.admin.Dto.Request.RequestDto(CONCAT(fr.userDest.firstName,' ',fr.userDest.lastName),fr.userDest.id,fr.status,CONCAT(fr.userDest.storedDocument.fileName,fr.userDest.storedDocument.extension)) from FriendshipRequest fr where fr.id.userOriginId=:userOrigin and fr.status=:status")
+    List<RequestDto> sentRequest(Long userOrigin,Integer status);
 
-    @Query("SELECT new com.Tesis.admin.Dto.Request.RequestDto(fr.userOrigin,fr.status) from FriendshipRequest fr where fr.id.userDestId=:userOrigin and fr.status=:status")
-    List<RequestDto>  receivedRequest(Long userOrigin,int status);
+    @Query("SELECT new com.Tesis.admin.Dto.Request.RequestDto(CONCAT(fr.userDest.firstName,' ',fr.userDest.lastName),fr.userDest.id,fr.status,CONCAT(fr.userDest.storedDocument.fileName,fr.userDest.storedDocument.extension)) from FriendshipRequest fr where fr.id.userDestId=:userOrigin and fr.status=:status")
+    List<RequestDto>  receivedRequest(Long userOrigin,Integer status);
 }

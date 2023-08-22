@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.Tesis.bicycle.Dto.ApiRest.Battle.BattleDto;
 import com.Tesis.bicycle.Dto.ApiRest.Battle.ScoreDto;
+import com.Tesis.bicycle.Dto.ApiRest.Request.RequestDto;
 import com.Tesis.bicycle.Dto.ApiRest.UserAppDto;
 import com.Tesis.bicycle.Repository.UserApiRestRepository;
 
@@ -45,5 +46,9 @@ public class UserViewModel extends AndroidViewModel {
 
     public LiveData<Boolean> update(UserAppDto appUserDto,Long id){
         return repository.update(appUserDto,id);
+    }
+
+    public LiveData<List<RequestDto>> searchUsers(Long id,Integer status){
+        return repository.searchUsers(id,status);
     }
 }

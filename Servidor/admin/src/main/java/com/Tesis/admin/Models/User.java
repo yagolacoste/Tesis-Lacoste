@@ -50,10 +50,9 @@ public class User implements Serializable {
     private StoredDocument storedDocument;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "friends",joinColumns = @JoinColumn(name = "appuser_id"),
-    inverseJoinColumns = @JoinColumn(name = "appuser_id_friends"))
+    @JoinTable(name = "friends",joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "friends_id"))
     private Set<User> friends;
-
 
 
 

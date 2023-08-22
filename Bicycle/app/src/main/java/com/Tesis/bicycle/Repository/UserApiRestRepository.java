@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.Tesis.bicycle.Dto.ApiRest.Battle.BattleDto;
 import com.Tesis.bicycle.Dto.ApiRest.Battle.ScoreDto;
+import com.Tesis.bicycle.Dto.ApiRest.Request.RequestDto;
 import com.Tesis.bicycle.Dto.ApiRest.UserAppDto;
 import com.Tesis.bicycle.Presenter.ApiRestConnection;
 import com.Tesis.bicycle.Service.ApiRest.UserApiService;
@@ -146,4 +147,24 @@ public class UserApiRestRepository {
         });
         return mld;
     }
+
+    public LiveData<List<RequestDto>> searchUsers(Long id,Integer status) {
+        final MutableLiveData<List<RequestDto>> mld=new MutableLiveData<>();
+        userApiService.searchUsers(id,status).enqueue(new Callback<List<RequestDto>>() {
+            @Override
+            public void onResponse(Call<List<RequestDto>> call, Response<List<RequestDto>> response) {
+                if(response.isSuccessful()){
+                    mld.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RequestDto>> call, Throwable t) {
+
+            }
+        });
+        return mld;
+    }
+
+
 }
