@@ -125,7 +125,7 @@ public class UserService implements IUserService{
             throw new NotFoundException(ErrorCodes.ACCESS_DENIED.getCode(), "Email not Exists");
         }
         User userOrig=userRepository.findById(userOrigin).get();
-        User friend=userRepository.findById(userOrigin).get();
+        User friend=userRepository.findById(userDest).get();
         userOrig.getFriends().add(friend);
         friend.getFriends().add(userOrig);
         userRepository.save(userOrig);
@@ -135,21 +135,8 @@ public class UserService implements IUserService{
 
     @Override
     public List<RequestDto> search(Long id, Integer status) {
-//        List<Object[]> results = userRepository.getAllNotFriendsAndPending(id, status);
-//        List<RequestDto> requestDtos = new ArrayList<>();
-//
-//        for (Object[] row : results) {
-//            String nameComplete = row[0] + " " + row[1];
-//            Long userDest = ((Long) row[2]);
-//            Integer statusValue = (Integer) row[3];
-//            String fileName = row[4] + "." + row[5];
-//
-//            RequestDto requestDto = new RequestDto(nameComplete, userDest, statusValue, fileName);
-//            requestDtos.add(requestDto);
-//        }
-//
-//        return requestDtos;
-        return userRepository.getAllNotFriendsAndPending(id, status).stream().map(u->new RequestDto(u)).collect(Collectors.toList());
+
+        return userRepository.getAllNotFriendsAndPending(id, status).stream().map(RequestDto::new).collect(Collectors.toList());
     }
 
     @Override

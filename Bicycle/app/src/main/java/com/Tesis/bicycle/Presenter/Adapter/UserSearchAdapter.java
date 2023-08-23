@@ -100,8 +100,6 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
                         if (onRequestSentListener != null) {
                             onRequestSentListener.onRequestSent(true);
                         }
-//                        holder.btnSendRequest.setActivated(false);
-//                        holder.btnSendRequest.setVisibility(View.INVISIBLE);
                         Toast.makeText(context,"Se envio solicitud correcto",Toast.LENGTH_LONG).show();
                     }else  Toast.makeText(context,"error de solicitud",Toast.LENGTH_LONG).show();
                 });

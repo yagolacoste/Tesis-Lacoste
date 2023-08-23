@@ -150,10 +150,6 @@ public class NewBattleActivity extends AppCompatActivity {
                 try {
                     battleViewModel.addBattle(battleDto).observe(this,response->{
                     });
-//                    Intent i=new Intent(this, TrackingActivity.class);
-//                    i.setAction(Constants.REPLAY_MY_ROUTE);
-//                    i.putExtra(Constants.ROUTE,routeDetailsDto);
-//                    startActivity(i);
                     BackToList();
                 } catch (IOException e) {
                     throw new RuntimeException(e);

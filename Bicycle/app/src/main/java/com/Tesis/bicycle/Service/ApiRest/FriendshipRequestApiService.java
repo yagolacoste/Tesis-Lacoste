@@ -15,14 +15,14 @@ import retrofit2.http.Query;
 
 public interface FriendshipRequestApiService {
 
-    @POST("/sendrequest")
+    @POST("sendrequest")
     Call<Void> sendRequest(@Body FriendshipRequestDto friendshipRequestDto);
 
 
-    @PUT("/accepted")
+    @PUT("accepted")
     Call<Void> acceptedRequest(@Body FriendshipRequestDto requestDto);
 
-    @PUT("/rejected")
+    @PUT("rejected")
     Call<Void> rejectedRequest(@Body FriendshipRequestDto requestDto);
 
     @GET("./")

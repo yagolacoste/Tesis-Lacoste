@@ -14,6 +14,9 @@ public class FriendshipRequestId implements Serializable {
     @Column(name="user_dest")
     private Long userDestId;
 
+    public FriendshipRequestId() {
+    }
+
     public FriendshipRequestId(FriendshipRequestDto friendshipRequestDto) {
         this.userOriginId= friendshipRequestDto.getUserOrigin();
         this.userDestId= friendshipRequestDto.getUserDest();

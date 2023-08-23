@@ -113,5 +113,4 @@ public class AddFriendActivity extends FragmentActivity  implements OnRequestSen
             adapter.notifyDataSetChanged();
         }
     }
-    }
 }

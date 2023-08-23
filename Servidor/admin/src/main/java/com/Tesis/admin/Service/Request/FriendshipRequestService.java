@@ -71,7 +71,7 @@ public class FriendshipRequestService implements IFriendshipRequestService {
   public List<RequestDto> request(Long userOrigin) {
     List<RequestDto>requestDtoList=new ArrayList<>();
     requestDtoList.addAll(requestRepository.sentRequest(userOrigin,FriendshipRequestStatus.PENDING.getValue()));
-    requestDtoList.addAll(requestRepository.sentRequest(userOrigin,FriendshipRequestStatus.REJECTED.getValue()));
+    requestDtoList.addAll(requestRepository.sentRequest(userOrigin,FriendshipRequestStatus.ACCEPTED.getValue()));
     requestDtoList.addAll(requestRepository.receivedRequest(userOrigin,FriendshipRequestStatus.PENDING.getValue()));
     return requestDtoList;
   }

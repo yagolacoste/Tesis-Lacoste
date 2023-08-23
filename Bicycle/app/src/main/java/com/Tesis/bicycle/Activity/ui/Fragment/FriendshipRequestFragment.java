@@ -8,15 +8,16 @@ import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import com.Tesis.bicycle.Dto.ApiRest.FriendshipRequest.FriendshipRequestDto;
+
+import com.Tesis.bicycle.Dto.ApiRest.Request.FriendshipRequestDto;
+import com.Tesis.bicycle.Presenter.Adapter.OnRequestSentListener;
 import com.Tesis.bicycle.Presenter.Adapter.ReceivedRequestAdapter;
-import com.Tesis.bicycle.Presenter.Adapter.RouteRecyclerViewAdapter;
 import com.Tesis.bicycle.ViewModel.FriendshipRequestViewModel;
-import com.Tesis.bicycle.ViewModel.StatisticsViewModel;
 
 import java.util.List;
 
-public class FriendshipRequestFragment extends BaseListViewFragment{
+
+public class FriendshipRequestFragment extends BaseListViewFragment implements OnRequestSentListener {
 
     private List<FriendshipRequestDto> friendshipRequestDtoList;
 
@@ -40,7 +41,8 @@ public class FriendshipRequestFragment extends BaseListViewFragment{
             if(response.getAccessToken()!=null){
                 friendshipRequestViewModel.request(response.getId()).observe(getViewLifecycleOwner(), resp->{
                     if(!resp.isEmpty()){
-                        adapter = new ReceivedRequestAdapter(resp);
+                        adapter = new ReceivedRequestAdapter(resp,getContext(),response.getId(),FriendshipRequestFragment.this);
+                        adapter.setOnRequestSentListener(this);
                         recyclerView.setAdapter(adapter);
                     }else {
                         Toast.makeText(context, "Not exist routes for user: " + response.getId(), Toast.LENGTH_SHORT).show();
@@ -48,5 +50,13 @@ public class FriendshipRequestFragment extends BaseListViewFragment{
                 });
             }
         });
+    }
+
+    @Override
+    public void onRequestSent(boolean success) {
+        if (success) {
+            getListView();
+            adapter.notifyDataSetChanged();
+        }
     }
 }
