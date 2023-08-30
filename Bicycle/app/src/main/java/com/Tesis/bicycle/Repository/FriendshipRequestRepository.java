@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.Tesis.bicycle.Dto.ApiRest.Request.FriendshipRequestDto;
 import com.Tesis.bicycle.Dto.ApiRest.Request.RequestDto;
+import com.Tesis.bicycle.Dto.ApiRest.Request.RequestNotifications;
 import com.Tesis.bicycle.Presenter.ApiRestConnection;
 import com.Tesis.bicycle.Service.ApiRest.FriendshipRequestApiService;
 
@@ -92,18 +93,18 @@ public class FriendshipRequestRepository {
     }
 
 
-    public LiveData<List<RequestDto>> request(Long userOrigin) {
-        final MutableLiveData<List<RequestDto>> mld=new MutableLiveData<>();
-        friendshipRequestApiService.request(userOrigin).enqueue(new Callback<List<RequestDto>>() {
+    public LiveData<RequestNotifications> request(Long userOrigin) {
+        final MutableLiveData<RequestNotifications> mld=new MutableLiveData<>();
+        friendshipRequestApiService.request(userOrigin).enqueue(new Callback<RequestNotifications>() {
             @Override
-            public void onResponse(Call<List<RequestDto>> call, Response<List<RequestDto>> response) {
+            public void onResponse(Call<RequestNotifications> call, Response<RequestNotifications> response) {
                 if(response.isSuccessful()){
                     mld.setValue(response.body());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<RequestDto>> call, Throwable t) {
+            public void onFailure(Call<RequestNotifications> call, Throwable t) {
 
             }
         });

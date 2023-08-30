@@ -52,7 +52,6 @@ public abstract class BaseListViewFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // Esto se ejecuta cada vez que se realiza el gesto
                 getListView();
                 swipeRefreshLayout.setRefreshing(false);
             }

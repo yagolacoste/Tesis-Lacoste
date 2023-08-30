@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!-- Cambiar el color de fondo del diálogo -->
+        <item name="android:windowBackground">@color/customDialogBackground</item>
+        <!-- Cambiar el color del texto -->
+        <item name="android:textColorPrimary">@color/customDialogText</item>
+        <!-- Cambiar el color de los botones -->
+        <item name="android:colorAccent">@color/customDialogAccent</item>
+        <!-- Otros atributos según tus preferencias -->
+    </style>
+
+</resources>

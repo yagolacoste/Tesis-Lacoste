@@ -46,10 +46,7 @@
         <service
             android:name=".ServiceTracking.GPSService"
             android:enabled="true"
-            android:exported="true" /> <!-- <activity -->
-        <!-- android:name=".Activity.MenuActivity" -->
-        <!-- android:exported="true" -->
-        <!-- android:theme="@style/Theme.AppCompat.NoActionBar" /> -->
+            android:exported="true" />
         <activity
             android:name=".Activity.ui.NavInitActivity"
             android:exported="true" />
@@ -58,12 +55,10 @@
             android:exported="true" />
         <activity
             android:name=".Activity.TrackingActivity"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:exported="true" />
         <activity
             android:name=".Activity.TrackingDetailActivity"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:exported="true" />
         <activity
             android:name=".Activity.RegisterUserActivity"
             android:exported="true" /> <!-- android:theme="@style/Theme.AppCompat.NoActionBar" /> &lt;!&ndash; android:theme="@style/Theme.AppCompat.NoActionBar"/> &ndash;&gt; -->
@@ -75,7 +70,7 @@
             android:exported="true" /> <!-- android:theme="@style/Theme.AppCompat.NoActionBar"/> -->
         <activity
             android:name=".Activity.AddFriendActivity"
-            android:exported="true" /> <!-- android:theme="@style/Theme.AppCompat.NoActionBar"/> -->
+            android:exported="true" />
         <activity
             android:name=".Activity.NewBattleActivity"
             android:exported="true" />

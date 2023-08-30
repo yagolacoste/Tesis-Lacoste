@@ -156,10 +156,13 @@ public class UserService implements IUserService{
         ScoreDto scoreDto=new ScoreDto();
         User playerOne= userRepository.findById(id).get();
         scoreDto.setNamePlayerOneComplete(playerOne.getFirstName()+" "+playerOne.getLastName());
+        scoreDto.setFileNamePlayerOne(playerOne.getStoredDocument().getCompleteFileName());
         User playerTwo=this.userRepository.findByEmail(email);
         if(playerTwo!=null){
             if(playerOne.getFriends().contains(playerTwo)){
                 scoreDto=battleService.getScore(id,playerTwo.getId());
+                scoreDto.setFileNamePlayerOne(playerOne.getStoredDocument().getCompleteFileName());
+                scoreDto.setFileNamePlayerTwo(playerTwo.getStoredDocument().getCompleteFileName());
                 return scoreDto;
             }
             else throw new NotFoundException(playerOne.getFirstName() +"isn't friend ", ErrorCodes.NOT_FOUND.getCode());

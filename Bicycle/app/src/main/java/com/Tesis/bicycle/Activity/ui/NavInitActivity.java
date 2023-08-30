@@ -38,6 +38,7 @@ public class NavInitActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.bottom_notification);
+        replaceFragment(new FriendshipRequestFragment());
         bottomNavigationView.setOnItemSelectedListener(item ->{
             switch (item.getItemId()){
                 case R.id.bottom_notification:

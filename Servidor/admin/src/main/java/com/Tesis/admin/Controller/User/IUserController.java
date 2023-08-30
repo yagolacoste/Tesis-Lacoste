@@ -50,7 +50,7 @@ public interface IUserController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = {"{id}/score"},produces = MediaType.APPLICATION_JSON_VALUE)
-    ScoreDto getScore(@PathVariable Long id, @RequestParam (value = "email") String email);
+    ScoreDto getScore(@PathVariable Long id, @RequestParam (value = "name") String email);
 
 
 }

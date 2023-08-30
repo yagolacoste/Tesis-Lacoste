@@ -8,9 +8,9 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/mcvBattle"
         android:layout_width="match_parent"
-        android:layout_height="245dp"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:backgroundTint="#4CAF50"
+        android:backgroundTint="@color/blueLow"
         android:elevation="5dp"
         app:cardCornerRadius="10dp">
 
@@ -20,7 +20,7 @@
             android:layout_margin="10dp">
 
             <ImageView
-                android:id="@+id/imgProduct"
+                android:id="@+id/imgProfile"
                 android:layout_width="177dp"
                 android:layout_height="191dp"
                 android:layout_alignParentStart="true"
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="10dp"
-                android:layout_toEndOf="@id/imgProduct"
+                android:layout_toEndOf="@id/imgProfile"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -128,6 +128,7 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -137,17 +138,48 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/san_francisco"
-                        android:text="Height"
+                        android:text="Height:"
                         android:textColor="#fff"
                         android:textSize="18sp"
                         android:textStyle="bold" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/txtValueHeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/san_francisco"
+                        android:text="2"
+                        android:textColor="#fff"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txtNameEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/san_francisco"
+                        android:text="Email:"
+                        android:textColor="#fff"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txtValueEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/san_francisco"

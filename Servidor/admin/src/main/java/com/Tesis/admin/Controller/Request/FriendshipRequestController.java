@@ -2,12 +2,10 @@ package com.Tesis.admin.Controller.Request;
 
 
 import com.Tesis.admin.Dto.Request.FriendshipRequestDto;
-import com.Tesis.admin.Dto.Request.RequestDto;
+import com.Tesis.admin.Dto.Request.RequestNotifications;
 import com.Tesis.admin.Service.Request.IFriendshipRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 
 @RestController
@@ -33,7 +31,7 @@ public class FriendshipRequestController implements IFriendshipRequestController
   }
 
   @Override
-  public List<RequestDto> request(Long userOrigin) {
+  public RequestNotifications request(Long userOrigin) {
     return requestService.request(userOrigin);
   }
 }

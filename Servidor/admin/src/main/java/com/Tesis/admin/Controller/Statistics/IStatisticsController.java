@@ -46,7 +46,7 @@ public interface IStatisticsController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/achievements",produces = MediaType.APPLICATION_JSON_VALUE)
-    List<ClassificationDto> getAchievements();
+    List<ClassificationDto> getAchievements(@RequestParam("user")  Long appUser);
 
 
 }

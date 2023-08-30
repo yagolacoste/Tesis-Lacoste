@@ -2,6 +2,7 @@ package com.Tesis.bicycle.Service.ApiRest;
 
 import com.Tesis.bicycle.Dto.ApiRest.Request.FriendshipRequestDto;
 import com.Tesis.bicycle.Dto.ApiRest.Request.RequestDto;
+import com.Tesis.bicycle.Dto.ApiRest.Request.RequestNotifications;
 
 import java.util.List;
 
@@ -26,5 +27,5 @@ public interface FriendshipRequestApiService {
     Call<Void> rejectedRequest(@Body FriendshipRequestDto requestDto);
 
     @GET("./")
-    Call<List<RequestDto>> request(@Query("userOrigin") Long userOrigin);
+    Call<RequestNotifications> request(@Query("userOrigin") Long userOrigin);
 }

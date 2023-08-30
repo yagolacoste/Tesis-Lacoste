@@ -31,7 +31,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Kevin Piazzoli"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
                 <LinearLayout
@@ -43,7 +43,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="They aren't friends"
-                        android:textColor="#000000"
+                        android:textColor="@color/white"
                         android:textSize="20sp"
                         android:textStyle="italic"
                         android:layout_weight="1"

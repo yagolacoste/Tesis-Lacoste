@@ -29,7 +29,7 @@ public interface StatisticsApiService {
     Call<AchievementsDto> getAchievementsByUser(@Query("user") Long appUser);
 
     @GET("achievements")
-    Call<List<ClassificationDto>> getAchievements();
+    Call<List<ClassificationDto>> getAchievements(@Query("user") Long appUser);
 
 
 }

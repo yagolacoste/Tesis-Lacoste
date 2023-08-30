@@ -40,10 +40,11 @@ public class FriendshipRequestFragment extends BaseListViewFragment implements O
         accessTokenRoomViewModel.getFirst().observe(getViewLifecycleOwner(),response->{
             if(response.getAccessToken()!=null){
                 friendshipRequestViewModel.request(response.getId()).observe(getViewLifecycleOwner(), resp->{
-                    if(!resp.isEmpty()){
-                        adapter = new ReceivedRequestAdapter(resp,getContext(),response.getId(),FriendshipRequestFragment.this);
+                    if(resp!=null){
+                        adapter = new ReceivedRequestAdapter(resp.getMySent(),resp.getMyReceived(),getContext(),response.getId(),FriendshipRequestFragment.this);
                         adapter.setOnRequestSentListener(this);
                         recyclerView.setAdapter(adapter);
+
                     }else {
                         Toast.makeText(context, "Not exist routes for user: " + response.getId(), Toast.LENGTH_SHORT).show();
                     }

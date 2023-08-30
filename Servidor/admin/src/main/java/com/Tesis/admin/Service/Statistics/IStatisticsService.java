@@ -24,6 +24,6 @@ public interface IStatisticsService {
 
     AchievementsDto getAchievementsByUser(Long appUser) throws ParseException;
 
-    List<ClassificationDto> getAchievements();
+    List<ClassificationDto> getAchievements(Long user);
 
 }

@@ -45,7 +45,7 @@ public class ClassificationFragment extends BaseListViewFragment{
     public void getListView() {
         accessTokenRoomViewModel.getFirst().observe(getViewLifecycleOwner(),response->{
             if(response.getAccessToken()!=null){
-                statisticsViewModel.getAchievements().observe(getViewLifecycleOwner(), resp->{
+                statisticsViewModel.getAchievements(response.getId()).observe(getViewLifecycleOwner(), resp->{
                     if(!resp.isEmpty()){
                         adapter=new ClassificationRecyclerAdapter(resp);
                         recyclerView.setAdapter(adapter);

@@ -13,14 +13,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.Tesis.bicycle.Activity.AddFriendActivity;
+import com.Tesis.bicycle.Presenter.ApiRestConnection;
+import com.Tesis.bicycle.Presenter.Client.ClientRetrofit;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
 import com.Tesis.bicycle.ViewModel.UserViewModel;
 import com.google.android.material.textfield.TextInputLayout;
+import com.squareup.picasso.OkHttp3Downloader;
+import com.squareup.picasso.Picasso;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -109,12 +114,28 @@ public class ScoreFragment extends Fragment {
                                 TextView playerOne=customView.findViewById(R.id.txtPlayerOne);
                                 TextView playerTwo=customView.findViewById(R.id.txtPlayerTwo);
                                 TextView score=customView.findViewById(R.id.txtScore);
+                                ImageView imgPLayerOne=customView.findViewById(R.id.imgPlayerOne);
+                                ImageView imgPLayerTwo=customView.findViewById(R.id.imgPlayerTwo);
                                 playerOne.setText(response.getNamePlayerOneComplete());
                                 playerTwo.setText(response.getNamePlayerTwoComplete());
+                                String url = ApiRestConnection.URL_STORED_DOCUMENT + "download?fileName=" + response.getFileNamePlayerOne();
+                                Picasso picasso = new Picasso.Builder(getContext())
+                                        .downloader(new OkHttp3Downloader(ClientRetrofit.getHttp()))
+                                        .build();
+                                picasso.load(url)
+                                        .error(R.drawable.image_not_found)
+                                        .into(imgPLayerOne);
+                                url = ApiRestConnection.URL_STORED_DOCUMENT + "download?fileName=" + response.getFileNamePlayerOne();
+                                picasso = new Picasso.Builder(getContext())
+                                        .downloader(new OkHttp3Downloader(ClientRetrofit.getHttp()))
+                                        .build();
+                                picasso.load(url)
+                                        .error(R.drawable.image_not_found)
+                                        .into(imgPLayerTwo);
                                 score.setText(response.getPlayerOneScore()+" - "+response.getPlayerTwoScore());
                                 scoreLayout.addView(customView);
                             } else {
-                                warningMessage("No existe el usuer");
+                                warningMessage("Not exist battle with this user");
                             }
                         });
                     }
@@ -129,8 +150,9 @@ public class ScoreFragment extends Fragment {
         boolean retorno = true;
         String email;
         email = edtEmailFriendScore.getText().toString();
+
         if (email.isEmpty()) {
-            txtEmailFriendScore.setError("enter your email");
+            txtEmailFriendScore.setError("enter your friend's email");
             retorno = false;
         } else {
             txtEmailFriendScore.setErrorEnabled(false);

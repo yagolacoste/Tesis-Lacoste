@@ -107,9 +107,9 @@ public class StatisticsApiRepository {
         return mld;
     }
 
-    public LiveData<List<ClassificationDto>> getAchievements(){
+    public LiveData<List<ClassificationDto>> getAchievements(Long id){
         final MutableLiveData<List<ClassificationDto>> mld=new MutableLiveData<>();
-        statisticsApiService.getAchievements().enqueue(new Callback<List<ClassificationDto>>() {
+        statisticsApiService.getAchievements(id).enqueue(new Callback<List<ClassificationDto>>() {
             @Override
             public void onResponse(Call<List<ClassificationDto>> call, Response<List<ClassificationDto>> response) {
                 mld.setValue(response.body());

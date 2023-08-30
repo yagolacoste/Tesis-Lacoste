@@ -8,7 +8,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select route:" />
+        android:text="Select route:"
+        android:textSize="25dp"/>
 
     <LinearLayout
         android:id="@+id/containsRoute"
@@ -28,13 +29,14 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="End Date:" />
+        android:text="End Date:"
+        android:textSize="25dp"/>
 
     <EditText
         android:id="@+id/edtDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Seleccionar fecha"
+        android:hint="Select date"
         android:focusable="false"
         android:onClick="mostrarDatePickerDialog"
         android:clickable="true"
@@ -44,7 +46,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add User:" />
+        android:text="Add user:"
+        android:textSize="25dp"/>
 
     <ScrollView
         android:layout_width="match_parent"

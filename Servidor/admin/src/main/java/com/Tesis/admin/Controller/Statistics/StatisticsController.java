@@ -54,7 +54,7 @@ public class StatisticsController implements IStatisticsController{
     }
 
     @Override
-    public List<ClassificationDto> getAchievements() {
-        return statisticsService.getAchievements();
+    public List<ClassificationDto> getAchievements(Long user) {
+        return statisticsService.getAchievements(user);
     }
 }

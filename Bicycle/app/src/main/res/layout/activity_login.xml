@@ -16,7 +16,7 @@
             android:layout_height="273dp">
 
             <ImageView
-                android:layout_width="356dp"
+                android:layout_width="match_parent"
                 android:layout_height="181dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="55dp"
@@ -101,24 +101,25 @@
             android:drawableTint="#fff"
             android:drawableEnd="@drawable/ic_login"/>
     </LinearLayout>
+
     <LinearLayout
-        android:orientation="horizontal"
         android:id="@+id/linearParte5"
-        android:layout_below="@+id/linearParte4"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearParte4"
         android:layout_marginTop="10dp"
-        android:layout_height="wrap_content">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/txtRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/san_francisco"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/purple_500"
             android:gravity="center|center_horizontal"
-            android:text="@string/label_nuevoUser"/>
+            android:text="@string/label_nuevoUser"
+            android:textColor="@color/purple_500"
+            android:textSize="18sp"
+            android:textStyle="bold" />
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"

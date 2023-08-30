@@ -18,6 +18,12 @@ public class ScoreDto implements Serializable {
     @JsonProperty("playerTwoScore")
     private Long playerTwoScore;
 
+    @JsonProperty("fileNamePlayerOne")
+    private String fileNamePlayerOne;
+
+    @JsonProperty("fileNamePlayerTwo")
+    private String fileNamePlayerTwo;
+
     public ScoreDto() {
     }
 
@@ -58,5 +64,21 @@ public class ScoreDto implements Serializable {
 
     public void setPlayerTwoScore(Long playerTwoScore) {
         this.playerTwoScore = playerTwoScore;
+    }
+
+    public String getFileNamePlayerOne() {
+        return fileNamePlayerOne;
+    }
+
+    public void setFileNamePlayerOne(String fileNamePlayerOne) {
+        this.fileNamePlayerOne = fileNamePlayerOne;
+    }
+
+    public String getFileNamePlayerTwo() {
+        return fileNamePlayerTwo;
+    }
+
+    public void setFileNamePlayerTwo(String fileNamePlayerTwo) {
+        this.fileNamePlayerTwo = fileNamePlayerTwo;
     }
 }

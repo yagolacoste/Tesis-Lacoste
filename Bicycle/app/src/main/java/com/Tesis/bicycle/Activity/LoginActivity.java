@@ -16,6 +16,7 @@ import com.Tesis.bicycle.Activity.ui.NavInitActivity;
 import com.Tesis.bicycle.Dto.ApiRest.auth.request.LoginRequest;
 import com.Tesis.bicycle.Dto.ApiRest.auth.response.JwtResponse;
 import com.Tesis.bicycle.Model.Room.RefreshToken;
+import com.Tesis.bicycle.Presenter.Notifications;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
 import com.Tesis.bicycle.ViewModel.AuthViewModel;
@@ -30,16 +31,19 @@ public class LoginActivity extends AppCompatActivity {
     private AccessTokenRoomViewModel accessTokenRoomViewModel;
     private TextView txtNewUser;
     private TextInputLayout txtInputEmail, txtInputPassword;
+
+    private Notifications notifications;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        notifications=new Notifications(this);
         this.initViewModel();
 
         accessTokenRoomViewModel.getAccessToken().observe(this,response->{
             if(response!=null){
-                Toast.makeText(this,"Session active",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"Session active",Toast.LENGTH_LONG).show();
                 //startActivity(new Intent(this,MenuActivity.class));
                startActivity(new Intent(this, NavInitActivity.class));
             }
@@ -69,17 +73,16 @@ public class LoginActivity extends AppCompatActivity {
                 authViewModel.login(loginRequest).observe(this, response ->{
                     if(response.getAccessToken()!=null){
                         accessTokenRoomViewModel.logout();
-                        Toast.makeText(this,"access",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this,"Access the application",Toast.LENGTH_LONG).show();
                         JwtResponse tokenDto= response;
                         RefreshToken refreshToken=new RefreshToken(tokenDto);
                         accessTokenRoomViewModel.addAccessToken(refreshToken);
                         editMail.setText("");
                         editPassword.setText("");
-//                        startActivity(new Intent(this,MenuActivity.class));
                         startActivity(new Intent(this,NavInitActivity.class));
                         this.onPause();
                     }else{
-                        Toast.makeText(this,"User not exits",Toast.LENGTH_SHORT).show();
+                        notifications.warningMessage("Error! to access the account");
                     }
                 });
             }else

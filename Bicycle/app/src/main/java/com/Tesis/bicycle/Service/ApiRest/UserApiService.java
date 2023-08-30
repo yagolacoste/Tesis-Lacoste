@@ -31,7 +31,7 @@ public interface UserApiService {
     Call<Void> saveFriend(@Path("id")Long id,@Query("email")String email);
 
     @GET("{id}/score")
-    Call<ScoreDto> getScore(@Path("id")Long id, @Query("email")String email);
+    Call<ScoreDto> getScore(@Path("id")Long id, @Query("name")String email);
 
     @PUT("update")
     Call<Void> update(@Query (value = "id") Long id,@Body UserAppDto userAppDto);

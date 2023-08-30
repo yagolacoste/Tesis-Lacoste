@@ -158,9 +158,10 @@ public class StatisticsService implements IStatisticsService {
     }
 
     @Override
-    public List<ClassificationDto> getAchievements() {
+    public List<ClassificationDto> getAchievements(Long user) {
         List<ClassificationDto>classifications=new ArrayList<>();
-        List<UserAppDto> users=userService.list();
+        List<UserAppDto> users=userService.getFriends(user);
+        users.add(userService.getByUser(user));
         users.forEach(u->{
             try {
             ClassificationDto classificationDto=new ClassificationDto();
@@ -172,6 +173,7 @@ public class StatisticsService implements IStatisticsService {
             }
 
         });
+
         return classifications;
     }
 

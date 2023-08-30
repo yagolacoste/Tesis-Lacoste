@@ -2,9 +2,7 @@ package com.Tesis.admin.Service.Request;
 
 
 import com.Tesis.admin.Dto.Request.FriendshipRequestDto;
-import com.Tesis.admin.Dto.Request.RequestDto;
-
-import java.util.List;
+import com.Tesis.admin.Dto.Request.RequestNotifications;
 
 
 public interface IFriendshipRequestService {
@@ -15,5 +13,5 @@ public interface IFriendshipRequestService {
 
   void rejectedRequest(FriendshipRequestDto friendshipRequestDto);
 
-  List<RequestDto> request(Long userOrigin);
+  RequestNotifications request(Long userOrigin);
 }

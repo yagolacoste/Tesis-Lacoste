@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.Tesis.bicycle.Dto.ApiRest.auth.request.SignupRequest;
+import com.Tesis.bicycle.Presenter.Notifications;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.StoredDocumentViewModel;
 import com.Tesis.bicycle.ViewModel.AuthViewModel;
@@ -52,6 +53,7 @@ public class RegisterUserActivity extends AppCompatActivity {
     private TextInputLayout txtInputNameUser, txtInputLastName, txtInputAge,
             txtInputTypeHeight,
              txtInputTelephone, txtInputEmailUser, txtInputPasswordUser,txtInputTypeWeight;
+    private Notifications notifications;
     private final static int LOCATION_REQUEST_CODE = 23;
     private final static String USER_DEFAULT="user";
 
@@ -118,6 +120,7 @@ public class RegisterUserActivity extends AppCompatActivity {
         txtInputEmailUser = findViewById(R.id.txtInputEmailUser);
         txtInputPasswordUser = findViewById(R.id.txtInputPasswordUser);
         txtInputTypeWeight=findViewById(R.id.txtInputWeight);
+        notifications=new Notifications(this);
         btnUploadImage.setOnClickListener(v -> {
             this.uploadImage();
         });
@@ -247,17 +250,17 @@ public class RegisterUserActivity extends AppCompatActivity {
                     user.setEmail(edtEmailUser.getText().toString());
                     this.authViewModel.registerUser(user).observe(this, resp->{
                         if(resp){
-                            successMessage("Estupendo! " + "Su información ha sido guardada con éxito en el sistema.");
-                            this.finish();
+                            notifications.successMessage("New User!","Great! Your information has been successfully saved in the system.");
+                            //this.finish();
                         }
                         else {
-                            warningMessage("Se ha producido un error : ");
+                           notifications.warningMessage("Se ha producido un error : ");
                         }
                     });
 
                 });
             }catch (Exception e){
-                warningMessage("Se ha producido un error : " + e.getMessage());
+               notifications.warningMessage("Se ha producido un error : " + e.getMessage());
             }
         }
     }

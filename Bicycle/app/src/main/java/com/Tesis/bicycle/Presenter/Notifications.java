@@ -1,5 +1,6 @@
 package com.Tesis.bicycle.Presenter;
 
+import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -64,10 +65,16 @@ public class Notifications {
         notificationManager.cancel(i);
     }
 
-    public void successMessage(String message) {
+    public void successMessage(String title,String message) {
         new SweetAlertDialog(context,
-                SweetAlertDialog.SUCCESS_TYPE).setTitleText("Good Job!")
-                .setContentText(message).setContentText("Ok").show();
+                SweetAlertDialog.SUCCESS_TYPE).setTitleText(title)
+                .setContentText(message).setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                sweetAlertDialog.dismiss();  // Cierra el diálogo
+                ((Activity) context).finish();  // Cierra la actividad actual
+            }
+        }).show();
     }
 
     public void errorMessage(String message) {

@@ -41,7 +41,7 @@ public class StatisticsViewModel extends AndroidViewModel {
         return this.repository.getAchievementsByUser(appUser);
     }
 
-    public LiveData<List<ClassificationDto>> getAchievements(){
-        return this.repository.getAchievements();
+    public LiveData<List<ClassificationDto>> getAchievements(Long id){
+        return this.repository.getAchievements(id);
     }
 }

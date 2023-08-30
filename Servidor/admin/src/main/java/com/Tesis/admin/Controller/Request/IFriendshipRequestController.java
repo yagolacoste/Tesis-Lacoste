@@ -3,11 +3,9 @@ package com.Tesis.admin.Controller.Request;
 
 
 import com.Tesis.admin.Dto.Request.FriendshipRequestDto;
-import com.Tesis.admin.Dto.Request.RequestDto;
+import com.Tesis.admin.Dto.Request.RequestNotifications;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RequestMapping(IFriendshipRequestController.PATH)
@@ -25,5 +23,5 @@ public interface IFriendshipRequestController {
   void rejectedRequest(@RequestBody FriendshipRequestDto requestDto);
 
   @GetMapping(path = {""},produces = MediaType.APPLICATION_JSON_VALUE)
-  List<RequestDto> request(@RequestParam("userOrigin") Long userOrigin);
+  RequestNotifications request(@RequestParam("userOrigin") Long userOrigin);
 }

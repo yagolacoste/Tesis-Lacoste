@@ -31,6 +31,7 @@
             android:padding="5dp">
 
             <ImageView
+                android:id="@+id/imgPlayerOne"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
@@ -61,6 +62,7 @@
             android:padding="5dp">
 
             <ImageView
+                android:id="@+id/imgPlayerTwo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"

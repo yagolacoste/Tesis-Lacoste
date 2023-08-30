@@ -316,7 +316,7 @@ public class TrackingActivity extends Activity {
 
     //This Alert is not gps service activated
     private void AlertNoGps() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.CustomAlertDialog);
         builder.setMessage("Your device setting will be changed")
                 .setCancelable(false)
                 .setPositiveButton("Turn on", new DialogInterface.OnClickListener() {
