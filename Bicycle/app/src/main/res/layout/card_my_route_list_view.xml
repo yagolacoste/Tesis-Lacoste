@@ -21,13 +21,21 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/txtValueTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TITULO" />
+                    android:text="TITULO"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:id="@+id/txtValueDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TITULO"
+                    android:textSize="15dp"/>
 
             </LinearLayout>
 
@@ -131,7 +139,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:onClick="onRunButtonClick"
-                        android:text="Correr" />
+                        android:text="Run" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -148,7 +156,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:onClick="onStatsButtonClick"
-                        android:text="Estadísticas" />
+                        android:text="My Statistics" />
                 </LinearLayout>
 
             </LinearLayout>

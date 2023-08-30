@@ -61,6 +61,7 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
         holder.txtValueTime.setText(String.valueOf(items.get(position).getTime()));
         holder.openStreetMap.initLayer(holder.rootView.getContext(),items.get(position).getCoordinates().get(0));
         holder.openStreetMap.drawStatic((items.get(position).getCoordinates()));
+        holder.txtValueDescription.setText(items.get(position).getDescription());
         holder.route=items.get(position);
     }
 
@@ -87,7 +88,7 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
 
 
     public  class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView txtValueTitle,txtValueDistance,txtValueTime;
+        private TextView txtValueTitle,txtValueDistance,txtValueTime,txtValueDescription;
 
         private MapView mapImage;
         private OpenStreetMap openStreetMap;
@@ -106,6 +107,8 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
             statisButton=itemView.findViewById(R.id.statButton);
             rootView=itemView;
             openStreetMap=new OpenStreetMap(mapImage);
+            txtValueDescription=itemView.findViewById(R.id.txtValueDescription);
+
             runButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
