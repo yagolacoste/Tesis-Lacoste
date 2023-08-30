@@ -55,12 +55,15 @@ public class OpenStreetMap {
 
     private int color =Color.argb(128, 0, 0, 255);
 
+    RotationGestureOverlay mRotationGestureOverlay;
 
 
     public OpenStreetMap(MapView myOpenMapView) {
         this.myOpenMapView = myOpenMapView;
         roadManager=new OSRMRoadManager(myOpenMapView.getContext(), "OBP_Tuto/1.0");
         ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
+        mRotationGestureOverlay = new RotationGestureOverlay(myOpenMapView.getContext(), myOpenMapView);
+        this.mCompassOverlay = new CompassOverlay(myOpenMapView.getContext(), new InternalCompassOrientationProvider(myOpenMapView.getContext()), myOpenMapView);
     }
 
     public void initLayer(Context ctx, GeoPoint location) {
@@ -77,11 +80,11 @@ public class OpenStreetMap {
         IMapController mapController=myOpenMapView.getController();
         mapController.setZoom(16);
         mapController.setCenter(location);
-        RotationGestureOverlay mRotationGestureOverlay = new RotationGestureOverlay(ctx, myOpenMapView);
+//        mRotationGestureOverlay = new RotationGestureOverlay(ctx, myOpenMapView);
         mRotationGestureOverlay.setEnabled(true);
         myOpenMapView.setMultiTouchControls(true);
         myOpenMapView.getOverlays().add(mRotationGestureOverlay);
-        this.mCompassOverlay = new CompassOverlay(ctx, new InternalCompassOrientationProvider(ctx), myOpenMapView);
+//        this.mCompassOverlay = new CompassOverlay(ctx, new InternalCompassOrientationProvider(ctx), myOpenMapView);
         this.mCompassOverlay.enableCompass();
         myOpenMapView.getOverlays().add(this.mCompassOverlay);
         myOpenMapView.invalidate();
@@ -106,6 +109,29 @@ public class OpenStreetMap {
 
 
     public void draw(List<GeoPoint> points){
+        Marker startMarker=new Marker(myOpenMapView);
+        //Drawable dr = ResourcesCompat.getDrawable(getContext().getResources(), R.drawable.ic_location, null);
+        startMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_location));
+        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        Road road=roadManager.getRoad((ArrayList<GeoPoint>) points);
+        startMarker.setPosition(road.getRouteLow().get(0));
+        myOpenMapView.getOverlays().add(startMarker);
+        roadOverlay=RoadManager.buildRoadOverlay(road, color, 25f);
+        myOpenMapView.getOverlays().add(roadOverlay);
+        Marker endMarker=new Marker(myOpenMapView);
+        endMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_finish_flag));
+        endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        endMarker.setPosition(road.getRouteLow().get(road.getRouteLow().size()-1));
+
+        myOpenMapView.getOverlays().add(endMarker);
+        myOpenMapView.invalidate();
+    }
+
+    public void drawStatic(List<GeoPoint> points){
+        mRotationGestureOverlay.setEnabled(false);
+        myOpenMapView.setMultiTouchControls(false);
+        myOpenMapView.setBuiltInZoomControls(false);
+        this.mCompassOverlay.disableCompass();
         Marker startMarker=new Marker(myOpenMapView);
         //Drawable dr = ResourcesCompat.getDrawable(getContext().getResources(), R.drawable.ic_location, null);
         startMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_location));

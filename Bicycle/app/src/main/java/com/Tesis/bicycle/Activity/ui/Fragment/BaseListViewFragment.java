@@ -15,6 +15,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,6 +36,12 @@ public abstract class BaseListViewFragment extends Fragment {
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
+    protected ImageView imgLayoutEmpty;
+
+    protected TextView txtLayoutEmpty;
+
+    protected LinearLayout layoutEmpty;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -46,6 +56,9 @@ public abstract class BaseListViewFragment extends Fragment {
         recyclerView= (RecyclerView) view.findViewById(R.id.rcvScrollViewFr);
         floatingactionbutton=view.findViewById(R.id.btnAddFr);
         swipeRefreshLayout=view.findViewById(R.id.swipeRefreshLayout);
+        imgLayoutEmpty=view.findViewById(R.id.imgLayoutEmpty);
+        txtLayoutEmpty=view.findViewById(R.id.txtLayoutEmpty);
+        layoutEmpty=view.findViewById(R.id.layoutEmpty);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         accessTokenRoomViewModel=new ViewModelProvider(this).get(AccessTokenRoomViewModel.class);

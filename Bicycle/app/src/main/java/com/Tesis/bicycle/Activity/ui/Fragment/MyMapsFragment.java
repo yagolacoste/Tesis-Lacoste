@@ -21,6 +21,7 @@ import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Presenter.Adapter.MyRoutesRecyclerViewAdapter;
 import com.Tesis.bicycle.Presenter.Adapter.OnItemClickListener;
 import com.Tesis.bicycle.Presenter.Adapter.RouteRecyclerViewAdapter;
+import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.StatisticsViewModel;
 
 import java.util.List;
@@ -33,6 +34,8 @@ public class MyMapsFragment extends BaseListViewFragment implements OnItemClickL
 
     private StatisticsViewModel statisticsViewModel;
 
+    private String text="Your haven't any route save";
+
 
 
 
@@ -41,6 +44,8 @@ public class MyMapsFragment extends BaseListViewFragment implements OnItemClickL
         View view= super.onCreateView(inflater, container, savedInstanceState);
         statisticsViewModel =new ViewModelProvider(requireActivity()).get(StatisticsViewModel.class);
         floatingactionbutton.setVisibility(View.INVISIBLE);
+        imgLayoutEmpty.setImageAlpha(R.drawable.ic_route);
+        txtLayoutEmpty.setText(text);
         getListView();
         return view;
     }
@@ -50,17 +55,32 @@ public class MyMapsFragment extends BaseListViewFragment implements OnItemClickL
         accessTokenRoomViewModel.getFirst().observe(getViewLifecycleOwner(),response->{
             if(response.getAccessToken()!=null){
                 statisticsViewModel.getRouteById(response.getId()).observe(getViewLifecycleOwner(), resp->{
+                    //checkEmpty();
                     if(!resp.isEmpty()){
-                            routes = resp;
-                            adaptorRoute = new RouteRecyclerViewAdapter(routes);
-                            adaptorRoute.setListener(this);
-                            recyclerView.setAdapter(adaptorRoute);
+                        routes = resp;
+                        layoutEmpty.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        adaptorRoute = new RouteRecyclerViewAdapter(routes);
+                        adaptorRoute.setListener(this);
+                        recyclerView.setAdapter(adaptorRoute);
                     }else {
                         Toast.makeText(context, "Not exist routes for user: " + response.getId(), Toast.LENGTH_SHORT).show();
+                        layoutEmpty.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
                     }
                 });
             }
         });
+    }
+
+    private void checkEmpty(){
+        if(routes.isEmpty()){
+            layoutEmpty.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }else{
+            layoutEmpty.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

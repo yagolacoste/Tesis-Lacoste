@@ -15,11 +15,11 @@ import com.Tesis.bicycle.Service.ApiRest.UserApiService;
 public class ApiRestConnection {
 
    //public static final String URL="http://192.168.0.7:9191/";
-    //public static final String URL="http://172.16.1.162:9191/";
+    public static final String URL="http://172.27.176.1:9191/";
 
-    public static final String URL="http://bicycle.ddns.net:9191/";
+    //public static final String URL="http://bicycle.ddns.net:9191/";
     public static final String URL_ROUTES= ApiRestConnection.URL+"routes/";
-    public static final String URL_APPUSERHASROUTES= ApiRestConnection.URL+"statistics/";
+    public static final String URL_STATISTICS = ApiRestConnection.URL+"statistics/";
     public static final String URL_STORED_DOCUMENT= ApiRestConnection.URL+"storeddocuments/";
     public static final String URL_AUTH= ApiRestConnection.URL+"auth/";
     public static final String URL_USERS= ApiRestConnection.URL+"users/";
@@ -32,7 +32,7 @@ public class ApiRestConnection {
     }
 
     public static StatisticsApiService getServiceStatistics(Context context){
-        return ClientRetrofit.getClientWithInterceptor(URL_APPUSERHASROUTES,context).create(StatisticsApiService.class);
+        return ClientRetrofit.getClientWithInterceptor(URL_STATISTICS,context).create(StatisticsApiService.class);
     }
 
     public static BattleApiService getBattleApiService(Context context){
