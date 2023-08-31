@@ -28,6 +28,8 @@ public class BattleListFragment extends BaseListViewFragment implements BattleRe
     private BattleRecyclerViewAdapter battleRecyclerViewAdapter;
     private UserViewModel userViewModel;
 
+    private String text="Your haven't battles";
+
     public static BattleListFragment newInstance(@StringRes int tabName) {
         BattleListFragment frg = new BattleListFragment();
 
@@ -43,6 +45,8 @@ public class BattleListFragment extends BaseListViewFragment implements BattleRe
         View view= super.onCreateView(inflater, container, savedInstanceState);
         userViewModel=new ViewModelProvider(this).get(UserViewModel.class);
         floatingactionbutton.setActivated(true);
+        imgLayoutEmpty.setImageAlpha(R.drawable.ic_competing);
+        txtLayoutEmpty.setText(text);
         getListView();
         floatingactionbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,17 +63,19 @@ public class BattleListFragment extends BaseListViewFragment implements BattleRe
     public void getListView() {
         accessTokenRoomViewModel.getFirst().observe(getViewLifecycleOwner(),resp->{
             if(resp.getId()!=null){
-                try {
                     userViewModel.getBattlesByUser(resp.getId()).observe(getViewLifecycleOwner(),response->{
-                        if(response!=null){
+                        if(!response.isEmpty()){
+                            layoutEmpty.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.VISIBLE);
                             battleRecyclerViewAdapter=new BattleRecyclerViewAdapter(response,resp.getId());
                             battleRecyclerViewAdapter.setOnItemClickListener(this);
                             recyclerView.setAdapter(battleRecyclerViewAdapter);
                         }
+                        else {
+                            layoutEmpty.setVisibility(View.VISIBLE);
+                            recyclerView.setVisibility(View.GONE);
+                        }
                     });
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
             }
         });
     }

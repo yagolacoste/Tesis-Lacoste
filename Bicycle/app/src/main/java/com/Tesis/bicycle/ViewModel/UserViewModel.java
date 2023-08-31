@@ -28,7 +28,7 @@ public class UserViewModel extends AndroidViewModel {
         return repository.getById(id);
     }
 
-    public LiveData<List<BattleDto>> getBattlesByUser(Long id) throws IOException {
+    public LiveData<List<BattleDto>> getBattlesByUser(Long id) {
        return repository.getBattlesByUser(id);
     }
 

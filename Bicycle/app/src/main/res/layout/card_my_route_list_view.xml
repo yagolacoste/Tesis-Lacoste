@@ -9,13 +9,13 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="394dp"
+        android:layout_height="416dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="444dp"
             android:orientation="vertical"
             android:padding="10dp">
 
@@ -29,13 +29,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="TITULO"
-                    android:textSize="20dp"/>
+                    android:textSize="20dp" />
+
                 <TextView
                     android:id="@+id/txtValueDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="TITULO"
-                    android:textSize="15dp"/>
+                    android:textSize="15dp" />
 
             </LinearLayout>
 
@@ -139,7 +140,8 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:onClick="onRunButtonClick"
-                        android:text="Run" />
+                        android:text="Run"
+                        android:textSize="13dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -156,7 +158,8 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:onClick="onStatsButtonClick"
-                        android:text="My Statistics" />
+                        android:text="My Statistics"
+                        android:textSize="13dp" />
                 </LinearLayout>
 
             </LinearLayout>
