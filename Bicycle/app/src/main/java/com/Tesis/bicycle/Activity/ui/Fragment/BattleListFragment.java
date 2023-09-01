@@ -61,7 +61,7 @@ public class BattleListFragment extends BaseListViewFragment implements BattleRe
                         if(!response.isEmpty()){
                             layoutEmpty.setVisibility(View.GONE);
                             recyclerView.setVisibility(View.VISIBLE);
-                            battleRecyclerViewAdapter=new BattleRecyclerViewAdapter(response,resp.getId());
+                            battleRecyclerViewAdapter=new BattleRecyclerViewAdapter(response);
                             battleRecyclerViewAdapter.setOnItemClickListener(this);
                             recyclerView.setAdapter(battleRecyclerViewAdapter);
                         }

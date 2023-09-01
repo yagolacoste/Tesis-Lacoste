@@ -32,13 +32,11 @@ public class BattleRecyclerViewAdapter extends RecyclerView.Adapter<BattleRecycl
     private List<BattleDto> battles;
       private OnItemClickListener listener;
 
-      private Long userId;
 
 
 
-    public BattleRecyclerViewAdapter(List<BattleDto> battles,Long userId){
+    public BattleRecyclerViewAdapter(List<BattleDto> battles){
         this.battles=battles;
-        this.userId=userId;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -84,7 +82,7 @@ public class BattleRecyclerViewAdapter extends RecyclerView.Adapter<BattleRecycl
             }
 
         holder.battleDto=battles.get(position);
-
+            //holder.imgBattle.setImageAlpha(R.drawable.ic_battle);
 
     }
 
@@ -126,9 +124,6 @@ public class BattleRecyclerViewAdapter extends RecyclerView.Adapter<BattleRecycl
             btn_Information.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Intent intent = new Intent(rootView.getContext(), RankingListViewActivity.class);
-//                    intent.putExtra(Constants.BATTLE_ITEM, battleDto);
-//                    rootView.getContext().startActivity(intent);
                     Bundle args = new Bundle();
                     args.putSerializable(Constants.BATTLE_ITEM, battleDto);
                     RankingFragment rankingFragment=new RankingFragment();

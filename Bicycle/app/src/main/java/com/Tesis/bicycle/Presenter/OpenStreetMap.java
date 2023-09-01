@@ -169,10 +169,11 @@ public class OpenStreetMap {
 
 
 
-    public Bitmap captureMapAndCrop() {
+    public  Bitmap captureMapAndCrop(int width ,int height) {
+
         // Capturar la vista del mapa en un Canvas
-        int width = myOpenMapView.getWidth();
-        int height = myOpenMapView.getHeight();
+//        int width = myOpenMapView.getWidth();
+//        int height = myOpenMapView.getHeight();
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         myOpenMapView.draw(canvas);
@@ -240,4 +241,6 @@ public class OpenStreetMap {
     public void setColor(int color) {
         this.color = color;
     }
+
+
 }
