@@ -7,10 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.Tesis.bicycle.Activity.NewBattleActivity;
@@ -20,8 +16,6 @@ import com.Tesis.bicycle.Dto.ApiRest.Battle.BattleDto;
 import com.Tesis.bicycle.Presenter.Adapter.BattleRecyclerViewAdapter;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.UserViewModel;
-
-import java.io.IOException;
 
 public class BattleListFragment extends BaseListViewFragment implements BattleRecyclerViewAdapter.OnItemClickListener {
     private static final String ARG_TAB_NAME = "ARG_TAB_NAME";
@@ -45,7 +39,7 @@ public class BattleListFragment extends BaseListViewFragment implements BattleRe
         View view= super.onCreateView(inflater, container, savedInstanceState);
         userViewModel=new ViewModelProvider(this).get(UserViewModel.class);
         floatingactionbutton.setActivated(true);
-        imgLayoutEmpty.setImageAlpha(R.drawable.ic_competing);
+        imgLayoutEmpty.setImageAlpha(R.drawable.ic_competing_conver);
         txtLayoutEmpty.setText(text);
         getListView();
         floatingactionbutton.setOnClickListener(new View.OnClickListener() {

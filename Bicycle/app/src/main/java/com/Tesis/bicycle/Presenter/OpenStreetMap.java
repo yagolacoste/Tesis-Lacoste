@@ -33,6 +33,7 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.drawing.MapSnapshot;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.compass.CompassOverlay;
@@ -130,14 +131,18 @@ public class OpenStreetMap {
     }
 
     public void drawStatic(List<GeoPoint> points) {
-//        mRotationGestureOverlay.setEnabled(false);
-//        myOpenMapView.setMultiTouchControls(false);
         myOpenMapView.setBuiltInZoomControls(false);
-        myOpenMapView.getController().stopAnimation(true);
         myOpenMapView.setClickable(false);
-//        myOpenMapView.getController().stopAnimation(true);
         myOpenMapView.setEnabled(false);
-        //myOpenMapView.getController().setZoomEnabled(false);
+        myOpenMapView.getController().stopAnimation(true);
+        myOpenMapView.setMultiTouchControls(false);
+        // Calcula la bounding box (área que contiene todos los puntos)
+        BoundingBox boundingBox = BoundingBox.fromGeoPoints(points);
+        // Establece la vista del mapa para que abarque toda la ruta
+        IMapController mapController = myOpenMapView.getController();
+        mapController.zoomToSpan(boundingBox.getLatitudeSpan(), boundingBox.getLongitudeSpan());
+        mapController.setCenter(boundingBox.getCenter());
+        // Restringe las interacciones de gestos
         myOpenMapView.setMultiTouchControls(false);
 
         this.mCompassOverlay.disableCompass();
@@ -160,6 +165,8 @@ public class OpenStreetMap {
 
         myOpenMapView.invalidate();
     }
+
+
 
 
     public Bitmap captureMapAndCrop() {

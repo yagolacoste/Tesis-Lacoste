@@ -59,7 +59,8 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
         holder.txtValueTitle.setText(items.get(position).getName());
         holder.txtValueDistance.setText(items.get(position).getDistance());
         holder.txtValueTime.setText(String.valueOf(items.get(position).getTime()));
-        holder.openStreetMap.initLayer(holder.rootView.getContext(),items.get(position).getCoordinates().get(0));
+        int location=items.get(position).getCoordinates().size()/2;
+        holder.openStreetMap.initLayer(holder.rootView.getContext(),items.get(position).getCoordinates().get(location));
         holder.openStreetMap.drawStatic((items.get(position).getCoordinates()));
         holder.txtValueDescription.setText(items.get(position).getDescription());
         holder.route=items.get(position);

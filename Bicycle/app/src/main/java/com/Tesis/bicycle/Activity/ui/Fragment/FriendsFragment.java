@@ -15,6 +15,7 @@ import com.Tesis.bicycle.Activity.AddFriendActivity;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.UserAppDto;
 import com.Tesis.bicycle.Presenter.Adapter.UserRecyclerViewAdapter;
+import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.UserViewModel;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class FriendsFragment extends BaseListViewFragment{
 
     private UserRecyclerViewAdapter adapter;
 
-    private String action;
+    private String text="You don't friends";
 
     public static FriendsFragment newInstance(@StringRes int tabName) {
         FriendsFragment frg = new FriendsFragment();
@@ -47,6 +48,8 @@ public class FriendsFragment extends BaseListViewFragment{
         userViewModel=new ViewModelProvider(this).get(UserViewModel.class);
         Bundle args = getArguments();
         floatingactionbutton.setActivated(true);
+        imgLayoutEmpty.setImageAlpha(R.drawable.ic_group);
+        txtLayoutEmpty.setText(text);
         getListView();
         floatingactionbutton.setOnClickListener(new View.OnClickListener() {
             @Override

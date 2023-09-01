@@ -142,7 +142,7 @@
             android:id="@+id/ac_ic_footprints"
             android:layout_width="80dp"
             android:layout_height="60dp"
-            android:src="@drawable/ic_competing"
+            android:src="@drawable/ic_competing_conver"
             app:layout_constraintBottom_toBottomOf="@+id/ac_textView_compete"
             app:layout_constraintEnd_toEndOf="@+id/ac_textView_compete"
             app:layout_constraintStart_toStartOf="@+id/ac_textView_compete"

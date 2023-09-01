@@ -2,8 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,14 +19,15 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/navy"
                 app:navigationIcon="@drawable/ic_back"
-                app:title="Update User"
+                app:title="NEW BATTLE"
                 app:titleTextColor="@color/white" />
         </com.google.android.material.appbar.AppBarLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
                 android:id="@+id/btnAddUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add User" />
+                android:text="SELECT" />
         </LinearLayout>
 
     </ScrollView>
@@ -106,7 +106,7 @@
         android:id="@+id/btnCompete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Competir" />
+        android:text="Compete!" />
     </LinearLayout>
 
 </LinearLayout>

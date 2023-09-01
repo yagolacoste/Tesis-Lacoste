@@ -73,15 +73,6 @@ public class MyMapsFragment extends BaseListViewFragment implements OnItemClickL
         });
     }
 
-    private void checkEmpty(){
-        if(routes.isEmpty()){
-            layoutEmpty.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-        }else{
-            layoutEmpty.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-        }
-    }
 
     @Override
     public void onItemClick(RouteDetailsDto ruta) {
