@@ -1,16 +1,24 @@
 package com.Tesis.bicycle.Activity.ui.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.Tesis.bicycle.Activity.ui.NavInitActivity;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.Statistics.StatisticsDto;
 import com.Tesis.bicycle.Presenter.Adapter.StatisticRecyclerViewAdapter;
+import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.StatisticsViewModel;
 
 import java.util.List;
@@ -29,6 +37,7 @@ public class StatisticsFragment  extends BaseListViewFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view= super.onCreateView(inflater, container, savedInstanceState);
+       // ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         statisticsViewModel =new ViewModelProvider(requireActivity()).get(StatisticsViewModel.class);
         floatingactionbutton.setVisibility(View.INVISIBLE);
         Bundle args = getArguments();
@@ -57,6 +66,29 @@ public class StatisticsFragment  extends BaseListViewFragment {
         });
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.background:
+                backToMenuActivity();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void backToMenuActivity() {
+        replaceFragment(new MyMapsFragment());
+    }
+
+
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager=requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout,fragment);
+        fragmentTransaction.commit();
+    }
 
 
 

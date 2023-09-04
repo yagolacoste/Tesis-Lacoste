@@ -57,16 +57,17 @@ public class MyRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyRoutesRe
         private MapView mapImage;
         private OpenStreetMap openStreetMap;
 
-        private ImageView imgRoute;
+       //private ImageView imgRoute;
         //imagen
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtValueNameRoute=itemView.findViewById(R.id.txtValueNameRoute);
             txtValueDescription=itemView.findViewById(R.id.txtValueDescription);
             txtValueDistance=itemView.findViewById(R.id.txtValueDistance);
-            mapImage=new MapView(itemView.getContext());
+            mapImage=itemView.findViewById(R.id.imgRoute);
+            //mapImage=new MapView(itemView.getContext());
             openStreetMap=new OpenStreetMap(mapImage);
-            imgRoute=itemView.findViewById(R.id.imgRoute);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -79,6 +80,8 @@ public class MyRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyRoutesRe
         }
 
         public void bind(RouteDetailsDto route) {
+            openStreetMap.initLayer(itemView.getContext(),route.getCoordinates().get(0));
+            openStreetMap.drawStatic(route.getCoordinates());
             txtValueNameRoute.setText(route.getName());
             txtValueDescription.setText(route.getDescription());
             txtValueDistance.setText(String.valueOf(route.getDistance()));

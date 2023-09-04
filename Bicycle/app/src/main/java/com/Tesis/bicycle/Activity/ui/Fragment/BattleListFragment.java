@@ -39,7 +39,7 @@ public class BattleListFragment extends BaseListViewFragment implements BattleRe
         View view= super.onCreateView(inflater, container, savedInstanceState);
         userViewModel=new ViewModelProvider(this).get(UserViewModel.class);
         floatingactionbutton.setActivated(true);
-        imgLayoutEmpty.setImageAlpha(R.drawable.ic_competing_conver);
+        imgLayoutEmpty.setImageResource(R.drawable.ic_competing_conver);
         txtLayoutEmpty.setText(text);
         getListView();
         floatingactionbutton.setOnClickListener(new View.OnClickListener() {

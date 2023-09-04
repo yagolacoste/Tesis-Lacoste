@@ -1,5 +1,7 @@
 package com.Tesis.bicycle.Presenter.Adapter;
 
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Dto.ApiRest.UserAppDto;
 import com.Tesis.bicycle.Presenter.ApiRestConnection;
 import com.Tesis.bicycle.Presenter.Client.ClientRetrofit;
@@ -17,6 +18,8 @@ import com.Tesis.bicycle.R;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerViewAdapter.ViewHolder> {
@@ -57,10 +60,13 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
                 .build();
         picasso.load(url)
                 .error(R.drawable.image_not_found)
+                .rotate(270)
                 .into(holder.imgProfile);
         holder.txtValueEmail.setText(String.valueOf(users.get(position).getEmail()));
 
     }
+
+
 
     @Override
     public int getItemCount() {

@@ -29,7 +29,7 @@ public class FriendsFragment extends BaseListViewFragment{
 
     private UserRecyclerViewAdapter adapter;
 
-    private String text="You don't friends";
+    private String text="You don't have friends";
 
     public static FriendsFragment newInstance(@StringRes int tabName) {
         FriendsFragment frg = new FriendsFragment();
@@ -48,7 +48,7 @@ public class FriendsFragment extends BaseListViewFragment{
         userViewModel=new ViewModelProvider(this).get(UserViewModel.class);
         Bundle args = getArguments();
         floatingactionbutton.setActivated(true);
-        imgLayoutEmpty.setImageAlpha(R.drawable.ic_group);
+        imgLayoutEmpty.setImageResource(R.drawable.ic_group);
         txtLayoutEmpty.setText(text);
         getListView();
         floatingactionbutton.setOnClickListener(new View.OnClickListener() {
@@ -69,13 +69,15 @@ public class FriendsFragment extends BaseListViewFragment{
                     if(!resp.isEmpty()){
                         friends = resp;
                         adapter=new UserRecyclerViewAdapter(friends);
-//                        if(action==null){
-//                            adapter.setOnItemClickListener(this);
-//                        }
+                        layoutEmpty.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
                         recyclerView.setAdapter(adapter);
                     }
-                    else
+                    else{
                         Toast.makeText(context,"Not exist Friends for route: ",Toast.LENGTH_SHORT).show();
+                        layoutEmpty.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                    }
                 });
             }
         });

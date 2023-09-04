@@ -17,7 +17,7 @@
     <string name="label_password">password</string>
     <string name="label_start_session">start session</string>
     <string name="label_nuevoUser"><u>REGISTER</u></string>
-    <string name="label_olvide_password">forget password</string>
+    <string name="label_forget_password">Forgot my password?</string>
     <string name="title_activity_inicio">InicioActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

@@ -1,6 +1,8 @@
 package com.Tesis.bicycle.Presenter.Adapter;
 
 import android.content.Context;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,8 @@ import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.ViewHolder> {
@@ -82,8 +86,9 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
         final Picasso picasso = new Picasso.Builder(holder.itemView.getContext())
                 .downloader(new OkHttp3Downloader(ClientRetrofit.getHttp()))
                 .build();
-        picasso.load(url)
+        Picasso.get().load(url)
                 .error(R.drawable.image_not_found)
+                .rotate(270)
                 .into(holder.profilePhotoSearchUser);
         if(requestDto.getStatus() == FriendshipRequestStatus.PENDING.getValue()){
             holder.btnSendRequest.setActivated(false);
@@ -108,6 +113,8 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
 
 
     }
+
+
 
     private String checkStatus(RequestDto requestDto) {
         if (requestDto.getStatus() == FriendshipRequestStatus.PENDING.getValue())

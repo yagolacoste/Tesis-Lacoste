@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnInitSession;
     private AuthViewModel authViewModel;
     private AccessTokenRoomViewModel accessTokenRoomViewModel;
-    private TextView txtNewUser;
+    private TextView txtNewUser,txtForgetMyPassword;
     private TextInputLayout txtInputEmail, txtInputPassword;
 
     private Notifications notifications;
@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         txtInputPassword = findViewById(R.id.txtInputPassword);
         txtNewUser = findViewById(R.id.txtRegister);
         btnInitSession = findViewById(R.id.btnStartSession);
+        txtForgetMyPassword=findViewById(R.id.txtForgetMyPassword);
         btnInitSession.setOnClickListener(v->{
         try{
             if(validate()){
