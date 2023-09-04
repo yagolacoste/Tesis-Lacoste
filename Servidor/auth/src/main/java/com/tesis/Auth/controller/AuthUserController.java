@@ -24,11 +24,7 @@ public class AuthUserController implements IAuthUserController{
 
     @Override
     public RefreshTokenDto validate(String token) {
-
         return authUserService.validate(token);
-//        if(tokenDto == null)
-//            return new BadRequestException()
-//        return tokenDto;
     }
 
     @Override
@@ -45,6 +41,5 @@ public class AuthUserController implements IAuthUserController{
     public void logoutUser(RefreshTokenDto refreshTokenDto) {
          authUserService.logoutUser(refreshTokenDto);
     }
-
 
 }

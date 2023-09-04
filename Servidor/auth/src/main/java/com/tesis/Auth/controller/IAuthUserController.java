@@ -17,20 +17,19 @@ import javax.validation.Valid;
 public interface IAuthUserController {
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping(value = "/signin",consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/signin", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public JwtResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest);
 
-    @PostMapping(value = "/validate",produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/validate", produces = MediaType.APPLICATION_JSON_VALUE)
     public RefreshTokenDto validate(@RequestParam String token);
 
-    @PostMapping(value = "/signup",produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE)
     public void registerUser(@Valid @RequestBody SignupRequest signUpRequest);
 
     @PostMapping("/refreshtoken")
     public TokenRefreshResponse refreshtoken(@Valid @RequestBody TokenRefreshRequest request);
 
-    @PostMapping(value = "/signout",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/signout", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void logoutUser(@RequestBody RefreshTokenDto refreshTokenDto);
-
-    }
+    
+}

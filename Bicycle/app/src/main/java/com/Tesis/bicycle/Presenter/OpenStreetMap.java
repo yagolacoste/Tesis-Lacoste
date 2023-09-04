@@ -122,7 +122,7 @@ public class OpenStreetMap {
         roadOverlay=RoadManager.buildRoadOverlay(road, color, 25f);
         myOpenMapView.getOverlays().add(roadOverlay);
         Marker endMarker=new Marker(myOpenMapView);
-        endMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_finish_flag));
+        endMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_finish_flag_convert));
         endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         endMarker.setPosition(road.getRouteLow().get(road.getRouteLow().size()-1));
 
@@ -158,7 +158,7 @@ public class OpenStreetMap {
         myOpenMapView.getOverlays().add(roadOverlay);
 
         Marker endMarker = new Marker(myOpenMapView);
-        endMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_finish_flag));
+        endMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_finish_flag_convert));
         endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         endMarker.setPosition(road.getRouteLow().get(road.getRouteLow().size() - 1));
         myOpenMapView.getOverlays().add(endMarker);

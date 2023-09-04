@@ -23,6 +23,8 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
+import com.google.android.gms.tasks.CancellationToken;
+import com.google.android.gms.tasks.OnTokenCanceledListener;
 
 import org.jetbrains.annotations.Nullable;
 import org.osmdroid.util.GeoPoint;
@@ -54,6 +56,11 @@ public class GPSService extends Service {
     @Override
     public void onCreate() {
         notification=new Notifications(GPSService.this);
+        fusedLocationProviderClient=LocationServices.getFusedLocationProviderClient(GPSService.this);
+        locationRequest = LocationRequest.create();
+        locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);
+        locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);
+        locationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY); // Por defecto puse HIGH solo para verificar que andaba
         super.onCreate();
     }
 
@@ -67,16 +74,12 @@ public class GPSService extends Service {
 
     public void startLocationService(){
 //        addNotification();
+
         if(tracking==null)
             tracking=new Tracking();
 
         if(!tracking.isCreated()) {
             //Init and create API Location services.
-            fusedLocationProviderClient=LocationServices.getFusedLocationProviderClient(GPSService.this);
-            locationRequest = LocationRequest.create();
-            locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);
-            locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);
-            locationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY); // Por defecto puse HIGH solo para verificar que andaba
             locationCallback = new LocationCallback() {
                 @Override
                 public void onLocationResult(@NonNull LocationResult locationResult) {
