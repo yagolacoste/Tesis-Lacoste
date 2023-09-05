@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.Tesis.bicycle.Dto.ApiRest.Request.FriendshipRequestDto;
 import com.Tesis.bicycle.Presenter.Adapter.OnRequestSentListener;
 import com.Tesis.bicycle.Presenter.Adapter.ReceivedRequestAdapter;
+import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.FriendshipRequestViewModel;
 
 import java.util.List;
@@ -19,11 +20,11 @@ import java.util.List;
 
 public class FriendshipRequestFragment extends BaseListViewFragment implements OnRequestSentListener {
 
-    private List<FriendshipRequestDto> friendshipRequestDtoList;
-
     private ReceivedRequestAdapter adapter;
 
     private FriendshipRequestViewModel friendshipRequestViewModel;
+
+    private String text="You haven't friends request";
 
 
     @Override
@@ -31,6 +32,8 @@ public class FriendshipRequestFragment extends BaseListViewFragment implements O
         View view= super.onCreateView(inflater, container, savedInstanceState);
         friendshipRequestViewModel =new ViewModelProvider(requireActivity()).get(FriendshipRequestViewModel.class);
         floatingactionbutton.setVisibility(View.INVISIBLE);
+        imgLayoutEmpty.setImageResource(R.drawable.ic_notification);
+        txtLayoutEmpty.setText(text);
         getListView();
         return view;
     }

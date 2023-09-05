@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -132,16 +133,27 @@ public class OpenStreetMap {
 
     public void drawStatic(List<GeoPoint> points) {
         myOpenMapView.setBuiltInZoomControls(false);
-        myOpenMapView.setClickable(false);
+        myOpenMapView.setClickable(true);
         myOpenMapView.setEnabled(false);
         myOpenMapView.getController().stopAnimation(true);
         myOpenMapView.setMultiTouchControls(false);
+
+
+
         // Calcula la bounding box (área que contiene todos los puntos)
         BoundingBox boundingBox = BoundingBox.fromGeoPoints(points);
-        // Establece la vista del mapa para que abarque toda la ruta
+
+        // Establece un margen para que el recorrido no quede justo en los bordes
+        int padding = 100; // Puedes ajustar este valor según tus necesidades
+
+        // Calcula el nivel de zoom para mostrar toda la ruta
         IMapController mapController = myOpenMapView.getController();
-        mapController.zoomToSpan(boundingBox.getLatitudeSpan(), boundingBox.getLongitudeSpan());
+        int zoom = calculateZoomLevel(boundingBox, myOpenMapView.getWidth(), myOpenMapView.getHeight(), padding);
+        mapController.setZoom(zoom);
+
+        // Centra el mapa en el centro de la BoundingBox
         mapController.setCenter(boundingBox.getCenter());
+
         // Restringe las interacciones de gestos
         myOpenMapView.setMultiTouchControls(false);
 
@@ -150,40 +162,35 @@ public class OpenStreetMap {
         Marker startMarker = new Marker(myOpenMapView);
         startMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_location));
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        Road road = roadManager.getRoad((ArrayList<GeoPoint>) points);
-        startMarker.setPosition(road.getRouteLow().get(0));
+        startMarker.setPosition(points.get(0));
         myOpenMapView.getOverlays().add(startMarker);
 
-        roadOverlay = RoadManager.buildRoadOverlay(road, color, 25f);
+        roadOverlay = RoadManager.buildRoadOverlay(roadManager.getRoad((ArrayList<GeoPoint>) points), color, 25f);
         myOpenMapView.getOverlays().add(roadOverlay);
 
         Marker endMarker = new Marker(myOpenMapView);
         endMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_finish_flag_convert));
         endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        endMarker.setPosition(road.getRouteLow().get(road.getRouteLow().size() - 1));
+        endMarker.setPosition(points.get(points.size() - 1));
         myOpenMapView.getOverlays().add(endMarker);
 
         myOpenMapView.invalidate();
     }
 
+    private int calculateZoomLevel(BoundingBox boundingBox, int mapWidth, int mapHeight, int padding) {
+        final int WORLD_SIZE = 256; // Tamaño del mundo en píxeles a nivel de zoom 0
+        double latSpan = boundingBox.getLatitudeSpan();
+        double lonSpan = boundingBox.getLongitudeSpan();
+        double maxSpan = Math.max(latSpan, lonSpan);
 
+        for (int i = 0; i <= 18; i++) {
+            if ((maxSpan * WORLD_SIZE / (1 << i)) + padding * 2 < Math.min(mapWidth, mapHeight)) {
+                return i;
+            }
+        }
 
-
-    public  Bitmap captureMapAndCrop(int width ,int height) {
-
-        // Capturar la vista del mapa en un Canvas
-//        int width = myOpenMapView.getWidth();
-//        int height = myOpenMapView.getHeight();
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        myOpenMapView.draw(canvas);
-
-        Bitmap croppedMap = Bitmap.createBitmap(bitmap, 0, 0, width, height);
-
-        return croppedMap;
+        return 18; // Nivel de zoom máximo
     }
-
-
 
 
     public Polyline getRoadOverlay() {
