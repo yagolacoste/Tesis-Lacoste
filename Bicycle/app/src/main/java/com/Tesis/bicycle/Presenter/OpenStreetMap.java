@@ -132,46 +132,27 @@ public class OpenStreetMap {
     }
 
     public void drawStatic(List<GeoPoint> points) {
-        myOpenMapView.setBuiltInZoomControls(false);
-        myOpenMapView.setClickable(true);
+        //myOpenMapView.setBuiltInZoomControls(false);
+        myOpenMapView.setClickable(false);
         myOpenMapView.setEnabled(false);
         myOpenMapView.getController().stopAnimation(true);
-        myOpenMapView.setMultiTouchControls(false);
-
-
-
-        // Calcula la bounding box (área que contiene todos los puntos)
-        BoundingBox boundingBox = BoundingBox.fromGeoPoints(points);
-
-        // Establece un margen para que el recorrido no quede justo en los bordes
-        int padding = 100; // Puedes ajustar este valor según tus necesidades
-
-        // Calcula el nivel de zoom para mostrar toda la ruta
-        IMapController mapController = myOpenMapView.getController();
-        int zoom = calculateZoomLevel(boundingBox, myOpenMapView.getWidth(), myOpenMapView.getHeight(), padding);
-        mapController.setZoom(zoom);
-
-        // Centra el mapa en el centro de la BoundingBox
-        mapController.setCenter(boundingBox.getCenter());
-
-        // Restringe las interacciones de gestos
-        myOpenMapView.setMultiTouchControls(false);
 
         this.mCompassOverlay.disableCompass();
 
         Marker startMarker = new Marker(myOpenMapView);
         startMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_location));
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        startMarker.setPosition(points.get(0));
+        Road road = roadManager.getRoad((ArrayList<GeoPoint>) points);
+        startMarker.setPosition(road.getRouteLow().get(0));
         myOpenMapView.getOverlays().add(startMarker);
 
-        roadOverlay = RoadManager.buildRoadOverlay(roadManager.getRoad((ArrayList<GeoPoint>) points), color, 25f);
+        roadOverlay = RoadManager.buildRoadOverlay(road, color, 25f);
         myOpenMapView.getOverlays().add(roadOverlay);
 
         Marker endMarker = new Marker(myOpenMapView);
         endMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_finish_flag_convert));
         endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        endMarker.setPosition(points.get(points.size() - 1));
+        endMarker.setPosition(road.getRouteLow().get(road.getRouteLow().size() - 1));
         myOpenMapView.getOverlays().add(endMarker);
 
         myOpenMapView.invalidate();

@@ -1,5 +1,6 @@
 package com.Tesis.bicycle.Activity.ui.Fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.StringRes;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.Tesis.bicycle.Dto.ApiRest.Statistics.ClassificationDto;
 import com.Tesis.bicycle.Presenter.Adapter.ClassificationRecyclerAdapter;
 import com.Tesis.bicycle.Presenter.Adapter.StatisticRecyclerViewAdapter;
 import com.Tesis.bicycle.R;
@@ -17,11 +19,18 @@ import com.Tesis.bicycle.ViewModel.StatisticsViewModel;
 import com.Tesis.bicycle.ViewModel.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ClassificationFragment extends BaseListViewFragment{
 
 
     private static final String ARG_TAB_NAME = "ARG_TAB_NAME";
 
+    private List<ClassificationDto> classificationList;
     private ClassificationRecyclerAdapter adapter;
     private StatisticsViewModel statisticsViewModel;
 
@@ -71,6 +80,80 @@ public class ClassificationFragment extends BaseListViewFragment{
             }
         });
 
+        fab_battle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    List<ClassificationDto> sortedList =classificationList.stream()
+                            .sorted(Comparator.comparingInt(c->c.getAchievementsDto().getBattleWinner()))
+                            .collect(Collectors.toList());
+                    Collections.reverse(sortedList); // Ordena en orden inverso
+
+                    // Actualiza la lista original con la lista ordenada
+                    classificationList.clear();
+                    classificationList.addAll(sortedList);
+
+                    adapter = new ClassificationRecyclerAdapter(classificationList);
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+        });
+        fab_distance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    List<ClassificationDto> sortedList = classificationList.stream()
+                            .sorted(Comparator.comparing(c -> c.getAchievementsDto().getDistanceMax()))
+                            .collect(Collectors.toList());
+
+                    Collections.reverse(sortedList); // Ordena en orden inverso
+
+                    // Actualiza la lista original con la lista ordenada
+                    classificationList.clear();
+                    classificationList.addAll(sortedList);
+
+                    adapter = new ClassificationRecyclerAdapter(classificationList);
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+        });
+        fab_cronometre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    List<ClassificationDto> sortedList =  classificationList.stream()
+                            .sorted(Comparator.comparing(achievement ->
+                                    achievement.getAchievementsDto().getTimeMin()))
+                            .collect(Collectors.toList());
+//                    Collections.reverse(sortedList); // Ordena en orden inverso
+
+                    // Actualiza la lista original con la lista ordenada
+                    classificationList.clear();
+                    classificationList.addAll(sortedList);
+
+                    adapter = new ClassificationRecyclerAdapter(classificationList);
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+        });
+        fab_speedometer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    List<ClassificationDto> sortedList = classificationList.stream()
+                            .sorted(Comparator.comparingDouble(c->c.getAchievementsDto().getSpeedMax()))
+                            .collect(Collectors.toList());
+                    Collections.reverse(sortedList); // Ordena en orden inverso
+
+                    // Actualiza la lista original con la lista ordenada
+                    classificationList.clear();
+                    classificationList.addAll(sortedList);
+
+                    adapter = new ClassificationRecyclerAdapter(classificationList);
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+        });
         getListView();
         return view;
     }
@@ -101,6 +184,7 @@ public class ClassificationFragment extends BaseListViewFragment{
             if(response.getAccessToken()!=null){
                 statisticsViewModel.getAchievements(response.getId()).observe(getViewLifecycleOwner(), resp->{
                     if(!resp.isEmpty()){
+                        classificationList = resp;
                         adapter=new ClassificationRecyclerAdapter(resp);
                         recyclerView.setAdapter(adapter);
                     }

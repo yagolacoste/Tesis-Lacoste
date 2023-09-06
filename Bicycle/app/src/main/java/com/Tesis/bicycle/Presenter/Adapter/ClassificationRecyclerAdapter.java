@@ -42,6 +42,7 @@ public class ClassificationRecyclerAdapter extends RecyclerView.Adapter<Classifi
                 .downloader(new OkHttp3Downloader(ClientRetrofit.getHttp()))
                 .build();
         picasso.load(url)
+                .rotate(270)
                 .error(R.drawable.image_not_found)
                 .into(holder.clImageViewUserPicture);
         holder.clTextViewName.setText(classifications.get(position).getProfileUserDto().getNameComplete());

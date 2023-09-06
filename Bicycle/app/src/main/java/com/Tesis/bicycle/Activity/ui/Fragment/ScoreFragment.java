@@ -123,6 +123,7 @@ public class ScoreFragment extends Fragment {
                                         .downloader(new OkHttp3Downloader(ClientRetrofit.getHttp()))
                                         .build();
                                 picasso.load(url)
+                                        .rotate(270)
                                         .error(R.drawable.image_not_found)
                                         .into(imgPLayerOne);
                                 url = ApiRestConnection.URL_STORED_DOCUMENT + "download?fileName=" + response.getFileNamePlayerOne();
@@ -130,6 +131,7 @@ public class ScoreFragment extends Fragment {
                                         .downloader(new OkHttp3Downloader(ClientRetrofit.getHttp()))
                                         .build();
                                 picasso.load(url)
+                                        .rotate(270)
                                         .error(R.drawable.image_not_found)
                                         .into(imgPLayerTwo);
                                 score.setText(response.getPlayerOneScore()+" - "+response.getPlayerTwoScore());
