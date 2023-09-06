@@ -98,4 +98,5 @@ dependencies {
     /////////////////Libreria Douglas-Peucker ///////////////////////////
     implementation 'org.locationtech.jts:jts-core:1.16.1'
 
+
 }

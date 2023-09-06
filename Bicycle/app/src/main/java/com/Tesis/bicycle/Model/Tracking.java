@@ -105,7 +105,7 @@ public class Tracking implements Serializable {
             // Verificar si la posición actual se encuentra dentro del umbral de proximidad
             //double distance = calculateDistance(location, points.get(nearestIndex));
             float distance =location.distanceTo( points.get(nearestIndex));
-            if (distance <= 25.0f) {
+            if (distance <= 50.0f) {
                 return true; // El objeto está siguiendo la ruta correctamente
             }
         }

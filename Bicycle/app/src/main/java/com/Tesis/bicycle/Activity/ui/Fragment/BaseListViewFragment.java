@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.pm.PermissionInfoCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,6 +34,8 @@ public abstract class BaseListViewFragment extends Fragment {
 
     protected FloatingActionButton floatingactionbutton;
 
+    protected Boolean menuOpen=false;
+
     protected Context context;
 
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -42,6 +46,9 @@ public abstract class BaseListViewFragment extends Fragment {
 
     protected LinearLayout layoutEmpty;
 
+
+
+    protected OvershootInterpolator interpolator=new OvershootInterpolator();
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -62,6 +69,10 @@ public abstract class BaseListViewFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         accessTokenRoomViewModel=new ViewModelProvider(this).get(AccessTokenRoomViewModel.class);
+
+
+
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -72,6 +83,7 @@ public abstract class BaseListViewFragment extends Fragment {
 
         return view;
     }
+
 
 
 
