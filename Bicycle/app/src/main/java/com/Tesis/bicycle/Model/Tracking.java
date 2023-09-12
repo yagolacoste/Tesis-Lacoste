@@ -63,6 +63,10 @@ public class Tracking implements Serializable {
 
     private Long image;
 
+    private static final double MIN_DISTANCE_THRESHOLD = 10.0; // Establece un valor apropiado en metros
+
+    private static final double MAX_ANGLE_THRESHOLD = 270.0; // Establece un valor apropiado en grados
+
     public Tracking() {
 
     }
@@ -76,14 +80,19 @@ public class Tracking implements Serializable {
         repeat=true;
     }
 
-
-
     public void addTracking(Location currentLocation) {
+        if (isCoordinateValid(currentLocation)) {
+            // La nueva coordenada es válida, agrégala al historial
+            addCoordinateToHistory(currentLocation);
+        }
+        this.currentLocation=currentLocation;
+    }
+
+    private void addCoordinateToHistory(Location currentLocation) {
         if(points.isEmpty()) {
             avgSpeed=currentLocation.getSpeed();
         }else{
             Location lastPoint = points.get(points.size() - 1);
-//            if(lastPoint.distanceTo(currentLocation)>1.5f)//preguntar por el umbral
                 distance += lastPoint.distanceTo(currentLocation);
             timeElapsedBetweenTrkPoints +=Math.abs(this.getLastPoint().getTime()-currentLocation.getTime());
             avgSpeedFromSUVAT = ((distance / (float) 1000) / (getCurrentTimeMillis() / (float) 3600000));
@@ -94,8 +103,115 @@ public class Tracking implements Serializable {
             avgSpeed=totalSpeedForRunningAverage/totalTrkPointsWithSpeedForRunningAverage;
         }
         points.add(currentLocation);
-        this.currentLocation=currentLocation;
+        //this.currentLocation=currentLocation;
+
     }
+
+    private boolean isCoordinateValid(Location currentLocation) {
+        // Obtén la última coordenada válida en tu historial
+        Location lastValidLocation = getLastValidCoordinate();
+
+        if (lastValidLocation == null) {
+//            this.currentLocation=currentLocation;
+            // No hay coordenadas válidas anteriores, considera la nueva coordenada válida
+            return true;
+        }
+
+        // Calcula la distancia entre la última coordenada válida y la nueva coordenada
+        double distance = calculateDistance(
+                lastValidLocation.getLatitude(), lastValidLocation.getLongitude(),
+                currentLocation.getLatitude(), currentLocation.getLongitude()
+        );
+
+        // Calcula el ángulo entre la dirección actual y la dirección de movimiento desde la última coordenada válida
+        double angle = calculateAngle(lastValidLocation, currentLocation);
+
+        // Comprueba si la distancia es mayor o igual que MIN_DISTANCE_THRESHOLD
+        // y el ángulo es menor o igual que MAX_ANGLE_THRESHOLD
+        return distance >= MIN_DISTANCE_THRESHOLD && angle <= MAX_ANGLE_THRESHOLD;
+    }
+
+    private Location getLastValidCoordinate() {
+        if (!points.isEmpty()) {
+            return points.get(points.size() - 1);
+        }
+        return null;
+    }
+
+    private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+        // Radio de la Tierra en metros
+        final double R = 6371e3; // metros
+
+        // Convierte las coordenadas de grados a radianes
+        double lat1Rad = Math.toRadians(lat1);
+        double lon1Rad = Math.toRadians(lon1);
+        double lat2Rad = Math.toRadians(lat2);
+        double lon2Rad = Math.toRadians(lon2);
+
+        // Diferencia de latitud y longitud
+        double dlat = lat2Rad - lat1Rad;
+        double dlon = lon2Rad - lon1Rad;
+
+        // Fórmula de Haversine para calcular la distancia
+        double a = Math.sin(dlat / 2) * Math.sin(dlat / 2) +
+                Math.cos(lat1Rad) * Math.cos(lat2Rad) *
+                        Math.sin(dlon / 2) * Math.sin(dlon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = R * c;
+
+        return distance;
+    }
+    private double calculateAngle(Location location1, Location location2) {
+        double lat1 = location1.getLatitude();
+        double lon1 = location1.getLongitude();
+        double lat2 = location2.getLatitude();
+        double lon2 = location2.getLongitude();
+
+        // Convierte las coordenadas de grados a radianes
+        double lat1Rad = Math.toRadians(lat1);
+        double lon1Rad = Math.toRadians(lon1);
+        double lat2Rad = Math.toRadians(lat2);
+        double lon2Rad = Math.toRadians(lon2);
+
+        // Diferencia de longitud entre las coordenadas
+        double dlon = lon2Rad - lon1Rad;
+
+        // Fórmula del ángulo entre direcciones (azimuth) en radianes
+        double y = Math.sin(dlon) * Math.cos(lat2Rad);
+        double x = Math.cos(lat1Rad) * Math.sin(lat2Rad) -
+                Math.sin(lat1Rad) * Math.cos(lat2Rad) * Math.cos(dlon);
+        double azimuthRad = Math.atan2(y, x);
+
+        // Convierte el ángulo de radianes a grados
+        double azimuthDegrees = Math.toDegrees(azimuthRad);
+
+        // Asegura que el ángulo esté en el rango [0, 360)
+        azimuthDegrees = (azimuthDegrees + 360) % 360;
+
+        return azimuthDegrees;
+    }
+
+
+
+
+//    public void addTracking(Location currentLocation) {
+//        if(points.isEmpty()) {
+//            avgSpeed=currentLocation.getSpeed();
+//        }else{
+//            Location lastPoint = points.get(points.size() - 1);
+////            if(lastPoint.distanceTo(currentLocation)>1.5f)//preguntar por el umbral
+//                distance += lastPoint.distanceTo(currentLocation);
+//            timeElapsedBetweenTrkPoints +=Math.abs(this.getLastPoint().getTime()-currentLocation.getTime());
+//            avgSpeedFromSUVAT = ((distance / (float) 1000) / (getCurrentTimeMillis() / (float) 3600000));
+//        }
+//        if(currentLocation.getSpeed()!=0){
+//            totalSpeedForRunningAverage+=currentLocation.getSpeed();
+//            totalTrkPointsWithSpeedForRunningAverage+=1;
+//            avgSpeed=totalSpeedForRunningAverage/totalTrkPointsWithSpeedForRunningAverage;
+//        }
+//        points.add(currentLocation);
+//        this.currentLocation=currentLocation;
+//    }
 
     public boolean trackingRoute(Location location){
         List<Location>points=convertRouteReplay();
@@ -144,8 +260,6 @@ public class Tracking implements Serializable {
 
 
     public Location getLastPoint(){
-//        if(!points.isEmpty())
-//            return points.get(points.size()-1);
         return currentLocation;
     }
 
