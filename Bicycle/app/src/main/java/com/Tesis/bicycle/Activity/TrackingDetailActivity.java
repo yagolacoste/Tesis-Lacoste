@@ -123,7 +123,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
             return true;
         }else if(!locationBinder.isDeviation()){
             return true;
-        }else if(locationBinder.getDistancesRoutes()>30.0f){
+        }else if(locationBinder.getDistancesRoutes()>45.0f){
                 return true;
             }
         return false;
