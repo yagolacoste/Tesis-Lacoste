@@ -95,7 +95,8 @@ public class TrackingDetailActivity extends AppCompatActivity {
     private void updateUI() {
         openStreetMap.initLayer(TrackingDetailActivity.this,locationBinder.getGeoPoints().get(0));
         tvDistanceTrackingDetail.setText(String.valueOf(locationBinder.getDistanceString()));
-        tvSpeedTrackingDetail.setText(locationBinder.getAvgSpeedCalcualted());
+        tvSpeedTrackingDetail.setText(locationBinder.getAvgSpeedToString());
+        //tvSpeedTrackingDetail.setText(locationBinder.getAvgSpeedCalcualtedToString());
         tvTimeTrackingDetail.setText(locationBinder.getDuration());
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         tvDateTrackingDetail.setText(formatter.format(locationBinder.getTimeCreated()));

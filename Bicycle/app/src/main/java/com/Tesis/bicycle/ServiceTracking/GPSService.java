@@ -259,17 +259,13 @@ public class GPSService extends Service {
 
         public float getDistancesRoutes(){return tracking.getDistancesRoutes();}
 
-        public String getAvgSpeedCalcualted(){
-            return tracking.getAvgSpeedFromSUVAT();
+        public String getAvgSpeedCalcualtedToString(){
+            return tracking.getAvgSpeedFromSUVATToString();
+        }
+        public String getAvgSpeedToString(){
+            return tracking.getAvgSpeedString();
         }
 
-        public Long getImage(){
-            return tracking.getImage();
-        }
-
-        public void setImage(Long imageId){
-            tracking.setImage(imageId);
-        }
 
 
     }

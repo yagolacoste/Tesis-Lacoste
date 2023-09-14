@@ -34,11 +34,11 @@ import kotlin.jvm.Transient;
 public class Tracking implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final float MAX_SPEED_THRESHOLD =100.0F ;
-    private static final float MAX_ACCURACY_THRESHOLD =20.0F ;
-    private static final long MIN_TIME_DIFFERENCE =  10000 ;
+    private static final float MAX_SPEED_THRESHOLD =100.0F ; //100 m/s
+    private static final float MAX_ACCURACY_THRESHOLD =20.0F ; //20 metros
+    private static final long MIN_TIME_DIFFERENCE = 3000 ;//3 seg
 
-    private static final float MIN_MOVEMENT_THRESHOLD = 15.0F; // 15 metros
+    private static final float MIN_MOVEMENT_THRESHOLD = 3.0F; // 3 metros
     private String id;
     private String title="";
     private String description="";
@@ -66,7 +66,6 @@ public class Tracking implements Serializable {
 
     private Location lastValidLocation ;//ultima location valida (VER COMO MUESTRA EN MAPA)
 
-    private Long image;
 
     
 
@@ -100,9 +99,6 @@ public class Tracking implements Serializable {
             timeElapsedBetweenTrkPoints += Math.abs(lastPoint.getTime() - currentLocation.getTime());
             avgSpeedFromSUVAT = ((distance / (float) 1000) / (getCurrentTimeMillis() / (float) 3600000));
         }
-
-        // Aplicar filtros aquí
-        if (isCoordinateValid(currentLocation)) {
             if (currentLocation.getSpeed() != 0) {
                 totalSpeedForRunningAverage += currentLocation.getSpeed();
                 totalTrkPointsWithSpeedForRunningAverage += 1;
@@ -110,7 +106,6 @@ public class Tracking implements Serializable {
             }
             points.add(currentLocation);
             this.lastValidLocation = currentLocation;
-        }
     }
 
     private boolean isCoordinateValid(Location currentLocation) {
@@ -118,7 +113,18 @@ public class Tracking implements Serializable {
         // Puedes usar los filtros de precisión, velocidad, tiempo, etc., como se mencionó anteriormente
         // Retorna true si la coordenada cumple con tus criterios de validez, de lo contrario, retorna false
         // Por ejemplo:
-        if (currentLocation.getAccuracy() <= MAX_ACCURACY_THRESHOLD &&
+
+        if(points.isEmpty()){
+            return true;
+        }
+
+        float acc=currentLocation.getAccuracy();
+        float speed=currentLocation.getSpeed();
+        boolean temp= isTemporalFilterValid(currentLocation);
+        boolean dist= isDistanceFilterValid(currentLocation);
+
+
+        if ( currentLocation.getAccuracy()<= MAX_ACCURACY_THRESHOLD &&
                 currentLocation.getSpeed() < MAX_SPEED_THRESHOLD &&
                 isTemporalFilterValid(currentLocation) &&
                 isDistanceFilterValid(currentLocation)) {
@@ -145,7 +151,8 @@ public class Tracking implements Serializable {
         // y decidir si es válida o no
         // Retorna true si es válida, de lo contrario, retorna false
         // Por ejemplo:
-        if (lastValidLocation == null || lastValidLocation.getTime() - location.getTime() > MIN_TIME_DIFFERENCE) {
+        float temp=lastValidLocation.getTime() - location.getTime();
+        if (lastValidLocation == null || location.getTime() - lastValidLocation.getTime() > MIN_TIME_DIFFERENCE) {
            //lastValidLocation = location;
             return true;
         } else {
@@ -333,7 +340,7 @@ public class Tracking implements Serializable {
 
     public String getAvgSpeedString(){return String.format(Locale.UK, "%.2f", avgSpeed);}
 
-    public String getAvgSpeedFromSUVAT() {
+    public String getAvgSpeedFromSUVATToString() {
          return String.format(Locale.UK, "%.2f", avgSpeedFromSUVAT);
     }
 
@@ -417,8 +424,13 @@ public class Tracking implements Serializable {
         this.distance = distance;
     }
 
-    public float getAvgSpeed() {
+    public float getAvgSpeedFromSUVAT() {
+        //return avgSpeed;
         return avgSpeedFromSUVAT;
+    }
+
+    public float getAvgSpeed() {
+        return avgSpeed;
     }
 
     public void setAvgSpeed(float avgSpeed) {
@@ -546,13 +558,6 @@ public class Tracking implements Serializable {
         this.lastValidLocation = currentLocation;
     }
 
-    public Long getImage() {
-        return image;
-    }
-
-    public void setImage(Long image) {
-        this.image = image;
-    }
 
     @Override
     public String toString() {

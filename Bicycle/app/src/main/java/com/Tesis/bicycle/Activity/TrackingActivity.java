@@ -125,8 +125,8 @@ public class TrackingActivity extends Activity {
         @Override
         public void run() {
             tv_distance.setText(locationBinder.getDistanceString());
-//            tv_avgSpeed.setText(locationBinder.getAvgSpeedString());
-            tv_avgSpeed.setText(locationBinder.getAvgSpeedCalcualted());
+            tv_avgSpeed.setText(locationBinder.getAvgSpeedString());
+            //tv_avgSpeed.setText(locationBinder.getAvgSpeedCalcualted());
             if (locationBinder.getLastLocation() != null)
                 openStreetMap.updatePosition(locationBinder.getLastLocation());
             if (!stopped) updateStatsHandler.postDelayed(this, 1000);
