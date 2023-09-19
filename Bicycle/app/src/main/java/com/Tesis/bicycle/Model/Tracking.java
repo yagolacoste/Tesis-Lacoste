@@ -2,6 +2,7 @@ package com.Tesis.bicycle.Model;
 
 import android.location.Location;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -34,11 +35,12 @@ import kotlin.jvm.Transient;
 public class Tracking implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final float MAX_SPEED_THRESHOLD =100.0F ; //100 m/s
-    private static final float MAX_ACCURACY_THRESHOLD =20.0F ; //20 metros
+    private static final float MAX_SPEED_THRESHOLD =30.0F ; //30 m/s
+    private static final float MIN_SPEED_THRESHOLD =0.001F ; //0.1 m/s
+    private static final float MAX_ACCURACY_THRESHOLD =15.0F ; //15 metros
     private static final long MIN_TIME_DIFFERENCE = 3000 ;//3 seg
 
-    private static final float MIN_MOVEMENT_THRESHOLD = 3.0F; // 3 metros
+    private static final float MIN_MOVEMENT_THRESHOLD = 5.0F; // 5 metros
     private String id;
     private String title="";
     private String description="";
@@ -66,6 +68,8 @@ public class Tracking implements Serializable {
 
     private Location lastValidLocation ;//ultima location valida (VER COMO MUESTRA EN MAPA)
 
+    private Location newLocation;
+
 
     
 
@@ -83,11 +87,11 @@ public class Tracking implements Serializable {
     }
 
     public void addTracking(Location currentLocation) {
-        if (isCoordinateValid(currentLocation)) {
-            // La nueva coordenada es válida, agrégala al historial
-            addCoordinateToHistory(currentLocation);
-        }
-
+            if (isCoordinateValid(currentLocation)) {
+                // La nueva coordenada es válida, agrégala al historial
+                addCoordinateToHistory(currentLocation);
+            }
+        newLocation=currentLocation;
     }
 
     private void addCoordinateToHistory(Location currentLocation) {
@@ -109,25 +113,15 @@ public class Tracking implements Serializable {
     }
 
     private boolean isCoordinateValid(Location currentLocation) {
-        // Implementa tus filtros aquí
-        // Puedes usar los filtros de precisión, velocidad, tiempo, etc., como se mencionó anteriormente
-        // Retorna true si la coordenada cumple con tus criterios de validez, de lo contrario, retorna false
-        // Por ejemplo:
-
         if(points.isEmpty()){
             return true;
         }
-
-        float acc=currentLocation.getAccuracy();
-        float speed=currentLocation.getSpeed();
-        boolean temp= isTemporalFilterValid(currentLocation);
-        boolean dist= isDistanceFilterValid(currentLocation);
-
-
+        Log.d("La precison es ", String.valueOf(currentLocation.getAccuracy()));
+        Log.d("La velocidad es ", String.valueOf(currentLocation.getSpeed()));
         if ( currentLocation.getAccuracy()<= MAX_ACCURACY_THRESHOLD &&
-                currentLocation.getSpeed() < MAX_SPEED_THRESHOLD &&
-                isTemporalFilterValid(currentLocation) &&
-                isDistanceFilterValid(currentLocation)) {
+                isDistanceFilterValid(currentLocation) &&
+                (currentLocation.getSpeed()> MIN_SPEED_THRESHOLD&&
+                currentLocation.getSpeed() < MAX_SPEED_THRESHOLD)){
             return true;
         } else {
             return false;
@@ -146,7 +140,6 @@ public class Tracking implements Serializable {
     }
 
     private boolean isTemporalFilterValid(Location location) {
-        // Implementa tu filtro temporal aquí
         // Puedes verificar si la coordenada cambió demasiado rápido en un corto período de tiempo
         // y decidir si es válida o no
         // Retorna true si es válida, de lo contrario, retorna false
@@ -387,6 +380,14 @@ public class Tracking implements Serializable {
         }else return distance;
     }
 
+
+    public Location getNewLocation() {
+        return newLocation;
+    }
+
+    public void setNewLocation(Location newLocation) {
+        this.newLocation = newLocation;
+    }
 
     public  void setPoints(List<Location> points){
         this.points = points;

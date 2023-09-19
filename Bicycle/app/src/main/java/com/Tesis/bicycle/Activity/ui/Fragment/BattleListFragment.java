@@ -22,7 +22,6 @@ public class BattleListFragment extends BaseListViewFragment implements BattleRe
     private BattleRecyclerViewAdapter battleRecyclerViewAdapter;
     private UserViewModel userViewModel;
 
-    private String text="Your haven't battles";
 
     public static BattleListFragment newInstance(@StringRes int tabName) {
         BattleListFragment frg = new BattleListFragment();
@@ -40,6 +39,7 @@ public class BattleListFragment extends BaseListViewFragment implements BattleRe
         userViewModel=new ViewModelProvider(this).get(UserViewModel.class);
         floatingactionbutton.setActivated(true);
         imgLayoutEmpty.setImageResource(R.drawable.ic_competing_conver);
+        setText("Your haven't battles");
         txtLayoutEmpty.setText(text);
         getListView();
         floatingactionbutton.setOnClickListener(new View.OnClickListener() {

@@ -46,6 +46,7 @@ public abstract class BaseListViewFragment extends Fragment {
 
     protected LinearLayout layoutEmpty;
 
+    protected String text="Your haven't any route save";
 
 
     protected OvershootInterpolator interpolator=new OvershootInterpolator();
@@ -85,7 +86,13 @@ public abstract class BaseListViewFragment extends Fragment {
     }
 
 
+    public String getText() {
+        return text;
+    }
 
+    public void setText(String text) {
+        this.text = text;
+    }
 
     public abstract void getListView();
 

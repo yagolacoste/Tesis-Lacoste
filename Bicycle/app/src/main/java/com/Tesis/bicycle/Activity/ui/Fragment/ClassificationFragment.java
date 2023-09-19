@@ -69,8 +69,10 @@ public class ClassificationFragment extends BaseListViewFragment{
         fab_distance.setTranslationY(translationYaxis);
         floatingactionbutton.setVisibility(View.INVISIBLE);
         floatingactionbutton.setActivated(false);
-        layoutButtonMenuAction.setVisibility(View.VISIBLE);
-
+       // layoutButtonMenuAction.setVisibility(View.VISIBLE);
+        imgLayoutEmpty.setImageResource(R.drawable.ic_status);
+        setText("You haven't classification");
+        txtLayoutEmpty.setText(text);
         fab_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -184,12 +186,28 @@ public class ClassificationFragment extends BaseListViewFragment{
             if(response.getAccessToken()!=null){
                 statisticsViewModel.getAchievements(response.getId()).observe(getViewLifecycleOwner(), resp->{
                     if(!resp.isEmpty()){
+                        layoutEmpty.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        layoutButtonMenuAction.setVisibility(View.VISIBLE);
+//                        fab_main.setVisibility(View.VISIBLE);
+//                        fab_cronometre.setVisibility(View.VISIBLE);
+//                        fab_speedometer.setVisibility(View.VISIBLE);
+//                        fab_battle.setVisibility(View.VISIBLE);
+//                        fab_distance.setVisibility(View.VISIBLE);
                         classificationList = resp;
                         adapter=new ClassificationRecyclerAdapter(resp);
                         recyclerView.setAdapter(adapter);
                     }
-                    else
-                        Toast.makeText(context,"Not exist classification: ",Toast.LENGTH_SHORT).show();
+                    else{
+                        layoutEmpty.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+//                        fab_main.setVisibility(View.GONE);
+//                        fab_cronometre.setVisibility(View.GONE);
+//                        fab_speedometer.setVisibility(View.GONE);
+//                        fab_battle.setVisibility(View.GONE);
+//                        fab_distance.setVisibility(View.GONE);
+                        layoutButtonMenuAction.setVisibility(View.GONE);
+                    }
                 });
             }
         });

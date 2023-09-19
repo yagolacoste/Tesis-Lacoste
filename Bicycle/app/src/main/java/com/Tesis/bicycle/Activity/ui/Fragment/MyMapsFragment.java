@@ -34,7 +34,7 @@ public class MyMapsFragment extends BaseListViewFragment implements OnItemClickL
 
     private StatisticsViewModel statisticsViewModel;
 
-    private String text="Your haven't any route save";
+
 
 
 
@@ -45,6 +45,7 @@ public class MyMapsFragment extends BaseListViewFragment implements OnItemClickL
         statisticsViewModel =new ViewModelProvider(requireActivity()).get(StatisticsViewModel.class);
         floatingactionbutton.setVisibility(View.INVISIBLE);
         imgLayoutEmpty.setImageAlpha(R.drawable.ic_route);
+        setText("Your haven't any route save");
         txtLayoutEmpty.setText(text);
         getListView();
         return view;

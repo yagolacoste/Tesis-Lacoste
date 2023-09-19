@@ -3,6 +3,7 @@
     <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <!-- Cambiar el color de fondo del diálogo -->
         <item name="android:windowBackground">@color/customDialogBackground</item>
+<!--       <item name="android:background">@drawable/cycling</item>-->
         <!-- Cambiar el color del texto -->
         <item name="android:textColorPrimary">@color/customDialogText</item>
         <!-- Cambiar el color de los botones -->

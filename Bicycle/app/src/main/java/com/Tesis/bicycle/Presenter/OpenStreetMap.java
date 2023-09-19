@@ -150,7 +150,7 @@ public class OpenStreetMap {
         myOpenMapView.getOverlays().add(roadOverlay);
 
         Marker endMarker = new Marker(myOpenMapView);
-        endMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_finish_flag_convert));
+        endMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_flag));
         endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         endMarker.setPosition(road.getRouteLow().get(road.getRouteLow().size() - 1));
         myOpenMapView.getOverlays().add(endMarker);
@@ -158,20 +158,6 @@ public class OpenStreetMap {
         myOpenMapView.invalidate();
     }
 
-    private int calculateZoomLevel(BoundingBox boundingBox, int mapWidth, int mapHeight, int padding) {
-        final int WORLD_SIZE = 256; // Tamaño del mundo en píxeles a nivel de zoom 0
-        double latSpan = boundingBox.getLatitudeSpan();
-        double lonSpan = boundingBox.getLongitudeSpan();
-        double maxSpan = Math.max(latSpan, lonSpan);
-
-        for (int i = 0; i <= 18; i++) {
-            if ((maxSpan * WORLD_SIZE / (1 << i)) + padding * 2 < Math.min(mapWidth, mapHeight)) {
-                return i;
-            }
-        }
-
-        return 18; // Nivel de zoom máximo
-    }
 
 
     public Polyline getRoadOverlay() {

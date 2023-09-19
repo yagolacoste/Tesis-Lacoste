@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         txtNewUser.setOnClickListener(view -> {
-            Intent i=new Intent(this,RegisterUserActivity.class);
+            Intent i=new Intent(this, RegisterActivity.class);
             startActivity(i);
             overridePendingTransition(R.anim.left_in,R.anim.left_out);
         });

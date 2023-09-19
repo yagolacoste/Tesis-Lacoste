@@ -125,10 +125,11 @@ public class TrackingActivity extends Activity {
         @Override
         public void run() {
             tv_distance.setText(locationBinder.getDistanceString());
-            tv_avgSpeed.setText(locationBinder.getAvgSpeedString());
-            //tv_avgSpeed.setText(locationBinder.getAvgSpeedCalcualted());
+            //tv_avgSpeed.setText(locationBinder.getAvgSpeedString());
+            tv_avgSpeed.setText(locationBinder.getAvgSpeedCalcualtedToString());
             if (locationBinder.getLastLocation() != null)
-                openStreetMap.updatePosition(locationBinder.getLastLocation());
+                //openStreetMap.updatePosition(locationBinder.getLastLocation());
+                openStreetMap.updatePosition(locationBinder.getNewLocation());
             if (!stopped) updateStatsHandler.postDelayed(this, 1000);
         }
     };

@@ -235,6 +235,8 @@ public class GPSService extends Service {
 
         public Location getLastLocation(){return tracking.getLastPoint();}
 
+        public Location getNewLocation(){return tracking.getNewLocation();}
+
         public List<GeoPoint> getGeoPoints(){
                 return tracking.getGeoPoints();
             }

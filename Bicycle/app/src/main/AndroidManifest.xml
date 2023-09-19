@@ -60,7 +60,7 @@
             android:name=".Activity.TrackingDetailActivity"
             android:exported="true" />
         <activity
-            android:name=".Activity.RegisterUserActivity"
+            android:name=".Activity.RegisterActivity"
             android:exported="true" /> <!-- android:theme="@style/Theme.AppCompat.NoActionBar" /> &lt;!&ndash; android:theme="@style/Theme.AppCompat.NoActionBar"/> &ndash;&gt; -->
         <activity
             android:name=".Presenter.ListView.RouteListViewActivity"
