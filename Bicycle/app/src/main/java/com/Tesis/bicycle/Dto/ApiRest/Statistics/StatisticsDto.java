@@ -20,6 +20,9 @@ public class StatisticsDto implements Serializable {
     @JsonProperty("nameComplete")
     private String nameComplete;
 
+    @JsonProperty("fileName")
+    private String fileName;
+
     @JsonProperty("route")
     private String route;
 
@@ -151,4 +154,12 @@ public class StatisticsDto implements Serializable {
     }
 
     public String getAvgSpeedString(){return String.format(Locale.UK, "%.2f", avgSpeed);}
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 }

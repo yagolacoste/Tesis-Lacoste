@@ -1,6 +1,7 @@
 package com.Tesis.bicycle.Repository;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -22,10 +23,13 @@ import retrofit2.Response;
 public class StatisticsApiRepository {
 
     private static StatisticsApiRepository repository;
+
+    private  Context context;
     private final StatisticsApiService statisticsApiService;
 
 
     public StatisticsApiRepository(Context context) {
+        this.context=context;
         this.statisticsApiService = ApiRestConnection.getServiceStatistics(context);
     }
 
@@ -49,7 +53,7 @@ public class StatisticsApiRepository {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-
+                Toast.makeText(context,"No hay internet ",Toast.LENGTH_LONG).show();
             }
         });
         return mld;

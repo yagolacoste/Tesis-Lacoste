@@ -17,21 +17,53 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/rankNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/user_item"
-                android:text="User"
-                android:textSize="22sp"
                 android:padding="16dp"
-                android:textColor="@color/black"/>
+                android:text="1"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageRanking"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/image_not_found"
+                app:civ_border_color="#FFF"
+                app:civ_border_width="2dp"
+                android:layout_toRightOf="@id/rankNumber" />
+
             <TextView
+                android:id="@+id/user_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtTimeValue"
-                android:text="Time"
-                android:layout_alignParentRight="true"
                 android:padding="16dp"
-                android:textSize="18sp"/>
+                android:text="Yago Lacoste"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_toRightOf="@id/imageRanking" />
+
+            <!-- LinearLayout para organizar el TextView al final -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearLayoutTime"
+                android:orientation="horizontal"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtTimeValue"
+                    android:text="Time"
+                    android:layout_gravity="center_vertical"
+                    android:padding="16dp"
+                    android:textSize="18sp"/>
+            </LinearLayout>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"

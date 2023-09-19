@@ -88,7 +88,6 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
                 .build();
         Picasso.get().load(url)
                 .error(R.drawable.image_not_found)
-                .rotate(270)
                 .into(holder.profilePhotoSearchUser);
         if(requestDto.getStatus() == FriendshipRequestStatus.PENDING.getValue()){
             holder.btnSendRequest.setActivated(false);

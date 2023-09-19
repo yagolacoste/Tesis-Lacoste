@@ -23,6 +23,9 @@ public class StatisticsDto implements Serializable  {
     @JsonProperty("nameComplete")
     private String nameComplete;
 
+    @JsonProperty("fileName")
+    private String fileName;
+
     @JsonProperty("route")
     private String route;
 
@@ -49,6 +52,7 @@ public class StatisticsDto implements Serializable  {
         this.id=r.getId();
         this.nameComplete=r.getAppUser().getFirstName()+" "+r.getAppUser().getLastName();
         this.appUser=r.getAppUser().getId();
+        this.fileName=r.getAppUser().getStoredDocument().getCompleteFileName();
         this.route=r.getRoute().getId();
         this.weather=r.getWeather();
         this.avgSpeed=r.getAvgSpeed();
@@ -156,5 +160,19 @@ public class StatisticsDto implements Serializable  {
     public Date getTimeCreated() {
 
         return timeCreated;
+    }
+
+
+
+    public String getFileName() {
+
+        return fileName;
+    }
+
+
+
+    public void setFileName(String fileName) {
+
+        this.fileName = fileName;
     }
 }

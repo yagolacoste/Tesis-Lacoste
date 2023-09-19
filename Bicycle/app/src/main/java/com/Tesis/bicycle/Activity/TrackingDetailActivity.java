@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.Tesis.bicycle.Activity.ui.NavInitActivity;
 import com.Tesis.bicycle.Constants;
@@ -58,9 +59,6 @@ public class TrackingDetailActivity extends AppCompatActivity {
     private GPSService.LocationBinder locationBinder=null;
     private AccessTokenRoomViewModel accessTokenRoomViewModel;
     private StatisticsViewModel statisticsViewModel;
-
-    private StoredDocumentViewModel storedDocumentViewModel;
-    private RouteViewModel routeViewModel;
 
     private OpenStreetMap openStreetMap;
 
@@ -143,8 +141,6 @@ public class TrackingDetailActivity extends AppCompatActivity {
         final ViewModelProvider vmp = new ViewModelProvider(this);
         this.accessTokenRoomViewModel=vmp.get(AccessTokenRoomViewModel.class);
         this.statisticsViewModel =vmp.get(StatisticsViewModel.class);
-        this.storedDocumentViewModel=vmp.get(StoredDocumentViewModel.class);
-        this.routeViewModel=vmp.get(RouteViewModel.class);
     }
 
     private void init(){
@@ -204,6 +200,8 @@ public class TrackingDetailActivity extends AppCompatActivity {
                     } else
                         notifications.addNotification("Congratulation!", "You save new route ! ");
                     backToMenuActivity();
+                }else {
+                    Toast.makeText(this,"No hay internet ",Toast.LENGTH_LONG).show();
                 }
             });
         });

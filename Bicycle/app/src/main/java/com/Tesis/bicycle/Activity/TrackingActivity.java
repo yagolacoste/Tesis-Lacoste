@@ -214,7 +214,7 @@ public class TrackingActivity extends Activity {
                     locationUpdatesActive=false;
                     if(action!=null){
                         if (equalsPosition()) {
-                            notifications.warningMessage("Pro favor esta en el inicio de la carrera");
+                            notifications.warningMessage("Please, start at the beginning of the tour.");
                         }
                         else{
                             stopLocationUpdates();
