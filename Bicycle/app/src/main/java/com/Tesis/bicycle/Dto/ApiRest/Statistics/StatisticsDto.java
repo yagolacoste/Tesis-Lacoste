@@ -136,7 +136,7 @@ public class StatisticsDto implements Serializable {
         int metres = Math.round(distance);
         int km = metres / 1000;
         metres = metres % 1000;
-        String format = "%d";//buscar
+        String format = "%d";
 
         if (km == 0) {
             if (b) {

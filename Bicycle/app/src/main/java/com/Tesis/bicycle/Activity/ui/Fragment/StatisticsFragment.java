@@ -43,8 +43,10 @@ public class StatisticsFragment  extends BaseListViewFragment {
         Bundle args = getArguments();
         if (args != null) {
             routeSelect = args.getString(Constants.ROUTE_ID);
-            // Haz lo que necesites con el routeId
         }
+        imgLayoutEmpty.setImageAlpha(R.drawable.ic_statistics);
+        setText("Your haven't any route save");
+        txtLayoutEmpty.setText(text);
         getListView();
         return view;
     }
@@ -55,12 +57,16 @@ public class StatisticsFragment  extends BaseListViewFragment {
             if(response.getAccessToken()!=null){
                 statisticsViewModel.getStatisticByRoute(routeSelect).observe(getViewLifecycleOwner(), resp->{
                     if(!resp.isEmpty()){
+                        layoutEmpty.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
                         statistics = resp;
                         adaptorStatistics=new StatisticRecyclerViewAdapter(statistics);
                         recyclerView.setAdapter(adaptorStatistics);
                     }
-                    else
-                        Toast.makeText(context,"Not exist statistics for route: ",Toast.LENGTH_SHORT).show();
+                    else{
+                        layoutEmpty.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                    }
                 });
             }
         });

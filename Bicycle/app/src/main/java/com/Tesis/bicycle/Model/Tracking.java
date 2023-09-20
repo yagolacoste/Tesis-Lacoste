@@ -35,7 +35,7 @@ import kotlin.jvm.Transient;
 public class Tracking implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final float MAX_SPEED_THRESHOLD =30.0F ; //30 m/s
+    private static final float MAX_SPEED_THRESHOLD =20.0F ; //30 m/s
     private static final float MIN_SPEED_THRESHOLD =0.001F ; //0.1 m/s
     private static final float MAX_ACCURACY_THRESHOLD =15.0F ; //15 metros
     private static final long MIN_TIME_DIFFERENCE = 3000 ;//3 seg

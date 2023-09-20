@@ -178,7 +178,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
             StatisticsApiRest statisticsApiRest = new StatisticsApiRest();
             statisticsApiRest.setAppUser(refreshTokenDto.getId());
             statisticsApiRest.setDistance(locationBinder.getDistance());
-            statisticsApiRest.setAvgSpeed(locationBinder.getAvgSpeed());
+            statisticsApiRest.setAvgSpeed(locationBinder.getAvgSpeedCalculated());
             statisticsApiRest.setTime(locationBinder.getTimeLocalTime());
             statisticsApiRest.setTimeCreated(locationBinder.getTimeCreated());
             statisticsApiRest.setWeather("");

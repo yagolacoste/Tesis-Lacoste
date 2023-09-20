@@ -45,6 +45,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class OpenStreetMap {
@@ -132,12 +133,9 @@ public class OpenStreetMap {
     }
 
     public void drawStatic(List<GeoPoint> points) {
-        //myOpenMapView.setBuiltInZoomControls(false);
-        myOpenMapView.setClickable(false);
-        myOpenMapView.setEnabled(false);
-        myOpenMapView.getController().stopAnimation(true);
 
-        this.mCompassOverlay.disableCompass();
+
+
 
         Marker startMarker = new Marker(myOpenMapView);
         startMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_location));
@@ -154,7 +152,33 @@ public class OpenStreetMap {
         endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         endMarker.setPosition(road.getRouteLow().get(road.getRouteLow().size() - 1));
         myOpenMapView.getOverlays().add(endMarker);
+        GeoPoint minGeoPoint = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            minGeoPoint = points.stream().min(Comparator.comparing(GeoPoint::getLatitude)).get();
+        }
+        GeoPoint maxGeoPoint = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            maxGeoPoint = points.stream().max(Comparator.comparing(GeoPoint::getLatitude)).get();
+        }
+        // Obtención de las coordenadas del punto medio del recorrido
+        double lat = (points.get(0).getLatitude() + points.get(points.size() - 1).getLatitude()) / 2;
+        double lon = (points.get(0).getLongitude() + points.get(points.size() - 1).getLongitude()) / 2;
 
+        // Centrado del mapa en el punto medio
+        myOpenMapView.getController().setCenter(new GeoPoint(lat, lon));
+
+        // Conversión de los GeoPoint en doubles
+        double minLat = minGeoPoint.getLatitude();
+        double maxLat = maxGeoPoint.getLatitude();
+
+        // Ajuste automático del zoom para que se pueda visualizar todo el recorrido marcado
+        myOpenMapView.getController().zoomToSpan(minLat, maxLat);
+
+        myOpenMapView.setBuiltInZoomControls(false);
+        myOpenMapView.setClickable(false);
+        myOpenMapView.setEnabled(false);
+        myOpenMapView.getController().stopAnimation(true);
+        this.mCompassOverlay.disableCompass();
         myOpenMapView.invalidate();
     }
 

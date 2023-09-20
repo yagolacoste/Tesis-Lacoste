@@ -227,6 +227,9 @@ public class GPSService extends Service {
         public float getAvgSpeed() {
             return tracking.getAvgSpeed();
         }
+        public float getAvgSpeedCalculated() {
+            return tracking.getAvgSpeedFromSUVAT();
+        }
 
         //Get the average speed as a string
         public String getAvgSpeedString() {
