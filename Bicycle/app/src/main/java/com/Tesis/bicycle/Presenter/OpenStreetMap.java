@@ -133,10 +133,6 @@ public class OpenStreetMap {
     }
 
     public void drawStatic(List<GeoPoint> points) {
-
-
-
-
         Marker startMarker = new Marker(myOpenMapView);
         startMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_location));
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
@@ -168,10 +164,14 @@ public class OpenStreetMap {
         myOpenMapView.getController().setCenter(new GeoPoint(lat, lon));
 
         // Conversión de los GeoPoint en doubles
-        double minLat = minGeoPoint.getLatitude();
-        double maxLat = maxGeoPoint.getLatitude();
+//        double minLat = minGeoPoint.getLatitude();
+//        double maxLat = maxGeoPoint.getLatitude();
+
+
 
         // Ajuste automático del zoom para que se pueda visualizar todo el recorrido marcado
+        double minLat=points.get(0).getLatitude();
+        double maxLat=points.get(points.size() - 1).getLatitude();
         myOpenMapView.getController().zoomToSpan(minLat, maxLat);
 
         myOpenMapView.setBuiltInZoomControls(false);

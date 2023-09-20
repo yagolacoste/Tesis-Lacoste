@@ -88,7 +88,7 @@ public class GPSService extends Service {
                         return;
                     }
                     if (locationResult != null ) {
-                       for(Location location:locationResult.getLocations()){// tengo que ver esto que onda
+                       for(Location location:locationResult.getLocations()){
                            tracking.addTracking(location);
 //                           if(tracking.isRepeat() && tracking.getPoints().size()>3){
                             if(tracking.isRepeat()){

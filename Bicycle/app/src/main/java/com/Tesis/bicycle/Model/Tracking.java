@@ -182,7 +182,7 @@ public class Tracking implements Serializable {
             // Verificar si la posición actual se encuentra dentro del umbral de proximidad
             //double distance = calculateDistance(location, points.get(nearestIndex));
             float distance =location.distanceTo( points.get(nearestIndex));
-            if (distance <= 45.0f) {
+            if (distance <= 20.0f) { //Verifica si la distancia es menor a 20 metros entre la nueva localizacion y el proximo punto de proximidad
                 return true; // El objeto está siguiendo la ruta correctamente
             }
         }
@@ -359,6 +359,7 @@ public class Tracking implements Serializable {
         return routeReplay;
     }
 
+    //Revisa la distancia entre ambas rutas sea la misma o proxima con diferencia de 15 metros
     public float getDistancesRoutes(){
         float totalDistance =0;
         List<Location> route=convertRouteReplay();
