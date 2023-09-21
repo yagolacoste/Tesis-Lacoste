@@ -41,7 +41,7 @@ public class Tracking implements Serializable {
     private static final long MIN_TIME_DIFFERENCE = 3000 ;//3 seg
 
     private static final float MIN_MOVEMENT_THRESHOLD = 5.0F; // 5 metros
-    private static final int THRESHOLD_DIRECTION = 45;
+    private static final int THRESHOLD_DIRECTION = 35;
     private String id;
     private String title="";
     private String description="";
@@ -65,11 +65,13 @@ public class Tracking implements Serializable {
 
     private Long battle;
 
-    private boolean deviation=true;
+    private boolean desviation=true;
 
     private Location lastValidLocation ;//ultima location valida (VER COMO MUESTRA EN MAPA)
 
     private Location newLocation;
+
+    private boolean notificationDisplayed = false;
 
 
     
@@ -88,12 +90,20 @@ public class Tracking implements Serializable {
     }
 
     public void addTracking(Location currentLocation) {
-            if (isCoordinateValid(currentLocation)) {
-                // La nueva coordenada es válida, agrégala al historial
+            if (isCoordinateValid(currentLocation)) {// revisa que la coordenada sea precisa , yq ue este en el movimiento adecuado
+                if(isRepeat()){ //Reviso si es repetido el camino
+                    this.setDesviation(this.checkingNearestNewPointAndNextPointIndex(currentLocation));//Revisa y setea si se devio entre el proximo punto de mi listado almacenado y el nuevo punto
+                    if (!this.isDesviation() && !notificationDisplayed) {
+                        notificationDisplayed = true;
+                        // Establece una bandera de desviación en tu objeto 'tracking' si se desvía
+                        //this.setDesviation(true);
+                    }
+                }
                 addCoordinateToHistory(currentLocation);
             }
         newLocation=currentLocation;
     }
+
 
     private void addCoordinateToHistory(Location currentLocation) {
         if (points.isEmpty()) {
@@ -117,15 +127,12 @@ public class Tracking implements Serializable {
         if(points.isEmpty()){
             return true;
         }
-        Log.d("La precison es ", String.valueOf(currentLocation.getAccuracy()));
-        Log.d("La velocidad es ", String.valueOf(currentLocation.getSpeed()));
-
         double bearing = currentLocation.getBearing() - lastValidLocation.getBearing();
         if ( currentLocation.getAccuracy()<= MAX_ACCURACY_THRESHOLD &&
                 isDistanceFilterValid(currentLocation) &&
                 (currentLocation.getSpeed()> MIN_SPEED_THRESHOLD&&
                 currentLocation.getSpeed() < MAX_SPEED_THRESHOLD) &&
-                Math.abs(bearing) > THRESHOLD_DIRECTION){
+                Math.abs(bearing) > THRESHOLD_DIRECTION){//no estoy seguro de esto
             return true;
         } else {
             return false;
@@ -145,9 +152,6 @@ public class Tracking implements Serializable {
 
     private boolean isTemporalFilterValid(Location location) {
         // Puedes verificar si la coordenada cambió demasiado rápido en un corto período de tiempo
-        // y decidir si es válida o no
-        // Retorna true si es válida, de lo contrario, retorna false
-        // Por ejemplo:
         float temp=lastValidLocation.getTime() - location.getTime();
         if (lastValidLocation == null || location.getTime() - lastValidLocation.getTime() > MIN_TIME_DIFFERENCE) {
            //lastValidLocation = location;
@@ -178,7 +182,7 @@ public class Tracking implements Serializable {
 //        this.currentLocation=currentLocation;
 //    }
 
-    public boolean trackingRoute(Location location){
+    public boolean checkingNearestNewPointAndNextPointIndex(Location location){
         List<Location>points=convertRouteReplay();
 
         int nearestIndex = findNearestPointIndex(location);
@@ -199,7 +203,6 @@ public class Tracking implements Serializable {
         int nearestIndex = -1;
 
         for (int i = 0; i < convertRouteReplay().size(); i++) {
-            //double distance = calculateDistance(currentLocation, convertGeoPoint().get(i));
             float distance=currentLocation.distanceTo(convertRouteReplay().get(i));
             if (distance < minDistance) {
                 minDistance = distance;
@@ -548,12 +551,12 @@ public class Tracking implements Serializable {
     }
 
 
-    public boolean isDeviation() {
-        return deviation;
+    public boolean isDesviation() {
+        return desviation;
     }
 
-    public void setDeviation(boolean deviation) {
-        this.deviation = deviation;
+    public void setDesviation(boolean desviation) {
+        this.desviation = desviation;
     }
 
     public Location getCurrentLocation() {

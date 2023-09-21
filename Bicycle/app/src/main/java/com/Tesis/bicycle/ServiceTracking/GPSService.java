@@ -90,14 +90,10 @@ public class GPSService extends Service {
                     if (locationResult != null ) {
                        for(Location location:locationResult.getLocations()){
                            tracking.addTracking(location);
-//                           if(tracking.isRepeat() && tracking.getPoints().size()>3){
-                            if(tracking.isRepeat()){
-                             tracking.setDeviation(tracking.trackingRoute(location));
-                               if(!tracking.isDeviation() && !notificationDisplayed){
-                                   notification.addNotification("Alert","te saliste del camino");
-                                   notificationDisplayed=true;
-                               }
-                           }
+                            if (tracking.isDesviation() && !notificationDisplayed) {
+                                notification.addNotification("Alert", "te saliste del camino");
+                                notificationDisplayed = true;
+                            }
                        }
                     }
                 }
@@ -250,12 +246,12 @@ public class GPSService extends Service {
 
         public Long getBattleId(){return tracking.getBattle();}
 
-        public boolean trackingRoute(Location location){return tracking.trackingRoute(location);}
+        public boolean checkingNearestNewPointAndNextPointIndex(Location location){return tracking.checkingNearestNewPointAndNextPointIndex(location);}
 
         public List<Location>getCoordinates(){return tracking.getPoints();}
 
         public boolean isRepeat(){ return tracking.isRepeat();}
-        public boolean isDeviation(){ return tracking.isDeviation();}
+        public boolean isDeviation(){ return tracking.isDesviation();}
         public void setId(String id){tracking.setId(id);}
 
         public void setBattle(Long id){tracking.setBattle(id);}
