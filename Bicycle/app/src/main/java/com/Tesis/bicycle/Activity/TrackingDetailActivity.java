@@ -122,7 +122,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
             return true;
         }else if(!locationBinder.isDeviation()){
             return true;
-        }else if(locationBinder.getDistancesRoutes()>15.0f){
+        }else if(locationBinder.getDistancesRoutes()>45.0f){//revisa que la diferencia entre rutas sea menor a 45 metro
                 return true;
             }
         return false;

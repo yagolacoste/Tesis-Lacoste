@@ -35,12 +35,13 @@ import kotlin.jvm.Transient;
 public class Tracking implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final float MAX_SPEED_THRESHOLD =20.0F ; //30 m/s
-    private static final float MIN_SPEED_THRESHOLD =0.001F ; //0.1 m/s
-    private static final float MAX_ACCURACY_THRESHOLD =15.0F ; //15 metros
+    private static final float MAX_SPEED_THRESHOLD =20.0F ; //20 m/s
+    private static final float MIN_SPEED_THRESHOLD =0.1F ; //0.1 m/s
+    private static final float MAX_ACCURACY_THRESHOLD =12.0F ; //12 metros
     private static final long MIN_TIME_DIFFERENCE = 3000 ;//3 seg
 
     private static final float MIN_MOVEMENT_THRESHOLD = 5.0F; // 5 metros
+    private static final int THRESHOLD_DIRECTION = 45;
     private String id;
     private String title="";
     private String description="";
@@ -118,10 +119,13 @@ public class Tracking implements Serializable {
         }
         Log.d("La precison es ", String.valueOf(currentLocation.getAccuracy()));
         Log.d("La velocidad es ", String.valueOf(currentLocation.getSpeed()));
+
+        double bearing = currentLocation.getBearing() - lastValidLocation.getBearing();
         if ( currentLocation.getAccuracy()<= MAX_ACCURACY_THRESHOLD &&
                 isDistanceFilterValid(currentLocation) &&
                 (currentLocation.getSpeed()> MIN_SPEED_THRESHOLD&&
-                currentLocation.getSpeed() < MAX_SPEED_THRESHOLD)){
+                currentLocation.getSpeed() < MAX_SPEED_THRESHOLD) &&
+                Math.abs(bearing) > THRESHOLD_DIRECTION){
             return true;
         } else {
             return false;

@@ -126,61 +126,57 @@ public class OpenStreetMap {
         Marker endMarker=new Marker(myOpenMapView);
         endMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_finish_flag_convert));
         endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        endMarker.setPosition(road.getRouteLow().get(road.getRouteLow().size()-1));
-
+        GeoPoint lastPoint = road.getRouteLow().get(road.getRouteLow().size()-1);
+        double latitude = lastPoint.getLatitude();
+        double longitude = lastPoint.getLongitude();
+        endMarker.setPosition(new GeoPoint(latitude, longitude));
         myOpenMapView.getOverlays().add(endMarker);
         myOpenMapView.invalidate();
     }
 
     public void drawStatic(List<GeoPoint> points) {
-        Marker startMarker = new Marker(myOpenMapView);
-        startMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_location));
-        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        Road road = roadManager.getRoad((ArrayList<GeoPoint>) points);
-        startMarker.setPosition(road.getRouteLow().get(0));
-        myOpenMapView.getOverlays().add(startMarker);
-
-        roadOverlay = RoadManager.buildRoadOverlay(road, color, 25f);
-        myOpenMapView.getOverlays().add(roadOverlay);
-
-        Marker endMarker = new Marker(myOpenMapView);
-        endMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_flag));
-        endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        endMarker.setPosition(road.getRouteLow().get(road.getRouteLow().size() - 1));
-        myOpenMapView.getOverlays().add(endMarker);
-        GeoPoint minGeoPoint = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            minGeoPoint = points.stream().min(Comparator.comparing(GeoPoint::getLatitude)).get();
-        }
-        GeoPoint maxGeoPoint = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            maxGeoPoint = points.stream().max(Comparator.comparing(GeoPoint::getLatitude)).get();
-        }
-        // Obtención de las coordenadas del punto medio del recorrido
-        double lat = (points.get(0).getLatitude() + points.get(points.size() - 1).getLatitude()) / 2;
-        double lon = (points.get(0).getLongitude() + points.get(points.size() - 1).getLongitude()) / 2;
-
-        // Centrado del mapa en el punto medio
-        myOpenMapView.getController().setCenter(new GeoPoint(lat, lon));
-
-        // Conversión de los GeoPoint en doubles
-//        double minLat = minGeoPoint.getLatitude();
-//        double maxLat = maxGeoPoint.getLatitude();
-
-
-
-        // Ajuste automático del zoom para que se pueda visualizar todo el recorrido marcado
-        double minLat=points.get(0).getLatitude();
-        double maxLat=points.get(points.size() - 1).getLatitude();
-        myOpenMapView.getController().zoomToSpan(minLat, maxLat);
-
         myOpenMapView.setBuiltInZoomControls(false);
         myOpenMapView.setClickable(false);
         myOpenMapView.setEnabled(false);
         myOpenMapView.getController().stopAnimation(true);
         this.mCompassOverlay.disableCompass();
+        draw(points);
+        autoZoom(points);
         myOpenMapView.invalidate();
+
+
     }
+
+
+
+    private void autoZoom(List<GeoPoint> points){
+        double minLat = Double.MAX_VALUE;
+        double maxLat = -Double.MAX_VALUE;
+        double minLon = Double.MAX_VALUE;
+        double maxLon = -Double.MAX_VALUE;
+
+        for (GeoPoint point : points) {
+            double latitude = point.getLatitude();
+            double longitude = point.getLongitude();
+
+            if (latitude < minLat) {
+                minLat = latitude;
+            }
+            if (latitude > maxLat) {
+                maxLat = latitude;
+            }
+            if (longitude < minLon) {
+                minLon = longitude;
+            }
+            if (longitude > maxLon) {
+                maxLon = longitude;
+            }
+        }
+
+        myOpenMapView.getController().zoomToSpan(Math.abs(maxLat - minLat), Math.abs(maxLon - minLon));
+        myOpenMapView.getController().setCenter(new GeoPoint((maxLat + minLat) / 2, (maxLon + minLon) / 2));
+    }
+
 
 
 

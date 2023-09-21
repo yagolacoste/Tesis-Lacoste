@@ -12,6 +12,7 @@ import com.Tesis.bicycle.Activity.AddFriendActivity;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.UserAppDto;
 import com.Tesis.bicycle.Presenter.Adapter.UserRecyclerViewAdapter;
+import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.UserViewModel;
 import com.google.android.material.tabs.TabLayout;
 
@@ -34,6 +35,9 @@ public class UserListViewActivity extends ListViewActivity implements UserRecycl
         super.onCreate(savedInstanceState);
         user=new ViewModelProvider(this).get(UserViewModel.class);
         action=getIntent().getAction();
+        imgLayoutEmptySelect.setImageResource(R.drawable.ic_group);
+        setText("Your haven't friends");
+        txtLayoutEmptySelect.setText(text);
         getListView();
     }
 
@@ -44,12 +48,16 @@ public class UserListViewActivity extends ListViewActivity implements UserRecycl
                 user.getFriends(response.getId()).observe(this,resp->{
                     if(!resp.isEmpty()){
                         friends = resp;
+                        layoutEmptySelect.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
                         adapter=new UserRecyclerViewAdapter(friends);
                         adapter.setOnItemClickListener(this);
                         recyclerView.setAdapter(adapter);
                     }
-                    else
-                        Toast.makeText(this,"Not exist Friends for route: ",Toast.LENGTH_SHORT).show();
+                    else{
+                        layoutEmptySelect.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                    }
                 });
             }
         });

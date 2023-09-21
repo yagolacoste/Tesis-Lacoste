@@ -58,8 +58,8 @@ public class GPSService extends Service {
         notification=new Notifications(GPSService.this);
         fusedLocationProviderClient=LocationServices.getFusedLocationProviderClient(GPSService.this);
         locationRequest = LocationRequest.create();
-        locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);
-        locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);
+        locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);//7segundos
+        locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);//3segundos
         locationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY); // Por defecto puse HIGH solo para verificar que andaba
         super.onCreate();
     }

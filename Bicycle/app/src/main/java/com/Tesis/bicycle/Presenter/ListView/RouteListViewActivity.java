@@ -13,6 +13,7 @@ import com.Tesis.bicycle.Dto.ApiRest.RouteDetailsDto;
 import com.Tesis.bicycle.Presenter.Adapter.MyRoutesRecyclerViewAdapter;
 import com.Tesis.bicycle.Presenter.Adapter.OnItemClickListener;
 import com.Tesis.bicycle.Presenter.Adapter.RouteRecyclerViewAdapter;
+import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.StatisticsViewModel;
 
 import java.util.List;
@@ -32,7 +33,9 @@ public class RouteListViewActivity extends ListViewActivity implements OnItemCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         statisticsViewModel =new ViewModelProvider(this).get(StatisticsViewModel.class);
-        String action=getIntent().getAction();
+        imgLayoutEmptySelect.setImageResource(R.drawable.ic_route);
+        setText("Your haven't routes");
+        txtLayoutEmptySelect.setText(text);
         getListView();
 
     }
@@ -43,12 +46,15 @@ public class RouteListViewActivity extends ListViewActivity implements OnItemCli
             if(response.getAccessToken()!=null){
                 statisticsViewModel.getRouteById(response.getId()).observe(this, resp->{
                     if(!resp.isEmpty()){
-                            routes = resp;
-                            recyclerRoutesDetails = new MyRoutesRecyclerViewAdapter(routes);
-                            recyclerRoutesDetails.setOnItemClickListener(this);
-                            recyclerView.setAdapter(recyclerRoutesDetails);
+                        routes = resp;
+                        layoutEmptySelect.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        recyclerRoutesDetails = new MyRoutesRecyclerViewAdapter(routes);
+                        recyclerRoutesDetails.setOnItemClickListener(this);
+                        recyclerView.setAdapter(recyclerRoutesDetails);
                     }else {
-                        Toast.makeText(this, "Not exist routes for user: " + response.getId(), Toast.LENGTH_SHORT).show();
+                        layoutEmptySelect.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
                     }
                 });
             }

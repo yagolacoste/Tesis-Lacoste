@@ -38,6 +38,7 @@ public class BattleListFragment extends BaseListViewFragment implements BattleRe
         View view= super.onCreateView(inflater, container, savedInstanceState);
         userViewModel=new ViewModelProvider(this).get(UserViewModel.class);
         floatingactionbutton.setActivated(true);
+        floatingactionbutton.setVisibility(View.VISIBLE);
         imgLayoutEmpty.setImageResource(R.drawable.ic_competing_conver);
         setText("Your haven't battles");
         txtLayoutEmpty.setText(text);
@@ -61,6 +62,7 @@ public class BattleListFragment extends BaseListViewFragment implements BattleRe
                         if(!response.isEmpty()){
                             layoutEmpty.setVisibility(View.GONE);
                             recyclerView.setVisibility(View.VISIBLE);
+
                             battleRecyclerViewAdapter=new BattleRecyclerViewAdapter(response);
                             battleRecyclerViewAdapter.setOnItemClickListener(this);
                             recyclerView.setAdapter(battleRecyclerViewAdapter);
