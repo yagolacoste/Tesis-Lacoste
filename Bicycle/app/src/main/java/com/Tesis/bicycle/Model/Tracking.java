@@ -35,7 +35,7 @@ import kotlin.jvm.Transient;
 public class Tracking implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final float MAX_SPEED_THRESHOLD =20.0F ; //20 m/s
+    private static final float MAX_SPEED_THRESHOLD =10.0F ; //15 m/s
     private static final float MIN_SPEED_THRESHOLD =0.1F ; //0.1 m/s
     private static final float MAX_ACCURACY_THRESHOLD =12.0F ; //12 metros
     private static final long MIN_TIME_DIFFERENCE = 3000 ;//3 seg
@@ -190,7 +190,7 @@ public class Tracking implements Serializable {
             // Verificar si la posición actual se encuentra dentro del umbral de proximidad
             //double distance = calculateDistance(location, points.get(nearestIndex));
             float distance =location.distanceTo( points.get(nearestIndex));
-            if (distance <= 20.0f) { //Verifica si la distancia es menor a 20 metros entre la nueva localizacion y el proximo punto de proximidad
+            if (distance <= 10.0f) { //Verifica si la distancia es menor a 20 metros entre la nueva localizacion y el proximo punto de proximidad
                 return true; // El objeto está siguiendo la ruta correctamente
             }
         }

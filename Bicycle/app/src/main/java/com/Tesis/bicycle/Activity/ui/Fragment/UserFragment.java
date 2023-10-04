@@ -128,7 +128,6 @@ public class UserFragment extends Fragment{
                                 .downloader(new OkHttp3Downloader(ClientRetrofit.getHttp()))
                                 .build();
                         picasso.load(url)
-                                .rotate(270)
                                 .error(R.drawable.image_not_found)
                                 .into(imageUser);
                     }
