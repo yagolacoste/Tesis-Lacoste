@@ -35,13 +35,14 @@ import kotlin.jvm.Transient;
 public class Tracking implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final float MAX_SPEED_THRESHOLD =10.0F ; //15 m/s
+    private static final float MAX_SPEED_THRESHOLD =12.0F ; //12 m/s
     private static final float MIN_SPEED_THRESHOLD =0.1F ; //0.1 m/s
-    private static final float MAX_ACCURACY_THRESHOLD =12.0F ; //12 metros
+    private static final float MAX_ACCURACY_THRESHOLD =20.0F ; //20 metros
     private static final long MIN_TIME_DIFFERENCE = 3000 ;//3 seg
-
     private static final float MIN_MOVEMENT_THRESHOLD = 5.0F; // 5 metros
-    private static final int THRESHOLD_DIRECTION = 35;
+
+    private static final float MIN_ALTITUDE_THRESHOLD = -450F; // 5 metros
+    private static final double MAX_ALTITUDE_THRESHOLD = 5200F;
     private String id;
     private String title="";
     private String description="";
@@ -73,6 +74,10 @@ public class Tracking implements Serializable {
 
     private boolean notificationDisplayed = false;
 
+    private List<Location> buffer=new ArrayList<>();
+
+    private static final float CONFIDENCE_THRESHOLD=5F;// 5 metros?
+
 
     
 
@@ -90,18 +95,53 @@ public class Tracking implements Serializable {
     }
 
     public void addTracking(Location currentLocation) {
-            if (isCoordinateValid(currentLocation)) {// revisa que la coordenada sea precisa , yq ue este en el movimiento adecuado
-                if(isRepeat()){ //Reviso si es repetido el camino
-                    this.setDesviation(this.checkingNearestNewPointAndNextPointIndex(currentLocation));//Revisa y setea si se devio entre el proximo punto de mi listado almacenado y el nuevo punto
-                    if (!this.isDesviation() && !notificationDisplayed) {
-                        notificationDisplayed = true;
-                        // Establece una bandera de desviación en tu objeto 'tracking' si se desvía
-                        //this.setDesviation(true);
-                    }
-                }
-                addCoordinateToHistory(currentLocation);
+            if (isCoordinateValid(currentLocation)) {// filtros de altitud,velocidad,altura
+               if(checkMobility(currentLocation)){
+                ////////////Repeat route////////////
+//                if(isRepeat()){ //Reviso si es repetido el camino
+//                    this.setDesviation(this.checkingNearestNewPointAndNextPointIndex(currentLocation));//Revisa y setea si se devio entre el proximo punto de mi listado almacenado y el nuevo punto
+//                    if (!this.isDesviation() && !notificationDisplayed) {
+//                        notificationDisplayed = true;
+//                        // Establece una bandera de desviación en tu objeto 'tracking' si se desvía
+//                        //this.setDesviation(true);
+//                    }
+//                }
+                   addCoordinateToHistory(currentLocation);
+                   newLocation=currentLocation;
+               }
             }
-        newLocation=currentLocation;
+
+    }
+
+    private boolean checkMobility(Location currentLocation) {
+        if(buffer.isEmpty()) {
+            buffer.add(currentLocation);
+            return true;
+        }else if(!buffer.isEmpty() && buffer.size()==1){
+            float distance = buffer.get(0).distanceTo(currentLocation);
+            if(distance<=CONFIDENCE_THRESHOLD){
+                buffer.add(0,currentLocation);
+            }
+            else {
+                buffer.add(currentLocation);
+            }
+            return true;
+        }else if(!buffer.isEmpty() && buffer.size()==2){
+            Location correctLocation=buffer.get(0);
+            Location problematicLocation=buffer.get(1);
+            float correctDistance = correctLocation.distanceTo(currentLocation);
+            float problematicDistance= problematicLocation.distanceTo(currentLocation);
+            float distanceToCorrectAndProblematic = problematicLocation.distanceTo(currentLocation);
+            if((correctDistance<problematicDistance) && (correctDistance< distanceToCorrectAndProblematic)) {
+                this.buffer.remove(problematicLocation);
+            }else{
+                this.buffer.add(0,problematicLocation);
+                this.buffer.remove(problematicLocation);
+                this.buffer.remove(correctLocation);
+            }
+            return this.checkMobility(currentLocation);
+        }
+        return false;
     }
 
 
@@ -128,26 +168,25 @@ public class Tracking implements Serializable {
             return true;
         }
 
-
-        if ( currentLocation.getAccuracy()<= MAX_ACCURACY_THRESHOLD &&
-                isDistanceFilterValid(currentLocation) &&
-                (currentLocation.getSpeed()> MIN_SPEED_THRESHOLD&&
-                currentLocation.getSpeed() < MAX_SPEED_THRESHOLD)){
-            return true;
-        } else {
+        if(currentLocation.getAccuracy()>MAX_ACCURACY_THRESHOLD)
             return false;
-        }
+
+        if(currentLocation.getAltitude()<MIN_ALTITUDE_THRESHOLD || currentLocation.getAltitude()>MAX_ALTITUDE_THRESHOLD)
+            return false;
+
+        if (currentLocation.getSpeed()< MIN_SPEED_THRESHOLD &&
+                currentLocation.getSpeed() > MAX_SPEED_THRESHOLD)
+            return false;
+
+       return isDistanceFilterValid(currentLocation);
     }
 
     private boolean isDistanceFilterValid(Location location) {
-        if (location != null ){
             float distance = lastValidLocation.distanceTo(location);
-            if (distance >= MIN_MOVEMENT_THRESHOLD && distance<=60F)
+//            if (distance >= MIN_MOVEMENT_THRESHOLD && distance<=60F/2)
+            if(distance <=MAX_ACCURACY_THRESHOLD/2)
                 return true;
-        } else {
             return false;
-        }
-        return false;
     }
 
     private boolean isTemporalFilterValid(Location location) {
