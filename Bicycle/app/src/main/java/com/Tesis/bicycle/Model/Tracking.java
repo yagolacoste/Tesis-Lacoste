@@ -127,12 +127,12 @@ public class Tracking implements Serializable {
         if(points.isEmpty()){
             return true;
         }
-        double bearing = currentLocation.getBearing() - lastValidLocation.getBearing();
+
+
         if ( currentLocation.getAccuracy()<= MAX_ACCURACY_THRESHOLD &&
                 isDistanceFilterValid(currentLocation) &&
                 (currentLocation.getSpeed()> MIN_SPEED_THRESHOLD&&
-                currentLocation.getSpeed() < MAX_SPEED_THRESHOLD) &&
-                Math.abs(bearing) > THRESHOLD_DIRECTION){//no estoy seguro de esto
+                currentLocation.getSpeed() < MAX_SPEED_THRESHOLD)){
             return true;
         } else {
             return false;
@@ -142,7 +142,7 @@ public class Tracking implements Serializable {
     private boolean isDistanceFilterValid(Location location) {
         if (location != null ){
             float distance = lastValidLocation.distanceTo(location);
-            if (distance >= MIN_MOVEMENT_THRESHOLD)
+            if (distance >= MIN_MOVEMENT_THRESHOLD && distance<=60F)
                 return true;
         } else {
             return false;
