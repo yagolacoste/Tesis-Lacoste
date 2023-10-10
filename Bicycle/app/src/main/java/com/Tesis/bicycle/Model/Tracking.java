@@ -35,11 +35,9 @@ import kotlin.jvm.Transient;
 public class Tracking implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final float MAX_SPEED_THRESHOLD =12.0F ; //12 m/s
-    private static final float MIN_SPEED_THRESHOLD =0.1F ; //0.1 m/s
-    private static final float MAX_ACCURACY_THRESHOLD =20.0F ; //20 metros
-    private static final long MIN_TIME_DIFFERENCE = 3000 ;//3 seg
-    private static final float MIN_MOVEMENT_THRESHOLD = 5.0F; // 5 metros
+    private static final float MAX_SPEED_THRESHOLD =15.0F ; //15 m/s
+    private static final float MIN_SPEED_THRESHOLD =0.3F ; //0.3 m/s
+    private static final float MAX_ACCURACY_THRESHOLD =30.0F ; //30 metros
 
     private static final float MIN_ALTITUDE_THRESHOLD = -450F; // 5 metros
     private static final double MAX_ALTITUDE_THRESHOLD = 5200F;
@@ -120,24 +118,20 @@ public class Tracking implements Serializable {
         }else if(!buffer.isEmpty() && buffer.size()==1){
             float distance = buffer.get(0).distanceTo(currentLocation);
             if(distance<=CONFIDENCE_THRESHOLD){
-                buffer.add(0,currentLocation);
+                buffer.clear();
             }
-            else {
                 buffer.add(currentLocation);
-            }
             return true;
         }else if(!buffer.isEmpty() && buffer.size()==2){
             Location correctLocation=buffer.get(0);
             Location problematicLocation=buffer.get(1);
             float correctDistance = correctLocation.distanceTo(currentLocation);
             float problematicDistance= problematicLocation.distanceTo(currentLocation);
-            float distanceToCorrectAndProblematic = problematicLocation.distanceTo(currentLocation);
+            float distanceToCorrectAndProblematic = correctLocation.distanceTo(problematicLocation);
             if((correctDistance<problematicDistance) && (correctDistance< distanceToCorrectAndProblematic)) {
-                this.buffer.remove(problematicLocation);
+                this.buffer.remove(1);
             }else{
-                this.buffer.add(0,problematicLocation);
-                this.buffer.remove(problematicLocation);
-                this.buffer.remove(correctLocation);
+                this.buffer.remove(0);
             }
             return this.checkMobility(currentLocation);
         }
@@ -168,14 +162,17 @@ public class Tracking implements Serializable {
             return true;
         }
 
+        float acc=currentLocation.getAccuracy();
         if(currentLocation.getAccuracy()>MAX_ACCURACY_THRESHOLD)
             return false;
 
-        if(currentLocation.getAltitude()<MIN_ALTITUDE_THRESHOLD || currentLocation.getAltitude()>MAX_ALTITUDE_THRESHOLD)
+        float alt= (float) currentLocation.getAltitude();
+        if((float)currentLocation.getAltitude()<MIN_ALTITUDE_THRESHOLD || (float)currentLocation.getAltitude()>MAX_ALTITUDE_THRESHOLD)
             return false;
 
+        float speed= currentLocation.getSpeed();
         if (currentLocation.getSpeed()< MIN_SPEED_THRESHOLD &&
-                currentLocation.getSpeed() > MAX_SPEED_THRESHOLD)
+                currentLocation.getSpeed() >  MAX_SPEED_THRESHOLD)
             return false;
 
        return isDistanceFilterValid(currentLocation);
@@ -189,16 +186,16 @@ public class Tracking implements Serializable {
             return false;
     }
 
-    private boolean isTemporalFilterValid(Location location) {
-        // Puedes verificar si la coordenada cambió demasiado rápido en un corto período de tiempo
-        float temp=lastValidLocation.getTime() - location.getTime();
-        if (lastValidLocation == null || location.getTime() - lastValidLocation.getTime() > MIN_TIME_DIFFERENCE) {
-           //lastValidLocation = location;
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    private boolean isTemporalFilterValid(Location location) {
+//        // Puedes verificar si la coordenada cambió demasiado rápido en un corto período de tiempo
+//        float temp=lastValidLocation.getTime() - location.getTime();
+//        if (lastValidLocation == null || location.getTime() - lastValidLocation.getTime() > MIN_TIME_DIFFERENCE) {
+//           //lastValidLocation = location;
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 
 
 
