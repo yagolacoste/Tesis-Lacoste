@@ -36,8 +36,8 @@ public class Tracking implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private static final float MAX_SPEED_THRESHOLD =15.0F ; //15 m/s
-    private static final float MIN_SPEED_THRESHOLD =0.3F ; //0.3 m/s
-    private static final float MAX_ACCURACY_THRESHOLD =30.0F ; //30 metros
+    private static final float MIN_SPEED_THRESHOLD =0.1F ; //0.3 m/s
+    private static final float MAX_ACCURACY_THRESHOLD =40F ; //40 metros
 
     private static final float MIN_ALTITUDE_THRESHOLD = -450F; // 5 metros
     private static final double MAX_ALTITUDE_THRESHOLD = 5200F;
@@ -74,7 +74,7 @@ public class Tracking implements Serializable {
 
     private List<Location> buffer=new ArrayList<>();
 
-    private static final float CONFIDENCE_THRESHOLD=5F;// 5 metros?
+    private static final float CONFIDENCE_THRESHOLD=20F;// 10 metros
 
 
     
