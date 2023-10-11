@@ -35,8 +35,8 @@ import kotlin.jvm.Transient;
 public class Tracking implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final float MAX_SPEED_THRESHOLD =15.0F ; //15 m/s
-    private static final float MIN_SPEED_THRESHOLD =0.1F ; //0.3 m/s
+    private static final float MAX_SPEED_THRESHOLD =10.0F ; //15 m/s //segun google son 30 k/h con toda la furia
+    private static final float MIN_SPEED_THRESHOLD =0.01F ; //0.01 m/s
     private static final float MAX_ACCURACY_THRESHOLD =40F ; //40 metros
 
     private static final float MIN_ALTITUDE_THRESHOLD = -450F; // 5 metros
@@ -74,7 +74,7 @@ public class Tracking implements Serializable {
 
     private List<Location> buffer=new ArrayList<>();
 
-    private static final float CONFIDENCE_THRESHOLD=20F;// 10 metros
+    private static final float CONFIDENCE_THRESHOLD=30F;// 30 metros
 
 
     
@@ -114,13 +114,15 @@ public class Tracking implements Serializable {
     private boolean checkMobility(Location currentLocation) {
         if(buffer.isEmpty()) {
             buffer.add(currentLocation);
+            addCoordinateToHistory(currentLocation);
             return true;
         }else if(!buffer.isEmpty() && buffer.size()==1){
             float distance = buffer.get(0).distanceTo(currentLocation);
             if(distance<=CONFIDENCE_THRESHOLD){
                 buffer.clear();
+                addCoordinateToHistory(currentLocation);
             }
-                buffer.add(currentLocation);
+            buffer.add(currentLocation);
             return true;
         }else if(!buffer.isEmpty() && buffer.size()==2){
             Location correctLocation=buffer.get(0);
