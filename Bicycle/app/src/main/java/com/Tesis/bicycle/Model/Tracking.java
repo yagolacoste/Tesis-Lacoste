@@ -1,43 +1,24 @@
 package com.Tesis.bicycle.Model;
 
 import android.location.Location;
-import android.os.Build;
 import android.util.Log;
 
-import androidx.annotation.RequiresApi;
-
-import com.Tesis.bicycle.Activity.TrackingActivity;
-import com.Tesis.bicycle.Constants;
-import com.google.gson.annotations.SerializedName;
-
-import org.apache.commons.lang3.RandomStringUtils;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.LineString;
-import org.locationtech.jts.simplify.DouglasPeuckerSimplifier;
 import org.osmdroid.util.GeoPoint;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.time.Instant;
-import java.time.LocalDate;
+import java.nio.Buffer;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
-
-import kotlin.jvm.Transient;
 
 public class Tracking implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final float MAX_SPEED_THRESHOLD =10.0F ; //15 m/s //segun google son 30 k/h con toda la furia
-    private static final float MIN_SPEED_THRESHOLD =0.01F ; //0.01 m/s
-    private static final float MAX_ACCURACY_THRESHOLD =40F ; //40 metros
+    private static final float MAX_SPEED_THRESHOLD =10.0F ; //10 m/s //segun google son 30 k/h con toda la furia
+    private static final float MIN_SPEED_THRESHOLD =0.01F ; //0.01 m/s //minimo no va
+    private static final float MAX_ACCURACY_THRESHOLD =20F ; //60 metros achica 30 metros
 
     private static final float MIN_ALTITUDE_THRESHOLD = -450F; // 5 metros
     private static final double MAX_ALTITUDE_THRESHOLD = 5200F;
@@ -64,17 +45,18 @@ public class Tracking implements Serializable {
 
     private Long battle;
 
-    private boolean desviation=true;
+    private boolean deviation =true;
 
     private Location lastValidLocation ;//ultima location valida (VER COMO MUESTRA EN MAPA)
 
-    private Location newLocation;
 
     private boolean notificationDisplayed = false;
 
     private List<Location> buffer=new ArrayList<>();
 
-    private static final float CONFIDENCE_THRESHOLD=30F;// 30 metros
+    private List<Location> unfilteredPoints=new ArrayList<>();
+
+//    private static final float CONFIDENCE_THRESHOLD=30F;// 30 metros
 
 
     
@@ -93,51 +75,53 @@ public class Tracking implements Serializable {
     }
 
     public void addTracking(Location currentLocation) {
+        unfilteredPoints.add(currentLocation);
             if (isCoordinateValid(currentLocation)) {// filtros de altitud,velocidad,altura
-               if(checkMobility(currentLocation)){
+               checkMobility(currentLocation);
                 ////////////Repeat route////////////
 //                if(isRepeat()){ //Reviso si es repetido el camino
-//                    this.setDesviation(this.checkingNearestNewPointAndNextPointIndex(currentLocation));//Revisa y setea si se devio entre el proximo punto de mi listado almacenado y el nuevo punto
-//                    if (!this.isDesviation() && !notificationDisplayed) {
+//                    this.setDeviation(this.checkingNearestNewPointAndNextPointIndex(currentLocation));//Revisa y setea si se devio entre el proximo punto de mi listado almacenado y el nuevo punto
+//                    if (!this.isDeviation() && !notificationDisplayed) {
 //                        notificationDisplayed = true;
 //                        // Establece una bandera de desviación en tu objeto 'tracking' si se desvía
-//                        //this.setDesviation(true);
+//                        //this.setDeviation(true);
 //                    }
 //                }
-                   addCoordinateToHistory(currentLocation);
-                   newLocation=currentLocation;
-               }
+//                   addCoordinateToHistory(currentLocation);
+//                   newLocation=currentLocation;
+
             }
 
     }
 
-    private boolean checkMobility(Location currentLocation) {
+    private void checkMobility(Location currentLocation) {
         if(buffer.isEmpty()) {
             buffer.add(currentLocation);
-            addCoordinateToHistory(currentLocation);
-            return true;
-        }else if(!buffer.isEmpty() && buffer.size()==1){
-            float distance = buffer.get(0).distanceTo(currentLocation);
-            if(distance<=CONFIDENCE_THRESHOLD){
-                buffer.clear();
-                addCoordinateToHistory(currentLocation);
-            }
+            addCoordinateToHistory(currentLocation);//guardo la primer coordenada en el buffer y en el historial  por estar vacios
+            Log.i("BUFFER EMPTY","PRIMERA COORDENADA");
+        }else if(!buffer.isEmpty() && buffer.size()==1){//detecta si esta detenido o no
+//            float distance = buffer.get(0).distanceTo(currentLocation);
+//             if(distance<=CONFIDENCE_THRESHOLD){
+//                buffer.clear();
+//                addCoordinateToHistory(currentLocation);
+//              }
             buffer.add(currentLocation);
-            return true;
+
         }else if(!buffer.isEmpty() && buffer.size()==2){
             Location correctLocation=buffer.get(0);
             Location problematicLocation=buffer.get(1);
             float correctDistance = correctLocation.distanceTo(currentLocation);
             float problematicDistance= problematicLocation.distanceTo(currentLocation);
-            float distanceToCorrectAndProblematic = correctLocation.distanceTo(problematicLocation);
-            if((correctDistance<problematicDistance) && (correctDistance< distanceToCorrectAndProblematic)) {
-                this.buffer.remove(1);
-            }else{
-                this.buffer.remove(0);
+            float distanceToCorrectAndProblematic = correctLocation.distanceTo(problematicLocation);//Di
+          if((correctDistance<problematicDistance) && (correctDistance< distanceToCorrectAndProblematic)) {
+                this.buffer.remove(problematicLocation);//remuevo segunda
+          }else{
+                this.buffer.remove(correctLocation);//remuevo la primera
+                addCoordinateToHistory(currentLocation);
             }
-            return this.checkMobility(currentLocation);
+           this.checkMobility(currentLocation);
         }
-        return false;
+
     }
 
 
@@ -164,15 +148,12 @@ public class Tracking implements Serializable {
             return true;
         }
 
-        float acc=currentLocation.getAccuracy();
-        if(currentLocation.getAccuracy()>MAX_ACCURACY_THRESHOLD)
+        if(currentLocation.getAccuracy()>MAX_ACCURACY_THRESHOLD)/// achicar la precision a 30 m
             return false;
 
-        float alt= (float) currentLocation.getAltitude();
         if((float)currentLocation.getAltitude()<MIN_ALTITUDE_THRESHOLD || (float)currentLocation.getAltitude()>MAX_ALTITUDE_THRESHOLD)
             return false;
 
-        float speed= currentLocation.getSpeed();
         if (currentLocation.getSpeed()< MIN_SPEED_THRESHOLD &&
                 currentLocation.getSpeed() >  MAX_SPEED_THRESHOLD)
             return false;
@@ -182,7 +163,7 @@ public class Tracking implements Serializable {
 
     private boolean isDistanceFilterValid(Location location) {
             float distance = lastValidLocation.distanceTo(location);
-//            if (distance >= MIN_MOVEMENT_THRESHOLD && distance<=60F/2)
+            Log.i("DISTANCE BETWEEN LASTPOINT NEW LOCATION","Su DISTANCE es : "+distance);
             if(distance <=MAX_ACCURACY_THRESHOLD/2)
                 return true;
             return false;
@@ -427,14 +408,6 @@ public class Tracking implements Serializable {
     }
 
 
-    public Location getNewLocation() {
-        return newLocation;
-    }
-
-    public void setNewLocation(Location newLocation) {
-        this.newLocation = newLocation;
-    }
-
     public  void setPoints(List<Location> points){
         this.points = points;
     }
@@ -589,12 +562,12 @@ public class Tracking implements Serializable {
     }
 
 
-    public boolean isDesviation() {
-        return desviation;
+    public boolean isDeviation() {
+        return deviation;
     }
 
-    public void setDesviation(boolean desviation) {
-        this.desviation = desviation;
+    public void setDeviation(boolean deviation) {
+        this.deviation = deviation;
     }
 
     public Location getCurrentLocation() {
@@ -605,6 +578,13 @@ public class Tracking implements Serializable {
         this.lastValidLocation = currentLocation;
     }
 
+    public List<Location> getUnfilteredPoints() {
+        return unfilteredPoints;
+    }
+
+    public void setUnfilteredPoints(List<Location> unfilteredPoints) {
+        this.unfilteredPoints = unfilteredPoints;
+    }
 
     @Override
     public String toString() {

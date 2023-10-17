@@ -2,6 +2,7 @@ package com.Tesis.bicycle.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.room.Room;
 
 import android.annotation.SuppressLint;
 import android.content.ComponentName;
@@ -26,10 +27,13 @@ import com.Tesis.bicycle.Activity.ui.NavInitActivity;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.Statistics.StatisticsApiRest;
 import com.Tesis.bicycle.Dto.Room.RefreshTokenDto;
+import com.Tesis.bicycle.Model.Room.Routes;
 import com.Tesis.bicycle.Presenter.ApiRestConnection;
+import com.Tesis.bicycle.Presenter.AppDataBase;
 import com.Tesis.bicycle.Presenter.Notifications;
 import com.Tesis.bicycle.Presenter.OpenStreetMap;
 import com.Tesis.bicycle.R;
+import com.Tesis.bicycle.Service.Room.RoutesService;
 import com.Tesis.bicycle.ServiceTracking.GPSService;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
 import com.Tesis.bicycle.ViewModel.RouteViewModel;
@@ -47,6 +51,7 @@ import java.util.stream.Collectors;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.Route;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,6 +69,8 @@ public class TrackingDetailActivity extends AppCompatActivity {
 
     private Notifications notifications;
 
+    private RoutesService db;
+
 
 
 
@@ -74,6 +81,13 @@ public class TrackingDetailActivity extends AppCompatActivity {
             openStreetMap.initLayer(TrackingDetailActivity.this,locationBinder.getGeoPoints().get(0));
             filterData();//filtro la data para ver si se hizo un camino o estan correcto los datos
             updateUI();
+
+            //////////////////ROOM/////////////////////////
+            Routes route=new Routes();
+            route.setId(locationBinder.getId());
+            route.setUnfilteredPoints(locationBinder.getUnfilteredPoints());
+            route.setFilteredPoints(locationBinder.getCoordinates());
+            db.add(route);
         }
 
         @Override
@@ -141,6 +155,8 @@ public class TrackingDetailActivity extends AppCompatActivity {
         final ViewModelProvider vmp = new ViewModelProvider(this);
         this.accessTokenRoomViewModel=vmp.get(AccessTokenRoomViewModel.class);
         this.statisticsViewModel =vmp.get(StatisticsViewModel.class);
+        this.db = Room.databaseBuilder(TrackingDetailActivity.this, AppDataBase.class, Constants.NAME_DATA_BASE)
+                .allowMainThreadQueries().fallbackToDestructiveMigration().build().routesService();
     }
 
     private void init(){
@@ -186,7 +202,6 @@ public class TrackingDetailActivity extends AppCompatActivity {
             statisticsApiRest.setTitle(locationBinder.getTitle());
             statisticsApiRest.setCoordinates(locationBinder.getGeoPoints());
             statisticsApiRest.setBattleId(locationBinder.getBattleId());
-            statisticsApiRest.setImage(1L);
                 if (!locationBinder.getId().contains("-")) {
                 statisticsApiRest.setRoute(refreshTokenDto.getId() + "-" + locationBinder.getId());
             } else

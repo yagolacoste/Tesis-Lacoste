@@ -116,7 +116,9 @@ public class StatisticsApiRepository {
         statisticsApiService.getAchievements(id).enqueue(new Callback<List<ClassificationDto>>() {
             @Override
             public void onResponse(Call<List<ClassificationDto>> call, Response<List<ClassificationDto>> response) {
-                mld.setValue(response.body());
+                if(!response.body().isEmpty()){
+                    mld.setValue(response.body());
+                }
             }
 
             @Override

@@ -13,18 +13,19 @@ import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.room.Room;
 
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Model.Tracking;
+import com.Tesis.bicycle.Presenter.AppDataBase;
 import com.Tesis.bicycle.Presenter.Notifications;
+import com.Tesis.bicycle.Service.Room.RoutesService;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
-import com.google.android.gms.tasks.CancellationToken;
-import com.google.android.gms.tasks.OnTokenCanceledListener;
 
 import org.jetbrains.annotations.Nullable;
 import org.osmdroid.util.GeoPoint;
@@ -44,6 +45,7 @@ public class GPSService extends Service {
     //Binder
     private final IBinder binder =new LocationBinder();
 
+    private RoutesService db;
 
     private Tracking tracking;
 
@@ -58,9 +60,10 @@ public class GPSService extends Service {
         notification=new Notifications(GPSService.this);
         fusedLocationProviderClient=LocationServices.getFusedLocationProviderClient(GPSService.this);
         locationRequest = LocationRequest.create();
-        locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);//15 segundos
-        locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);//7 segundos
+        locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);//7 segundos
+        locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);//3 segundos
         locationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY); // Por defecto puse HIGH solo para verificar que andaba
+
         super.onCreate();
     }
 
@@ -90,7 +93,7 @@ public class GPSService extends Service {
                     if (locationResult != null ) {
                        for(Location location:locationResult.getLocations()){
                            tracking.addTracking(location);
-                            if (tracking.isDesviation() && !notificationDisplayed) {
+                            if (tracking.isDeviation() && !notificationDisplayed) {
                                 notification.addNotification("Alert", "te saliste del camino");
                                 notificationDisplayed = true;
                             }
@@ -234,7 +237,6 @@ public class GPSService extends Service {
 
         public Location getLastLocation(){return tracking.getLastPoint();}
 
-        public Location getNewLocation(){return tracking.getNewLocation();}
 
         public List<GeoPoint> getGeoPoints(){
                 return tracking.getGeoPoints();
@@ -251,7 +253,7 @@ public class GPSService extends Service {
         public List<Location>getCoordinates(){return tracking.getPoints();}
 
         public boolean isRepeat(){ return tracking.isRepeat();}
-        public boolean isDeviation(){ return tracking.isDesviation();}
+        public boolean isDeviation(){ return tracking.isDeviation();}
         public void setId(String id){tracking.setId(id);}
 
         public void setBattle(Long id){tracking.setBattle(id);}
@@ -267,7 +269,9 @@ public class GPSService extends Service {
             return tracking.getAvgSpeedString();
         }
 
-
+        public List<Location> getUnfilteredPoints(){
+            return tracking.getUnfilteredPoints();
+        }
 
     }
 

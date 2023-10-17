@@ -161,19 +161,20 @@ public class StatisticsService implements IStatisticsService {
     public List<ClassificationDto> getAchievements(Long user) {
         List<ClassificationDto>classifications=new ArrayList<>();
         List<UserAppDto> users=userService.getFriends(user);
-        users.add(userService.getByUser(user));
-        users.forEach(u->{
-            try {
-            ClassificationDto classificationDto=new ClassificationDto();
-            classificationDto.setProfileUserDto(new ProfileUserDto(u));
-            classificationDto.setAchievementsDto(this.getAchievementsByUser(u.getId()));
-            classifications.add(classificationDto);
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
+        if(!users.isEmpty()) {
+            users.add(userService.getByUser(user));
+            users.forEach(u -> {
+                try {
+                    ClassificationDto classificationDto = new ClassificationDto();
+                    classificationDto.setProfileUserDto(new ProfileUserDto(u));
+                    classificationDto.setAchievementsDto(this.getAchievementsByUser(u.getId()));
+                    classifications.add(classificationDto);
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
 
-        });
-
+            });
+        }
         return classifications;
     }
 
