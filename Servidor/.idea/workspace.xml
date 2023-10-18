@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7729f06-1757-4dfa-ac9d-78d48a9c1c01" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Bicycle/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/.idea/deploymentTargetDropDown.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/TrackingDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Activity/TrackingDetailActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Dto/ApiRest/Statistics/StatisticsApiRest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Dto/ApiRest/Statistics/StatisticsApiRest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Model/Tracking.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Model/Tracking.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/AppDataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/AppDataBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/ServiceTracking/GPSService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/ServiceTracking/GPSService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Statistics/StatisticsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/Tesis/admin/Service/Statistics/StatisticsService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +77,7 @@
       <recent name="C:\Users\yago_\OneDrive\Escritorio\Tesis\Tesis-Lacoste\Servidor\admin\src\main\java\com\Tesis\admin" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GatewayApplication">
+  <component name="RunManager" selected="Application.AdminApplication">
     <configuration name="AdminApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.Tesis.admin.AdminApplication" />
       <module name="admin" />
@@ -146,10 +138,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.GatewayApplication" />
         <item itemvalue="Application.AdminApplication" />
         <item itemvalue="Application.AuthApplication" />
         <item itemvalue="Application.DiscoveryApplication" />
+        <item itemvalue="Application.GatewayApplication" />
       </list>
     </recent_temporary>
   </component>

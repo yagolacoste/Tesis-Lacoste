@@ -16,9 +16,9 @@ import java.util.Locale;
 public class Tracking implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final float MAX_SPEED_THRESHOLD =10.0F ; //10 m/s //segun google son 30 k/h con toda la furia
+    private static final float MAX_SPEED_THRESHOLD =12.0F ; //12 m/s //segun google son 30 k/h con toda la furia
     private static final float MIN_SPEED_THRESHOLD =0.01F ; //0.01 m/s //minimo no va
-    private static final float MAX_ACCURACY_THRESHOLD =20F ; //60 metros achica 30 metros
+    private static final float MAX_ACCURACY_THRESHOLD =15F ; //15 metros achica 30 metros
 
     private static final float MIN_ALTITUDE_THRESHOLD = -450F; // 5 metros
     private static final double MAX_ALTITUDE_THRESHOLD = 5200F;
@@ -148,9 +148,6 @@ public class Tracking implements Serializable {
             return true;
         }
 
-        if(currentLocation.getAccuracy()>MAX_ACCURACY_THRESHOLD)/// achicar la precision a 30 m
-            return false;
-
         if((float)currentLocation.getAltitude()<MIN_ALTITUDE_THRESHOLD || (float)currentLocation.getAltitude()>MAX_ALTITUDE_THRESHOLD)
             return false;
 
@@ -158,13 +155,16 @@ public class Tracking implements Serializable {
                 currentLocation.getSpeed() >  MAX_SPEED_THRESHOLD)
             return false;
 
-       return isDistanceFilterValid(currentLocation);
+        if(currentLocation.getAccuracy()>MAX_ACCURACY_THRESHOLD)/// achicar la precision a 30 m
+            return false;
+        else
+            return isDistanceFilterValid(currentLocation);
     }
 
     private boolean isDistanceFilterValid(Location location) {
             float distance = lastValidLocation.distanceTo(location);
             Log.i("DISTANCE BETWEEN LASTPOINT NEW LOCATION","Su DISTANCE es : "+distance);
-            if(distance <=MAX_ACCURACY_THRESHOLD/2)
+            if(distance >MAX_ACCURACY_THRESHOLD/2)
                 return true;
             return false;
     }
