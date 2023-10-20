@@ -16,9 +16,9 @@ import java.util.Locale;
 public class Tracking implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final float MAX_SPEED_THRESHOLD =12.0F ; //12 m/s //segun google son 30 k/h con toda la furia
+    private static final float MAX_SPEED_THRESHOLD =15.0F ; //12 m/s //segun google son 30 k/h con toda la furia
     private static final float MIN_SPEED_THRESHOLD =0.01F ; //0.01 m/s //minimo no va
-    private static final float MAX_ACCURACY_THRESHOLD =15F ; //15 metros achica 30 metros
+    private static final float MAX_ACCURACY_THRESHOLD =10F ; //15 metros achica 30 metros
 
     private static final float MIN_ALTITUDE_THRESHOLD = -450F; // 5 metros
     private static final double MAX_ALTITUDE_THRESHOLD = 5200F;
