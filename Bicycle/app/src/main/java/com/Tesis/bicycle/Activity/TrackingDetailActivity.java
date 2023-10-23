@@ -86,7 +86,8 @@ public class TrackingDetailActivity extends AppCompatActivity {
             Routes route=new Routes();
             route.setId(locationBinder.getId());
             route.setUnfilteredPoints(locationBinder.getUnfilteredPoints());
-            route.setFilteredPoints(locationBinder.getCoordinates());
+            route.setFilteredPoints(locationBinder.getFilteredPoints());
+            route.setFilteredBuffer_points(locationBinder.getCoordinates());
             db.add(route);
         }
 

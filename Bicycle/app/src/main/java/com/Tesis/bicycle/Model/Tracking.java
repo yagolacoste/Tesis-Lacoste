@@ -16,9 +16,9 @@ import java.util.Locale;
 public class Tracking implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final float MAX_SPEED_THRESHOLD =15.0F ; //12 m/s //segun google son 30 k/h con toda la furia
+    private static final float MAX_SPEED_THRESHOLD =20.0F ; //15 m/s //segun google son 30 k/h con toda la furia
     private static final float MIN_SPEED_THRESHOLD =0.01F ; //0.01 m/s //minimo no va
-    private static final float MAX_ACCURACY_THRESHOLD =10F ; //15 metros achica 30 metros
+    private static final float MAX_ACCURACY_THRESHOLD =16F ; //16 metros es un promedio de los valores calculados
 
     private static final float MIN_ALTITUDE_THRESHOLD = -450F; // 5 metros
     private static final double MAX_ALTITUDE_THRESHOLD = 5200F;
@@ -54,6 +54,8 @@ public class Tracking implements Serializable {
 
     private List<Location> buffer=new ArrayList<>();
 
+    private List<Location> filteredPoints=new ArrayList<>();
+
     private List<Location> unfilteredPoints=new ArrayList<>();
 
 //    private static final float CONFIDENCE_THRESHOLD=30F;// 30 metros
@@ -77,16 +79,17 @@ public class Tracking implements Serializable {
     public void addTracking(Location currentLocation) {
         unfilteredPoints.add(currentLocation);
             if (isCoordinateValid(currentLocation)) {// filtros de altitud,velocidad,altura
-               checkMobility(currentLocation);
+                filteredPoints.add(currentLocation);
+                checkMobility(currentLocation);
                 ////////////Repeat route////////////
-//                if(isRepeat()){ //Reviso si es repetido el camino
-//                    this.setDeviation(this.checkingNearestNewPointAndNextPointIndex(currentLocation));//Revisa y setea si se devio entre el proximo punto de mi listado almacenado y el nuevo punto
-//                    if (!this.isDeviation() && !notificationDisplayed) {
-//                        notificationDisplayed = true;
-//                        // Establece una bandera de desviación en tu objeto 'tracking' si se desvía
-//                        //this.setDeviation(true);
-//                    }
-//                }
+                if(isRepeat()){ //Reviso si es repetido el camino
+                    this.setDeviation(this.checkingNearestNewPointAndNextPointIndex(currentLocation));//Revisa y setea si se devio entre el proximo punto de mi listado almacenado y el nuevo punto
+                    if (!this.isDeviation() && !notificationDisplayed) {
+                        notificationDisplayed = true;
+                        // Establece una bandera de desviación en tu objeto 'tracking' si se desvía
+                        //this.setDeviation(true);
+                    }
+                }
 //                   addCoordinateToHistory(currentLocation);
 //                   newLocation=currentLocation;
 
@@ -98,7 +101,6 @@ public class Tracking implements Serializable {
         if(buffer.isEmpty()) {
             buffer.add(currentLocation);
             addCoordinateToHistory(currentLocation);//guardo la primer coordenada en el buffer y en el historial  por estar vacios
-            Log.i("BUFFER EMPTY","PRIMERA COORDENADA");
         }else if(!buffer.isEmpty() && buffer.size()==1){//detecta si esta detenido o no
 //            float distance = buffer.get(0).distanceTo(currentLocation);
 //             if(distance<=CONFIDENCE_THRESHOLD){
@@ -151,8 +153,7 @@ public class Tracking implements Serializable {
         if((float)currentLocation.getAltitude()<MIN_ALTITUDE_THRESHOLD || (float)currentLocation.getAltitude()>MAX_ALTITUDE_THRESHOLD)
             return false;
 
-        if (currentLocation.getSpeed()< MIN_SPEED_THRESHOLD &&
-                currentLocation.getSpeed() >  MAX_SPEED_THRESHOLD)
+        if (currentLocation.getSpeed() >  MAX_SPEED_THRESHOLD)
             return false;
 
         if(currentLocation.getAccuracy()>MAX_ACCURACY_THRESHOLD)/// achicar la precision a 30 m
@@ -169,37 +170,6 @@ public class Tracking implements Serializable {
             return false;
     }
 
-//    private boolean isTemporalFilterValid(Location location) {
-//        // Puedes verificar si la coordenada cambió demasiado rápido en un corto período de tiempo
-//        float temp=lastValidLocation.getTime() - location.getTime();
-//        if (lastValidLocation == null || location.getTime() - lastValidLocation.getTime() > MIN_TIME_DIFFERENCE) {
-//           //lastValidLocation = location;
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
-
-
-
-
-//    public void addTracking(Location currentLocation) {
-//        if(points.isEmpty()) {
-//            avgSpeed=currentLocation.getSpeed();
-//        }else{
-//            Location lastPoint = points.get(points.size() - 1);
-//                distance += lastPoint.distanceTo(currentLocation);
-//            timeElapsedBetweenTrkPoints +=Math.abs(this.getLastPoint().getTime()-currentLocation.getTime());
-//            avgSpeedFromSUVAT = ((distance / (float) 1000) / (getCurrentTimeMillis() / (float) 3600000));
-//        }
-//        if(currentLocation.getSpeed()!=0){
-//            totalSpeedForRunningAverage+=currentLocation.getSpeed();
-//            totalTrkPointsWithSpeedForRunningAverage+=1;
-//            avgSpeed=totalSpeedForRunningAverage/totalTrkPointsWithSpeedForRunningAverage;
-//        }
-//        points.add(currentLocation);
-//        this.currentLocation=currentLocation;
-//    }
 
     public boolean checkingNearestNewPointAndNextPointIndex(Location location){
         List<Location>points=convertRouteReplay();
@@ -209,7 +179,7 @@ public class Tracking implements Serializable {
             // Verificar si la posición actual se encuentra dentro del umbral de proximidad
             //double distance = calculateDistance(location, points.get(nearestIndex));
             float distance =location.distanceTo( points.get(nearestIndex));
-            if (distance <= 10.0f) { //Verifica si la distancia es menor a 20 metros entre la nueva localizacion y el proximo punto de proximidad
+            if (distance <= MAX_ACCURACY_THRESHOLD) { //Verifica si la distancia es menor a 16 metros entre la nueva localizacion y el proximo punto de proximidad
                 return true; // El objeto está siguiendo la ruta correctamente
             }
         }
@@ -582,8 +552,12 @@ public class Tracking implements Serializable {
         return unfilteredPoints;
     }
 
-    public void setUnfilteredPoints(List<Location> unfilteredPoints) {
-        this.unfilteredPoints = unfilteredPoints;
+    public List<Location> getFilteredPoints() {
+        return filteredPoints;
+    }
+
+    public void setFilteredPoints(List<Location> filteredPoints) {
+        this.filteredPoints = filteredPoints;
     }
 
     @Override

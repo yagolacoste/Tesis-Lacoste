@@ -10,7 +10,7 @@ import com.Tesis.bicycle.Model.Room.Routes;
 import com.Tesis.bicycle.Service.Room.RefreshTokenService;
 import com.Tesis.bicycle.Service.Room.RoutesService;
 
-@Database(entities = {RefreshToken.class, Routes.class}, version =10,exportSchema = true)
+@Database(entities = {RefreshToken.class, Routes.class}, version =11,exportSchema = true)
 @TypeConverters({ConvertersDate.class})
 public abstract class AppDataBase extends RoomDatabase {
 

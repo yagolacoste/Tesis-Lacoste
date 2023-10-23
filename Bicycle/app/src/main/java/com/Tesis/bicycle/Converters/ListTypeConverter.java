@@ -20,7 +20,7 @@ public class ListTypeConverter {
     public static String toString(List<Location> list) {
         List<String>locations=new ArrayList<>();
         for (Location loc:list){
-           locations.add("POINT("+loc.getLongitude()+" "+loc.getLatitude()+")");
+           locations.add("POINT("+loc.getLongitude()+" "+loc.getLatitude()+")"+","+"acc: "+loc.getAccuracy()+" veloc: "+loc.getSpeed());
         }
         return new Gson().toJson(locations);
     }

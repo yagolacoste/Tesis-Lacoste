@@ -94,7 +94,7 @@ public class GPSService extends Service {
                        for(Location location:locationResult.getLocations()){
                            tracking.addTracking(location);
                             if (tracking.isDeviation() && !notificationDisplayed) {
-                                notification.addNotification("Alert", "te saliste del camino");
+                                notification.addNotification("Alert", "you have gone off the road");
                                 notificationDisplayed = true;
                             }
                        }
@@ -272,8 +272,11 @@ public class GPSService extends Service {
         public List<Location> getUnfilteredPoints(){
             return tracking.getUnfilteredPoints();
         }
-
+        public List<Location> getFilteredPoints(){
+            return tracking.getFilteredPoints();
+        }
     }
+
 
     @Override
     public boolean onUnbind(Intent intent) {

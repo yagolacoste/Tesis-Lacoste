@@ -23,9 +23,15 @@ public class Routes {
     @ColumnInfo(name = "unfiltered_points")
     @TypeConverters(ListTypeConverter.class)
     private List<Location> unfilteredPoints;
+
     @ColumnInfo(name = "filtered_points")
     @TypeConverters(ListTypeConverter.class)
     private List<Location> filteredPoints;
+    @ColumnInfo(name = "filteredBuffer_points")
+    @TypeConverters(ListTypeConverter.class)
+    private List<Location> filteredBuffer_points;
+
+
 
     public Routes() {
     }
@@ -52,5 +58,13 @@ public class Routes {
 
     public void setFilteredPoints(List<Location> filteredPoints) {
         this.filteredPoints = filteredPoints;
+    }
+
+    public List<Location> getFilteredBuffer_points() {
+        return filteredBuffer_points;
+    }
+
+    public void setFilteredBuffer_points(List<Location> filteredBuffer_points) {
+        this.filteredBuffer_points = filteredBuffer_points;
     }
 }
