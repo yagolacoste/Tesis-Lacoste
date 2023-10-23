@@ -64,6 +64,7 @@ public class MyMapsFragment extends BaseListViewFragment implements OnItemClickL
                         adaptorRoute = new RouteRecyclerViewAdapter(routes);
                         adaptorRoute.setListener(this);
                         recyclerView.setAdapter(adaptorRoute);
+
                     }else {
                         Toast.makeText(context, "Not exist routes for user: " + response.getId(), Toast.LENGTH_SHORT).show();
                         layoutEmpty.setVisibility(View.VISIBLE);

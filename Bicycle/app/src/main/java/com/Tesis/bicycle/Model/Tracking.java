@@ -73,7 +73,7 @@ public class Tracking implements Serializable {
         description=tracking.getDescription();
         routeReplay=tracking.getRouteReplay();
         battle=tracking.getBattle();
-        repeat=true;
+        repeat=false;
     }
 
     public void addTracking(Location currentLocation) {
@@ -86,8 +86,7 @@ public class Tracking implements Serializable {
                     this.setDeviation(this.checkingNearestNewPointAndNextPointIndex(currentLocation));//Revisa y setea si se devio entre el proximo punto de mi listado almacenado y el nuevo punto
                     if (!this.isDeviation() && !notificationDisplayed) {
                         notificationDisplayed = true;
-                        // Establece una bandera de desviación en tu objeto 'tracking' si se desvía
-                        //this.setDeviation(true);
+                        this.setDeviation(true);
                     }
                 }
 //                   addCoordinateToHistory(currentLocation);
@@ -156,7 +155,7 @@ public class Tracking implements Serializable {
         if (currentLocation.getSpeed() >  MAX_SPEED_THRESHOLD)
             return false;
 
-        if(currentLocation.getAccuracy()>MAX_ACCURACY_THRESHOLD)/// achicar la precision a 30 m
+        if(currentLocation.getAccuracy()>MAX_ACCURACY_THRESHOLD)
             return false;
         else
             return isDistanceFilterValid(currentLocation);

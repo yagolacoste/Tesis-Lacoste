@@ -177,7 +177,11 @@ public class TrackingDetailActivity extends AppCompatActivity {
         getApplicationContext().bindService(intent, lsc, Context.BIND_ABOVE_CLIENT);
 
         btnSave.setOnClickListener(view -> {
-            storeData();
+            if(validateTitleAndDescription()) {
+                storeData();
+            }else{
+            inputNameAndDescription();
+        }
 
         });
         btnDiscard.setOnClickListener(new View.OnClickListener() {
@@ -190,41 +194,55 @@ public class TrackingDetailActivity extends AppCompatActivity {
 
     @SuppressLint("SuspiciousIndentation")
     private void storeData() {
-        this.accessTokenRoomViewModel.getFirst().observe(this,response-> {
-            RefreshTokenDto refreshTokenDto = response;
-            StatisticsApiRest statisticsApiRest = new StatisticsApiRest();
-            statisticsApiRest.setAppUser(refreshTokenDto.getId());
-            statisticsApiRest.setDistance(locationBinder.getDistance());
-            statisticsApiRest.setAvgSpeed(locationBinder.getAvgSpeedCalculated());
-            statisticsApiRest.setTime(locationBinder.getTimeLocalTime());
-            statisticsApiRest.setTimeCreated(locationBinder.getTimeCreated());
-            statisticsApiRest.setWeather("");
-            statisticsApiRest.setDescription(locationBinder.getDescription());
-            statisticsApiRest.setTitle(locationBinder.getTitle());
-            statisticsApiRest.setCoordinates(locationBinder.getGeoPoints());
-            statisticsApiRest.setBattleId(locationBinder.getBattleId());
+
+            this.accessTokenRoomViewModel.getFirst().observe(this, response -> {
+                RefreshTokenDto refreshTokenDto = response;
+                StatisticsApiRest statisticsApiRest = new StatisticsApiRest();
+                statisticsApiRest.setAppUser(refreshTokenDto.getId());
+                statisticsApiRest.setDistance(locationBinder.getDistance());
+                statisticsApiRest.setAvgSpeed(locationBinder.getAvgSpeedCalculated());
+                statisticsApiRest.setTime(locationBinder.getTimeLocalTime());
+                statisticsApiRest.setTimeCreated(locationBinder.getTimeCreated());
+                statisticsApiRest.setWeather("");
+                statisticsApiRest.setDescription(locationBinder.getDescription());
+                statisticsApiRest.setTitle(locationBinder.getTitle());
+                statisticsApiRest.setCoordinates(locationBinder.getGeoPoints());
+                statisticsApiRest.setBattleId(locationBinder.getBattleId());
                 if (!locationBinder.getId().contains("-")) {
-                statisticsApiRest.setRoute(refreshTokenDto.getId() + "-" + locationBinder.getId());
-            } else
-                statisticsApiRest.setRoute(locationBinder.getId());
-            statisticsViewModel.addStatistic(statisticsApiRest).observe(this, resp -> {
-                if (resp) {
-                    if (statisticsApiRest.getBattleId() != null) {
-                        notifications.addNotification("Good Job!", "You completed the battle wait the result");
-                    } else if (locationBinder.isRepeat()) {
-                        notifications.addNotification("Good Job!", "You completed the route");
-                    } else
-                        notifications.addNotification("Congratulation!", "You save new route ! ");
-                    backToMenuActivity();
-                }else {
-                    Toast.makeText(this,"No hay internet ",Toast.LENGTH_LONG).show();
-                }
+                    statisticsApiRest.setRoute(refreshTokenDto.getId() + "-" + locationBinder.getId());
+                } else
+                    statisticsApiRest.setRoute(locationBinder.getId());
+                statisticsViewModel.addStatistic(statisticsApiRest).observe(this, resp -> {
+                    if (resp) {
+                        if (statisticsApiRest.getBattleId() != null) {
+                            notifications.addNotification("Good Job!", "You completed the battle wait the result");
+                        } else if (locationBinder.isRepeat()) {
+                            notifications.addNotification("Good Job!", "You completed the route");
+                        } else
+                            notifications.addNotification("Congratulation!", "You save new route ! ");
+                        backToMenuActivity();
+                    } else {
+                        Toast.makeText(this, "No hay internet ", Toast.LENGTH_LONG).show();
+                    }
+                });
             });
-        });
-    
+
     }
 
+    private boolean validateTitleAndDescription() {
 
+        boolean result = true;
+        String title, description;
+        title = tvTitleTrackingDetail.getText().toString();
+        description = tvDescriptionTrackingDetail.getText().toString();
+        if (title.isEmpty()) {
+            result = false;
+        }
+        if (description.isEmpty()) {
+            result = false;
+        }
+        return result;
+    }
 
 
     private void backToMenuActivity() {

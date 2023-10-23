@@ -76,13 +76,15 @@ public class StatisticsFragment  extends BaseListViewFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.background:
+            case android.R.id.home:
                 backToMenuActivity();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 
     private void backToMenuActivity() {
         replaceFragment(new MyMapsFragment());
