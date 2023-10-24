@@ -134,6 +134,7 @@ public class RouteRecyclerViewAdapter extends RecyclerView.Adapter<RouteRecycler
                 private void replaceFragment(Fragment fragment){
                     FragmentManager fragmentManager=((AppCompatActivity) rootView.getContext()).getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+                    fragmentTransaction.addToBackStack(fragment.getTag());
                     fragmentTransaction.replace(R.id.frame_layout,fragment);
                     fragmentTransaction.commit();
                 }
