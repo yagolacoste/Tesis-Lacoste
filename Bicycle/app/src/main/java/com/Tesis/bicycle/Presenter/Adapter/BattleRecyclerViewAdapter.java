@@ -133,8 +133,9 @@ public class BattleRecyclerViewAdapter extends RecyclerView.Adapter<BattleRecycl
                 private void replaceFragment(Fragment fragment){
                     FragmentManager fragmentManager=((AppCompatActivity) rootView.getContext()).getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+//                    fragmentTransaction.addToBackStack(fragment.getTag());
                     fragmentTransaction.replace(R.id.frame_layout,fragment);
-                    fragmentTransaction.commit();
+                    fragmentTransaction.commitNow();
                 }
             });
 

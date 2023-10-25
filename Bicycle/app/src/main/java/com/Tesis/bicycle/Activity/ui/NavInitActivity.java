@@ -91,14 +91,14 @@ public class NavInitActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            // Manejar la acción de retroceso
-            replaceFragment(new MyMapsFragment()); // Reemplaza 'MiFragmento' con el nombre de tu fragmento
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if (item.getItemId() == android.R.id.home) {
+//            // Manejar la acción de retroceso
+//            replaceFragment(new MyMapsFragment()); // Reemplaza 'MiFragmento' con el nombre de tu fragmento
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
 }
