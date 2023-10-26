@@ -6,10 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".Activity.ui.NavInitActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        android:background="@color/navy"
+        app:title="BYCICLE"
+        app:titleMarginStart="30dp"
+        app:titleTextColor="@color/white"/>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
         android:id="@+id/frame_layout" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
