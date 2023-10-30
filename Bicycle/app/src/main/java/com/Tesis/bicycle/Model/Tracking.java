@@ -114,7 +114,7 @@ public class Tracking implements Serializable {
             float correctDistance = correctLocation.distanceTo(currentLocation);
             float problematicDistance= problematicLocation.distanceTo(currentLocation);
             float distanceToCorrectAndProblematic = correctLocation.distanceTo(problematicLocation);//Di
-          if((correctDistance< distanceToCorrectAndProblematic)) {
+          if((correctDistance< distanceToCorrectAndProblematic) && (correctDistance<problematicDistance)) {//por el triangulo dibujado
                 this.buffer.remove(problematicLocation);//remuevo segunda /// nunca entra aca porque si es un desvio el filtro por distancia lo saca
           }else{
                 this.buffer.remove(correctLocation);//remuevo la primera
