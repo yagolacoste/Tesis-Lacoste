@@ -99,7 +99,7 @@ public class Tracking implements Serializable {
     private void checkMobility(Location currentLocation) {
         if(buffer.isEmpty()) {
             buffer.add(currentLocation);
-            addCoordinateToHistory(currentLocation);//guardo la primer coordenada en el buffer y en el historial  por estar vacios
+            //addCoordinateToHistory(currentLocation);//guardo la primer coordenada en el buffer y en el historial  por estar vacios
         }else if(!buffer.isEmpty() && buffer.size()==1){//detecta si esta detenido o no
 //            float distance = buffer.get(0).distanceTo(currentLocation);
 //             if(distance<=CONFIDENCE_THRESHOLD){
@@ -228,7 +228,11 @@ public class Tracking implements Serializable {
         timeStarted=new Date(System.currentTimeMillis());
         }
 
-    public void stopTrackingActivity(){//probar con el celu
+    public void stopTrackingActivity(){
+        if(!buffer.isEmpty()){
+            for(Location location:buffer)
+                addCoordinateToHistory(location);
+        }
         timeStopped=new Date(System.currentTimeMillis());
         timeElapsedBetweenStartStops = timeStopped.getTime() - timeStarted.getTime();
 
