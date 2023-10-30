@@ -12,13 +12,12 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="703dp">
+        android:layout_height="650dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvScrollViewFr"
             android:layout_width="match_parent"
-            android:layout_height="700dp"
-            android:visibility="gone">
+            android:layout_height="730dp">
         </androidx.recyclerview.widget.RecyclerView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         <LinearLayout
@@ -26,7 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/imgLayoutEmpty"
@@ -55,7 +55,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="120dp"
         android:src="@drawable/ic_add_photo"
         android:visibility="gone"/>
 

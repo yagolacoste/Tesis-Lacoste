@@ -142,7 +142,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/btn_Information"
-                    android:text="Not Started" />
+                    android:text="Not Started"
+                    android:textSize="20dp"
+                    android:textAlignment="center"/>
             </LinearLayout>
         </RelativeLayout>
 
