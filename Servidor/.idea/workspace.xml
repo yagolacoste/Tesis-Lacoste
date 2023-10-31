@@ -139,8 +139,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.GatewayApplication" />
-        <item itemvalue="Application.AdminApplication" />
         <item itemvalue="Application.AuthApplication" />
+        <item itemvalue="Application.AdminApplication" />
         <item itemvalue="Application.DiscoveryApplication" />
       </list>
     </recent_temporary>

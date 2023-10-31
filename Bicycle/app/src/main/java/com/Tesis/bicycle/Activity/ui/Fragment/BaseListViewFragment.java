@@ -48,7 +48,6 @@ public abstract class BaseListViewFragment extends Fragment {
 
     protected String text="Your haven't any route save";
 
-
     protected OvershootInterpolator interpolator=new OvershootInterpolator();
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

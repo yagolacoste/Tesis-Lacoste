@@ -17,7 +17,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvScrollViewFr"
             android:layout_width="match_parent"
-            android:layout_height="730dp">
+            android:layout_height="730dp"
+            android:visibility="gone">
+
         </androidx.recyclerview.widget.RecyclerView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         <LinearLayout

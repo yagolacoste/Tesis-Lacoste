@@ -204,7 +204,7 @@ public class TrackingActivity extends Activity {
             action = getIntent().getAction();
             if (action != null) {
                 setRouteByAction(action);
-                }
+            }
 
 
             //capturo coordenadas cada 5segundos
@@ -250,7 +250,7 @@ public class TrackingActivity extends Activity {
         }
     }
 
-    private boolean equalsPosition() {
+    private boolean equalsPosition() {//podria ir en gps service o tracking
             GeoPoint Compare = repeat.getRouteReplay().get(0);
             Location location = new Location("");
             location.setLatitude(Compare.getLatitudeE6() / 1E6);

@@ -73,7 +73,7 @@ public class Tracking implements Serializable {
         description=tracking.getDescription();
         routeReplay=tracking.getRouteReplay();
         battle=tracking.getBattle();
-        repeat=false;
+        repeat=tracking.isRepeat();
     }
 
     public void addTracking(Location currentLocation) {
@@ -89,8 +89,6 @@ public class Tracking implements Serializable {
                         this.setDeviation(true);
                     }
                 }
-//                   addCoordinateToHistory(currentLocation);
-//                   newLocation=currentLocation;
 
             }
 
@@ -114,7 +112,7 @@ public class Tracking implements Serializable {
             float correctDistance = correctLocation.distanceTo(currentLocation);
             float problematicDistance= problematicLocation.distanceTo(currentLocation);
             float distanceToCorrectAndProblematic = correctLocation.distanceTo(problematicLocation);//Di
-          if((correctDistance< distanceToCorrectAndProblematic) && (correctDistance<problematicDistance)) {//por el triangulo dibujado
+          if((correctDistance< distanceToCorrectAndProblematic) || (correctDistance<problematicDistance)) {//por el triangulo dibujado
                 this.buffer.remove(problematicLocation);//remuevo segunda /// nunca entra aca porque si es un desvio el filtro por distancia lo saca
           }else{
                 this.buffer.remove(correctLocation);//remuevo la primera
@@ -561,6 +559,14 @@ public class Tracking implements Serializable {
 
     public void setFilteredPoints(List<Location> filteredPoints) {
         this.filteredPoints = filteredPoints;
+    }
+
+    public boolean isNotificationDisplayed() {
+        return notificationDisplayed;
+    }
+
+    public void setNotificationDisplayed(boolean notificationDisplayed) {
+        this.notificationDisplayed = notificationDisplayed;
     }
 
     @Override

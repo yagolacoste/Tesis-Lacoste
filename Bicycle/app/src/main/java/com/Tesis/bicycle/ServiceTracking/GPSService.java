@@ -93,7 +93,8 @@ public class GPSService extends Service {
                     if (locationResult != null ) {
                        for(Location location:locationResult.getLocations()){
                            tracking.addTracking(location);
-                            if (tracking.isDeviation() && !notificationDisplayed) {
+
+                            if (tracking.isDeviation() && tracking.isRepeat()) {
                                 notification.addNotification("Alert", "you have gone off the road");
                                 notificationDisplayed = true;
                             }
