@@ -43,17 +43,19 @@
         app:layout_constraintStart_toStartOf="@id/titleName"
         app:layout_constraintTop_toBottomOf="@id/titleName"/>
 
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/white_background"
         android:orientation="vertical"
         android:padding="10dp"
-        android:background="@drawable/white_background"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleLastName">
 
@@ -68,28 +70,28 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:elevation="5dp"
-                android:padding="8dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="8dp">
 
                 <TextView
+                    android:id="@+id/postsAge"
                     android:layout_width="80dp"
                     android:layout_height="60dp"
-                    android:id="@+id/postsAge"
-                    android:text="27"
                     android:gravity="center"
+                    android:text="27"
                     android:textAlignment="center"
                     android:textColor="@color/lavender"
                     android:textSize="26sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/posts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/posts"
                     android:text="Age"
                     android:textAlignment="center"
                     android:textColor="@color/lavender"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -99,28 +101,28 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:elevation="5dp"
-                android:padding="8dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="8dp">
 
                 <TextView
+                    android:id="@+id/postWeight"
                     android:layout_width="80dp"
                     android:layout_height="60dp"
-                    android:id="@+id/postWeight"
-                    android:text="455"
                     android:gravity="center"
+                    android:text="455"
                     android:textAlignment="center"
                     android:textColor="@color/lavender"
                     android:textSize="26sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/followers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/followers"
                     android:text="Weight"
                     android:textAlignment="center"
                     android:textColor="@color/lavender"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -130,28 +132,28 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:elevation="5dp"
-                android:padding="8dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="8dp">
 
                 <TextView
+                    android:id="@+id/postHeight"
                     android:layout_width="80dp"
                     android:layout_height="60dp"
-                    android:id="@+id/postHeight"
-                    android:text="413"
                     android:gravity="center"
+                    android:text="413"
                     android:textAlignment="center"
                     android:textColor="@color/lavender"
                     android:textSize="26sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/following"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/following"
                     android:text="Height"
                     android:textAlignment="center"
                     android:textColor="@color/lavender"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -160,31 +162,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Phone"
-                android:textStyle="bold"
                 android:textColor="@color/lavender"
-                android:textSize="18sp"/>
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/profilePhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/profilePhone"
-                android:text="Phone"
                 android:layout_weight="1"
+                android:text="Phone"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/grey"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -193,51 +195,52 @@
             android:layout_height="1dp"
             android:layout_margin="10dp"
             android:alpha="0.5"
-            android:background="@color/lavender"/>
+            android:background="@color/lavender" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
-            android:padding="8dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="8dp">
 
             <TextView
+                android:id="@+id/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/email"
                 android:layout_weight="1"
                 android:text="Email"
-                android:textStyle="bold"
                 android:textColor="@color/lavender"
-                android:textSize="18sp"/>
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/profileEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/profileEmail"
-                android:text="email"
                 android:layout_weight="1"
+                android:text="email"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/grey"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
         </LinearLayout>
 
     </LinearLayout>
 
-
     <Button
+        android:id="@+id/editButton"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:id="@+id/editButton"
         android:gravity="center"
         android:text="Edit Profile"
         android:textSize="18sp"
-        app:cornerRadius = "20dp"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/linearLayout"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout"/>
+        app:layout_constraintTop_toBottomOf="@id/linearLayout"
+        app:layout_constraintVertical_bias="0.087" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

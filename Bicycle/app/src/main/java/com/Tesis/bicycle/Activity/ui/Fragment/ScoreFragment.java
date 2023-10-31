@@ -110,7 +110,9 @@ public class ScoreFragment extends Fragment {
                                 TextView titleWinner = customView.findViewById(R.id.txtWinner);
                                 if(response.getPlayerOneScore()>response.getPlayerTwoScore()){
                                     titleWinner.setText("Winner is "+response.getNamePlayerOneComplete());
-                                }else titleWinner.setText("Winner is "+response.getNamePlayerTwoComplete());
+                                }else if  (response.getPlayerOneScore()==response.getPlayerTwoScore()){
+                                    titleWinner.setText("There is a tie");
+                                } else titleWinner.setText("Winner is "+response.getNamePlayerTwoComplete());
                                 TextView playerOne=customView.findViewById(R.id.txtPlayerOne);
                                 TextView playerTwo=customView.findViewById(R.id.txtPlayerTwo);
                                 TextView score=customView.findViewById(R.id.txtScore);

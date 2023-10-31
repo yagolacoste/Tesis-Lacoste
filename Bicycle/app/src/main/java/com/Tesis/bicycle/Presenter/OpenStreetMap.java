@@ -29,6 +29,7 @@ import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.routing.OSRMRoadManager;
 import org.osmdroid.bonuspack.routing.Road;
 import org.osmdroid.bonuspack.routing.RoadManager;
+import org.osmdroid.bonuspack.utils.BonusPackHelper;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.BoundingBox;
@@ -65,7 +66,7 @@ public class OpenStreetMap {
 
     public OpenStreetMap(MapView myOpenMapView) {
         this.myOpenMapView = myOpenMapView;
-        roadManager=new OSRMRoadManager(myOpenMapView.getContext(), "OBP_Tuto/1.0");
+        roadManager=new OSRMRoadManager(myOpenMapView.getContext(), BonusPackHelper.DEFAULT_USER_AGENT);//"OBP_Tuto/1.0"
         ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
         mRotationGestureOverlay = new RotationGestureOverlay(myOpenMapView.getContext(), myOpenMapView);
         this.mCompassOverlay = new CompassOverlay(myOpenMapView.getContext(), new InternalCompassOrientationProvider(myOpenMapView.getContext()), myOpenMapView);
