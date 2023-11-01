@@ -3,6 +3,7 @@ package com.Tesis.bicycle.Activity.ui;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -13,7 +14,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.TextView;
 
 
 import com.Tesis.bicycle.Activity.TrackingActivity;
@@ -26,9 +27,15 @@ import com.Tesis.bicycle.Dto.ApiRest.auth.request.TokenRefreshRequest;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
 import com.Tesis.bicycle.ViewModel.AuthViewModel;
+import com.Tesis.bicycle.ViewModel.FriendshipRequestViewModel;
 import com.Tesis.bicycle.databinding.ActivityNavInitBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.concurrent.atomic.AtomicInteger;
+
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 
 public class NavInitActivity extends AppCompatActivity {
 
@@ -38,10 +45,19 @@ public class NavInitActivity extends AppCompatActivity {
     private AuthViewModel authViewModel;
     private AccessTokenRoomViewModel accessTokenRoomViewModel;
 
+    private FriendshipRequestViewModel friendshipRequestViewModel;
+
+    private int notificationCount = 0;
+    private TextView notificationCountTextView;
+
+    private Badge badge;
+
+
 
     private void initViewModel() {
         authViewModel =new ViewModelProvider(this).get(AuthViewModel.class);
         accessTokenRoomViewModel=new ViewModelProvider(this).get(AccessTokenRoomViewModel.class);
+        friendshipRequestViewModel =new ViewModelProvider(this).get(FriendshipRequestViewModel.class);
     }
 
     @Override
@@ -113,7 +129,6 @@ public class NavInitActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.noti_option_menu,menu);
-
         return true;
     }
 

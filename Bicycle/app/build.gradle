@@ -99,4 +99,8 @@ dependencies {
     implementation 'org.locationtech.jts:jts-core:1.16.1'
 
 
+    implementation 'q.rorbin:badgeview:1.1.2'
+
+
+
 }

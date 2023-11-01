@@ -46,7 +46,7 @@
     <string name="tab_score">Score</string>
     <string name="tab_profile">PROFILE</string>
     <string name="tab_achievements">ACHIEVEMENTS</string>
-    <string name="tab_classification">CLASSIFICATION</string>
+    <string name="tab_classification">classification</string>
     <string name="no_records">Todavía no hay récords almacenados.</string>
     <string name="st_winner">winner</string>
     <string name="st_speed">%,d km/h</string>
