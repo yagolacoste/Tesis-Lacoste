@@ -34,8 +34,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import q.rorbin.badgeview.Badge;
-import q.rorbin.badgeview.QBadgeView;
+
 
 public class NavInitActivity extends AppCompatActivity {
 
@@ -50,7 +49,6 @@ public class NavInitActivity extends AppCompatActivity {
     private int notificationCount = 0;
     private TextView notificationCountTextView;
 
-    private Badge badge;
 
 
 

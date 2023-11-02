@@ -161,7 +161,7 @@ public class Tracking implements Serializable {
 
     private boolean isDistanceFilterValid(Location location) {
             float distance = lastValidLocation.distanceTo(location);
-            Log.i("DISTANCE BETWEEN LASTPOINT NEW LOCATION","Su DISTANCE es : "+distance);
+            //Log.i("DISTANCE BETWEEN LASTPOINT NEW LOCATION","Su DISTANCE es : "+distance);
             if(distance >MAX_ACCURACY_THRESHOLD/2)
                 return true;
             return false;

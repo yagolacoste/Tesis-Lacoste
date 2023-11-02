@@ -25,19 +25,10 @@
                 android:layout_height="wrap_content">
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="170dp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="55dp"
-                    android:src="@drawable/tortuge_ic" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
-                    android:gravity="center"
-                    android:text="@string/bicycle"
-                    android:textColor="@color/white"
-                    android:textSize="30sp"
-                    android:textStyle="bold|normal" />
+                    android:layout_marginTop="25dp"
+                    android:src="@drawable/ic_torgue_edit" />
             </LinearLayout>
         </FrameLayout>
     </LinearLayout>
@@ -52,9 +43,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/san_francisco"
-            android:textSize="35sp"
+            android:textSize="50sp"
             android:textStyle="bold"
-            android:gravity="left|center_horizontal"
+            android:gravity="center_horizontal"
             android:text="@string/welcome"/>
     </LinearLayout>
 
