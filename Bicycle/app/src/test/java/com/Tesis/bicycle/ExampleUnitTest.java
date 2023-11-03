@@ -6,10 +6,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
 
+
 import static org.junit.Assert.*;
 
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 
 import com.Tesis.bicycle.Model.Tracking;
 
@@ -171,20 +173,20 @@ public class ExampleUnitTest {
             double latitude = Double.parseDouble(coordinates[1]);
             float accuracy = Float.parseFloat(parts[1]);
             float speed = Float.parseFloat(parts[2]);
-            Location location = new MockLocation("");
-            location.setLongitude(longitude);
-            location.setLatitude(latitude);
-            location.setAccuracy(accuracy);
-            location.setSpeed(speed);
+//            Location location = new Location("gps");
+//            location.setLongitude(longitude);
+//            location.setLatitude(latitude);
+//            location.setAccuracy(accuracy);
+//            location.setSpeed(speed);
 
-//            Location mockLocation = Mockito.mock(Location.class);
-//
-//
-//            Mockito.when(mockLocation.getLongitude()).thenReturn(longitude);
-//            Mockito.when(mockLocation.getLatitude()).thenReturn(latitude);
-//            Mockito.when(mockLocation.getAccuracy()).thenReturn(accuracy);
-//            Mockito.when(mockLocation.getSpeed()).thenReturn(speed);
-//
+            Location mockLocation = Mockito.mock(Location.class);
+
+
+            Mockito.when(mockLocation.getLongitude()).thenReturn(longitude);
+            Mockito.when(mockLocation.getLatitude()).thenReturn(latitude);
+            Mockito.when(mockLocation.getAccuracy()).thenReturn(accuracy);
+            Mockito.when(mockLocation.getSpeed()).thenReturn(speed);
+
 //            // Obtiene los valores de los mocks y los imprime
 //            double mockLongitude = mockLocation.getLongitude();
 //            double mockLatitude = mockLocation.getLatitude();
@@ -192,7 +194,7 @@ public class ExampleUnitTest {
 //            float mockSpeed = mockLocation.getSpeed();
 
 
-            locationList.add(location);
+            locationList.add(mockLocation);
         }
         for(Location l:locationList){
             // Agrega la ubicación al Tracking

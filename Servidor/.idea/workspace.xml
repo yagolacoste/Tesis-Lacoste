@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7729f06-1757-4dfa-ac9d-78d48a9c1c01" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ApiRestConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Presenter/ApiRestConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/androidTest/java/com/Tesis/bicycle/ExampleInstrumentedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/androidTest/java/com/Tesis/bicycle/ExampleInstrumentedTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Model/Tracking.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/main/java/com/Tesis/bicycle/Model/Tracking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/app/src/test/java/com/Tesis/bicycle/ExampleUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/app/src/test/java/com/Tesis/bicycle/ExampleUnitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Bicycle/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../Bicycle/gradle.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
