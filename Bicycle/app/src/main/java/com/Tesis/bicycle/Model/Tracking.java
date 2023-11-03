@@ -18,7 +18,7 @@ public class Tracking implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final float MAX_SPEED_THRESHOLD =10.0F ; //10 m/s //segun google son 30 k/h con toda la furia
     private static final float MIN_SPEED_THRESHOLD =0.01F ; //0.01 m/s //minimo no va
-    private static final float MAX_ACCURACY_THRESHOLD =21.0F ; //20 metros inclusive es un promedio de los valores calculados
+    private static final float MAX_ACCURACY_THRESHOLD =16.0F ; //16 metros inclusive es un promedio de los valores calculados
 
     private static final float MIN_ALTITUDE_THRESHOLD = -450F; // 5 metros
     private static final double MAX_ALTITUDE_THRESHOLD = 5200F;

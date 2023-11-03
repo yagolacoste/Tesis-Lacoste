@@ -2,11 +2,15 @@ package com.Tesis.bicycle.Model.Room;
 
 import android.location.Location;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+import com.Tesis.bicycle.Dto.ApiRest.Statistics.StatisticsApiRest;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.jetbrains.annotations.NotNull;
 import org.osmdroid.util.GeoPoint;
 
 import java.time.LocalTime;
@@ -17,20 +21,137 @@ import java.util.List;
 @Entity(tableName="tracked")
 public class Tracked {
 
-    private String id;
+
+    //data route
+    @ColumnInfo(name = "routeId")
+    private String routeId;
+
+    @ColumnInfo(name = "title")
     private String title="";
+
+    @ColumnInfo(name = "description")
     private String description="";
+
+    @ColumnInfo(name="coordinates")
+    private List<GeoPoint> coordinates;
+
+    //statistics
+    @ColumnInfo(name="appUser")
+    private Long appUser;
+
+    @ColumnInfo(name="distance")
     private float distance=0;
+    @ColumnInfo(name="avgSpeed")
     private float avgSpeed=0;
+
+    @ColumnInfo(name="time")
     @JsonFormat(timezone = JsonFormat.DEFAULT_TIMEZONE,pattern = "H:mm:ss")
     private LocalTime time;
 
-    @JsonProperty("timeCreated")
+    @ColumnInfo(name="timeCreated")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd",timezone = "America/Buenos_Aires")
     private Date timeCreated;
-    private transient List<Location> points=new ArrayList<>();//si no se repite
-    private boolean repeat=false;//para ver si se repite
+
+    @ColumnInfo(name="battle")
     private Long battle;//si se hizo una batalla
-    private boolean update;//si esta subido
+
+
+
+    public Tracked() {
+    }
+
+    public Tracked(StatisticsApiRest statisticsApiRest) {
+        this.routeId = statisticsApiRest.getRoute();
+        this.title = statisticsApiRest.getTitle();
+        this.description = statisticsApiRest.getDescription();
+        this.coordinates = statisticsApiRest.getCoordinates();
+        this.appUser = statisticsApiRest.getAppUser();
+        this.distance = statisticsApiRest.getDistance();
+        this.avgSpeed = statisticsApiRest.getAvgSpeed();
+        this.time = statisticsApiRest.getTime();
+        this.timeCreated = statisticsApiRest.getTimeCreated();
+        this.battle = statisticsApiRest.getBattleId();
+    }
+
+    public String getRouteId() {
+        return routeId;
+    }
+
+    public void setRouteId(String routeId) {
+        this.routeId = routeId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<GeoPoint> getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(List<GeoPoint> coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public Long getAppUser() {
+        return appUser;
+    }
+
+    public void setAppUser(Long appUser) {
+        this.appUser = appUser;
+    }
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
+    }
+
+    public float getAvgSpeed() {
+        return avgSpeed;
+    }
+
+    public void setAvgSpeed(float avgSpeed) {
+        this.avgSpeed = avgSpeed;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
+    }
+
+    public Date getTimeCreated() {
+        return timeCreated;
+    }
+
+    public void setTimeCreated(Date timeCreated) {
+        this.timeCreated = timeCreated;
+    }
+
+
+    public Long getBattle() {
+        return battle;
+    }
+
+    public void setBattle(Long battle) {
+        this.battle = battle;
+    }
 
 }
