@@ -5,20 +5,30 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 import androidx.room.TypeConverter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
 public class ConvertersDate {
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     @TypeConverter
-    public static LocalDate fromTimestamp(Long value) {
-            return value == null ? null :LocalDate.ofEpochDay(value);
+    public static Date toDate(String dateString) {
+        try {
+            return dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            return null;
+        }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @TypeConverter
-    public static Long dateToTimestamp(LocalDate date) {
-        return date == null ? null : date.toEpochDay();
+    public static String fromDate(Date date) {
+        if (date != null) {
+            return dateFormat.format(date);
+        } else {
+            return null;
+        }
     }
 }

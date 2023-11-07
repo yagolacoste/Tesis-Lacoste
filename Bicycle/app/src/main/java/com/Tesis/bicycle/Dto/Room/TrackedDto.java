@@ -1,94 +1,73 @@
-package com.Tesis.bicycle.Model.Room;
-
-import android.location.Location;
+package com.Tesis.bicycle.Dto.Room;
 
 import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
 import com.Tesis.bicycle.Converters.ConvertersDate;
 import com.Tesis.bicycle.Converters.ListOfGeoPointConvert;
-import com.Tesis.bicycle.Converters.ListTypeConverter;
 import com.Tesis.bicycle.Converters.LocalTimeConverter;
-import com.Tesis.bicycle.Dto.ApiRest.Statistics.StatisticsApiRest;
+import com.Tesis.bicycle.Model.Room.Tracked;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import org.jetbrains.annotations.NotNull;
 import org.osmdroid.util.GeoPoint;
 
+import java.io.Serializable;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Entity(tableName="tracked")
-public class Tracked {
+public class TrackedDto implements Serializable {
 
-    @PrimaryKey(autoGenerate = true)
-    private int id;
-    //data route
-    @ColumnInfo(name = "routeId")
+    @JsonProperty("routeId")
     private String routeId;
 
-    @ColumnInfo(name = "title")
+    @JsonProperty( "title")
     private String title="";
 
-    @ColumnInfo(name = "description")
+    @JsonProperty( "description")
     private String description="";
 
-    @ColumnInfo(name="coordinates")
+    @JsonProperty("coordinates")
     @TypeConverters(ListOfGeoPointConvert.class)
     private List<GeoPoint> coordinates;
 
     //statistics
-    @ColumnInfo(name="appUser")
+    @JsonProperty("appUser")
     private Long appUser;
 
-    @ColumnInfo(name="distance")
+    @JsonProperty("distance")
     private float distance=0;
-    @ColumnInfo(name="avgSpeed")
+    @JsonProperty("avgSpeed")
     private float avgSpeed=0;
 
-    @ColumnInfo(name="time")
-    //@JsonFormat(timezone = JsonFormat.DEFAULT_TIMEZONE,pattern = "H:mm:ss")
+    @JsonProperty("time")
+   // @JsonFormat(timezone = JsonFormat.DEFAULT_TIMEZONE,pattern = "H:mm:ss")
     @TypeConverters(LocalTimeConverter.class)
     private LocalTime time;
 
-    @ColumnInfo(name="timeCreated")
+    @JsonProperty("timeCreated")
     //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd",timezone = "America/Buenos_Aires")
     @TypeConverters(ConvertersDate.class)
     private Date timeCreated;
 
-    @ColumnInfo(name="battle")
+    @JsonProperty("battle")
     private Long battle;//si se hizo una batalla
 
-
-
-    public Tracked() {
+    public TrackedDto() {
     }
 
-    public Tracked(StatisticsApiRest statisticsApiRest) {
-        this.routeId = statisticsApiRest.getRoute();
-        this.title = statisticsApiRest.getTitle();
-        this.description = statisticsApiRest.getDescription();
-        this.coordinates = statisticsApiRest.getCoordinates();
-        this.appUser = statisticsApiRest.getAppUser();
-        this.distance = statisticsApiRest.getDistance();
-        this.avgSpeed = statisticsApiRest.getAvgSpeed();
-        this.time = statisticsApiRest.getTime();
-        this.timeCreated = statisticsApiRest.getTimeCreated();
-        this.battle = statisticsApiRest.getBattleId();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public TrackedDto(Tracked tracked) {
+        this.routeId = tracked.getRouteId();
+        this.title = tracked.getTitle();
+        this.description = tracked.getDescription();
+        this.coordinates = tracked.getCoordinates();
+        this.appUser = tracked.getAppUser();
+        this.distance = tracked.getDistance();
+        this.avgSpeed = tracked.getAvgSpeed();
+        this.time = tracked.getTime();
+        this.timeCreated = tracked.getTimeCreated();
+        this.battle = tracked.getBattle();
     }
 
     public String getRouteId() {
@@ -163,7 +142,6 @@ public class Tracked {
         this.timeCreated = timeCreated;
     }
 
-
     public Long getBattle() {
         return battle;
     }
@@ -171,5 +149,4 @@ public class Tracked {
     public void setBattle(Long battle) {
         this.battle = battle;
     }
-
 }

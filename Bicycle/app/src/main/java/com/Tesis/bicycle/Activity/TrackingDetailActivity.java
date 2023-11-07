@@ -28,6 +28,7 @@ import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.Statistics.StatisticsApiRest;
 import com.Tesis.bicycle.Dto.Room.RefreshTokenDto;
 import com.Tesis.bicycle.Model.Room.Routes;
+import com.Tesis.bicycle.Model.Room.Tracked;
 import com.Tesis.bicycle.Presenter.ApiRestConnection;
 import com.Tesis.bicycle.Presenter.AppDataBase;
 import com.Tesis.bicycle.Presenter.Notifications;
@@ -39,6 +40,7 @@ import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
 import com.Tesis.bicycle.ViewModel.RouteViewModel;
 import com.Tesis.bicycle.ViewModel.StatisticsViewModel;
 import com.Tesis.bicycle.ViewModel.StoredDocumentViewModel;
+import com.Tesis.bicycle.ViewModel.TrackedRoomViewModel;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.osmdroid.util.GeoPoint;
@@ -64,6 +66,8 @@ public class TrackingDetailActivity extends AppCompatActivity {
     private GPSService.LocationBinder locationBinder=null;
     private AccessTokenRoomViewModel accessTokenRoomViewModel;
     private StatisticsViewModel statisticsViewModel;
+
+    private TrackedRoomViewModel trackedRoomViewModel;
 
     private OpenStreetMap openStreetMap;
 
@@ -156,6 +160,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
         final ViewModelProvider vmp = new ViewModelProvider(this);
         this.accessTokenRoomViewModel=vmp.get(AccessTokenRoomViewModel.class);
         this.statisticsViewModel =vmp.get(StatisticsViewModel.class);
+        this.trackedRoomViewModel=vmp.get(TrackedRoomViewModel.class);
         this.db = Room.databaseBuilder(TrackingDetailActivity.this, AppDataBase.class, Constants.NAME_DATA_BASE)
                 .allowMainThreadQueries().fallbackToDestructiveMigration().build().routesService();
     }
@@ -222,7 +227,10 @@ public class TrackingDetailActivity extends AppCompatActivity {
                             notifications.addNotification("Congratulation!", "You save new route ! ");
                         backToMenuActivity();
                     } else {
-                        Toast.makeText(this, "No hay internet ", Toast.LENGTH_LONG).show();
+                        Tracked tracked=new Tracked(statisticsApiRest);
+                        trackedRoomViewModel.add(tracked);
+                        notifications.errorMessage("There isn't connection,You statistics is wait for update");
+                        Toast.makeText(this, "There isn't conextion, ", Toast.LENGTH_LONG).show();
                     }
                 });
             });

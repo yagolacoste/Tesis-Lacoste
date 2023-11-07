@@ -53,7 +53,8 @@ public class StatisticsApiRepository {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(context,"No hay internet ",Toast.LENGTH_LONG).show();
+                //Toast.makeText(context,"No hay internet ",Toast.LENGTH_LONG).show();
+                mld.setValue(false);
             }
         });
         return mld;

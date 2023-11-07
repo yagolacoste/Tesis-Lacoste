@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.Tesis.bicycle.Dto.Room.RefreshTokenDto;
+import com.Tesis.bicycle.Dto.Room.TrackedDto;
 import com.Tesis.bicycle.Model.Room.Routes;
 import com.Tesis.bicycle.Model.Room.Tracked;
 
@@ -17,6 +18,6 @@ public interface TrackedService {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void add(Tracked Tracked);
 
-    @Query("SELECT * FROM tracked ")
-    List<Tracked> getAll();
+    @Query("SELECT * FROM tracked")
+    List<TrackedDto> getAll();
 }

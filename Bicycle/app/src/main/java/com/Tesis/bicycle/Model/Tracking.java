@@ -18,7 +18,7 @@ public class Tracking implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final float MAX_SPEED_THRESHOLD =10.0F ; //10 m/s //segun google son 30 k/h con toda la furia
     private static final float MIN_SPEED_THRESHOLD =0.01F ; //0.01 m/s //minimo no va
-    private static final float MAX_ACCURACY_THRESHOLD =16.0F ; //16 metros inclusive es un promedio de los valores calculados
+    private static final float MAX_ACCURACY_THRESHOLD =17.0F ; //17 metros inclusive es un promedio de los valores calculados
 
     private static final float MIN_ALTITUDE_THRESHOLD = -450F; // 5 metros
     private static final double MAX_ALTITUDE_THRESHOLD = 5200F;
@@ -98,7 +98,7 @@ public class Tracking implements Serializable {
     private void checkMobility(Location currentLocation) {
         if(buffer.isEmpty()) {
             buffer.add(currentLocation);
-            addCoordinateToHistory(currentLocation);//guardo la primer coordenada en el buffer y en el historial  por estar vacios
+            //addCoordinateToHistory(currentLocation);//guardo la primer coordenada en el buffer y en el historial  por estar vacios
         }else if(!buffer.isEmpty() && buffer.size()==1){//detecta si esta detenido o no
 //            float distance = buffer.get(0).distanceTo(currentLocation);
 //             if(distance<=CONFIDENCE_THRESHOLD){
@@ -113,11 +113,14 @@ public class Tracking implements Serializable {
             float correctDistance = correctLocation.distanceTo(currentLocation);
             float problematicDistance= problematicLocation.distanceTo(currentLocation);
             float distanceToCorrectAndProblematic = correctLocation.distanceTo(problematicLocation);//Di
-          if((correctDistance< distanceToCorrectAndProblematic) ) {
-                this.buffer.remove(problematicLocation);//remuevo segunda /// nunca entra aca porque si es un desvio el filtro por distancia lo saca
-          }else{
+          if((correctDistance> distanceToCorrectAndProblematic) ) {
+                this.buffer.remove(problematicLocation);
                 this.buffer.remove(correctLocation);//remuevo la primera
-                addCoordinateToHistory(correctLocation);
+                addCoordinateToHistory(correctLocation);//remuevo segunda /// nunca entra aca porque si es un desvio el filtro por distancia lo saca
+          }else{
+//                this.buffer.remove(correctLocation);//remuevo la primera
+//                addCoordinateToHistory(correctLocation);
+              this.buffer.remove(problematicLocation);
             }
            this.checkMobility(currentLocation);
         }
@@ -162,8 +165,7 @@ public class Tracking implements Serializable {
 
     private boolean isDistanceFilterValid(Location location) {
             float distance = lastValidLocation.distanceTo(location);
-            //Log.i("DISTANCE BETWEEN LASTPOINT NEW LOCATION","Su DISTANCE es : "+distance);
-            if(distance >MAX_ACCURACY_THRESHOLD/2)
+                if(distance >MAX_ACCURACY_THRESHOLD/2)
                 return true;
             return false;
     }

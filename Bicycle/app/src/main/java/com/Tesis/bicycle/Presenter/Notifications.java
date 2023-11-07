@@ -79,7 +79,17 @@ public class Notifications {
 
     public void errorMessage(String message) {
         new SweetAlertDialog(context,
-                SweetAlertDialog.ERROR_TYPE).setTitleText("Oops...").setContentText(message).show();
+                SweetAlertDialog.ERROR_TYPE).setTitleText("Oops...")
+                .setContentText(message).setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismiss();  // Cierra el diálogo
+                        ((Activity) context).finish(); // Cierra la actividad actual
+
+                    }
+                }).show();
+//        new SweetAlertDialog(context,
+//                SweetAlertDialog.ERROR_TYPE).setTitleText("Oops...").setContentText(message).show();
     }
 
     public void warningMessage(String message) {
