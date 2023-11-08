@@ -67,7 +67,7 @@ public class OpenStreetMap {
     public OpenStreetMap(MapView myOpenMapView) {
         this.myOpenMapView = myOpenMapView;
         roadManager=new OSRMRoadManager(myOpenMapView.getContext(), BonusPackHelper.DEFAULT_USER_AGENT);//"OBP_Tuto/1.0"
-        ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
+        //((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
         mRotationGestureOverlay = new RotationGestureOverlay(myOpenMapView.getContext(), myOpenMapView);
         this.mCompassOverlay = new CompassOverlay(myOpenMapView.getContext(), new InternalCompassOrientationProvider(myOpenMapView.getContext()), myOpenMapView);
     }
@@ -114,26 +114,52 @@ public class OpenStreetMap {
     }
 
 
-    public void draw(List<GeoPoint> points){
-        Marker startMarker=new Marker(myOpenMapView);
-        //Drawable dr = ResourcesCompat.getDrawable(getContext().getResources(), R.drawable.ic_location, null);
-        startMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_location));
-        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        Road road=roadManager.getRoad((ArrayList<GeoPoint>) points);
-        startMarker.setPosition(road.getRouteLow().get(0));
-        myOpenMapView.getOverlays().add(startMarker);
-        roadOverlay=RoadManager.buildRoadOverlay(road, color, 25f);
-        myOpenMapView.getOverlays().add(roadOverlay);
-        Marker endMarker=new Marker(myOpenMapView);
-        endMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_finish_flag_convert));
-        endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        GeoPoint lastPoint = road.getRouteLow().get(road.getRouteLow().size()-1);
-        double latitude = lastPoint.getLatitude();
-        double longitude = lastPoint.getLongitude();
-        endMarker.setPosition(new GeoPoint(latitude, longitude));
-        myOpenMapView.getOverlays().add(endMarker);
-        myOpenMapView.invalidate();
-    }
+//    public void draw(List<GeoPoint> points){
+//        Marker startMarker=new Marker(myOpenMapView);
+//        //Drawable dr = ResourcesCompat.getDrawable(getContext().getResources(), R.drawable.ic_location, null);
+//        startMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_location));
+//        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+//        Road road=roadManager.getRoad((ArrayList<GeoPoint>) points);
+//        startMarker.setPosition(road.getRouteLow().get(0));
+//        myOpenMapView.getOverlays().add(startMarker);
+//        roadOverlay=RoadManager.buildRoadOverlay(road, color, 25f);
+//        myOpenMapView.getOverlays().add(roadOverlay);
+//        Marker endMarker=new Marker(myOpenMapView);
+//        endMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_finish_flag_convert));
+//        endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+//        GeoPoint lastPoint = road.getRouteLow().get(road.getRouteLow().size()-1);
+//        double latitude = lastPoint.getLatitude();
+//        double longitude = lastPoint.getLongitude();
+//        endMarker.setPosition(new GeoPoint(latitude, longitude));
+//        myOpenMapView.getOverlays().add(endMarker);
+//        myOpenMapView.invalidate();
+//    }
+public void draw(List<GeoPoint> points) {
+    // Eliminar capas anteriores del mapa
+    myOpenMapView.getOverlays().clear();
+
+    // Crear y agregar la línea al mapa
+    Polyline polyline = new Polyline();
+    polyline.setPoints(points);
+    myOpenMapView.getOverlays().add(polyline);
+
+    // Agregar marcadores de inicio y fin
+    Marker startMarker = new Marker(myOpenMapView);
+    startMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_location));
+    startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+    startMarker.setPosition(points.get(0));
+    myOpenMapView.getOverlays().add(startMarker);
+
+    Marker endMarker = new Marker(myOpenMapView);
+    endMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_finish_flag_convert));
+    endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+    endMarker.setPosition(points.get(points.size() - 1));
+    myOpenMapView.getOverlays().add(endMarker);
+
+    // Actualizar el mapa
+    myOpenMapView.invalidate();
+}
+
 
     public void drawStatic(List<GeoPoint> points) {
         myOpenMapView.setBuiltInZoomControls(false);
