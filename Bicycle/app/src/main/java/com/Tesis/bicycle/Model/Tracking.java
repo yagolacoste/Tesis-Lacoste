@@ -18,7 +18,7 @@ public class Tracking implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final float MAX_SPEED_THRESHOLD =8.0F ; //8 m/s //segun google son 30 k/h con toda la furia
     private static final float MIN_SPEED_THRESHOLD =0.01F ; //0.01 m/s //minimo no va
-    private static final float MAX_ACCURACY_THRESHOLD =17.0F ; //17 metros inclusive es un promedio de los valores calculados
+    private static final float MAX_ACCURACY_THRESHOLD =16.0F ; //15 metros inclusive es un promedio de los valores calculados
 
     private static final float MIN_ALTITUDE_THRESHOLD = -450F; // 5 metros
     private static final double MAX_ALTITUDE_THRESHOLD = 5200F;
@@ -58,7 +58,6 @@ public class Tracking implements Serializable {
 
     private List<Location> unfilteredPoints=new ArrayList<>();
 
-//    private static final float CONFIDENCE_THRESHOLD=30F;// 30 metros
 
 
     
@@ -108,7 +107,7 @@ public class Tracking implements Serializable {
             float correctDistance = correctLocation.distanceTo(currentLocation);
             float problematicDistance= problematicLocation.distanceTo(currentLocation);
             float distanceToCorrectAndProblematic = correctLocation.distanceTo(problematicLocation);//Di
-          if((correctDistance< distanceToCorrectAndProblematic)) {
+          if((correctDistance< distanceToCorrectAndProblematic) && correctDistance<problematicDistance) {
                 this.buffer.remove(problematicLocation);
           }else{
                 //adjustCoordinate(correctLocation,problematicLocation);
@@ -120,30 +119,6 @@ public class Tracking implements Serializable {
 
     }
 
-    private void adjustCoordinate(Location correctLocation, Location problematicDistance) {
-        float currentAngle = problematicDistance.getBearing();
-        float previousAngle = correctLocation.getBearing();
-
-    // Calcular la diferencia entre los ángulos
-        float angleDifference = currentAngle - previousAngle;
-
-    // Si la diferencia es mayor que un cierto umbral, entonces la coordenada está desviada
-        if (Math.abs(angleDifference) >25F) {
-            // Alinear la coordenada desviada
-            problematicDistance.setBearing(previousAngle);
-
-            // Obtener la diferencia de latitud entre las coordenadas
-            float latitudeDifference = (float) (problematicDistance.getLatitude() - correctLocation.getLatitude());
-
-            // Obtener la diferencia de longitud entre las coordenadas
-            float longitudeDifference = (float) (problematicDistance.getLongitude() - correctLocation.getLongitude());
-
-            // Correr la coordenada desviada para que quede en línea recta con la coordenada anterior
-            problematicDistance.setLatitude(correctLocation.getLatitude() + latitudeDifference);
-            problematicDistance.setLongitude(correctLocation.getLongitude() + longitudeDifference);
-        }
-
-    }
 
 
     private void addCoordinateToHistory(Location currentLocation) {
@@ -183,7 +158,8 @@ public class Tracking implements Serializable {
 
     private boolean isDistanceFilterValid(Location location) {
             float distance = lastValidLocation.distanceTo(location);
-                if(distance >MAX_ACCURACY_THRESHOLD/2)
+
+                if(distance > (MAX_ACCURACY_THRESHOLD/2F))
                 return true;
             return false;
     }
