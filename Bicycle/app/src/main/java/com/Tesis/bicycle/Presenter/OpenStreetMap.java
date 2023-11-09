@@ -135,6 +135,7 @@ public class OpenStreetMap {
 //        myOpenMapView.invalidate();
 //    }
 public void draw(List<GeoPoint> points) {
+
     // Eliminar capas anteriores del mapa
     myOpenMapView.getOverlays().clear();
 

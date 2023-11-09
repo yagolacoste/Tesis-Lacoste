@@ -16,7 +16,7 @@ import java.util.Locale;
 public class Tracking implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final float MAX_SPEED_THRESHOLD =10.0F ; //10 m/s //segun google son 30 k/h con toda la furia
+    private static final float MAX_SPEED_THRESHOLD =8.0F ; //8 m/s //segun google son 30 k/h con toda la furia
     private static final float MIN_SPEED_THRESHOLD =0.01F ; //0.01 m/s //minimo no va
     private static final float MAX_ACCURACY_THRESHOLD =17.0F ; //17 metros inclusive es un promedio de los valores calculados
 
@@ -95,74 +95,55 @@ public class Tracking implements Serializable {
 
     }
 
+
+
     private void checkMobility(Location currentLocation) {
-        if (buffer.isEmpty()) {
+        if(buffer.isEmpty()) {
             buffer.add(currentLocation);
-            // addCoordinateToHistory(currentLocation);
-        } else if (buffer.size() == 1) {
+        }else if(!buffer.isEmpty() && buffer.size()==1){//detecta si esta detenido o no
             buffer.add(currentLocation);
-        } else if (buffer.size() == 2) {
-            Location lastLocation = buffer.get(0);
-            Location secondToLastLocation = buffer.get(1);
-
-            float lastDistance = lastLocation.distanceTo(currentLocation);
-            float secondToLastDistance = secondToLastLocation.distanceTo(currentLocation);
-            float distanceBetweenLastAndSecondToLast = lastLocation.distanceTo(secondToLastLocation);
-
-            if (lastDistance > distanceBetweenLastAndSecondToLast) {
-                buffer.remove(secondToLastLocation);
-                adjustCoordinates(lastLocation, currentLocation);
-                addCoordinateToHistory(lastLocation);
-            } else {
-                buffer.remove(lastLocation);
+        }else if(!buffer.isEmpty() && buffer.size()==2){
+            Location correctLocation=buffer.get(0);
+            Location problematicLocation=buffer.get(1);
+            float correctDistance = correctLocation.distanceTo(currentLocation);
+            float problematicDistance= problematicLocation.distanceTo(currentLocation);
+            float distanceToCorrectAndProblematic = correctLocation.distanceTo(problematicLocation);//Di
+          if((correctDistance< distanceToCorrectAndProblematic)) {
+                this.buffer.remove(problematicLocation);
+          }else{
+                //adjustCoordinate(correctLocation,problematicLocation);
+                this.buffer.remove(correctLocation);//remuevo la primera
+                addCoordinateToHistory(correctLocation);
             }
-
-            buffer.add(currentLocation);
+           this.checkMobility(currentLocation);
         }
+
     }
 
-    private void adjustCoordinates(Location referenceLocation, Location targetLocation) {
-        float bearing = referenceLocation.bearingTo(targetLocation);
-        float distance = referenceLocation.distanceTo(targetLocation);
+    private void adjustCoordinate(Location correctLocation, Location problematicDistance) {
+        float currentAngle = problematicDistance.getBearing();
+        float previousAngle = correctLocation.getBearing();
 
-        double newLatitude = referenceLocation.getLatitude() + distance * Math.sin(Math.toRadians(bearing));
-        double newLongitude = referenceLocation.getLongitude() + distance * Math.cos(Math.toRadians(bearing));
+    // Calcular la diferencia entre los ángulos
+        float angleDifference = currentAngle - previousAngle;
 
-        targetLocation.setLatitude(newLatitude);
-        targetLocation.setLongitude(newLongitude);
+    // Si la diferencia es mayor que un cierto umbral, entonces la coordenada está desviada
+        if (Math.abs(angleDifference) >25F) {
+            // Alinear la coordenada desviada
+            problematicDistance.setBearing(previousAngle);
+
+            // Obtener la diferencia de latitud entre las coordenadas
+            float latitudeDifference = (float) (problematicDistance.getLatitude() - correctLocation.getLatitude());
+
+            // Obtener la diferencia de longitud entre las coordenadas
+            float longitudeDifference = (float) (problematicDistance.getLongitude() - correctLocation.getLongitude());
+
+            // Correr la coordenada desviada para que quede en línea recta con la coordenada anterior
+            problematicDistance.setLatitude(correctLocation.getLatitude() + latitudeDifference);
+            problematicDistance.setLongitude(correctLocation.getLongitude() + longitudeDifference);
+        }
+
     }
-
-//    private void checkMobility(Location currentLocation) {
-//        if(buffer.isEmpty()) {
-//            buffer.add(currentLocation);
-//            //addCoordinateToHistory(currentLocation);//guardo la primer coordenada en el buffer y en el historial  por estar vacios
-//        }else if(!buffer.isEmpty() && buffer.size()==1){//detecta si esta detenido o no
-////            float distance = buffer.get(0).distanceTo(currentLocation);
-////             if(distance<=CONFIDENCE_THRESHOLD){
-////                buffer.clear();
-////                addCoordinateToHistory(currentLocation);
-////              }
-//            buffer.add(currentLocation);
-//
-//        }else if(!buffer.isEmpty() && buffer.size()==2){
-//            Location correctLocation=buffer.get(0);
-//            Location problematicLocation=buffer.get(1);
-//            float correctDistance = correctLocation.distanceTo(currentLocation);
-//            float problematicDistance= problematicLocation.distanceTo(currentLocation);
-//            float distanceToCorrectAndProblematic = correctLocation.distanceTo(problematicLocation);//Di
-//          if((correctDistance> distanceToCorrectAndProblematic) ) {
-//                this.buffer.remove(problematicLocation);
-//                this.buffer.remove(correctLocation);//remuevo la primera
-//                addCoordinateToHistory(correctLocation);//remuevo segunda /// nunca entra aca porque si es un desvio el filtro por distancia lo saca
-//          }else{
-////                this.buffer.remove(correctLocation);//remuevo la primera
-////                addCoordinateToHistory(correctLocation);
-//              this.buffer.remove(problematicLocation);
-//            }
-//           this.checkMobility(currentLocation);
-//        }
-//
-//    }
 
 
     private void addCoordinateToHistory(Location currentLocation) {
