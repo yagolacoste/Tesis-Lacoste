@@ -6,11 +6,13 @@ import androidx.room.TypeConverter;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 
 import org.osmdroid.util.GeoPoint;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +20,19 @@ public class ListOfGeoPointConvert {
 
     @TypeConverter
     public static List<GeoPoint> fromString(String value) {
-        return new Gson().fromJson(value, new TypeToken<List<GeoPoint>>() {}.getType());
+        Type listType = new TypeToken<List<List<Double>>>() {}.getType();
+        List<List<Double>> coordinatesList = new Gson().fromJson(value, listType);
+
+        // Convertir la lista de listas de coordenadas a GeoPoint
+        List<GeoPoint> geoPoints = new ArrayList<>();
+        for (List<Double> coordinates : coordinatesList) {
+            double latitude = coordinates.get(0);
+            double longitude = coordinates.get(1);
+            geoPoints.add(new GeoPoint(latitude, longitude));
+        }
+
+        return geoPoints;
+
     }
 
     @TypeConverter

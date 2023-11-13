@@ -10,6 +10,7 @@ import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 
+import com.Tesis.bicycle.Activity.ui.NavInitActivity;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.R;
 
@@ -84,7 +85,17 @@ public class Notifications {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
                         sweetAlertDialog.dismiss();  // Cierra el diálogo
-                        ((Activity) context).finish(); // Cierra la actividad actual
+                        Intent intent = new Intent(context, NavInitActivity.class);
+
+                        // Agrega banderas para limpiar la pila de actividades y hacer que la nueva actividad sea la principal
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                        // Inicia la nueva actividad
+                        context.startActivity(intent);
+
+                        // Cierra la actividad actual
+                        ((Activity) context).finish();
+//                        ((Activity) context).finish(); // Cierra la actividad actual
 
                     }
                 }).show();

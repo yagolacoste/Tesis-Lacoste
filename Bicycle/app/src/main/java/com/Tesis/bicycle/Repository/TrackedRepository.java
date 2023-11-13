@@ -42,5 +42,9 @@ public class TrackedRepository {
         return mld;
     }
 
+    public void deleteById(String id){
+        this.db.trackedService().deleteById(id);
+    }
+
 
 }

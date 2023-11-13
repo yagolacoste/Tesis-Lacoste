@@ -38,7 +38,7 @@ public abstract class BaseListViewFragment extends Fragment {
 
     protected Context context;
 
-    private SwipeRefreshLayout swipeRefreshLayout;
+    protected SwipeRefreshLayout swipeRefreshLayout;
 
     protected ImageView imgLayoutEmpty;
 

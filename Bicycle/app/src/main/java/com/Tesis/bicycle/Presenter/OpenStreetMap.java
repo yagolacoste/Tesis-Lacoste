@@ -134,6 +134,8 @@ public class OpenStreetMap {
 //        myOpenMapView.getOverlays().add(endMarker);
 //        myOpenMapView.invalidate();
 //    }
+
+
 public void draw(List<GeoPoint> points) {
 
     // Eliminar capas anteriores del mapa
@@ -143,22 +145,30 @@ public void draw(List<GeoPoint> points) {
     Polyline polyline = new Polyline();
     polyline.setPoints(points);
     myOpenMapView.getOverlays().add(polyline);
-
+    if(points.size()>1){
     // Agregar marcadores de inicio y fin
-    Marker startMarker = new Marker(myOpenMapView);
-    startMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_location));
-    startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-    startMarker.setPosition(points.get(0));
-    myOpenMapView.getOverlays().add(startMarker);
+        Marker startMarker = new Marker(myOpenMapView);
+        startMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_location));
+        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        startMarker.setPosition(points.get(0));
+        myOpenMapView.getOverlays().add(startMarker);
 
-    Marker endMarker = new Marker(myOpenMapView);
-    endMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_finish_flag_convert));
-    endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-    endMarker.setPosition(points.get(points.size() - 1));
-    myOpenMapView.getOverlays().add(endMarker);
+        Marker endMarker = new Marker(myOpenMapView);
+        endMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_finish_flag_convert));
+        endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        endMarker.setPosition(points.get(points.size() - 1));
+        myOpenMapView.getOverlays().add(endMarker);
 
-    // Actualizar el mapa
-    myOpenMapView.invalidate();
+        // Actualizar el mapa
+        myOpenMapView.invalidate();
+    }else{
+        Marker startMarker = new Marker(myOpenMapView);
+        startMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_location));
+        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        startMarker.setPosition(points.get(0));
+        myOpenMapView.getOverlays().add(startMarker);
+        myOpenMapView.invalidate();
+    }
 }
 
 

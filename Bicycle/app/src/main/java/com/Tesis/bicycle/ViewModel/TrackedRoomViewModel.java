@@ -33,5 +33,8 @@ public class TrackedRoomViewModel extends AndroidViewModel {
        return this.repository.getAll();
     }
 
+    public void deleteById(String id){
+        this.repository.deleteById(id);
+    }
 
 }

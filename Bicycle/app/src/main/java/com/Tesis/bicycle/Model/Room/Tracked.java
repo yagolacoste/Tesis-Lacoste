@@ -28,7 +28,7 @@ import java.util.List;
 public class Tracked {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
     //data route
     @ColumnInfo(name = "routeId")
     private String routeId;
@@ -83,11 +83,11 @@ public class Tracked {
         this.battle = statisticsApiRest.getBattleId();
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

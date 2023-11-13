@@ -16,9 +16,8 @@ import java.util.Locale;
 public class Tracking implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final float MAX_SPEED_THRESHOLD =8.0F ; //8 m/s //segun google son 30 k/h con toda la furia
-    private static final float MIN_SPEED_THRESHOLD =0.01F ; //0.01 m/s //minimo no va
-    private static final float MAX_ACCURACY_THRESHOLD =16.0F ; //15 metros inclusive es un promedio de los valores calculados
+    private static final float MAX_SPEED_THRESHOLD =8F ; //8 m/s //segun google son 30 k/h con toda la furia
+    private static final float MAX_ACCURACY_THRESHOLD =16F ; //15 metros inclusive es un promedio de los valores calculados
 
     private static final float MIN_ALTITUDE_THRESHOLD = -450F; // 5 metros
     private static final double MAX_ALTITUDE_THRESHOLD = 5200F;
@@ -99,15 +98,19 @@ public class Tracking implements Serializable {
     private void checkMobility(Location currentLocation) {
         if(buffer.isEmpty()) {
             buffer.add(currentLocation);
-        }else if(!buffer.isEmpty() && buffer.size()==1){//detecta si esta detenido o no
-            buffer.add(currentLocation);
+            addCoordinateToHistory(currentLocation);
+        }else if(!buffer.isEmpty() && buffer.size()==1){//para detectar si la nueva posicion no esta mas atras
+            Location correctLocation=buffer.get(0);
+            float distance =correctLocation.distanceTo(currentLocation);
+            if(distance>(MAX_ACCURACY_THRESHOLD/2))/// me han llegado datos con distancia mayor a 8 deje este condicion porque tengo que tomar distancias mayor a 8 a partir del punto que entra
+                buffer.add(currentLocation);
         }else if(!buffer.isEmpty() && buffer.size()==2){
             Location correctLocation=buffer.get(0);
             Location problematicLocation=buffer.get(1);
             float correctDistance = correctLocation.distanceTo(currentLocation);
             float problematicDistance= problematicLocation.distanceTo(currentLocation);
             float distanceToCorrectAndProblematic = correctLocation.distanceTo(problematicLocation);//Di
-          if((correctDistance< distanceToCorrectAndProblematic) && correctDistance<problematicDistance) {
+          if((correctDistance< distanceToCorrectAndProblematic && correctDistance<problematicDistance)){
                 this.buffer.remove(problematicLocation);
           }else{
                 //adjustCoordinate(correctLocation,problematicLocation);
@@ -158,7 +161,6 @@ public class Tracking implements Serializable {
 
     private boolean isDistanceFilterValid(Location location) {
             float distance = lastValidLocation.distanceTo(location);
-
                 if(distance > (MAX_ACCURACY_THRESHOLD/2F))
                 return true;
             return false;
@@ -196,6 +198,41 @@ public class Tracking implements Serializable {
         return nearestIndex;
     }
 
+
+
+    public void stopTrackingActivity(){
+        checkLastPoints();
+        timeStopped=new Date(System.currentTimeMillis());
+        timeElapsedBetweenStartStops = timeStopped.getTime() - timeStarted.getTime();
+
+        //Calculate the average speed based on the distance and the time between stopping and starting
+        //the session
+        avgSpeedFromSUVAT = distance / (timeElapsedBetweenStartStops / 1000);//m/s
+        avgSpeedFromSUVAT=(avgSpeedFromSUVAT*3600)/1000;
+//        avgSpeedFromSUVAT = ((distance / (float) 1000) / (getCurrentTimeMillis() / (float) 3600000));
+
+    }
+
+    private void checkLastPoints(){
+        if(!buffer.isEmpty()){
+            if (buffer.size()==1 && points.size()!=buffer.size())
+                addCoordinateToHistory(buffer.get(0));
+            else if(buffer.size() == 2){
+                Location correctLocation=buffer.get(0);
+                Location problematicLocation=buffer.get(1);
+                float correctDistance = lastValidLocation.distanceTo(correctLocation);
+                float problematicDistance= lastValidLocation.distanceTo(problematicLocation);
+                float distanceToCorrectAndProblematic = correctLocation.distanceTo(problematicLocation);//Di
+                addCoordinateToHistory(correctLocation);
+                if((correctDistance< problematicDistance)){
+                    addCoordinateToHistory(problematicLocation);
+                }
+
+            }
+        }
+    }
+
+
     private List<Location> convertRouteReplay() {
         List<Location> result=new ArrayList<>();
         for(GeoPoint g:getRouteReplay()){
@@ -221,22 +258,6 @@ public class Tracking implements Serializable {
     public void startTrackingActivity(){
         timeCreated=new Date(System.currentTimeMillis());
         timeStarted=new Date(System.currentTimeMillis());
-        }
-
-    public void stopTrackingActivity(){
-        if(!buffer.isEmpty()){
-            for(Location location:buffer)
-                addCoordinateToHistory(location);
-        }
-        timeStopped=new Date(System.currentTimeMillis());
-        timeElapsedBetweenStartStops = timeStopped.getTime() - timeStarted.getTime();
-
-        //Calculate the average speed based on the distance and the time between stopping and starting
-        //the session
-        avgSpeedFromSUVAT = distance / (timeElapsedBetweenStartStops / 1000);//m/s
-        avgSpeedFromSUVAT=(avgSpeedFromSUVAT*3600)/1000;
-//        avgSpeedFromSUVAT = ((distance / (float) 1000) / (getCurrentTimeMillis() / (float) 3600000));
-
     }
 
     public String getDuration() {

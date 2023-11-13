@@ -9,7 +9,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="205dp"
+        android:layout_height="wrap_content"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp">
 
@@ -122,7 +122,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/runButtonTracked"
+                        android:id="@+id/discardButtonTracked"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -140,7 +140,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/statButtonTracked"
+                        android:id="@+id/saveButtonTracked"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"

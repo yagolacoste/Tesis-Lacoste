@@ -1,6 +1,7 @@
 package com.Tesis.bicycle.Dto.ApiRest.Statistics;
 
 
+import com.Tesis.bicycle.Dto.Room.TrackedDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -49,6 +50,19 @@ public class StatisticsApiRest implements Serializable {
 
 
     public StatisticsApiRest() {
+    }
+
+    public StatisticsApiRest(TrackedDto trackedDto) {
+        this.appUser = trackedDto.getAppUser();
+        this.route = trackedDto.getRouteId();
+        this.title = trackedDto.getTitle();
+        this.description = trackedDto.getDescription();
+        this.distance = trackedDto.getDistance();
+        this.avgSpeed = trackedDto.getAvgSpeed();
+        this.time = trackedDto.getTime();
+        this.timeCreated = trackedDto.getTimeCreated();
+        this.coordinates = trackedDto.getCoordinates();
+        this.battleId = trackedDto.getBattle();
     }
 
     public Long getAppUser() {

@@ -1,6 +1,7 @@
 package com.Tesis.bicycle.Service.Room;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -20,4 +21,8 @@ public interface TrackedService {
 
     @Query("SELECT * FROM tracked")
     List<TrackedDto> getAll();
+
+
+    @Query("DELETE FROM tracked where routeId =:routeId ")
+    void  deleteById(String routeId);
 }
