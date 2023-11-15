@@ -100,7 +100,7 @@ public class Tracking implements Serializable {
             buffer.add(currentLocation);
             addCoordinateToHistory(currentLocation);
         }else if(!buffer.isEmpty() && buffer.size()==1){//para detectar si la nueva posicion no esta mas atras
-            Location correctLocation=buffer.get(0);
+            Location correctLocation=buffer.get(0); //p1
             float distance =correctLocation.distanceTo(currentLocation);
             if(distance>(MAX_ACCURACY_THRESHOLD/2))/// me han llegado datos con distancia mayor a 8 deje este condicion porque tengo que tomar distancias mayor a 8 a partir del punto que entra
                 buffer.add(currentLocation);
@@ -110,7 +110,7 @@ public class Tracking implements Serializable {
             float correctDistance = correctLocation.distanceTo(currentLocation);
             float problematicDistance= problematicLocation.distanceTo(currentLocation);
             float distanceToCorrectAndProblematic = correctLocation.distanceTo(problematicLocation);//Di
-          if((correctDistance< distanceToCorrectAndProblematic && correctDistance<problematicDistance)){
+          if((correctDistance< distanceToCorrectAndProblematic)){
                 this.buffer.remove(problematicLocation);
           }else{
                 //adjustCoordinate(correctLocation,problematicLocation);
@@ -202,6 +202,8 @@ public class Tracking implements Serializable {
 
     public void stopTrackingActivity(){
         checkLastPoints();
+        //POstprocessingPoint /////////
+        ////agarro el point agarro un punto pivote
         timeStopped=new Date(System.currentTimeMillis());
         timeElapsedBetweenStartStops = timeStopped.getTime() - timeStarted.getTime();
 
@@ -222,7 +224,6 @@ public class Tracking implements Serializable {
                 Location problematicLocation=buffer.get(1);
                 float correctDistance = lastValidLocation.distanceTo(correctLocation);
                 float problematicDistance= lastValidLocation.distanceTo(problematicLocation);
-                float distanceToCorrectAndProblematic = correctLocation.distanceTo(problematicLocation);//Di
                 addCoordinateToHistory(correctLocation);
                 if((correctDistance< problematicDistance)){
                     addCoordinateToHistory(problematicLocation);

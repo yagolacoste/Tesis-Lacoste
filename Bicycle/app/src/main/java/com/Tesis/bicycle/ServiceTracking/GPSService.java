@@ -52,6 +52,8 @@ public class GPSService extends Service {
 
     private Notifications notification;
 
+    private boolean lastLocation=false;
+
     private boolean notificationDisplayed = false;
 
 
@@ -93,12 +95,13 @@ public class GPSService extends Service {
                     if (locationResult != null ) {
                        for(Location location:locationResult.getLocations()){
                            tracking.addTracking(location);
-
                             if (tracking.isDeviation() && tracking.isRepeat()) {
                                 notification.addNotification("Alert", "you have gone off the road");
                                 notificationDisplayed = true;
                             }
                        }
+                       if(lastLocation)
+                           stopLocationService();
                     }
                 }
             };
@@ -131,9 +134,14 @@ public class GPSService extends Service {
 
 
     private void stopLocationService(){
-        tracking.stopTrackingActivity();
-        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
-        notification.cancel(1);
+        //booleano en verdadero para pausar
+        if(!lastLocation){
+            lastLocation=true;
+        }else{
+            tracking.stopTrackingActivity();
+            fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+            notification.cancel(1);
+        }
     }
 
 
