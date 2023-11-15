@@ -49,8 +49,11 @@ public class AboutFragment  extends BaseListViewFragment{
         this.statisticsViewModel=new ViewModelProvider(requireActivity()).get(StatisticsViewModel.class);
         this.notifications=new Notifications(requireActivity());
         floatingactionbutton.setVisibility(View.INVISIBLE);
-        imgLayoutEmpty.setImageResource(R.drawable.ic_torgue_edit);//icono de la tortuga
-
+        ViewGroup.LayoutParams layoutParams = imgLayoutEmpty.getLayoutParams();
+        layoutParams.height = 750;
+        layoutParams.width = 750;
+        imgLayoutEmpty.setLayoutParams(layoutParams);
+        imgLayoutEmpty.setImageResource(R.drawable.ic_torgue_edit);
         setText(getString(R.string.about_fragment));
         txtLayoutEmpty.setText(text);
 
@@ -92,7 +95,6 @@ public class AboutFragment  extends BaseListViewFragment{
                             });
                             recyclerView.setAdapter(adaptorRoute);
                         } else {
-                            Toast.makeText(context, "Not exist routes for user: " + 1, Toast.LENGTH_SHORT).show();
                             layoutEmpty.setVisibility(View.VISIBLE);
                             recyclerView.setVisibility(View.GONE);
                         }

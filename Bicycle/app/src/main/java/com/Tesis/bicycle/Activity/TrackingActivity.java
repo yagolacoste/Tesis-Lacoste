@@ -157,7 +157,6 @@ public class TrackingActivity extends Activity {
                 repeat = null;
             }
             locationBinder.startTracking();
-            locationBinder.setActivityType(activityTypeInd);
             registerReceiver(locationSettingStateReceiver, new IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION));
             updateTimeHandler.postDelayed(updateTimeThread, 0);
             updateStatsHandler.postDelayed(updateStatsThread, 0);
@@ -237,6 +236,7 @@ public class TrackingActivity extends Activity {
                 @Override
                 public void onClick(View view) {
                     stopLocationService();
+
                     Intent i = new Intent(TrackingActivity.this, TrackingDetailActivity.class);
                     if (routeDetailsDto != null) {
                         i.setAction(Constants.REPLAY_MY_ROUTE);

@@ -1,12 +1,13 @@
 package com.Tesis.bicycle.Model;
 
 import android.location.Location;
-import android.util.Log;
 
+import com.Tesis.bicycle.Constants;
+
+import org.apache.commons.lang3.RandomStringUtils;
 import org.osmdroid.util.GeoPoint;
 
 import java.io.Serializable;
-import java.nio.Buffer;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,7 +19,6 @@ public class Tracking implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final float MAX_SPEED_THRESHOLD =8F ; //8 m/s //segun google son 30 k/h con toda la furia
     private static final float MAX_ACCURACY_THRESHOLD =16F ; //15 metros inclusive es un promedio de los valores calculados
-
     private static final float MIN_ALTITUDE_THRESHOLD = -450F; // 5 metros
     private static final double MAX_ALTITUDE_THRESHOLD = 5200F;
     private String id;
@@ -30,8 +30,6 @@ public class Tracking implements Serializable {
     private Date timeCreated=null;
     private Date timeStarted=null;
     private Date timeStopped=null;
-    private int rating=5;
-    private int activityType;
     private long timeElapsedBetweenStartStops = 0;
     private float timeElapsedBetweenTrkPoints = 0;
     private float totalSpeedForRunningAverage = 0;
@@ -39,15 +37,10 @@ public class Tracking implements Serializable {
     private long timeInMilliseconds=0;
     private transient List<Location> points=new ArrayList<>();//puntos que captura el gps
     private transient List<GeoPoint> routeReplay=new ArrayList<>();
-
     private boolean repeat=false;
-
     private Long battle;
-
     private boolean deviation =true;
-
-    private Location lastValidLocation ;//ultima location valida (VER COMO MUESTRA EN MAPA)
-
+    private Location lastValidLocation ;
 
     private boolean notificationDisplayed = false;
 
@@ -57,7 +50,7 @@ public class Tracking implements Serializable {
 
     private List<Location> unfilteredPoints=new ArrayList<>();
 
-
+    private List<Location> waysPoints=new ArrayList<>();
 
     
 
@@ -98,7 +91,7 @@ public class Tracking implements Serializable {
     private void checkMobility(Location currentLocation) {
         if(buffer.isEmpty()) {
             buffer.add(currentLocation);
-            addCoordinateToHistory(currentLocation);
+           addCoordinateToHistory(currentLocation);
         }else if(!buffer.isEmpty() && buffer.size()==1){//para detectar si la nueva posicion no esta mas atras
             Location correctLocation=buffer.get(0); //p1
             float distance =correctLocation.distanceTo(currentLocation);
@@ -108,12 +101,10 @@ public class Tracking implements Serializable {
             Location correctLocation=buffer.get(0);
             Location problematicLocation=buffer.get(1);
             float correctDistance = correctLocation.distanceTo(currentLocation);
-            float problematicDistance= problematicLocation.distanceTo(currentLocation);
             float distanceToCorrectAndProblematic = correctLocation.distanceTo(problematicLocation);//Di
           if((correctDistance< distanceToCorrectAndProblematic)){
                 this.buffer.remove(problematicLocation);
           }else{
-                //adjustCoordinate(correctLocation,problematicLocation);
                 this.buffer.remove(correctLocation);//remuevo la primera
                 addCoordinateToHistory(correctLocation);
             }
@@ -125,10 +116,10 @@ public class Tracking implements Serializable {
 
 
     private void addCoordinateToHistory(Location currentLocation) {
-        if (points.isEmpty()) {
+        if (waysPoints.isEmpty()) {
             avgSpeed = currentLocation.getSpeed();
         } else {
-            Location lastPoint = points.get(points.size() - 1);
+            Location lastPoint = waysPoints.get(waysPoints.size() - 1);
             distance += lastPoint.distanceTo(currentLocation);
             timeElapsedBetweenTrkPoints += Math.abs(lastPoint.getTime() - currentLocation.getTime());
             avgSpeedFromSUVAT = ((distance / (float) 1000) / (getCurrentTimeMillis() / (float) 3600000));
@@ -138,12 +129,12 @@ public class Tracking implements Serializable {
                 totalTrkPointsWithSpeedForRunningAverage += 1;
                 avgSpeed = totalSpeedForRunningAverage / totalTrkPointsWithSpeedForRunningAverage;
             }
-            points.add(currentLocation);
+            waysPoints.add(currentLocation);
             this.lastValidLocation = currentLocation;
     }
 
     private boolean isCoordinateValid(Location currentLocation) {
-        if(points.isEmpty()){
+        if(waysPoints.isEmpty()){
             return true;
         }
 
@@ -175,7 +166,7 @@ public class Tracking implements Serializable {
             // Verificar si la posición actual se encuentra dentro del umbral de proximidad
             //double distance = calculateDistance(location, points.get(nearestIndex));
             float distance =location.distanceTo( points.get(nearestIndex));
-            if (distance <= MAX_ACCURACY_THRESHOLD) { //Verifica si la distancia es menor a 16 metros entre la nueva localizacion y el proximo punto de proximidad
+            if (distance <= 40F) { //Verifica si la distancia es menor a 16 metros entre la nueva localizacion y el proximo punto de proximidad
                 return true; // El objeto está siguiendo la ruta correctamente
             }
         }
@@ -201,9 +192,94 @@ public class Tracking implements Serializable {
 
 
     public void stopTrackingActivity(){
-        checkLastPoints();
-        //POstprocessingPoint /////////
-        ////agarro el point agarro un punto pivote
+        analyzedLastPoints();
+        points=postProcessingPoints();
+        calculateStatisticsFinished();
+
+//        compareRoutes();
+    }
+
+
+    private void compareRoutes() {//revisar esto de cuando se hace una ruta pero no termino de hacerla
+        if(checkConditionRoutes()){
+            this.setId(RandomStringUtils.random(Constants.MAX_CARACTER_ID,true,true));
+//            inputNameAndDescription();//ver que onda con esto
+            this.setBattle(null);
+        }
+    }
+
+    ///Revisa si ambas rutas son iguales
+    private boolean checkConditionRoutes(){
+        if(!this.isRepeat()){
+            return true;
+        }else if(!this.isDeviation()){
+            return true;
+        }else if(this.getDistancesRoutes()>30.0f){//revisa que la diferencia entre rutas sea menor a 30 metro
+            return true;
+        }
+        return false;
+
+    }
+
+    private List<Location> postProcessingPoints() {
+        ArrayList<Location> exits= new ArrayList<Location>();
+        Location pivot = waysPoints.get(0);
+        int i =1;
+        ArrayList<Location> aux= new ArrayList<Location>();
+        while (i<waysPoints.size() ) {
+            Location nextPoint = waysPoints.get(i);
+            float distanceBetweenPivotAndNextPoint=pivot.distanceTo(nextPoint);
+            if ( distanceBetweenPivotAndNextPoint < MAX_ACCURACY_THRESHOLD){
+                aux.add(nextPoint);
+                i++;
+            } else {
+                if (aux.size()==0) {
+                    exits.add(pivot);
+                    pivot = nextPoint;
+                    i++;
+                    aux.clear();
+                } else {
+                    //TENGO ALGO EN AUX
+                    aux.add(pivot);
+                    Location avg = getAveragePoints(aux);
+                    pivot = avg;
+                    aux.clear();
+                }
+
+            }
+
+        }
+//QUEDO EL PIVOT Y POSIBLEMENTE EL ARRAY
+        aux.add(pivot);
+        Location avg = getAveragePoints(aux);
+        exits.add(avg);
+        return exits;
+    }
+
+    private Location getAveragePoints(List<Location> averagePoints){
+        if (averagePoints == null || averagePoints.isEmpty()) {
+            return null;
+        }
+
+        double sumLatitud = 0;
+        double sumLongitud = 0;
+
+        for (Location location : averagePoints) {
+            sumLatitud += location.getLatitude();
+            sumLongitud += location.getLongitude();
+        }
+
+        double averageLatitude = sumLatitud / averagePoints.size();
+        double averageLongitude = sumLongitud / averagePoints.size();
+
+        Location location=new Location("New point");
+        location.setLatitude(averageLatitude);
+        location.setLongitude(averageLongitude);
+
+        return location;
+    }
+
+    private void calculateStatisticsFinished(){
         timeStopped=new Date(System.currentTimeMillis());
         timeElapsedBetweenStartStops = timeStopped.getTime() - timeStarted.getTime();
 
@@ -212,12 +288,11 @@ public class Tracking implements Serializable {
         avgSpeedFromSUVAT = distance / (timeElapsedBetweenStartStops / 1000);//m/s
         avgSpeedFromSUVAT=(avgSpeedFromSUVAT*3600)/1000;
 //        avgSpeedFromSUVAT = ((distance / (float) 1000) / (getCurrentTimeMillis() / (float) 3600000));
-
     }
 
-    private void checkLastPoints(){
+    private void analyzedLastPoints(){
         if(!buffer.isEmpty()){
-            if (buffer.size()==1 && points.size()!=buffer.size())
+            if (buffer.size()==1 && waysPoints.size()!=buffer.size())
                 addCoordinateToHistory(buffer.get(0));
             else if(buffer.size() == 2){
                 Location correctLocation=buffer.get(0);
@@ -269,16 +344,6 @@ public class Tracking implements Serializable {
     public long getCurrentTimeMillis(){
        return (System.currentTimeMillis()-timeStarted.getTime());
     }
-
-    //return activity recognicion with determinate avgspeed
-    public static int getPredictedActivityType(float avgSpeed){
-        if(avgSpeed<8) {
-            return 2;
-        }else if(avgSpeed<15){
-            return 1;
-        }else return 3;
-    }
-
 
 
     public LocalTime millsToLocalTime() {
@@ -471,21 +536,6 @@ public class Tracking implements Serializable {
         this.timeStopped = timeStopped;
     }
 
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
-    public int getActivityType() {
-        return activityType;
-    }
-
-    public void setActivityType(int activityType) {
-        this.activityType = activityType;
-    }
 
     public long getTimeElapsedBetweenStartStops() {
         return timeElapsedBetweenStartStops;
@@ -599,8 +649,6 @@ public class Tracking implements Serializable {
                 ", timeCreated=" + timeCreated +
                 ", timeStarted=" + timeStarted +
                 ", timeStopped=" + timeStopped +
-                ", rating=" + rating +
-                ", activityType=" + activityType +
                 ", timeElapsedBetweenStartStops=" + timeElapsedBetweenStartStops +
                 ", timeElapsedBetweenTrkPoints=" + timeElapsedBetweenTrkPoints +
                 ", totalSpeedForRunningAverage=" + totalSpeedForRunningAverage +

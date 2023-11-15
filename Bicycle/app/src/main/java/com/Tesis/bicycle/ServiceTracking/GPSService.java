@@ -43,27 +43,24 @@ public class GPSService extends Service {
     private LocationCallback locationCallback;
 
     //Binder
-    private final IBinder binder =new LocationBinder();
+    private final IBinder binder = new LocationBinder();
 
-    private RoutesService db;
 
     private Tracking tracking;
 
 
     private Notifications notification;
 
-    private boolean lastLocation=false;
-
-    private boolean notificationDisplayed = false;
+    private boolean lastLocation = false;
 
 
     @Override
     public void onCreate() {
-        notification=new Notifications(GPSService.this);
-        fusedLocationProviderClient=LocationServices.getFusedLocationProviderClient(GPSService.this);
+        notification = new Notifications(GPSService.this);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(GPSService.this);
         locationRequest = LocationRequest.create();
-        locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);//7 segundos
-        locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);//3 segundos
+        locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);//3 segundos
+        locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);//1 segundos
         locationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY); // Por defecto puse HIGH solo para verificar que andaba
 
         super.onCreate();
@@ -71,19 +68,16 @@ public class GPSService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-      //  startForeground(1,addNotification());
-        //addNotification();
-        notification.addNotification("Location service","Running");
+        notification.addNotification("Location service", "Running");
         return super.onStartCommand(intent, flags, startId);
     }
 
-    public void startLocationService(){
-//        addNotification();
+    public void startLocationService() {
 
-        if(tracking==null)
-            tracking=new Tracking();
+        if (tracking == null)
+            tracking = new Tracking();
 
-        if(!tracking.isCreated()) {
+        if (!tracking.isCreated()) {
             //Init and create API Location services.
             locationCallback = new LocationCallback() {
                 @Override
@@ -92,16 +86,17 @@ public class GPSService extends Service {
                     if (locationResult == null) {
                         return;
                     }
-                    if (locationResult != null ) {
-                       for(Location location:locationResult.getLocations()){
-                           tracking.addTracking(location);
+                    if (locationResult != null) {
+                        for (Location location : locationResult.getLocations()) {
+                            tracking.addTracking(location);
                             if (tracking.isDeviation() && tracking.isRepeat()) {
                                 notification.addNotification("Alert", "you have gone off the road");
-                                notificationDisplayed = true;
                             }
-                       }
-                       if(lastLocation)
-                           stopLocationService();
+                        }
+                        if (lastLocation){
+//                            tracking.addTracking(locationResult.getLastLocation());
+                            stopLocationService();
+                        }
                     }
                 }
             };
@@ -112,7 +107,7 @@ public class GPSService extends Service {
             }
         }
 
-        }
+    }
 
 
 
@@ -120,8 +115,8 @@ public class GPSService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        locationCallback=null;
-        locationRequest=null;
+        locationCallback = null;
+        locationRequest = null;
         stopForeground(true);
     }
 
@@ -133,11 +128,11 @@ public class GPSService extends Service {
     }
 
 
-    private void stopLocationService(){
+    private void stopLocationService() {
         //booleano en verdadero para pausar
-        if(!lastLocation){
-            lastLocation=true;
-        }else{
+        if (!lastLocation) {
+            lastLocation = true;
+        } else {
             tracking.stopTrackingActivity();
             fusedLocationProviderClient.removeLocationUpdates(locationCallback);
             notification.cancel(1);
@@ -146,17 +141,23 @@ public class GPSService extends Service {
 
 
 
+
+
     public class LocationBinder extends Binder {
 
-        public void startTracking(){ startLocationService();}
+        public void startTracking() {
+            startLocationService();
+        }
 
-        public void stopTracking(){ stopLocationService();}
+        public void stopTracking() {
+            stopLocationService();
+        }
 
 
-        //Set the activity type
-        public void setActivityType(int activityTypeInd){ tracking.setActivityType(activityTypeInd); }
 
-        public void setTrackingActivity(Tracking repeat){tracking=new Tracking(repeat);}
+        public void setTrackingActivity(Tracking repeat) {
+            tracking = new Tracking(repeat);
+        }
 
         //Get the tracked session
         public Tracking getTrackedActivity() {
@@ -166,16 +167,6 @@ public class GPSService extends Service {
         //Get all the track points
         public List<Location> getTrkPoints() {
             return tracking.getPoints();
-        }
-
-        //Set the tracked session rating for persistence
-        public void setRating(int rating) {
-            tracking.setRating(rating);
-        }
-
-        //Get the tracked session rating
-        public int getRating() {
-            return tracking.getRating();
         }
 
 
@@ -214,7 +205,7 @@ public class GPSService extends Service {
             return tracking.getTimeString();
         }
 
-        public LocalTime getTimeLocalTime(){
+        public LocalTime getTimeLocalTime() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 return tracking.millsToLocalTime();
             }
@@ -235,6 +226,7 @@ public class GPSService extends Service {
         public float getAvgSpeed() {
             return tracking.getAvgSpeed();
         }
+
         public float getAvgSpeedCalculated() {
             return tracking.getAvgSpeedFromSUVAT();
         }
@@ -244,44 +236,68 @@ public class GPSService extends Service {
             return tracking.getAvgSpeedString();
         }
 
-        public Location getLastLocation(){return tracking.getLastPoint();}
+        public Location getLastLocation() {
+            return tracking.getLastPoint();
+        }
 
 
-        public List<GeoPoint> getGeoPoints(){
-                return tracking.getGeoPoints();
-            }
+        public List<GeoPoint> getGeoPoints() {
+            return tracking.getGeoPoints();
+        }
 
-        public String getId(){
+        public String getId() {
             return tracking.getId();
         }
 
-        public Long getBattleId(){return tracking.getBattle();}
+        public Long getBattleId() {
+            return tracking.getBattle();
+        }
 
-        public boolean checkingNearestNewPointAndNextPointIndex(Location location){return tracking.checkingNearestNewPointAndNextPointIndex(location);}
+        public boolean checkingNearestNewPointAndNextPointIndex(Location location) {
+            return tracking.checkingNearestNewPointAndNextPointIndex(location);
+        }
 
-        public List<Location>getCoordinates(){return tracking.getPoints();}
+        public List<Location> getCoordinates() {
+            return tracking.getPoints();
+        }
 
-        public boolean isRepeat(){ return tracking.isRepeat();}
-        public boolean isDeviation(){ return tracking.isDeviation();}
-        public void setId(String id){tracking.setId(id);}
+        public boolean isRepeat() {
+            return tracking.isRepeat();
+        }
 
-        public void setBattle(Long id){tracking.setBattle(id);}
+        public boolean isDeviation() {
+            return tracking.isDeviation();
+        }
 
-        public void setRepeat(boolean repeat){tracking.setRepeat(repeat);}
+        public void setId(String id) {
+            tracking.setId(id);
+        }
 
-        public float getDistancesRoutes(){return tracking.getDistancesRoutes();}
+        public void setBattle(Long id) {
+            tracking.setBattle(id);
+        }
 
-        public String getAvgSpeedCalcualtedToString(){
+        public void setRepeat(boolean repeat) {
+            tracking.setRepeat(repeat);
+        }
+
+        public float getDistancesRoutes() {
+            return tracking.getDistancesRoutes();
+        }
+
+        public String getAvgSpeedCalcualtedToString() {
             return tracking.getAvgSpeedFromSUVATToString();
         }
-        public String getAvgSpeedToString(){
+
+        public String getAvgSpeedToString() {
             return tracking.getAvgSpeedString();
         }
 
-        public List<Location> getUnfilteredPoints(){
+        public List<Location> getUnfilteredPoints() {
             return tracking.getUnfilteredPoints();
         }
-        public List<Location> getFilteredPoints(){
+
+        public List<Location> getFilteredPoints() {
             return tracking.getFilteredPoints();
         }
     }
