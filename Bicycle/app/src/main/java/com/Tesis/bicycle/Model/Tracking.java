@@ -76,7 +76,7 @@ public class Tracking implements Serializable {
                 ////////////Repeat route////////////
                 if(isRepeat()){ //Reviso si es repetido el camino
                     this.setDeviation(this.checkingNearestNewPointAndNextPointIndex(currentLocation));//Revisa y setea si se devio entre el proximo punto de mi listado almacenado y el nuevo punto
-                    if (!this.isDeviation() && !notificationDisplayed) {
+                    if (this.isDeviation() && !notificationDisplayed) {
                         notificationDisplayed = true;
                         this.setDeviation(true);
                     }
@@ -166,7 +166,7 @@ public class Tracking implements Serializable {
             // Verificar si la posición actual se encuentra dentro del umbral de proximidad
             //double distance = calculateDistance(location, points.get(nearestIndex));
             float distance =location.distanceTo( points.get(nearestIndex));
-            if (distance <= 40F) { //Verifica si la distancia es menor a 16 metros entre la nueva localizacion y el proximo punto de proximidad
+            if (distance > 50F) { //Verifica si la distancia es menor a 50 metros entre la nueva localizacion y el proximo punto de proximidad
                 return true; // El objeto está siguiendo la ruta correctamente
             }
         }
@@ -214,7 +214,7 @@ public class Tracking implements Serializable {
             return true;
         }else if(!this.isDeviation()){
             return true;
-        }else if(this.getDistancesRoutes()>30.0f){//revisa que la diferencia entre rutas sea menor a 30 metro
+        }else if(this.getDistancesRoutes()>40.0f){//revisa que la diferencia entre rutas sea menor a 30 metro
             return true;
         }
         return false;

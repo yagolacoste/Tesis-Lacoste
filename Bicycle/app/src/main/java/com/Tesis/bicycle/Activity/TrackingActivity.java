@@ -277,6 +277,7 @@ public class TrackingActivity extends Activity {
         repeat.setTitle(routeDetailsDto.getName());
         repeat.setDescription(routeDetailsDto.getDescription());
         repeat.setRouteReplay(routeDetailsDto.getCoordinates());
+        repeat.setRepeat(isRepeat);
 
     }
 

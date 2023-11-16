@@ -85,30 +85,6 @@ public class TrackingDetailActivity extends AppCompatActivity {
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             locationBinder= (GPSService.LocationBinder) iBinder;
 
-//            synchronized (locationBinder) {
-//                List<GeoPoint> geoPoints = locationBinder.getGeoPoints();
-//
-//                if (geoPoints != null && !geoPoints.isEmpty()) {
-//                    GeoPoint g = geoPoints.get(0);
-//                    openStreetMap.initLayer(TrackingDetailActivity.this, g);
-//                    filterData();
-//                    updateUI();
-//
-//                    //////////////////ROOM/////////////////////////
-//                    Routes route = new Routes();
-//                    route.setId(locationBinder.getId());
-//                    route.setUnfilteredPoints(locationBinder.getUnfilteredPoints());
-//                    route.setFilteredPoints(locationBinder.getFilteredPoints());
-//                    route.setFilteredBuffer_points(locationBinder.getCoordinates());
-//                    db.add(route);
-//                }else {
-//                // Log o muestra un mensaje para depurar
-//                Log.e("Error", "geoPoints is null or empty");
-//                }
-//            }
-//            while (locationBinder.getGeoPoints().isEmpty()){
-//                locationBinder.getGeoPoints().isEmpty();
-//            }
             GeoPoint g=locationBinder.getGeoPoints().get(0);
             Log.i("EL PUNTO ES ", g.toString());
             openStreetMap.initLayer(TrackingDetailActivity.this,locationBinder.getGeoPoints().get(0));
@@ -170,7 +146,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
             return true;
         }else if(!locationBinder.isDeviation()){
             return true;
-        }else if(locationBinder.getDistancesRoutes()>30.0f){//revisa que la diferencia entre rutas sea menor a 30 metro
+        }else if(locationBinder.getDistancesRoutes()>20.0F){//revisa que la diferencia entre rutas sea menor a 30 metro
                 return true;
             }
         return false;

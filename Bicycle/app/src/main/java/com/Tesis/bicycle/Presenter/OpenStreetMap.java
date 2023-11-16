@@ -67,7 +67,7 @@ public class OpenStreetMap {
     public OpenStreetMap(MapView myOpenMapView) {
         this.myOpenMapView = myOpenMapView;
         roadManager=new OSRMRoadManager(myOpenMapView.getContext(), BonusPackHelper.DEFAULT_USER_AGENT);//"OBP_Tuto/1.0"
-        ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
+//        ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
         mRotationGestureOverlay = new RotationGestureOverlay(myOpenMapView.getContext(), myOpenMapView);
         this.mCompassOverlay = new CompassOverlay(myOpenMapView.getContext(), new InternalCompassOrientationProvider(myOpenMapView.getContext()), myOpenMapView);
     }
@@ -138,12 +138,11 @@ public class OpenStreetMap {
 
 public void draw(List<GeoPoint> points) {
 
-    // Eliminar capas anteriores del mapa
-    myOpenMapView.getOverlays().clear();
-
     // Crear y agregar la línea al mapa
     Polyline polyline = new Polyline();
     polyline.setPoints(points);
+    polyline.setColor(color);
+    polyline.setWidth(15f);
     myOpenMapView.getOverlays().add(polyline);
     if(points.size()>1){
     // Agregar marcadores de inicio y fin
