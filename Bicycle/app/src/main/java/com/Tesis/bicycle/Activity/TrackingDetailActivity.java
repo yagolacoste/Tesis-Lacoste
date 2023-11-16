@@ -85,42 +85,43 @@ public class TrackingDetailActivity extends AppCompatActivity {
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             locationBinder= (GPSService.LocationBinder) iBinder;
 
-            synchronized (locationBinder) {
-                List<GeoPoint> geoPoints = locationBinder.getGeoPoints();
-
-                if (geoPoints != null && !geoPoints.isEmpty()) {
-                    GeoPoint g = geoPoints.get(0);
-                    openStreetMap.initLayer(TrackingDetailActivity.this, g);
-                    filterData();
-                    updateUI();
-
-                    //////////////////ROOM/////////////////////////
-                    Routes route = new Routes();
-                    route.setId(locationBinder.getId());
-                    route.setUnfilteredPoints(locationBinder.getUnfilteredPoints());
-                    route.setFilteredPoints(locationBinder.getFilteredPoints());
-                    route.setFilteredBuffer_points(locationBinder.getCoordinates());
-                    db.add(route);
-                }else {
-                // Log o muestra un mensaje para depurar
-                Log.e("Error", "geoPoints is null or empty");
-                }
-            }
-
+//            synchronized (locationBinder) {
+//                List<GeoPoint> geoPoints = locationBinder.getGeoPoints();
 //
-//            GeoPoint g=locationBinder.getGeoPoints().get(0);
-//            Log.i("EL PUNTO ES ", g.toString());
-//            openStreetMap.initLayer(TrackingDetailActivity.this,locationBinder.getGeoPoints().get(0));
-//            filterData();//filtro la data para ver si se hizo un camino o estan correcto los datos
-//            updateUI();
+//                if (geoPoints != null && !geoPoints.isEmpty()) {
+//                    GeoPoint g = geoPoints.get(0);
+//                    openStreetMap.initLayer(TrackingDetailActivity.this, g);
+//                    filterData();
+//                    updateUI();
 //
-//            //////////////////ROOM/////////////////////////
-//            Routes route=new Routes();
-//            route.setId(locationBinder.getId());
-//            route.setUnfilteredPoints(locationBinder.getUnfilteredPoints());
-//            route.setFilteredPoints(locationBinder.getFilteredPoints());
-//            route.setFilteredBuffer_points(locationBinder.getCoordinates());
-//            db.add(route);
+//                    //////////////////ROOM/////////////////////////
+//                    Routes route = new Routes();
+//                    route.setId(locationBinder.getId());
+//                    route.setUnfilteredPoints(locationBinder.getUnfilteredPoints());
+//                    route.setFilteredPoints(locationBinder.getFilteredPoints());
+//                    route.setFilteredBuffer_points(locationBinder.getCoordinates());
+//                    db.add(route);
+//                }else {
+//                // Log o muestra un mensaje para depurar
+//                Log.e("Error", "geoPoints is null or empty");
+//                }
+//            }
+//            while (locationBinder.getGeoPoints().isEmpty()){
+//                locationBinder.getGeoPoints().isEmpty();
+//            }
+            GeoPoint g=locationBinder.getGeoPoints().get(0);
+            Log.i("EL PUNTO ES ", g.toString());
+            openStreetMap.initLayer(TrackingDetailActivity.this,locationBinder.getGeoPoints().get(0));
+            filterData();//filtro la data para ver si se hizo un camino o estan correcto los datos
+            updateUI();
+
+            //////////////////ROOM/////////////////////////
+            Routes route=new Routes();
+            route.setId(locationBinder.getId());
+            route.setUnfilteredPoints(locationBinder.getUnfilteredPoints());
+            route.setFilteredPoints(locationBinder.getFilteredPoints());
+            route.setFilteredBuffer_points(locationBinder.getCoordinates());
+            db.add(route);
         }
 
         @Override

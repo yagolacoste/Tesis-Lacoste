@@ -193,7 +193,7 @@ public class Tracking implements Serializable {
 
     public void stopTrackingActivity(){
         analyzedLastPoints();
-        points=postProcessingPoints();
+        postProcessingPoints();
         calculateStatisticsFinished();
 
 //        compareRoutes();
@@ -221,8 +221,8 @@ public class Tracking implements Serializable {
 
     }
 
-    private List<Location> postProcessingPoints() {
-        ArrayList<Location> exits= new ArrayList<Location>();
+    private void postProcessingPoints() {
+//        ArrayList<Location> exits= new ArrayList<Location>();
         Location pivot = waysPoints.get(0);
         int i =1;
         ArrayList<Location> aux= new ArrayList<Location>();
@@ -234,7 +234,7 @@ public class Tracking implements Serializable {
                 i++;
             } else {
                 if (aux.size()==0) {
-                    exits.add(pivot);
+                    points.add(pivot);
                     pivot = nextPoint;
                     i++;
                     aux.clear();
@@ -252,8 +252,8 @@ public class Tracking implements Serializable {
 //QUEDO EL PIVOT Y POSIBLEMENTE EL ARRAY
         aux.add(pivot);
         Location avg = getAveragePoints(aux);
-        exits.add(avg);
-        return exits;
+        points.add(avg);
+//        return exits;
     }
 
     private Location getAveragePoints(List<Location> averagePoints){
@@ -429,14 +429,14 @@ public class Tracking implements Serializable {
 
 
     public List<GeoPoint> getGeoPoints(){
-        if(!isRepeat()){
-            List<GeoPoint>geoPoints=new ArrayList<>();
-            for (Location l:points){
-                GeoPoint g=new GeoPoint(l.getLatitude(),l.getLongitude());
-                geoPoints.add(g);
-                }
-                return geoPoints;
-        }
+            if(!isRepeat()){
+                List<GeoPoint>geoPoints=new ArrayList<>();
+                for (Location l:points){
+                    GeoPoint g=new GeoPoint(l.getLatitude(),l.getLongitude());
+                    geoPoints.add(g);
+                    }
+                    return geoPoints;
+            }
         return routeReplay;
     }
 

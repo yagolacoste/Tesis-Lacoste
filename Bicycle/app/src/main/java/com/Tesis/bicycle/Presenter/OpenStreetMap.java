@@ -67,7 +67,7 @@ public class OpenStreetMap {
     public OpenStreetMap(MapView myOpenMapView) {
         this.myOpenMapView = myOpenMapView;
         roadManager=new OSRMRoadManager(myOpenMapView.getContext(), BonusPackHelper.DEFAULT_USER_AGENT);//"OBP_Tuto/1.0"
-        //((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
+        ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
         mRotationGestureOverlay = new RotationGestureOverlay(myOpenMapView.getContext(), myOpenMapView);
         this.mCompassOverlay = new CompassOverlay(myOpenMapView.getContext(), new InternalCompassOrientationProvider(myOpenMapView.getContext()), myOpenMapView);
     }

@@ -93,10 +93,10 @@ public class GPSService extends Service {
                                 notification.addNotification("Alert", "you have gone off the road");
                             }
                         }
-                        if (lastLocation){
-//                            tracking.addTracking(locationResult.getLastLocation());
-                            stopLocationService();
-                        }
+//                        if (lastLocation){
+//                           tracking.addTracking(locationResult.getLastLocation());
+//                            stopLocationService();
+//                        }
                     }
                 }
             };
@@ -108,8 +108,6 @@ public class GPSService extends Service {
         }
 
     }
-
-
 
 
     @Override
@@ -128,15 +126,19 @@ public class GPSService extends Service {
     }
 
 
-    private void stopLocationService() {
+    private void stopLocationService() {///Lo tuve que sacar por el hecho de que si la persona se queda parada daba error como que no habia sincronismo entre los datos
         //booleano en verdadero para pausar
-        if (!lastLocation) {
-            lastLocation = true;
-        } else {
-            tracking.stopTrackingActivity();
-            fusedLocationProviderClient.removeLocationUpdates(locationCallback);
-            notification.cancel(1);
-        }
+//        if (!lastLocation) {
+//            lastLocation = true;
+//        } else {
+//            tracking.stopTrackingActivity();
+//            fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+//            notification.cancel(1);
+//        }
+//
+        tracking.stopTrackingActivity();
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+        notification.cancel(1);
     }
 
 
