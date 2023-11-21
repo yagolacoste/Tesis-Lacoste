@@ -16,11 +16,14 @@ import java.util.Locale;
 
 public class Tracking implements Serializable {
 
+    //Parametros de configuracion de filtros
     private static final long serialVersionUID = 1L;
     private static final float MAX_SPEED_THRESHOLD =8F ; //8 m/s //segun google son 30 k/h con toda la furia
     private static final float MAX_ACCURACY_THRESHOLD =16F ; //15 metros inclusive es un promedio de los valores calculados
     private static final float MIN_ALTITUDE_THRESHOLD = -450F; // 5 metros
     private static final double MAX_ALTITUDE_THRESHOLD = 5200F;
+
+    // atributos de la ruta con estadisticas generada
     private String id;
     private String title="";
     private String description="";
@@ -35,27 +38,30 @@ public class Tracking implements Serializable {
     private float totalSpeedForRunningAverage = 0;
     private int totalTrkPointsWithSpeedForRunningAverage = 0;
     private long timeInMilliseconds=0;
-    private transient List<Location> points=new ArrayList<>();//puntos que captura el gps
-    private transient List<GeoPoint> routeReplay=new ArrayList<>();
     private boolean repeat=false;
     private Long battle;
     private boolean deviation =false;
     private Location lastValidLocation ;
 
+    //buffer y captador de puntos
+    private List<Location> buffer=new ArrayList<>();//buffer de analisis de movilidad
+    private List<Location> waysPoints=new ArrayList<>();//obtener coordenadas almacendas
+    private transient List<Location> points=new ArrayList<>();//coordendas para el postprocesamiento
+    private transient List<GeoPoint> routeReplay=new ArrayList<>();//ruta grabada para repetir
 
 
-    private List<Location> buffer=new ArrayList<>();
 
     private List<Location> filteredPoints=new ArrayList<>();
-
     private List<Location> unfilteredPoints=new ArrayList<>();
 
-    private List<Location> waysPoints=new ArrayList<>();
+
 
     
 
     public Tracking() {
-
+        this.id=RandomStringUtils.random(Constants.MAX_CARACTER_ID,true,true);
+        this.battle=null;
+        this.repeat=false;
     }
 
     public Tracking(Tracking tracking){
@@ -169,7 +175,7 @@ public class Tracking implements Serializable {
             // Verificar si la posición actual se encuentra dentro del umbral de proximidad
             //double distance = calculateDistance(location, points.get(nearestIndex));
             float distance =location.distanceTo( points.get(nearestIndex));
-            if (distance < 30.0F) { //Verifica si la distancia es menor a 30 metros entre la nueva localizacion y el proximo punto de proximidad
+            if (distance > 30.0F) { //Verifica si la distancia es menor a 30 metros entre la nueva localizacion y el proximo punto de proximidad
                 return true; // El objeto está siguiendo la ruta correctamente
             }
         }
@@ -203,26 +209,6 @@ public class Tracking implements Serializable {
     }
 
 
-    private void compareRoutes() {//revisar esto de cuando se hace una ruta pero no termino de hacerla
-        if(checkConditionRoutes()){
-            this.setId(RandomStringUtils.random(Constants.MAX_CARACTER_ID,true,true));
-//            inputNameAndDescription();//ver que onda con esto
-            this.setBattle(null);
-        }
-    }
-
-    ///Revisa si ambas rutas son iguales
-    private boolean checkConditionRoutes(){
-        if(!this.isRepeat()){
-            return true;
-        }else if(!this.isDeviation()){
-            return true;
-        }else if(this.getDistancesRoutes()>40.0f){//revisa que la diferencia entre rutas sea menor a 30 metro
-            return true;
-        }
-        return false;
-
-    }
 
     private void postProcessingPoints() {
 //        ArrayList<Location> exits= new ArrayList<Location>();
@@ -325,6 +311,28 @@ public class Tracking implements Serializable {
         return result;
     }
 
+
+    //Revisa la distancia entre ambas rutas sea la misma o proxima con diferencia de 15 metros
+    public boolean equalsBetweenNewRouteAndReplay(){
+        float totalDistance =0;
+        List<Location> replay=convertRouteReplay();
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            totalDistance = (float) replay.stream()
+                    .mapToDouble(location -> {
+                        int index = replay.indexOf(location);
+                        if (index < replay.size() - 1) {
+                            Location next = replay.get(index + 1);
+                            return location.distanceTo(next);
+                        }
+                        return 0.0;
+                    })
+                    .sum();
+        }
+            float result=totalDistance-distance;// no se si es necesario puede dar distinto
+        if(result<40.0F && replay.get(replay.size()-1).distanceTo(points.get(points.size()-1))<MAX_ACCURACY_THRESHOLD/2) //reviso que la distancia total sea emnor 40 metros x el error de coordendas// y los ultimos puntos esten cerca entre ellos
+            return true;
+        return false;
+    }
 
     public Location getLastPoint(){
         return lastValidLocation;
@@ -432,39 +440,13 @@ public class Tracking implements Serializable {
 
 
     public List<GeoPoint> getGeoPoints(){
-            if(!isRepeat()){
-                List<GeoPoint>geoPoints=new ArrayList<>();
-                for (Location l:points){
-                    GeoPoint g=new GeoPoint(l.getLatitude(),l.getLongitude());
-                    geoPoints.add(g);
-                    }
-                    return geoPoints;
+        List<GeoPoint>geoPoints=new ArrayList<>();
+        for (Location l:points){
+            GeoPoint g=new GeoPoint(l.getLatitude(),l.getLongitude());
+            geoPoints.add(g);
             }
-        return routeReplay;
+            return geoPoints;
     }
-
-    //Revisa la distancia entre ambas rutas sea la misma o proxima con diferencia de 15 metros
-    public float getDistancesRoutes(){
-        float totalDistance =0;
-        List<Location> route=convertRouteReplay();
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-             totalDistance = (float) route.stream()
-                    .mapToDouble(location -> {
-                        int index = route.indexOf(location);
-                        if (index < route.size() - 1) {
-                            Location next = route.get(index + 1);
-                            return location.distanceTo(next);
-                        }
-                        return 0.0;
-                    })
-                    .sum();
-        }
-        if(isRepeat()){
-            float result=totalDistance-distance;
-            return result;
-        }else return distance;
-    }
-
 
     public  void setPoints(List<Location> points){
         this.points = points;

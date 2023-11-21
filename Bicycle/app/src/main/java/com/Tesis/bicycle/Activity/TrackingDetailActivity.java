@@ -91,8 +91,8 @@ public class TrackingDetailActivity extends AppCompatActivity {
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             locationBinder= (GPSService.LocationBinder) iBinder;
 
-            openStreetMap.initLayer(TrackingDetailActivity.this,locationBinder.getGeoPoints().get(0));
-            filterData();//filtro la data para ver si se hizo un camino o estan correcto los datos
+//            openStreetMap.initLayer(TrackingDetailActivity.this,locationBinder.getGeoPoints().get(0));
+//            filterData();//filtro la data para ver si se hizo un camino o estan correcto los datos
             updateUI();
 
             //////////////////ROOM/////////////////////////
@@ -110,15 +110,16 @@ public class TrackingDetailActivity extends AppCompatActivity {
         }
     };
 
-    private void filterData() {//revisar esto de cuando se hace una ruta pero no termino de hacerla
-        if(checkConditionRoutes()){
-            locationBinder.setId(RandomStringUtils.random(Constants.MAX_CARACTER_ID,true,true));
-//            inputNameAndDescription();
-            locationBinder.setBattle(null);
-        }
-    }
+//    private void filterData() {//revisar esto de cuando se hace una ruta pero no termino de hacerla
+//        if(checkConditionRoutes()){
+//            locationBinder.setId(RandomStringUtils.random(Constants.MAX_CARACTER_ID,true,true));
+////            inputNameAndDescription();
+//            locationBinder.setBattle(null);
+//        }
+//    }
 
     private void updateUI() {
+        //Pone los datos capturados
         openStreetMap.initLayer(TrackingDetailActivity.this,locationBinder.getGeoPoints().get(0));
         tvDistanceTrackingDetail.setText(String.valueOf(locationBinder.getDistanceString()));
         //tvSpeedTrackingDetail.setText(locationBinder.getAvgSpeedToString());
@@ -126,36 +127,30 @@ public class TrackingDetailActivity extends AppCompatActivity {
         tvTimeTrackingDetail.setText(locationBinder.getDuration());
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         tvDateTrackingDetail.setText(formatter.format(locationBinder.getTimeCreated()));
-        openStreetMap.draw(locationBinder.getGeoPoints());
-        if(checkConditionRoutes()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                if(locationBinder.isRepeat()){
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if(locationBinder.isRepeat()){
+                if(locationBinder.isDeviation() || !locationBinder.equalsBetweenNewRouteAndReplay()) {//reviso si se desvio y si ambas son iguales
+                    openStreetMap.draw(locationBinder.getRouteReplay());//pone la ruta original
                     int color = Color.argb(128, 255, 0, 0);
                     openStreetMap.setColor(color);
-                    openStreetMap.draw(locationBinder.getTrkPoints().stream().map(p -> new GeoPoint(p.getLatitude(), p.getLongitude())).collect(Collectors.toList()));
-                    notifications.addNotification("Oops...","You didn't complete the route or divert but you have new statistics ;) ");
-                }else{
-                    openStreetMap.draw(locationBinder.getGeoPoints().stream().map(p -> new GeoPoint(p.getLatitude(), p.getLongitude())).collect(Collectors.toList()));
+                    openStreetMap.draw(locationBinder.getGeoPoints().stream().map(p -> new GeoPoint(p.getLatitude(), p.getLongitude())).collect(Collectors.toList()));//ruta grabada nueva con otro color
+                    notifications.addNotification("Oops...", "You didn't complete the route or divert but you have new statistics ;) ");
+                    //set battle y repeat para que sea almacenada una nueva ruta
+                    locationBinder.setBattle(null);
+                    locationBinder.setRepeat(false);
+                }else {
+                    openStreetMap.draw(locationBinder.getRouteReplay());//pone la ruta original
+                    edtTitle.setText(String.valueOf(locationBinder.getTitle()));
+                    edtDescription.setText(String.valueOf(locationBinder.getDescription()));
+
                 }
-                locationBinder.setRepeat(false);
+            }else{
+                openStreetMap.draw(locationBinder.getGeoPoints().stream().map(p -> new GeoPoint(p.getLatitude(), p.getLongitude())).collect(Collectors.toList()));
             }
         }
-        edtTitle.setText(String.valueOf(locationBinder.getTitle()));
-        edtDescription.setText(String.valueOf(locationBinder.getDescription()));
-
     }
 
-    private boolean checkConditionRoutes(){///revisar esto
-        if(!locationBinder.isRepeat()){
-            return true;
-        }else if(!locationBinder.isDeviation()){
-            return true;
-        }else if(locationBinder.getDistancesRoutes()>40.0F){//revisa que la diferencia entre rutas sea menor a 30 metro
-                return true;
-            }
-        return false;
-
-    }
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -240,7 +235,6 @@ public class TrackingDetailActivity extends AppCompatActivity {
 
     @SuppressLint("SuspiciousIndentation")
     private void storeData() {
-
             this.accessTokenRoomViewModel.getFirst().observe(this, response -> {
                 RefreshTokenDto refreshTokenDto = response;
                 StatisticsApiRest statisticsApiRest = new StatisticsApiRest();
@@ -284,34 +278,22 @@ public class TrackingDetailActivity extends AppCompatActivity {
         title = edtTitle.getText().toString();
         description = edtDescription.getText().toString();
         if (title.isEmpty()) {
-            tvTitleTrackingDetail.setError("Insert title");
+            tvTitleTrackingDetail.setError("Insert Title");
             result = false;
         } else {
             tvTitleTrackingDetail.setErrorEnabled(false);
+            locationBinder.setTitle(title);
         }
         if (description.isEmpty()) {
-            tvDescriptionTrackingDetail.setError("Insert description");
+            tvDescriptionTrackingDetail.setError("Insert Description");
             result = false;
         } else {
             tvDescriptionTrackingDetail.setErrorEnabled(false);
+            locationBinder.setDescription(description);
         }
         return result;
     }
 
-//    private boolean validateTitleAndDescription() {
-//
-//        boolean result = true;
-//        String title, description;
-//        title = tvTitleTrackingDetail.getText().toString();
-//        description = tvDescriptionTrackingDetail.getText().toString();
-//        if (title.isEmpty()) {
-//            result = false;
-//        }
-//        if (description.isEmpty()) {
-//            result = false;
-//        }
-//        return result;
-//    }
 
 
     private void backToMenuActivity() {
@@ -320,33 +302,6 @@ public class TrackingDetailActivity extends AppCompatActivity {
         stopService(new Intent(this,GPSService.class));///Esto puedo ver si ponerlo antes
         startActivity(i);
     }
-
-//    private void inputNameAndDescription() {
-//        androidx.appcompat.app.AlertDialog.Builder myDialog=new androidx.appcompat.app.AlertDialog.Builder(TrackingDetailActivity.this);
-//        myDialog.setTitle("Input name and description for the new route");
-//        LinearLayout layout=new LinearLayout(this);
-//        EditText name=new EditText(TrackingDetailActivity.this);
-//        name.setInputType(InputType.TYPE_CLASS_TEXT);
-//        name.setHint("Name");
-//        layout.addView(name);
-//        EditText description=new EditText(TrackingDetailActivity.this);
-//        description.setInputType(InputType.TYPE_CLASS_TEXT);
-//        description.setHint("Description");
-//        layout.addView(description);
-//
-//        myDialog.setView(layout);
-//
-//        myDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                locationBinder.setTitle(name.getText().toString());
-//                locationBinder.setDescription(description.getText().toString());
-//                tvTitleTrackingDetail.setText(String.valueOf(locationBinder.getTitle()));
-//                tvDescriptionTrackingDetail.setText(String.valueOf(locationBinder.getDescription()));
-//            }
-//        });
-//        myDialog.show();
-//    }
 
 
 }

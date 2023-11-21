@@ -273,6 +273,7 @@ public class TrackingActivity extends Activity {
         }
         openStreetMap.draw(routeDetailsDto.getCoordinates());
         isRepeat = true;
+        //Set old route or repeat route
         repeat.setId(routeDetailsDto.getId());
         repeat.setTitle(routeDetailsDto.getName());
         repeat.setDescription(routeDetailsDto.getDescription());

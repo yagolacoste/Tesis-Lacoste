@@ -153,8 +153,8 @@ public void draw(List<GeoPoint> points) {
         myOpenMapView.getOverlays().add(startMarker);
 
         Marker endMarker = new Marker(myOpenMapView);
-        endMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_finish_flag_convert));
-        endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        endMarker.setIcon(context.getResources().getDrawable(R.drawable.flag));
+        endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
         endMarker.setPosition(points.get(points.size() - 1));
         myOpenMapView.getOverlays().add(endMarker);
 
@@ -180,8 +180,6 @@ public void draw(List<GeoPoint> points) {
         draw(points);
         autoZoom(points);
         myOpenMapView.invalidate();
-
-
     }
 
 

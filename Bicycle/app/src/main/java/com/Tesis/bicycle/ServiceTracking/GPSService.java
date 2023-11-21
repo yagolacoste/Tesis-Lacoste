@@ -158,20 +158,8 @@ public class GPSService extends Service {
             stopLocationService();
         }
 
-
-
         public void setTrackingActivity(Tracking repeat) {
             tracking = new Tracking(repeat);
-        }
-
-        //Get the tracked session
-        public Tracking getTrackedActivity() {
-            return tracking;
-        }
-
-        //Get all the track points
-        public List<Location> getTrkPoints() {
-            return tracking.getPoints();
         }
 
 
@@ -227,19 +215,11 @@ public class GPSService extends Service {
             return tracking.getDistanceString();
         }
 
-        //Get the average speed of the tracked session
-        public float getAvgSpeed() {
-            return tracking.getAvgSpeed();
-        }
 
         public float getAvgSpeedCalculated() {
             return tracking.getAvgSpeedFromSUVAT();
         }
 
-        //Get the average speed as a string
-        public String getAvgSpeedString() {
-            return tracking.getAvgSpeedString();
-        }
 
         public Location getLastLocation() {
             return tracking.getLastPoint();
@@ -258,9 +238,6 @@ public class GPSService extends Service {
             return tracking.getBattle();
         }
 
-        public boolean checkingNearestNewPointAndNextPointIndex(Location location) {
-            return tracking.checkingNearestNewPointAndNextPointIndex(location);
-        }
 
         public List<Location> getCoordinates() {
             return tracking.getPoints();
@@ -286,16 +263,12 @@ public class GPSService extends Service {
             tracking.setRepeat(repeat);
         }
 
-        public float getDistancesRoutes() {
-            return tracking.getDistancesRoutes();
+        public boolean equalsBetweenNewRouteAndReplay() {
+            return tracking.equalsBetweenNewRouteAndReplay();
         }
 
         public String getAvgSpeedCalcualtedToString() {
             return tracking.getAvgSpeedFromSUVATToString();
-        }
-
-        public String getAvgSpeedToString() {
-            return tracking.getAvgSpeedString();
         }
 
         public List<Location> getUnfilteredPoints() {
@@ -304,6 +277,10 @@ public class GPSService extends Service {
 
         public List<Location> getFilteredPoints() {
             return tracking.getFilteredPoints();
+        }
+
+        public List<GeoPoint> getRouteReplay() {
+            return tracking.getRouteReplay();
         }
     }
 
