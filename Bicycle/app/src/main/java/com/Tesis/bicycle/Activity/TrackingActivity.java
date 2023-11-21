@@ -212,7 +212,7 @@ public class TrackingActivity extends Activity {
                 public void onClick(View view) {
                     locationUpdatesActive=false;
                     if(action!=null){
-                        if (equalsPosition()) {
+                        if (!equalsPosition()) {
                             notifications.warningMessage("Please, start at the beginning of the tour.");
                         }
                         else{
@@ -255,7 +255,7 @@ public class TrackingActivity extends Activity {
             Location location = new Location("");
             location.setLatitude(Compare.getLatitudeE6() / 1E6);
             location.setLongitude(Compare.getLongitudeE6() / 1E6);
-            if (currentLocation.distanceTo(location) > 10.0f) {//toma la distancia a 10 metros
+            if (currentLocation.distanceTo(location) < 10.0f) {//toma la distancia a 10 metros
                 return true;
             }
             return false;

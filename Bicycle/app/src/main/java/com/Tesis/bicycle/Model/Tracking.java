@@ -39,10 +39,10 @@ public class Tracking implements Serializable {
     private transient List<GeoPoint> routeReplay=new ArrayList<>();
     private boolean repeat=false;
     private Long battle;
-    private boolean deviation =true;
+    private boolean deviation =false;
     private Location lastValidLocation ;
 
-    private boolean notificationDisplayed = false;
+
 
     private List<Location> buffer=new ArrayList<>();
 
@@ -74,13 +74,13 @@ public class Tracking implements Serializable {
                 filteredPoints.add(currentLocation);
                 checkMobility(currentLocation);
                 ////////////Repeat route////////////
-                if(isRepeat()){ //Reviso si es repetido el camino
-                    this.setDeviation(this.checkingNearestNewPointAndNextPointIndex(currentLocation));//Revisa y setea si se devio entre el proximo punto de mi listado almacenado y el nuevo punto
-                    if (this.isDeviation() && !notificationDisplayed) {
-                        notificationDisplayed = true;
-                        this.setDeviation(true);
-                    }
-                }
+//                if(isRepeat() && !isDeviation()){ //Reviso si es repetido el camino y si no se desvio
+//                    this.setDeviation(this.checkingNearestNewPointAndNextPointIndex(lastValidLocation));//Revisa y setea si se devio entre el proximo punto de mi listado almacenado y el nuevo punto
+////                    if (this.isDeviation() && !notificationDisplayed) {
+////                        notificationDisplayed = true;
+//////                        this.setDeviation(true);
+////                    }
+//                }
 
             }
 
@@ -107,6 +107,9 @@ public class Tracking implements Serializable {
           }else{
                 this.buffer.remove(correctLocation);//remuevo la primera
                 addCoordinateToHistory(correctLocation);
+                if(isRepeat() && !isDeviation()){ //Reviso si es repetido el camino y si no se desvio
+                  this.setDeviation(this.checkingNearestNewPointAndNextPointIndex(correctLocation));//Revisa y setea si se devio entre el proximo punto de mi listado almacenado y el nuevo punto
+                }
             }
            this.checkMobility(currentLocation);
         }
@@ -166,7 +169,7 @@ public class Tracking implements Serializable {
             // Verificar si la posición actual se encuentra dentro del umbral de proximidad
             //double distance = calculateDistance(location, points.get(nearestIndex));
             float distance =location.distanceTo( points.get(nearestIndex));
-            if (distance > 50F) { //Verifica si la distancia es menor a 50 metros entre la nueva localizacion y el proximo punto de proximidad
+            if (distance < 30.0F) { //Verifica si la distancia es menor a 30 metros entre la nueva localizacion y el proximo punto de proximidad
                 return true; // El objeto está siguiendo la ruta correctamente
             }
         }
@@ -630,13 +633,7 @@ public class Tracking implements Serializable {
         this.filteredPoints = filteredPoints;
     }
 
-    public boolean isNotificationDisplayed() {
-        return notificationDisplayed;
-    }
 
-    public void setNotificationDisplayed(boolean notificationDisplayed) {
-        this.notificationDisplayed = notificationDisplayed;
-    }
 
     @Override
     public String toString() {

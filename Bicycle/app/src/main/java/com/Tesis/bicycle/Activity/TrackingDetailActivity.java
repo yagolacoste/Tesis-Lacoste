@@ -15,7 +15,9 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -42,6 +44,7 @@ import com.Tesis.bicycle.ViewModel.RouteViewModel;
 import com.Tesis.bicycle.ViewModel.StatisticsViewModel;
 import com.Tesis.bicycle.ViewModel.StoredDocumentViewModel;
 import com.Tesis.bicycle.ViewModel.TrackedRoomViewModel;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.osmdroid.util.GeoPoint;
@@ -62,7 +65,10 @@ import retrofit2.Response;
 
 public class TrackingDetailActivity extends AppCompatActivity {
 
-    private TextView tvTitleTrackingDetail,tvDescriptionTrackingDetail,tvDistanceTrackingDetail,tvSpeedTrackingDetail,tvTimeTrackingDetail,tvDateTrackingDetail;
+    private TextView tvDistanceTrackingDetail,tvSpeedTrackingDetail,tvTimeTrackingDetail,tvDateTrackingDetail;
+
+    private TextInputLayout tvTitleTrackingDetail,tvDescriptionTrackingDetail;
+    private EditText edtTitle,edtDescription;
     private Button btnSave,btnDiscard;
     private MapView myOpenMapView;
     private GPSService.LocationBinder locationBinder=null;
@@ -85,8 +91,6 @@ public class TrackingDetailActivity extends AppCompatActivity {
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             locationBinder= (GPSService.LocationBinder) iBinder;
 
-            GeoPoint g=locationBinder.getGeoPoints().get(0);
-            Log.i("EL PUNTO ES ", g.toString());
             openStreetMap.initLayer(TrackingDetailActivity.this,locationBinder.getGeoPoints().get(0));
             filterData();//filtro la data para ver si se hizo un camino o estan correcto los datos
             updateUI();
@@ -109,7 +113,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
     private void filterData() {//revisar esto de cuando se hace una ruta pero no termino de hacerla
         if(checkConditionRoutes()){
             locationBinder.setId(RandomStringUtils.random(Constants.MAX_CARACTER_ID,true,true));
-            inputNameAndDescription();
+//            inputNameAndDescription();
             locationBinder.setBattle(null);
         }
     }
@@ -136,8 +140,8 @@ public class TrackingDetailActivity extends AppCompatActivity {
                 locationBinder.setRepeat(false);
             }
         }
-        tvTitleTrackingDetail.setText(String.valueOf(locationBinder.getTitle()));
-        tvDescriptionTrackingDetail.setText(String.valueOf(locationBinder.getDescription()));
+        edtTitle.setText(String.valueOf(locationBinder.getTitle()));
+        edtDescription.setText(String.valueOf(locationBinder.getDescription()));
 
     }
 
@@ -146,7 +150,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
             return true;
         }else if(!locationBinder.isDeviation()){
             return true;
-        }else if(locationBinder.getDistancesRoutes()>20.0F){//revisa que la diferencia entre rutas sea menor a 30 metro
+        }else if(locationBinder.getDistancesRoutes()>40.0F){//revisa que la diferencia entre rutas sea menor a 30 metro
                 return true;
             }
         return false;
@@ -182,22 +186,54 @@ public class TrackingDetailActivity extends AppCompatActivity {
         btnSave=findViewById(R.id.btnSave);
         btnDiscard=findViewById(R.id.btnDiscard);
         openStreetMap=new OpenStreetMap(myOpenMapView);
+        edtTitle=findViewById(R.id.edtTitle);
+        edtDescription=findViewById(R.id.edtDescription);
         notifications=new Notifications(TrackingDetailActivity.this);
         Intent intent = new Intent(this, GPSService.class);
         getApplicationContext().bindService(intent, lsc, Context.BIND_ABOVE_CLIENT);
 
         btnSave.setOnClickListener(view -> {
-            if(validateTitleAndDescription()) {
+            if(validate()) {
                 storeData();
-            }else{
-            inputNameAndDescription();
-        }
-
+            }
         });
         btnDiscard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 backToMenuActivity();
+            }
+        });
+
+        edtTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                tvTitleTrackingDetail.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        edtDescription.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                tvDescriptionTrackingDetail.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
     }
@@ -242,20 +278,40 @@ public class TrackingDetailActivity extends AppCompatActivity {
 
     }
 
-    private boolean validateTitleAndDescription() {
-
+    private boolean validate() {
         boolean result = true;
         String title, description;
-        title = tvTitleTrackingDetail.getText().toString();
-        description = tvDescriptionTrackingDetail.getText().toString();
+        title = edtTitle.getText().toString();
+        description = edtDescription.getText().toString();
         if (title.isEmpty()) {
+            tvTitleTrackingDetail.setError("Insert title");
             result = false;
+        } else {
+            tvTitleTrackingDetail.setErrorEnabled(false);
         }
         if (description.isEmpty()) {
+            tvDescriptionTrackingDetail.setError("Insert description");
             result = false;
+        } else {
+            tvDescriptionTrackingDetail.setErrorEnabled(false);
         }
         return result;
     }
+
+//    private boolean validateTitleAndDescription() {
+//
+//        boolean result = true;
+//        String title, description;
+//        title = tvTitleTrackingDetail.getText().toString();
+//        description = tvDescriptionTrackingDetail.getText().toString();
+//        if (title.isEmpty()) {
+//            result = false;
+//        }
+//        if (description.isEmpty()) {
+//            result = false;
+//        }
+//        return result;
+//    }
 
 
     private void backToMenuActivity() {
@@ -265,32 +321,32 @@ public class TrackingDetailActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    private void inputNameAndDescription() {
-        androidx.appcompat.app.AlertDialog.Builder myDialog=new androidx.appcompat.app.AlertDialog.Builder(TrackingDetailActivity.this);
-        myDialog.setTitle("Input name and description for the new route");
-        LinearLayout layout=new LinearLayout(this);
-        EditText name=new EditText(TrackingDetailActivity.this);
-        name.setInputType(InputType.TYPE_CLASS_TEXT);
-        name.setHint("Name");
-        layout.addView(name);
-        EditText description=new EditText(TrackingDetailActivity.this);
-        description.setInputType(InputType.TYPE_CLASS_TEXT);
-        description.setHint("Description");
-        layout.addView(description);
-
-        myDialog.setView(layout);
-
-        myDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                locationBinder.setTitle(name.getText().toString());
-                locationBinder.setDescription(description.getText().toString());
-                tvTitleTrackingDetail.setText(String.valueOf(locationBinder.getTitle()));
-                tvDescriptionTrackingDetail.setText(String.valueOf(locationBinder.getDescription()));
-            }
-        });
-        myDialog.show();
-    }
+//    private void inputNameAndDescription() {
+//        androidx.appcompat.app.AlertDialog.Builder myDialog=new androidx.appcompat.app.AlertDialog.Builder(TrackingDetailActivity.this);
+//        myDialog.setTitle("Input name and description for the new route");
+//        LinearLayout layout=new LinearLayout(this);
+//        EditText name=new EditText(TrackingDetailActivity.this);
+//        name.setInputType(InputType.TYPE_CLASS_TEXT);
+//        name.setHint("Name");
+//        layout.addView(name);
+//        EditText description=new EditText(TrackingDetailActivity.this);
+//        description.setInputType(InputType.TYPE_CLASS_TEXT);
+//        description.setHint("Description");
+//        layout.addView(description);
+//
+//        myDialog.setView(layout);
+//
+//        myDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                locationBinder.setTitle(name.getText().toString());
+//                locationBinder.setDescription(description.getText().toString());
+//                tvTitleTrackingDetail.setText(String.valueOf(locationBinder.getTitle()));
+//                tvDescriptionTrackingDetail.setText(String.valueOf(locationBinder.getDescription()));
+//            }
+//        });
+//        myDialog.show();
+//    }
 
 
 }

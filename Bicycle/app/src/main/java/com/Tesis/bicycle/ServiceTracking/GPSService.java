@@ -51,6 +51,8 @@ public class GPSService extends Service {
 
     private Notifications notification;
 
+    private boolean notificationDisplayed = false;
+
     private boolean lastLocation = false;
 
 
@@ -89,8 +91,9 @@ public class GPSService extends Service {
                     if (locationResult != null) {
                         for (Location location : locationResult.getLocations()) {
                             tracking.addTracking(location);
-                            if (tracking.isDeviation() && tracking.isRepeat()) {
+                            if (tracking.isDeviation() && tracking.isRepeat() && !notificationDisplayed) {
                                 notification.addNotification("Alert", "you have gone off the road");
+                                notificationDisplayed=true;
                             }
                         }
 //                        if (lastLocation){
