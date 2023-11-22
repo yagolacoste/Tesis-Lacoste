@@ -423,6 +423,15 @@ public class TrackingActivity extends Activity {
 //        this.finish();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (locationSettingStateReceiver != null) {
+            unregisterReceiver(locationSettingStateReceiver); // Desregistrar el BroadcastReceiver
+        }
+    }
+
 
 
 }

@@ -1,8 +1,15 @@
 package com.Tesis.bicycle.ServiceTracking;
 
 
+
+
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -13,12 +20,14 @@ import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.room.Room;
 
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Model.Tracking;
 import com.Tesis.bicycle.Presenter.AppDataBase;
 import com.Tesis.bicycle.Presenter.Notifications;
+import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.Service.Room.RoutesService;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -36,6 +45,8 @@ import java.util.List;
 
 
 public class GPSService extends Service {
+
+    private static final int NOTIFICATION_ID = 1;
 
     //Locations service
     private LocationRequest locationRequest;
@@ -79,6 +90,10 @@ public class GPSService extends Service {
         if (tracking == null)
             tracking = new Tracking();
 
+        Notification notificationService = createNotification();
+
+        startForeground(NOTIFICATION_ID, notificationService);
+
         if (!tracking.isCreated()) {
             //Init and create API Location services.
             locationCallback = new LocationCallback() {
@@ -111,6 +126,41 @@ public class GPSService extends Service {
         }
 
     }
+
+    private Notification createNotification() {
+        String channelId = "Location_notification_channel";
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager == null) {
+            return null;
+        }
+        Intent resultIntent = new Intent();
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, resultIntent, PendingIntent.FLAG_MUTABLE);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(
+                getApplicationContext(),
+                channelId
+        );
+        builder.setSmallIcon(R.drawable.ic_bicycle);
+        builder.setContentTitle("Location service");
+        builder.setDefaults(NotificationCompat.DEFAULT_ALL);
+        builder.setContentText("Running");
+        builder.setContentIntent(pendingIntent);
+        builder.setPriority(NotificationCompat.PRIORITY_MAX);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(
+                    channelId,
+                    "Location Service",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            notificationChannel.setDescription("This channel is used by location service");
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+
+        Notification notification = builder.build();
+        notificationManager.notify(NOTIFICATION_ID, notification);
+        return notification;
+    }
+
 
 
     @Override

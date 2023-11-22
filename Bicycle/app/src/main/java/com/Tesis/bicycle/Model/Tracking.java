@@ -328,8 +328,9 @@ public class Tracking implements Serializable {
                     })
                     .sum();
         }
-            float result=totalDistance-distance;// no se si es necesario puede dar distinto
-        if(result<40.0F && replay.get(replay.size()-1).distanceTo(points.get(points.size()-1))<MAX_ACCURACY_THRESHOLD/2) //reviso que la distancia total sea emnor 40 metros x el error de coordendas// y los ultimos puntos esten cerca entre ellos
+            float result=totalDistance-distance;// no se si es necesario puede dar distinto en base a la sumatoria de desvios pequeños
+        //CHARLAR CON LUIS
+        if(result<30.0F && replay.get(replay.size()-1).distanceTo(points.get(points.size()-1))<MAX_ACCURACY_THRESHOLD/2) //reviso que la distancia total sea emnor 40 metros x el error de coordendas// y los ultimos puntos esten cerca entre ellos
             return true;
         return false;
     }

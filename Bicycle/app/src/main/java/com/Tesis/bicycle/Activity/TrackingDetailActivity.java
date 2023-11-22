@@ -137,6 +137,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
                     openStreetMap.draw(locationBinder.getGeoPoints().stream().map(p -> new GeoPoint(p.getLatitude(), p.getLongitude())).collect(Collectors.toList()));//ruta grabada nueva con otro color
                     notifications.addNotification("Oops...", "You didn't complete the route or divert but you have new statistics ;) ");
                     //set battle y repeat para que sea almacenada una nueva ruta
+                    locationBinder.setId(RandomStringUtils.random(Constants.MAX_CARACTER_ID,true,true));
                     locationBinder.setBattle(null);
                     locationBinder.setRepeat(false);
                 }else {
@@ -297,11 +298,23 @@ public class TrackingDetailActivity extends AppCompatActivity {
 
 
     private void backToMenuActivity() {
+
         Intent i=new Intent(TrackingDetailActivity.this, NavInitActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         stopService(new Intent(this,GPSService.class));///Esto puedo ver si ponerlo antes
         startActivity(i);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // Desvincular el servicio si está vinculado
+        if (locationBinder != null) {
+            getApplicationContext().unbindService(lsc);
+        }
+    }
+
 
 
 }
