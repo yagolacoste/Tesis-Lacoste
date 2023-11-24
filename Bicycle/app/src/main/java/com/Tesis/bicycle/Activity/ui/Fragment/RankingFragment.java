@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
@@ -50,8 +51,20 @@ public class RankingFragment extends BaseListViewFragment{
     @Override
     public void getListView() {
         ranking=battleDto.getRanking();
-        rankingAdapter=new RankingAdapter(ranking);
-        recyclerView.setAdapter(rankingAdapter);
+        if(!ranking.isEmpty()){
+            layoutEmpty.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            rankingAdapter=new RankingAdapter(ranking);
+            recyclerView.setAdapter(rankingAdapter);
+
+        }else {
+//            Toast.makeText(context, "Not exist routes for user: " + response.getId(), Toast.LENGTH_SHORT).show();
+            layoutEmpty.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }
+//        ranking=battleDto.getRanking();
+//        rankingAdapter=new RankingAdapter(ranking);
+//        recyclerView.setAdapter(rankingAdapter);
     }
 
 

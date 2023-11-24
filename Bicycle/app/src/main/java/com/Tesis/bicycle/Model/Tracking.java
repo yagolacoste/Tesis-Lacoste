@@ -175,7 +175,7 @@ public class Tracking implements Serializable {
             // Verificar si la posición actual se encuentra dentro del umbral de proximidad
             //double distance = calculateDistance(location, points.get(nearestIndex));
             float distance =location.distanceTo( points.get(nearestIndex));
-            if (distance > 30.0F) { //Verifica si la distancia es menor a 30 metros entre la nueva localizacion y el proximo punto de proximidad
+            if (distance > 50.0F) { //Verifica si la distancia es menor a 30 metros entre la nueva localizacion y el proximo punto de proximidad
                 return true; // El objeto está siguiendo la ruta correctamente
             }
         }
@@ -330,7 +330,7 @@ public class Tracking implements Serializable {
         }
             float result=totalDistance-distance;// no se si es necesario puede dar distinto en base a la sumatoria de desvios pequeños
         //CHARLAR CON LUIS
-        if(result<30.0F && replay.get(replay.size()-1).distanceTo(points.get(points.size()-1))<MAX_ACCURACY_THRESHOLD/2) //reviso que la distancia total sea emnor 40 metros x el error de coordendas// y los ultimos puntos esten cerca entre ellos
+        if(replay.get(replay.size()-1).distanceTo(points.get(points.size()-1))<MAX_ACCURACY_THRESHOLD/2) //reviso que la distancia total sea emnor 40 metros x el error de coordendas// y los ultimos puntos esten cerca entre ellos
             return true;
         return false;
     }

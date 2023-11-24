@@ -44,7 +44,7 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHold
         holder.txtTimeValue.setText(String.valueOf(statisticsDto.getTime()));
         holder.txtSpeedValue.setText(String.valueOf(statisticsDto.getAvgSpeedString())+"km/h");
         holder.txtDistValue.setText(String.valueOf(statisticsDto.getDistanceString()));
-        holder.rankNumber.setText(String.valueOf(position));
+        holder.rankNumber.setText(String.valueOf(position+1));
         String url = ApiRestConnection.URL_STORED_DOCUMENT + "download?fileName=" + ranking.get(position).getFileName();
         final Picasso picasso = new Picasso.Builder(holder.itemView.getContext())
                 .downloader(new OkHttp3Downloader(ClientRetrofit.getHttp()))

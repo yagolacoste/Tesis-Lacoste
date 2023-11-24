@@ -305,16 +305,5 @@ public class TrackingDetailActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        // Desvincular el servicio si está vinculado
-        if (locationBinder != null) {
-            getApplicationContext().unbindService(lsc);
-        }
-    }
-
-
 
 }

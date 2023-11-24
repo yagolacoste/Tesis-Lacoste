@@ -60,7 +60,6 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
                 .build();
         picasso.load(url)
                 .error(R.drawable.image_not_found)
-                .rotate(270)
                 .into(holder.imgProfile);
         holder.txtValueEmail.setText(String.valueOf(users.get(position).getEmail()));
 

@@ -428,7 +428,12 @@ public class TrackingActivity extends Activity {
         super.onDestroy();
 
         if (locationSettingStateReceiver != null) {
-            unregisterReceiver(locationSettingStateReceiver); // Desregistrar el BroadcastReceiver
+            try {
+                unregisterReceiver(locationSettingStateReceiver); // Desregistrar el BroadcastReceiver
+            } catch (IllegalArgumentException e) {
+                // Manejar la excepción si el receptor no estaba registrado
+                e.printStackTrace();
+            }
         }
     }
 
