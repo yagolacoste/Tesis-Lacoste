@@ -56,7 +56,6 @@ public class AboutFragment  extends BaseListViewFragment{
         imgLayoutEmpty.setImageResource(R.drawable.ic_torgue_edit);
         setText(getString(R.string.about_fragment));
         txtLayoutEmpty.setText(text);
-
         getListView();
         return view;
     }

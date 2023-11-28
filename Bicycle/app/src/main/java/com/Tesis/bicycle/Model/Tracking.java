@@ -79,16 +79,9 @@ public class Tracking implements Serializable {
             if (isCoordinateValid(currentLocation)) {// filtros de altitud,velocidad,altura
                 filteredPoints.add(currentLocation);
                 checkMobility(currentLocation);
-                ////////////Repeat route////////////
-//                if(isRepeat() && !isDeviation()){ //Reviso si es repetido el camino y si no se desvio
-//                    this.setDeviation(this.checkingNearestNewPointAndNextPointIndex(lastValidLocation));//Revisa y setea si se devio entre el proximo punto de mi listado almacenado y el nuevo punto
-////                    if (this.isDeviation() && !notificationDisplayed) {
-////                        notificationDisplayed = true;
-//////                        this.setDeviation(true);
-////                    }
-//                }
-
             }
+        avgSpeedFromSUVAT = ((distance / (float) 1000) / (getCurrentTimeMillis() / (float) 3600000));
+
 
     }
 
@@ -125,19 +118,15 @@ public class Tracking implements Serializable {
 
 
     private void addCoordinateToHistory(Location currentLocation) {
-        if (waysPoints.isEmpty()) {
-            avgSpeed = currentLocation.getSpeed();
-        } else {
+//        if (waysPoints.isEmpty()) {
+//            avgSpeed = currentLocation.getSpeed();
+//        } else {
+        if (!waysPoints.isEmpty()){
             Location lastPoint = waysPoints.get(waysPoints.size() - 1);
             distance += lastPoint.distanceTo(currentLocation);
             timeElapsedBetweenTrkPoints += Math.abs(lastPoint.getTime() - currentLocation.getTime());
-            avgSpeedFromSUVAT = ((distance / (float) 1000) / (getCurrentTimeMillis() / (float) 3600000));
+//            avgSpeedFromSUVAT = ((distance / (float) 1000) / (getCurrentTimeMillis() / (float) 3600000));
         }
-            if (currentLocation.getSpeed() != 0) {
-                totalSpeedForRunningAverage += currentLocation.getSpeed();
-                totalTrkPointsWithSpeedForRunningAverage += 1;
-                avgSpeed = totalSpeedForRunningAverage / totalTrkPointsWithSpeedForRunningAverage;
-            }
             waysPoints.add(currentLocation);
             this.lastValidLocation = currentLocation;
     }
@@ -204,8 +193,6 @@ public class Tracking implements Serializable {
         analyzedLastPoints();
         postProcessingPoints();
         calculateStatisticsFinished();
-
-//        compareRoutes();
     }
 
 
@@ -314,23 +301,8 @@ public class Tracking implements Serializable {
 
     //Revisa la distancia entre ambas rutas sea la misma o proxima con diferencia de 15 metros
     public boolean equalsBetweenNewRouteAndReplay(){
-        float totalDistance =0;
         List<Location> replay=convertRouteReplay();
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            totalDistance = (float) replay.stream()
-                    .mapToDouble(location -> {
-                        int index = replay.indexOf(location);
-                        if (index < replay.size() - 1) {
-                            Location next = replay.get(index + 1);
-                            return location.distanceTo(next);
-                        }
-                        return 0.0;
-                    })
-                    .sum();
-        }
-            float result=totalDistance-distance;// no se si es necesario puede dar distinto en base a la sumatoria de desvios pequeños
-        //CHARLAR CON LUIS
-        if(replay.get(replay.size()-1).distanceTo(points.get(points.size()-1))<MAX_ACCURACY_THRESHOLD/2) //reviso que la distancia total sea emnor 40 metros x el error de coordendas// y los ultimos puntos esten cerca entre ellos
+        if(replay.get(replay.size()-1).distanceTo(points.get(points.size()-1))<MAX_ACCURACY_THRESHOLD) //reviso que la distancia total sea emnor 40 metros x el error de coordendas// y los ultimos puntos esten cerca entre ellos
             return true;
         return false;
     }

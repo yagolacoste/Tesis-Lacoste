@@ -300,7 +300,6 @@ public class TrackingActivity extends Activity {
                 for(Location location:locationResult.getLocations()){
                     if (locationUpdatesActive && location != null) {
                         openStreetMap.updatePosition(location);
-                        currentLocation = location;
                         return;
                         }
                     }

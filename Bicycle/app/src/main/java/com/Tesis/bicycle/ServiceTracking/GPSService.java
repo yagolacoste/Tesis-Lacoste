@@ -92,7 +92,7 @@ public class GPSService extends Service {
 
         Notification notificationService = createNotification();
 
-        startForeground(NOTIFICATION_ID, notificationService);
+
 
         if (!tracking.isCreated()) {
             //Init and create API Location services.
@@ -124,7 +124,7 @@ public class GPSService extends Service {
                         .requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
             }
         }
-
+        startForeground(NOTIFICATION_ID, notificationService);
     }
 
     private Notification createNotification() {
@@ -145,7 +145,6 @@ public class GPSService extends Service {
         builder.setDefaults(NotificationCompat.DEFAULT_ALL);
         builder.setContentText("Running");
         builder.setContentIntent(pendingIntent);
-        builder.setPriority(NotificationCompat.PRIORITY_MAX);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel(
                     channelId,

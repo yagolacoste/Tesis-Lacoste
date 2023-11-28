@@ -98,14 +98,16 @@ public class OpenStreetMap {
 
 
     public  void updatePosition(Location location){
-        GeoPoint point=new GeoPoint(location.getLatitude(),location.getLongitude());
-        startMarker.setPosition(point);
-        startMarker.setAnchor(Marker.ANCHOR_RIGHT,Marker.ANCHOR_BOTTOM);
-        myOpenMapView.getOverlays().add((myOpenMapView.getOverlays().size()-1),startMarker);
-        IMapController mapController=myOpenMapView.getController();
-        mapController.setZoom(19);
-        mapController.setCenter(point);
-        myOpenMapView.invalidate();
+        if(location!=null){
+            GeoPoint point=new GeoPoint(location.getLatitude(),location.getLongitude());
+            startMarker.setPosition(point);
+            startMarker.setAnchor(Marker.ANCHOR_RIGHT,Marker.ANCHOR_BOTTOM);
+            myOpenMapView.getOverlays().add((myOpenMapView.getOverlays().size()-1),startMarker);
+            IMapController mapController=myOpenMapView.getController();
+            mapController.setZoom(19);
+            mapController.setCenter(point);
+            myOpenMapView.invalidate();
+        }
     }
 
     public void removeMarker(){
