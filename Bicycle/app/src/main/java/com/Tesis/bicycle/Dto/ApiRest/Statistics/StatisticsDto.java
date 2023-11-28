@@ -104,11 +104,16 @@ public class StatisticsDto implements Serializable {
         this.distance = distance;
     }
 
-    public String getTimeCreated() {
+    public String getTimeCreatedString() {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         return sdf.format(timeCreated);
+    }
+
+    public Date getTimeCreated() {
+
+        return timeCreated;
     }
 
     public void setTimeCreated(Date timeCreated) {

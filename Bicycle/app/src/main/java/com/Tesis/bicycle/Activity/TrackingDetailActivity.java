@@ -91,8 +91,6 @@ public class TrackingDetailActivity extends AppCompatActivity {
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             locationBinder= (GPSService.LocationBinder) iBinder;
 
-//            openStreetMap.initLayer(TrackingDetailActivity.this,locationBinder.getGeoPoints().get(0));
-//            filterData();//filtro la data para ver si se hizo un camino o estan correcto los datos
             updateUI();
 
             //////////////////ROOM/////////////////////////
@@ -110,13 +108,6 @@ public class TrackingDetailActivity extends AppCompatActivity {
         }
     };
 
-//    private void filterData() {//revisar esto de cuando se hace una ruta pero no termino de hacerla
-//        if(checkConditionRoutes()){
-//            locationBinder.setId(RandomStringUtils.random(Constants.MAX_CARACTER_ID,true,true));
-////            inputNameAndDescription();
-//            locationBinder.setBattle(null);
-//        }
-//    }
 
     private void updateUI() {
         //Pone los datos capturados
@@ -298,10 +289,9 @@ public class TrackingDetailActivity extends AppCompatActivity {
 
 
     private void backToMenuActivity() {
-
+        stopService(new Intent(this,GPSService.class));///Esto puedo ver si ponerlo antes
         Intent i=new Intent(TrackingDetailActivity.this, NavInitActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        stopService(new Intent(this,GPSService.class));///Esto puedo ver si ponerlo antes
         startActivity(i);
     }
 

@@ -50,7 +50,7 @@ public class StatisticRecyclerViewAdapter extends RecyclerView.Adapter<Statistic
         holder.distance.setText(statistics.get(position).getDistanceString());
         holder.speed.setText(statistics.get(position).getAvgSpeedString()+" km/h");
         holder.speedTime.setText(String.valueOf(statistics.get(position).getTime()));
-        holder.timeSession.setText(String.valueOf(statistics.get(position).getTimeCreated()));
+        holder.timeSession.setText(String.valueOf(statistics.get(position).getTimeCreatedString()));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.Tesis.bicycle.Activity.ui.Fragment;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -16,12 +17,16 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.Tesis.bicycle.Activity.ui.NavInitActivity;
 import com.Tesis.bicycle.Constants;
+import com.Tesis.bicycle.Dto.ApiRest.Statistics.ClassificationDto;
 import com.Tesis.bicycle.Dto.ApiRest.Statistics.StatisticsDto;
 import com.Tesis.bicycle.Presenter.Adapter.StatisticRecyclerViewAdapter;
 import com.Tesis.bicycle.R;
 import com.Tesis.bicycle.ViewModel.StatisticsViewModel;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class StatisticsFragment  extends BaseListViewFragment {
 
@@ -60,6 +65,12 @@ public class StatisticsFragment  extends BaseListViewFragment {
                         layoutEmpty.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
                         statistics = resp;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            statistics =statistics.stream()
+                                    .sorted(Comparator.comparing(c->c.getTimeCreated()))
+                                    .collect(Collectors.toList());
+                        }
+                            Collections.reverse(statistics); // Ordena en orden inverso
                         adaptorStatistics=new StatisticRecyclerViewAdapter(statistics);
                         recyclerView.setAdapter(adaptorStatistics);
                     }

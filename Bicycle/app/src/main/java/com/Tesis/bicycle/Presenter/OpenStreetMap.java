@@ -57,8 +57,6 @@ public class OpenStreetMap {
     private Polyline roadOverlay;
     private Context context;
 
-    private RoadManager roadManager;
-
     private int color =Color.argb(128, 0, 0, 255);
 
     RotationGestureOverlay mRotationGestureOverlay;
@@ -66,8 +64,6 @@ public class OpenStreetMap {
 
     public OpenStreetMap(MapView myOpenMapView) {
         this.myOpenMapView = myOpenMapView;
-        roadManager=new OSRMRoadManager(myOpenMapView.getContext(), BonusPackHelper.DEFAULT_USER_AGENT);//"OBP_Tuto/1.0"
-//        ((OSRMRoadManager)roadManager).setMean(OSRMRoadManager.MEAN_BY_BIKE);
         mRotationGestureOverlay = new RotationGestureOverlay(myOpenMapView.getContext(), myOpenMapView);
         this.mCompassOverlay = new CompassOverlay(myOpenMapView.getContext(), new InternalCompassOrientationProvider(myOpenMapView.getContext()), myOpenMapView);
     }
@@ -114,28 +110,6 @@ public class OpenStreetMap {
         myOpenMapView.getOverlays().remove(startMarker);
         myOpenMapView.invalidate();
     }
-
-
-//    public void draw(List<GeoPoint> points){
-//        Marker startMarker=new Marker(myOpenMapView);
-//        //Drawable dr = ResourcesCompat.getDrawable(getContext().getResources(), R.drawable.ic_location, null);
-//        startMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_location));
-//        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-//        Road road=roadManager.getRoad((ArrayList<GeoPoint>) points);
-//        startMarker.setPosition(road.getRouteLow().get(0));
-//        myOpenMapView.getOverlays().add(startMarker);
-//        roadOverlay=RoadManager.buildRoadOverlay(road, color, 25f);
-//        myOpenMapView.getOverlays().add(roadOverlay);
-//        Marker endMarker=new Marker(myOpenMapView);
-//        endMarker.setIcon(context.getResources().getDrawable(R.drawable.ic_finish_flag_convert));
-//        endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-//        GeoPoint lastPoint = road.getRouteLow().get(road.getRouteLow().size()-1);
-//        double latitude = lastPoint.getLatitude();
-//        double longitude = lastPoint.getLongitude();
-//        endMarker.setPosition(new GeoPoint(latitude, longitude));
-//        myOpenMapView.getOverlays().add(endMarker);
-//        myOpenMapView.invalidate();
-//    }
 
 
 public void draw(List<GeoPoint> points) {
@@ -255,14 +229,6 @@ public void draw(List<GeoPoint> points) {
 
     public void setContext(Context context) {
         this.context = context;
-    }
-
-    public RoadManager getRoadManager() {
-        return roadManager;
-    }
-
-    public void setRoadManager(RoadManager roadManager) {
-        this.roadManager = roadManager;
     }
 
     public int getColor() {
