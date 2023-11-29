@@ -236,12 +236,13 @@ public class TrackingActivity extends Activity {
                 @Override
                 public void onClick(View view) {
                     stopLocationService();
-
-                    Intent i = new Intent(TrackingActivity.this, TrackingDetailActivity.class);
-                    if (routeDetailsDto != null) {
-                        i.setAction(Constants.REPLAY_MY_ROUTE);
+                    if(stopped){
+                        Intent i = new Intent(TrackingActivity.this, TrackingDetailActivity.class);
+                        if (routeDetailsDto != null) {
+                            i.setAction(Constants.REPLAY_MY_ROUTE);
+                        }
+                        startActivity(i);
                     }
-                    startActivity(i);
                     // btn_turnoff.setEnabled(false);
                 }
             });
@@ -251,12 +252,15 @@ public class TrackingActivity extends Activity {
     }
 
     private boolean equalsPosition() {//podria ir en gps service o tracking
-            GeoPoint Compare = repeat.getRouteReplay().get(0);
-            Location location = new Location("");
-            location.setLatitude(Compare.getLatitudeE6() / 1E6);
-            location.setLongitude(Compare.getLongitudeE6() / 1E6);
-            if (currentLocation.distanceTo(location) < 10.0f) {//toma la distancia a 10 metros
-                return true;
+            if(currentLocation!=null){
+                GeoPoint Compare = repeat.getRouteReplay().get(0);
+                Location location = new Location("");
+                location.setLatitude(Compare.getLatitudeE6() / 1E6);
+                location.setLongitude(Compare.getLongitudeE6() / 1E6);
+                if (currentLocation.distanceTo(location) < 10.0f) {//toma la distancia a 10 metros
+                    return true;
+                }
+                return false;
             }
             return false;
     }
@@ -429,6 +433,7 @@ public class TrackingActivity extends Activity {
         if (locationSettingStateReceiver != null) {
             try {
                 unregisterReceiver(locationSettingStateReceiver); // Desregistrar el BroadcastReceiver
+
             } catch (IllegalArgumentException e) {
                 // Manejar la excepción si el receptor no estaba registrado
                 e.printStackTrace();
