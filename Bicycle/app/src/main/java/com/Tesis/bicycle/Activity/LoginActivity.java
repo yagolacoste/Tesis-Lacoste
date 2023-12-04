@@ -43,8 +43,6 @@ public class LoginActivity extends AppCompatActivity {
 
         accessTokenRoomViewModel.getAccessToken().observe(this,response->{
             if(response!=null){
-                Toast.makeText(this,"Session active",Toast.LENGTH_LONG).show();
-                //startActivity(new Intent(this,MenuActivity.class));
                startActivity(new Intent(this, NavInitActivity.class));
             }
             else
@@ -74,7 +72,6 @@ public class LoginActivity extends AppCompatActivity {
                 authViewModel.login(loginRequest).observe(this, response ->{
                     if(response.getAccessToken()!=null){
                         accessTokenRoomViewModel.logout();
-                        Toast.makeText(this,"Access the application",Toast.LENGTH_LONG).show();
                         JwtResponse tokenDto= response;
                         RefreshToken refreshToken=new RefreshToken(tokenDto);
                         accessTokenRoomViewModel.addAccessToken(refreshToken);
@@ -87,9 +84,9 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
             }else
-                Toast.makeText(this,"Please insert email and password",Toast.LENGTH_SHORT).show();
+                notifications.warningMessage("Please insert email and password");
         }catch (Exception e){
-                Toast.makeText(this,"User not exits",Toast.LENGTH_SHORT).show();
+            notifications.warningMessage("User not exits");
             }
         });
         txtNewUser.setOnClickListener(view -> {

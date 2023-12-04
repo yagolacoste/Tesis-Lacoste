@@ -1,14 +1,11 @@
 package com.Tesis.bicycle.Service.Room;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.Tesis.bicycle.Dto.Room.RefreshTokenDto;
 import com.Tesis.bicycle.Dto.Room.TrackedDto;
-import com.Tesis.bicycle.Model.Room.Routes;
 import com.Tesis.bicycle.Model.Room.Tracked;
 
 import java.util.List;

@@ -121,9 +121,9 @@ public class ReceivedRequestAdapter extends RecyclerView.Adapter<ReceivedRequest
                                 if (onRequestSentListener != null) {
                                     onRequestSentListener.onRequestSent(true);
                                 }
-                                Toast.makeText(context, "Se rechazo la solicitud", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, "You rejected friend's request", Toast.LENGTH_LONG).show();
                             } else
-                                Toast.makeText(context, "error de solicitud", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, "error ", Toast.LENGTH_LONG).show();
                         });
                     }
                 });
@@ -136,7 +136,6 @@ public class ReceivedRequestAdapter extends RecyclerView.Adapter<ReceivedRequest
                 .downloader(new OkHttp3Downloader(ClientRetrofit.getHttp()))
                 .build();
         picasso.load(url)
-                .rotate(270)
                 .error(R.drawable.image_not_found)
                 .into(holder.profilePhotoRequest);
 

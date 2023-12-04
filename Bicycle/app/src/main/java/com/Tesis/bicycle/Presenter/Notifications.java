@@ -19,47 +19,68 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class Notifications {
 
     private NotificationManager notificationManager;
+    private NotificationCompat.Builder notificationBuilder;
 
     private Context context;
     private static final int NOTIFICATION_ID = 1;
+    private static final String CHANNEL_ID = "Location_notification_channel";
 
-    public Notifications( Context context) {
-        notificationManager= (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+    private static int notificationCounter = 1;
+    public Notifications(Context context) {
         this.context = context;
+        notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // Crear el canal de notificación (solo es necesario una vez)
+        createNotificationChannel();
+
+        // Crear el NotificationCompat.Builder (solo una vez)
+        notificationBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_bicycle)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setPriority(NotificationCompat.PRIORITY_MAX);
     }
 
-    public void addNotification(String title,String description){
-        String channelId="Location_notification_channel";
-
-        Intent resultIntent=new Intent();
-        PendingIntent pendingIntent=PendingIntent.getActivity(context.getApplicationContext(),0,resultIntent,PendingIntent.FLAG_MUTABLE);
-        NotificationCompat.Builder builder= new NotificationCompat.Builder(
-                context.getApplicationContext(),
-                channelId
-        );
-        builder.setSmallIcon(R.drawable.ic_bicycle);
-//        builder.setContentTitle("Location service");
-        builder.setContentTitle(title);
-        builder.setDefaults(NotificationCompat.DEFAULT_ALL);
-//        builder.setContentText("Running");
-        builder.setContentText(description);
-        builder.setContentIntent(pendingIntent);
-        //builder.setAutoCancel(false);
-        builder.setPriority(NotificationCompat.PRIORITY_MAX);
-
-        if(Build.VERSION.SDK_INT>Build.VERSION_CODES.O) {
-            if (notificationManager != null && notificationManager.getNotificationChannel(channelId) == null) {
-                NotificationChannel notificationChannel = new NotificationChannel(
-                        channelId,
-                        "Location Service",
-                        NotificationManager.IMPORTANCE_HIGH
-                );
-                notificationChannel.setDescription("This channel is used by location service");
-                notificationManager.createNotificationChannel(notificationChannel);
-            }
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && notificationManager != null) {
+            NotificationChannel notificationChannel = new NotificationChannel(
+                    CHANNEL_ID,
+                    "Location Service",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            notificationChannel.setDescription("This channel is used by location service");
+            notificationManager.createNotificationChannel(notificationChannel);
         }
-        notificationManager.notify(NOTIFICATION_ID,builder.build());
-        //startForeground(Constants.LOCATION_SERVICE_ID, builder.build());
+    }
+
+    public void addNotification(String title, String description) {
+        // Incrementar el contador para IDs de notificación únicos
+        int uniqueNotificationId = NOTIFICATION_ID + notificationCounter;
+
+        // Actualizar el contenido de la notificación usando el Builder existente
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_bicycle)
+                .setContentTitle(title)
+                .setContentText(description)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setPriority(NotificationCompat.PRIORITY_MAX);
+
+        // Crear un intent vacío (puede que desees proporcionar un intent real)
+        Intent resultIntent = new Intent();
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                context.getApplicationContext(),
+                0,
+                resultIntent,
+                PendingIntent.FLAG_MUTABLE
+        );
+
+        // Actualizar la acción al hacer clic en la notificación
+        notificationBuilder.setContentIntent(pendingIntent);
+
+        // Mostrar la notificación actualizada con un ID único
+        notificationManager.notify(uniqueNotificationId, notificationBuilder.build());
+
+        // Incrementar el contador para la próxima notificación
+        notificationCounter++;
     }
 
     public void cancel(int i) {

@@ -69,7 +69,6 @@ public abstract class BaseListViewFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         accessTokenRoomViewModel=new ViewModelProvider(this).get(AccessTokenRoomViewModel.class);
-
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

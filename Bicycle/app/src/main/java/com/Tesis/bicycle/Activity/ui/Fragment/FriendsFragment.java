@@ -74,8 +74,7 @@ public class FriendsFragment extends BaseListViewFragment{
                         recyclerView.setAdapter(adapter);
                     }
                     else{
-                        Toast.makeText(context,"Not exist Friends for route: ",Toast.LENGTH_SHORT).show();
-                        layoutEmpty.setVisibility(View.VISIBLE);
+                         layoutEmpty.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
                     }
                 });

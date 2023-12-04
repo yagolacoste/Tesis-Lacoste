@@ -18,7 +18,7 @@ public class Tracking implements Serializable {
 
     //Parametros de configuracion de filtros
     private static final long serialVersionUID = 1L;
-    private static final float MAX_SPEED_THRESHOLD =8F ; //8 m/s //segun google son 30 k/h con toda la furia
+    private static final float MAX_SPEED_THRESHOLD =14F ; //14 m/s //segun google son 30 k/h con toda la furia
     private static final float MAX_ACCURACY_THRESHOLD =16F ; //15 metros inclusive es un promedio de los valores calculados
     private static final float MIN_ALTITUDE_THRESHOLD = -450F; // 5 metros
     private static final double MAX_ALTITUDE_THRESHOLD = 5200F;
@@ -34,7 +34,6 @@ public class Tracking implements Serializable {
     private Date timeStarted=null;
     private Date timeStopped=null;
     private long timeElapsedBetweenStartStops = 0;
-    private float timeElapsedBetweenTrkPoints = 0;
     private float totalSpeedForRunningAverage = 0;
     private int totalTrkPointsWithSpeedForRunningAverage = 0;
     private long timeInMilliseconds=0;
@@ -74,15 +73,10 @@ public class Tracking implements Serializable {
     }
 
     public void addTracking(Location currentLocation) {
-
-        unfilteredPoints.add(currentLocation);
-            if (isCoordinateValid(currentLocation)) {// filtros de altitud,velocidad,altura
-                filteredPoints.add(currentLocation);
+            if (isCoordinateValid(currentLocation)) {
                 checkMobility(currentLocation);
             }
         avgSpeedFromSUVAT = ((distance / (float) 1000) / (getCurrentTimeMillis() / (float) 3600000));
-
-
     }
 
 
@@ -118,14 +112,9 @@ public class Tracking implements Serializable {
 
 
     private void addCoordinateToHistory(Location currentLocation) {
-//        if (waysPoints.isEmpty()) {
-//            avgSpeed = currentLocation.getSpeed();
-//        } else {
         if (!waysPoints.isEmpty()){
             Location lastPoint = waysPoints.get(waysPoints.size() - 1);
             distance += lastPoint.distanceTo(currentLocation);
-            timeElapsedBetweenTrkPoints += Math.abs(lastPoint.getTime() - currentLocation.getTime());
-//            avgSpeedFromSUVAT = ((distance / (float) 1000) / (getCurrentTimeMillis() / (float) 3600000));
         }
             waysPoints.add(currentLocation);
             this.lastValidLocation = currentLocation;
@@ -190,9 +179,13 @@ public class Tracking implements Serializable {
 
 
     public void stopTrackingActivity(){
+        timeStopped=new Date(System.currentTimeMillis());
+        timeElapsedBetweenStartStops = timeStopped.getTime() - timeStarted.getTime();
         analyzedLastPoints();
         postProcessingPoints();
-        calculateStatisticsFinished();
+        avgSpeedFromSUVAT = distance / (timeElapsedBetweenStartStops / 1000);//m/s
+        avgSpeedFromSUVAT=(avgSpeedFromSUVAT*3600)/1000;
+//        calculateStatisticsFinished();
     }
 
 
@@ -255,16 +248,16 @@ public class Tracking implements Serializable {
         return location;
     }
 
-    private void calculateStatisticsFinished(){
-        timeStopped=new Date(System.currentTimeMillis());
-        timeElapsedBetweenStartStops = timeStopped.getTime() - timeStarted.getTime();
-
-        //Calculate the average speed based on the distance and the time between stopping and starting
-        //the session
-        avgSpeedFromSUVAT = distance / (timeElapsedBetweenStartStops / 1000);//m/s
-        avgSpeedFromSUVAT=(avgSpeedFromSUVAT*3600)/1000;
-//        avgSpeedFromSUVAT = ((distance / (float) 1000) / (getCurrentTimeMillis() / (float) 3600000));
-    }
+//    private void calculateStatisticsFinished(){
+//        timeStopped=new Date(System.currentTimeMillis());
+//        timeElapsedBetweenStartStops = timeStopped.getTime() - timeStarted.getTime();
+//
+//        //Calculate the average speed based on the distance and the time between stopping and starting
+//        //the session
+//        avgSpeedFromSUVAT = distance / (timeElapsedBetweenStartStops / 1000);//m/s
+//        avgSpeedFromSUVAT=(avgSpeedFromSUVAT*3600)/1000;
+////        avgSpeedFromSUVAT = ((distance / (float) 1000) / (getCurrentTimeMillis() / (float) 3600000));
+//    }
 
     private void analyzedLastPoints(){
         if(!buffer.isEmpty()){
@@ -279,7 +272,6 @@ public class Tracking implements Serializable {
                 if((correctDistance< problematicDistance)){
                     addCoordinateToHistory(problematicLocation);
                 }
-
             }
         }
     }
@@ -503,14 +495,6 @@ public class Tracking implements Serializable {
         this.timeElapsedBetweenStartStops = timeElapsedBetweenStartStops;
     }
 
-    public float getTimeElapsedBetweenTrkPoints() {
-        return timeElapsedBetweenTrkPoints;
-    }
-
-    public void setTimeElapsedBetweenTrkPoints(float timeElapsedBetweenTrkPoints) {
-        this.timeElapsedBetweenTrkPoints = timeElapsedBetweenTrkPoints;
-    }
-
     public float getTotalSpeedForRunningAverage() {
         return totalSpeedForRunningAverage;
     }
@@ -602,7 +586,6 @@ public class Tracking implements Serializable {
                 ", timeStarted=" + timeStarted +
                 ", timeStopped=" + timeStopped +
                 ", timeElapsedBetweenStartStops=" + timeElapsedBetweenStartStops +
-                ", timeElapsedBetweenTrkPoints=" + timeElapsedBetweenTrkPoints +
                 ", totalSpeedForRunningAverage=" + totalSpeedForRunningAverage +
                 ", totalTrkPointsWithSpeedForRunningAverage=" + totalTrkPointsWithSpeedForRunningAverage +
                 ", timeInMilliseconds=" + timeInMilliseconds +

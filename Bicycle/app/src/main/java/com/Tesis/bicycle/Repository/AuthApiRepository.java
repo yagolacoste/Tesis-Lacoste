@@ -40,12 +40,13 @@ public class AuthApiRepository {
         this.authService.login(loginRequest).enqueue(new Callback<JwtResponse>() {
             @Override
             public void onResponse(Call<JwtResponse> call, Response<JwtResponse> response) {
-                mld.setValue(response.body());
+                if (response.isSuccessful())
+                    mld.setValue(response.body());
+                else mld.setValue(new JwtResponse());
             }
 
             @Override
             public void onFailure(Call<JwtResponse> call, Throwable t) {
-                System.out.println("se produjo error al iniciar session"+ t.getMessage());
                 t.printStackTrace();
             }
         });

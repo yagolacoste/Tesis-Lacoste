@@ -7,22 +7,17 @@ import androidx.room.Room;
 import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,19 +25,14 @@ import com.Tesis.bicycle.Activity.ui.NavInitActivity;
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Dto.ApiRest.Statistics.StatisticsApiRest;
 import com.Tesis.bicycle.Dto.Room.RefreshTokenDto;
-import com.Tesis.bicycle.Model.Room.Routes;
 import com.Tesis.bicycle.Model.Room.Tracked;
-import com.Tesis.bicycle.Presenter.ApiRestConnection;
 import com.Tesis.bicycle.Presenter.AppDataBase;
 import com.Tesis.bicycle.Presenter.Notifications;
 import com.Tesis.bicycle.Presenter.OpenStreetMap;
 import com.Tesis.bicycle.R;
-import com.Tesis.bicycle.Service.Room.RoutesService;
 import com.Tesis.bicycle.ServiceTracking.GPSService;
 import com.Tesis.bicycle.ViewModel.AccessTokenRoomViewModel;
-import com.Tesis.bicycle.ViewModel.RouteViewModel;
 import com.Tesis.bicycle.ViewModel.StatisticsViewModel;
-import com.Tesis.bicycle.ViewModel.StoredDocumentViewModel;
 import com.Tesis.bicycle.ViewModel.TrackedRoomViewModel;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -50,18 +40,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
-import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.stream.Collectors;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.Route;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class TrackingDetailActivity extends AppCompatActivity {
 
@@ -81,7 +61,6 @@ public class TrackingDetailActivity extends AppCompatActivity {
 
     private Notifications notifications;
 
-    private RoutesService db;
 
 
 
@@ -90,16 +69,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             locationBinder= (GPSService.LocationBinder) iBinder;
-
             updateUI();
-
-            //////////////////ROOM/////////////////////////
-            Routes route=new Routes();
-            route.setId(locationBinder.getId());
-            route.setUnfilteredPoints(locationBinder.getUnfilteredPoints());
-            route.setFilteredPoints(locationBinder.getFilteredPoints());
-            route.setFilteredBuffer_points(locationBinder.getCoordinates());
-            db.add(route);
         }
 
         @Override
@@ -157,8 +127,6 @@ public class TrackingDetailActivity extends AppCompatActivity {
         this.accessTokenRoomViewModel=vmp.get(AccessTokenRoomViewModel.class);
         this.statisticsViewModel =vmp.get(StatisticsViewModel.class);
         this.trackedRoomViewModel=vmp.get(TrackedRoomViewModel.class);
-        this.db = Room.databaseBuilder(TrackingDetailActivity.this, AppDataBase.class, Constants.NAME_DATA_BASE)
-                .allowMainThreadQueries().fallbackToDestructiveMigration().build().routesService();
     }
 
     private void init(){
@@ -257,7 +225,6 @@ public class TrackingDetailActivity extends AppCompatActivity {
                         Tracked tracked=new Tracked(statisticsApiRest);
                         trackedRoomViewModel.add(tracked);
                         notifications.errorMessage("There isn't connection,You statistics is wait for update");
-                        Toast.makeText(this, "There isn't conextion, ", Toast.LENGTH_LONG).show();
                     }
                 });
             });
@@ -290,6 +257,7 @@ public class TrackingDetailActivity extends AppCompatActivity {
 
     private void backToMenuActivity() {
         stopService(new Intent(this,GPSService.class));///Esto puedo ver si ponerlo antes
+        getApplicationContext().unbindService(lsc);
         Intent i=new Intent(TrackingDetailActivity.this, NavInitActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);

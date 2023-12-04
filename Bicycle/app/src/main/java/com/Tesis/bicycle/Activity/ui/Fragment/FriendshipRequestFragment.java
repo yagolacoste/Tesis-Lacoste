@@ -53,8 +53,7 @@ public class FriendshipRequestFragment extends BaseListViewFragment implements O
                     }else {
                         layoutEmpty.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
-                        Toast.makeText(context, "Not exist routes for user: " + response.getId(), Toast.LENGTH_SHORT).show();
-                    }
+                      }
                 });
             }else{
                 layoutEmpty.setVisibility(View.VISIBLE);

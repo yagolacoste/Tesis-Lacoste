@@ -21,14 +21,11 @@ import android.os.Looper;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
-import androidx.room.Room;
 
 import com.Tesis.bicycle.Constants;
 import com.Tesis.bicycle.Model.Tracking;
-import com.Tesis.bicycle.Presenter.AppDataBase;
 import com.Tesis.bicycle.Presenter.Notifications;
 import com.Tesis.bicycle.R;
-import com.Tesis.bicycle.Service.Room.RoutesService;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -70,62 +67,66 @@ public class GPSService extends Service {
     @Override
     public void onCreate() {
         notification = new Notifications(GPSService.this);
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(GPSService.this);
-        locationRequest = LocationRequest.create();
-        locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);//3 segundos
-        locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);//1 segundos
-        locationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY); // Por defecto puse HIGH solo para verificar que andaba
+        startForeground(NOTIFICATION_ID, createNotification());
+
+        // Iniciar la obtención de coordenadas
+        startLocationService();
+
 
         super.onCreate();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        notification.addNotification("Location service", "Running");
+//        notification.addNotification("Location service", "Running");
         return super.onStartCommand(intent, flags, startId);
     }
 
-    public void startLocationService() {
+        public void startLocationService() {
 
-        if (tracking == null)
-            tracking = new Tracking();
+            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(GPSService.this);
+            locationRequest = LocationRequest.create();
+            locationRequest.setInterval(1000 * Constants.DEFAULT_UPDATE_INTERVAL);//3 segundos
+            locationRequest.setFastestInterval(1000 * Constants.FAST_UPDATE_INTERVAL);//1 segundos
+            locationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY); // Por defecto puse HIGH solo para verificar que andaba
 
-        Notification notificationService = createNotification();
 
+            if (tracking == null)
+                tracking = new Tracking();
 
-
-        if (!tracking.isCreated()) {
-            //Init and create API Location services.
-            locationCallback = new LocationCallback() {
-                @Override
-                public void onLocationResult(@NonNull LocationResult locationResult) {
-                    super.onLocationResult(locationResult);
-                    if (locationResult == null) {
-                        return;
-                    }
-                    if (locationResult != null) {
-                        for (Location location : locationResult.getLocations()) {
-                            tracking.addTracking(location);
-                            if (tracking.isDeviation() && tracking.isRepeat() && !notificationDisplayed) {
-                                notification.addNotification("Alert", "you have gone off the road");
-                                notificationDisplayed=true;
-                            }
+            Notification notificationService = createNotification();
+            if (!tracking.isCreated()) {
+                //Init and create API Location services.
+                locationCallback = new LocationCallback() {
+                    @Override
+                    public void onLocationResult(@NonNull LocationResult locationResult) {
+                        super.onLocationResult(locationResult);
+                        if (locationResult == null) {
+                            return;
                         }
-//                        if (lastLocation){
-//                           tracking.addTracking(locationResult.getLastLocation());
-//                            stopLocationService();
-//                        }
+                        if (locationResult != null) {
+                            for (Location location : locationResult.getLocations()) {
+                                tracking.addTracking(location);
+                                if (tracking.isDeviation() && tracking.isRepeat() && !notificationDisplayed) {
+                                    notification.addNotification("Alert", "you have gone off the road");
+                                    notificationDisplayed=true;
+                                }
+                            }
+    //                        if (lastLocation){
+    //                           tracking.addTracking(locationResult.getLastLocation());
+    //                            stopLocationService();
+    //                        }
+                        }
                     }
+                };
+                tracking.startTrackingActivity();
+                if (!(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+                    fusedLocationProviderClient
+                            .requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
                 }
-            };
-            tracking.startTrackingActivity();
-            if (!(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
-                fusedLocationProviderClient
-                        .requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
             }
+            startForeground(NOTIFICATION_ID, notificationService);
         }
-        startForeground(NOTIFICATION_ID, notificationService);
-    }
 
     private Notification createNotification() {
         String channelId = "Location_notification_channel";
@@ -165,8 +166,7 @@ public class GPSService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        locationCallback = null;
-        locationRequest = null;
+        stopLocationService();
         stopForeground(true);
     }
 
@@ -179,18 +179,8 @@ public class GPSService extends Service {
 
 
     private void stopLocationService() {///Lo tuve que sacar por el hecho de que si la persona se queda parada daba error como que no habia sincronismo entre los datos
-        //booleano en verdadero para pausar
-//        if (!lastLocation) {
-//            lastLocation = true;
-//        } else {
-//            tracking.stopTrackingActivity();
-//            fusedLocationProviderClient.removeLocationUpdates(locationCallback);
-//            notification.cancel(1);
-//        }
-//
         tracking.stopTrackingActivity();
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);
-        notification.cancel(1);
     }
 
 

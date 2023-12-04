@@ -257,7 +257,7 @@ public class TrackingActivity extends Activity {
                 Location location = new Location("");
                 location.setLatitude(Compare.getLatitudeE6() / 1E6);
                 location.setLongitude(Compare.getLongitudeE6() / 1E6);
-                if (currentLocation.distanceTo(location) < 10.0f) {//toma la distancia a 10 metros
+                if (currentLocation.distanceTo(location) < 8.0F) {//toma la distancia a 10 metros
                     return true;
                 }
                 return false;
@@ -304,9 +304,10 @@ public class TrackingActivity extends Activity {
                 for(Location location:locationResult.getLocations()){
                     if (locationUpdatesActive && location != null) {
                         openStreetMap.updatePosition(location);
+                        currentLocation=location;
                         return;
                         }
-                    }
+                }
             }
         };
 
